@@ -5,10 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="shortcut icon" href="images/title.png" />
+    <link rel="shortcut icon" href="../images/title.png" />
 
     <link href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="../css/app.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Poppins"
       rel="stylesheet"
@@ -61,16 +62,17 @@
       </div>
 
       <!--Navbar section start-->
+
       <nav
+        v-show="!direction"
         class="bg-white border-b border-slate-200 shadow-md sm:px-0 pt-3 md:py-3 top-0 sticky z-30"
-        :class="direction ? 'hidden' : 'block'"
       >
         <div
           class="bg-white flex flex-wrap sm:px-5 md:px-6 lg:px-12 pb-3 md:pb-0 items-center justify-between"
         >
           <a href="#" class="flex items-center pl-5 sm:pl-0">
             <img
-              src="images/main-logo.png"
+              src="../images/main-logo.png"
               class="h-7 mr-3 md:h-12"
               alt="Main logo"
             />
@@ -92,7 +94,7 @@
             </svg>
             <img
               class="w-[26px] h-[25.5px] object-cover cursor-pointer hover:opacity-75 transition-all rounded-full md:hidden ml-2.5 mr-1"
-              src="images/britain-flag.png"
+              src="../images/britain-flag.png"
               alt="english"
             />
             <button
@@ -248,7 +250,7 @@
               <li>
                 <img
                   class="mt-[3px] w-[26px] h-[25.5px] object-cover cursor-pointer hover:opacity-75 transition-all rounded-full hidden md:block"
-                  src="images/britain-flag.png"
+                  src="../images/britain-flag.png"
                   alt="english"
                 />
               </li>
@@ -606,7 +608,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/austria-flag.png"
+                                src="../images/austria-flag.png"
                                 alt="austria flag"
                               />
                               Австрия
@@ -622,7 +624,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/belgium-flag.png"
+                                src="../images/belgium-flag.png"
                                 alt="belgium flag"
                               />
                               Белгия
@@ -638,7 +640,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/bulgaria-flag.png"
+                                src="../images/bulgaria-flag.png"
                                 alt="bulgaria flag"
                               />
                               България
@@ -654,7 +656,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/britain-flag.png"
+                                src="../images/britain-flag.png"
                                 alt="britain flag"
                               />
                               Великобритания
@@ -670,7 +672,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/germany-flag.png"
+                                src="../images/germany-flag.png"
                                 alt="germany flag"
                               />
                               Германия
@@ -686,7 +688,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/denmark-flag.png"
+                                src="../images/denmark-flag.png"
                                 alt="denmark flag"
                               />
                               Дания
@@ -702,7 +704,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/spain-flag.png"
+                                src="../images/spain-flag.png"
                                 alt="spain flag"
                               />
                               Испания
@@ -718,7 +720,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/italy-flag.png"
+                                src="../images/italy-flag.png"
                                 alt="italy flag"
                               />
                               Италия
@@ -734,7 +736,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/netherland-flag.png"
+                                src="../images/netherland-flag.png"
                                 alt="netherland flag"
                               />
                               Нидерландия
@@ -750,7 +752,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/poland-flag.png"
+                                src="../images/poland-flag.png"
                                 alt="poland flag"
                               />
                               Полша
@@ -766,7 +768,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/portugal-flag.png"
+                                src="../images/portugal-flag.png"
                                 alt="portugal flag"
                               />
                               Португалия
@@ -782,7 +784,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/finland-flag.png"
+                                src="../images/finland-flag.png"
                                 alt="finland flag"
                               />
                               Финландия
@@ -798,7 +800,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/france-flag.png"
+                                src="../images/france-flag.png"
                                 alt="france flag"
                               />
                               Франция
@@ -814,7 +816,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/check-flag.png"
+                                src="../images/check-flag.png"
                                 alt="chezh flag"
                               />
                               Чехия
@@ -830,7 +832,7 @@
                             <div class="inline-flex items-center">
                               <img
                                 class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100"
-                                src="images/sweden-flag.png"
+                                src="../images/sweden-flag.png"
                                 alt="sweden flag"
                               />
                               Швеция
@@ -1037,7 +1039,7 @@
                     class="animate__animated animate__slow animate__fadeInDown"
                   >
                     <img
-                      src="images/stars.png"
+                      src="../images/stars.png"
                       alt="stars"
                       class="object-cover h-5 w-5 md:h-6 md:w-6 mx-auto mb-1.5"
                     />
@@ -1065,7 +1067,7 @@
                 </div>
               </div>
               <img
-                src="images/slide1.jpg"
+                src="../images/slide1.jpg"
                 class="absolute object-cover brightness-[.8] block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] opacity-75"
                 alt="slider-photo1"
               />
@@ -1097,7 +1099,7 @@
                 </div>
               </div>
               <img
-                src="images/slide2.jpg"
+                src="../images/slide2.jpg"
                 class="absolute object-cover brightness-75 block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem]"
                 alt="slider-photo2"
               />
@@ -1129,7 +1131,7 @@
                 </div>
               </div>
               <img
-                src="images/slide3.jpg"
+                src="../images/slide3.jpg"
                 class="absolute object-cover brightness-[.8] block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem]"
                 alt="slider-photo3"
               />
@@ -1370,8 +1372,8 @@
                   rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
               "
               class="w-64 h-64 sm:w-56 sm:h-56 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto sm:mx-0 object-cover rounded-lg lg:group-hover:scale-[1.15] transition-all duration-1000"
-              src="images/8.jpg"
-              alt=""
+              src="../images/8.jpg"
+              alt="our services"
             />
             <img
               style="
@@ -1379,8 +1381,8 @@
                   rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
               "
               class="w-64 h-64 sm:w-56 sm:h-56 md:w-36 md:h-36 lg:w-44 lg:h-44 mx-auto sm:mx-0 md:border-4 lg:border-8 border-[#5ca1e1] object-cover rounded-lg md:rounded-full md:-ml-20 lg:-ml-24 lg:group-hover:scale-[1.15] transition-all duration-1000"
-              src="images/2-3.jpg"
-              alt=""
+              src="../images/2-3.jpg"
+              alt="our services"
             />
           </div>
           <div
@@ -1434,6 +1436,7 @@
         </div>
 
         <!-- Call us modal -->
+
         <div
           id="call-us-modal"
           tabindex="-1"
@@ -1467,8 +1470,8 @@
               <div class="p-7 sm:space-x-8 pr-9 sm:flex items-center">
                 <img
                   class="object-cover h-48 w-52 md:h-52 md:w-56 mx-auto md:mx-0"
-                  src="images/4-1.png"
-                  alt=""
+                  src="../images/4-1.png"
+                  alt="service"
                 />
                 <div class="w-full mt-2.5 sm:mt-0">
                   <h1 class="text-center font-bold text-slate-700 text-xl">
@@ -1542,7 +1545,7 @@
       <!--Parallax section-->
       <section>
         <div
-          style="background-image: url(images/House-cleaning-service.png)"
+          style="background-image: url(../images/House-cleaning-service.png)"
           class="w-full brightness-50 h-[32rem] sm:h-[34rem] md:h-[36rem] lg:h-[40rem] bg-fixed bg-cover bg-center flex justify-center items-center"
         ></div>
 
@@ -1720,8 +1723,8 @@
           <div>
             <img
               class="mx-auto hidden sm:block px-5 xl:px-0 -mb-40 md:-mb-44 lg:-mb-48"
-              src="images/workprocess.png"
-              alt=""
+              src="../images/workprocess.png"
+              alt="line"
             />
           </div>
           <div
@@ -1730,8 +1733,8 @@
             <div class="group">
               <img
                 class="object-cover h-44 w-44 sm:h-36 sm:w-36 md:h-40 md:w-40 lg:h-48 lg:w-48 rounded-full border-2 border-[#5ca1e1] mx-auto md:group-hover:scale-125 transition-all duration-700"
-                src="images/12.jpg"
-                alt=""
+                src="../images/12.jpg"
+                alt="step 1"
               />
               <div
                 style="
@@ -1798,8 +1801,8 @@
             <div>
               <img
                 class="object-cover h-52 w-52 sm:h-52 sm:w-52 md:h-56 md:w-56 lg:h-64 lg:w-64 rounded-full border-2 border-[#5ca1e1] mx-auto"
-                src="images/14.jpg"
-                alt=""
+                src="../images/14.jpg"
+                alt="step 2"
               />
               <div
                 style="
@@ -1864,8 +1867,8 @@
             <div class="group">
               <img
                 class="object-cover h-44 w-44 sm:h-36 sm:w-36 md:h-40 md:w-40 lg:h-48 lg:w-48 rounded-full border-2 border-[#5ca1e1] mx-auto md:group-hover:scale-125 transition-all duration-700"
-                src="images/13.jpg"
-                alt=""
+                src="../images/13.jpg"
+                alt="step 3"
               />
               <div
                 style="
@@ -1973,7 +1976,11 @@
             </button>
           </div>
           <div class="hidden md:flex w-1/2 justify-center">
-            <img class="object-cover" src="images/about-2-434x410.png" alt="" />
+            <img
+              class="object-cover"
+              src="../images/about-2-434x410.png"
+              alt="team photo"
+            />
           </div>
         </div>
       </section>
@@ -2005,7 +2012,7 @@
                 class="shadow-2xl lg:shadow-none p-6 lg:p-0 rounded-lg border lg:border-0 border-slate-100"
               >
                 <div class="w-full flex justify-center lg:justify-end">
-                  <img src="images/icon-5.png" alt="" />
+                  <img src="../images/icon-5.png" alt="vacum machine" />
                 </div>
                 <div
                   class="text-center lg:text-right font-bold text-lg md:text-xl lg:text-2xl mt-1 md:mt-1.5"
@@ -2026,7 +2033,7 @@
                 class="shadow-2xl lg:shadow-none p-6 lg:p-0 rounded-lg border lg:border-0 border-slate-100 mt-8 md:mt-10"
               >
                 <div class="w-full flex justify-center lg:justify-end">
-                  <img src="images/icon-7.png" alt="" />
+                  <img src="../images/icon-7.png" alt="washing machine" />
                 </div>
                 <div
                   class="text-center lg:text-right font-bold text-lg md:text-xl lg:text-2xl mt-1 md:mt-1.5"
@@ -2052,8 +2059,8 @@
               <div class="rounded-full p-5 border-2 border-gray-200">
                 <img
                   class="object-cover rounded-full w-full"
-                  src="images/image_03-1-600x600.jpg"
-                  alt=""
+                  src="../images/image_03-1-600x600.jpg"
+                  alt="girl wirh dog"
                 />
               </div>
               <div class="w-full flex justify-center">
@@ -2073,7 +2080,7 @@
                 class="shadow-2xl lg:shadow-none p-6 lg:p-0 rounded-lg border lg:border-0 border-slate-100 mt-8 md:mt-10 lg:mt-0"
               >
                 <div class="w-full flex justify-center lg:justify-start">
-                  <img src="images/icon-8.png" alt="" />
+                  <img src="../images/icon-8.png" alt="ring" />
                 </div>
                 <div
                   class="text-center lg:text-left font-bold text-lg md:text-xl lg:text-2xl mt-1 md:mt-1.5"
@@ -2094,7 +2101,7 @@
                 class="shadow-2xl lg:shadow-none p-6 lg:p-0 rounded-lg border lg:border-0 border-slate-100 mt-8 md:mt-10"
               >
                 <div class="w-full flex justify-center lg:justify-start">
-                  <img src="images/icon-9.png" alt="" />
+                  <img src="../images/icon-9.png" alt="window" />
                 </div>
                 <div
                   class="text-center lg:text-left font-bold text-lg md:text-xl lg:text-2xl mt-1 md:mt-1.5"
@@ -2612,8 +2619,8 @@
               </div>
               <img
                 class="object-cover mx-auto mt-6"
-                src="images/testimonials-1.png"
-                alt=""
+                src="../images/testimonials-1.png"
+                alt="Filip Ivanov"
               />
               <h1 class="text-center font-semibold text-xl lg:text-2xl">
                 Филип Иванов
@@ -2633,8 +2640,8 @@
               </div>
               <img
                 class="object-cover mx-auto mt-6"
-                src="images/testimonials-3.png"
-                alt=""
+                src="../images/testimonials-3.png"
+                alt="Viktoriq Markova"
               />
               <h1 class="text-center font-semibold text-xl lg:text-2xl">
                 Виктория Маркова
@@ -2652,8 +2659,8 @@
               </div>
               <img
                 class="object-cover mx-auto mt-6"
-                src="images/testimonials-2.png"
-                alt=""
+                src="../images/testimonials-2.png"
+                alt="Konstadin Todorov"
               />
               <h1 class="text-center font-semibold text-xl lg:text-2xl">
                 Костадин Тодоров
@@ -2858,8 +2865,8 @@
       });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/main-vue.js"></script>
-    <script src="js/main.js"></script>
+    <script src="../js/main-vue.js"></script>
+    <script src="../js/main.js"></script>
     <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
   </body>
 </html>

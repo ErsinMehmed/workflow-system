@@ -10,6 +10,7 @@
     <link href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="../css/app.css" />
+    <link rel="stylesheet" href="../css/alert.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Poppins"
       rel="stylesheet"
@@ -26,7 +27,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-    <title>Carpet Cleaning</title>
+    <title>Carpet Cleaning - Начало</title>
   </head>
   <body class="scroll-smooth">
     <div id="app">
@@ -62,7 +63,6 @@
       </div>
 
       <!--Navbar section start-->
-
       <nav
         v-show="!direction"
         class="bg-white border-b border-slate-200 shadow-md sm:px-0 pt-3 md:py-3 top-0 sticky z-30"
@@ -70,7 +70,7 @@
         <div
           class="bg-white flex flex-wrap sm:px-5 md:px-6 lg:px-12 pb-3 md:pb-0 items-center justify-between"
         >
-          <a href="#" class="flex items-center pl-5 sm:pl-0">
+          <a href="home.html" class="flex items-center pl-5 sm:pl-0">
             <img
               src="../images/main-logo.png"
               class="h-7 mr-3 md:h-12"
@@ -108,7 +108,7 @@
             >
               <svg
                 v-show="hamburgerIcon"
-                class="w-6 h-6"
+                class="w-8 h-8"
                 aria-hidden="true"
                 fill="currentColor"
                 viewBox="0 0 20 20"
@@ -125,7 +125,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="2.4"
                 stroke="currentColor"
-                class="w-6 h-6"
+                class="w-8 h-8"
               >
                 <path
                   stroke-linecap="round"
@@ -144,8 +144,8 @@
             >
               <li>
                 <a
-                  href="#"
-                  class="flex items-center py-2 pl-3 pr-4 text-white bg-blue-600 rounded-md md:bg-transparent md:text-blue-700 md:p-0"
+                  href="home.html"
+                  class="flex items-center py-2 pl-3 pr-4 text-white bg-blue-600 rounded-md md:bg-transparent md:text-blue-700 md:p-0 active:scale-90"
                   aria-current="page"
                 >
                   <svg
@@ -153,7 +153,7 @@
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-5 h-5 mr-1 lg:hidden"
+                    class="w-5 h-5 mr-1 md:hidden"
                   >
                     <path
                       stroke-linecap="round"
@@ -167,14 +167,14 @@
               <li>
                 <a
                   href="#"
-                  class="flex items-center py-2 pl-3 pr-4 text-gray-700 rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 transition-all"
+                  class="flex items-center py-2 pl-3 pr-4 text-gray-700 rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 transition-all active:scale-90"
                 >
                   <svg
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-5 h-5 mr-1 lg:hidden"
+                    class="w-5 h-5 mr-1 md:hidden"
                   >
                     <path
                       stroke-linecap="round"
@@ -193,14 +193,14 @@
               <li>
                 <a
                   href="#"
-                  class="flex items-center py-2 pl-3 pr-4 text-gray-700 rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 transition-all"
+                  class="flex items-center py-2 pl-3 pr-4 text-gray-700 rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 transition-all active:scale-90"
                 >
                   <svg
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-5 h-5 mr-1 lg:hidden"
+                    class="w-5 h-5 mr-1 md:hidden"
                   >
                     <path
                       stroke-linecap="round"
@@ -214,14 +214,14 @@
               <li>
                 <a
                   href="#"
-                  class="flex items-center py-2 pl-3 pr-4 text-gray-700 rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 transition-all"
+                  class="flex items-center py-2 pl-3 pr-4 text-gray-700 rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 transition-all active:scale-90"
                 >
                   <svg
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-5 h-5 mr-1 lg:hidden"
+                    class="w-5 h-5 mr-1 md:hidden"
                   >
                     <path
                       stroke-linecap="round"
@@ -287,7 +287,7 @@
             </button>
             <div class="px-6 py-6 lg:px-8 text-slate-700">
               <h3 class="mb-4 text-xl font-semibold">Вашият профил</h3>
-              <form class="space-y-5" action="#">
+              <form id="sing-up-form" class="space-y-5">
                 <div>
                   <label
                     for="email"
@@ -349,7 +349,7 @@
                     </div>
                     <input
                       :type="passwordState ? 'password' : 'text'"
-                      name="password"
+                      name="passowrdLogin"
                       id="password"
                       class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full px-10 p-2.5"
                       placeholder="••••••••••"
@@ -515,7 +515,7 @@
             </button>
             <div class="px-6 py-6 lg:px-8 text-slate-700">
               <h3 class="mb-4 text-xl font-semibold">Създайте профил</h3>
-              <form class="space-y-5" action="#">
+              <form id="sign-in-form" class="space-y-5">
                 <div class="flex space-x-5">
                   <div>
                     <label
@@ -527,9 +527,10 @@
                     <input
                       type="text"
                       id="first_name"
+                      name="firstName"
                       class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5"
                       placeholder="Въведете име"
-                      required
+                      minlength="2"
                     />
                   </div>
                   <div>
@@ -542,9 +543,10 @@
                     <input
                       type="text"
                       id="family_name"
+                      name="familyName"
                       class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5"
                       placeholder="Въведете фамилия"
-                      required
+                      minlength="2"
                     />
                   </div>
                 </div>
@@ -558,14 +560,15 @@
                   <input
                     type="email"
                     id="email-signUp"
+                    name="email"
                     class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5"
                     placeholder="Въведете фамилия"
-                    required
+                    minlength="5"
                   />
                 </div>
                 <div>
                   <label
-                    for="family_name"
+                    for="phone"
                     class="block ml-1 mb-1 text-sm font-semibold text-slate-500"
                   >
                     Телефонен номер
@@ -843,11 +846,12 @@
                     </div>
                     <input
                       type="text"
-                      id="family_name"
+                      id="phone"
+                      name="phone"
                       v-model="countryCode"
                       class="bg-white border border-gray-200 border-l-0 text-gray-900 text-sm rounded-r-lg focus:ring-0 focus:outline-none block w-full p-2.5"
                       placeholder="Въведете телефонен номер"
-                      required
+                      minlength="6"
                     />
                   </div>
                 </div>
@@ -864,7 +868,8 @@
                       name="password"
                       id="password"
                       class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full pr-10 p-2.5"
-                      placeholder="••••••••••"
+                      placeholder="••••••••"
+                      minlength="8"
                     />
                     <div
                       @click="passwordReg = !passwordReg"
@@ -916,10 +921,11 @@
                   <div class="relative">
                     <input
                       :type="passwordRegRep ? 'password' : 'text'"
-                      name="password"
+                      name="passwordRep"
                       id="password"
                       class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full pr-10 p-2.5"
-                      placeholder="••••••••••"
+                      placeholder="••••••••"
+                      minlength="8"
                     />
                     <div
                       @click="passwordRegRep = !passwordRegRep"
@@ -1025,14 +1031,16 @@
           data-carousel="static"
         >
           <!-- Carousel wrapper -->
-          <div class="relative h-64 overflow-hidden md:h-[32rem] w-full">
+          <div
+            class="relative h-64 overflow-hidden md:h-[32rem] xl:[40rem] 2xl:h-[46rem] w-full"
+          >
             <!-- Item 1 -->
             <div
               class="hidden duration-700 ease-in-out text-center"
               data-carousel-item="active"
             >
               <div
-                class="relative h-64 md:h-[32rem] flex justify-center items-center z-20 text-slate-100"
+                class="relative h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem] flex justify-center items-center z-20 text-slate-100"
               >
                 <div>
                   <div
@@ -1068,7 +1076,7 @@
               </div>
               <img
                 src="../images/slide1.jpg"
-                class="absolute object-cover brightness-[.8] block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] opacity-75"
+                class="absolute object-cover brightness-[.8] block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem] opacity-75"
                 alt="slider-photo1"
               />
             </div>
@@ -1078,7 +1086,7 @@
               data-carousel-item
             >
               <div
-                class="relative h-64 md:h-[32rem] flex justify-center items-center z-20 text-slate-100"
+                class="relative h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem] flex justify-center items-center z-20 text-slate-100"
               >
                 <div>
                   <div
@@ -1100,7 +1108,7 @@
               </div>
               <img
                 src="../images/slide2.jpg"
-                class="absolute object-cover brightness-75 block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem]"
+                class="absolute object-cover brightness-75 block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem]"
                 alt="slider-photo2"
               />
             </div>
@@ -1110,7 +1118,7 @@
               data-carousel-item
             >
               <div
-                class="relative h-64 md:h-[32rem] flex justify-center items-center z-20 text-slate-100"
+                class="relative h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem] flex justify-center items-center z-20 text-slate-100"
               >
                 <div>
                   <div
@@ -1132,7 +1140,7 @@
               </div>
               <img
                 src="../images/slide3.jpg"
-                class="absolute object-cover brightness-[.8] block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem]"
+                class="absolute object-cover brightness-[.8] block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem]"
                 alt="slider-photo3"
               />
             </div>
@@ -1164,7 +1172,7 @@
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6 hidden lg:block absolute z-30 bottom-1 left-[49.2%] text-slate-100 animate-pulse cursor-pointer"
+            class="w-6 h-6 hidden lg:block absolute z-30 bottom-1 lg:left-[48.9%] xl:left-[49.2%] 2xl:left-[49.42%] text-slate-100 animate-pulse cursor-pointer"
           >
             <path
               stroke-linecap="round"
@@ -1360,7 +1368,9 @@
       </section>
 
       <section>
-        <div class="w-full py-10 md:py-14 lg:py-20 md:flex items-center">
+        <div
+          class="w-full py-10 md:py-14 lg:py-20 xl:py-24 2xl:py-32 md:flex items-center"
+        >
           <div
             class="w-full md:w-1/2 sm:flex justify-evenly md:justify-center items-end group space-y-5 sm:space-y-0"
             data-aos="slide-right"
@@ -1436,7 +1446,6 @@
         </div>
 
         <!-- Call us modal -->
-
         <div
           id="call-us-modal"
           tabindex="-1"
@@ -2202,7 +2211,7 @@
           >
             <!--Main offer-->
             <div
-              class="w-full md:w-72 2xl:w-80 p-4 bg-white shadow-lg rounded-md"
+              class="w-full md:w-72 xl:w-80 2xl:w-96 p-4 bg-white shadow-lg rounded-md"
             >
               <p
                 class="mb-4 text-xl font-semibold text-gray-800 text-center md:text-left"
@@ -2321,15 +2330,16 @@
               </ul>
               <button
                 type="button"
-                class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg"
+                onclick="location.replace('order.html')"
+                class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90"
               >
-                Избери план
+                Направете поръчка
               </button>
             </div>
 
             <!--Premium offer-->
             <div
-              class="w-full md:w-72 2xl:w-80 p-4 bg-white shadow-lg rounded-md"
+              class="w-full md:w-72 xl:w-80 2xl:w-96 p-4 bg-white shadow-lg rounded-md"
             >
               <p
                 class="mb-4 text-xl font-semibold text-gray-800 text-center md:text-left"
@@ -2449,15 +2459,16 @@
               </ul>
               <button
                 type="button"
-                class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg"
+                onclick="location.replace('order.html')"
+                class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90"
               >
-                Избери план
+                Направете поръчка
               </button>
             </div>
 
             <!--Vip offer-->
             <div
-              class="w-full md:w-72 2xl:w-80 p-4 bg-white shadow-lg rounded-md"
+              class="w-full md:w-72 xl:w-80 2xl:w-96 p-4 bg-white shadow-lg rounded-md"
             >
               <p
                 class="mb-4 text-xl font-semibold text-gray-800 text-center md:text-left"
@@ -2579,9 +2590,10 @@
               </ul>
               <button
                 type="button"
-                class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg"
+                onclick="location.replace('order.html')"
+                class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90"
               >
-                Избери план
+                Направете поръчка
               </button>
             </div>
           </div>
@@ -2763,7 +2775,7 @@
             <div class="relative mb-2">
               <input
                 type="text"
-                class="bg-slate-700 border border-slate-600 text-slate-100 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-slate-600 block w-full pr-8 p-2.5 caret-slate-50"
+                class="bg-slate-700 border border-slate-600 text-white text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-slate-600 block w-full pr-8 p-2.5 caret-white"
                 placeholder="Въведете имейл"
               />
               <button
@@ -2865,8 +2877,10 @@
       });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script src="../js/main-vue.js"></script>
     <script src="../js/main.js"></script>
+    <script src="../js/ajax.js"></script>
     <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
   </body>
 </html>

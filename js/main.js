@@ -94,7 +94,7 @@ $(document).on("input", "#slider", function () {
   if (x == 2) {
     var value = n * 0.24 + 30;
     var value1 = n * 0.26 + 60;
-    var value2 = n * 0.26 + 90;
+    var value2 = n * 0.28 + 90;
 
     var result = parseFloat(value).toFixed(2);
     var result1 = parseFloat(value1).toFixed(2);
@@ -154,7 +154,7 @@ $(document).on("input", "#final", function () {
   if (x == 2) {
     var value = n * 0.24 + 30;
     var value1 = n * 0.26 + 60;
-    var value2 = n * 0.26 + 90;
+    var value2 = n * 0.28 + 90;
 
     var result = parseFloat(value).toFixed(2);
     var result1 = parseFloat(value1).toFixed(2);
@@ -165,4 +165,118 @@ $(document).on("input", "#final", function () {
     $("#slider_value2").html(result2 + " лв.");
     $("#final").val(n);
   }
+});
+
+var accountBuilding = 0;
+var accountFinalPrice = 0;
+var accountOffer = 0;
+
+var finalPrice = $("#account-toast-price");
+
+$(".account-m2").keyup(function () {
+  var value = $(this).val();
+
+  if (accountOffer == 1 && accountBuilding == 1) {
+    accountFinalPrice = value * 0.12 + 30;
+  } else if (accountOffer == 1 && accountBuilding == 2) {
+    accountFinalPrice = value * 0.18 + 30;
+  } else if (accountOffer == 1 && accountBuilding == 3) {
+    accountFinalPrice = value * 0.24 + 30;
+  }
+
+  if (accountOffer == 2 && accountBuilding == 1) {
+    accountFinalPrice = value * 0.14 + 60;
+  } else if (accountOffer == 2 && accountBuilding == 2) {
+    accountFinalPrice = value * 0.2 + 60;
+  } else if (accountOffer == 2 && accountBuilding == 3) {
+    accountFinalPrice = value * 0.26 + 60;
+  }
+
+  if (accountOffer == 3 && accountBuilding == 1) {
+    accountFinalPrice = value * 0.16 + 90;
+  } else if (accountOffer == 3 && accountBuilding == 2) {
+    accountFinalPrice = value * 0.22 + 90;
+  } else if (accountOffer == 3 && accountBuilding == 3) {
+    accountFinalPrice = value * 0.28 + 90;
+  }
+
+  finalPrice.html(accountFinalPrice + " лв.");
+});
+
+$(".building").click(function () {
+  var value = $(this).val();
+  var accountM2 = $("#account-m2").val();
+
+  if (value == "Къща") {
+    accountBuilding = 1;
+  } else if (value == "Офис") {
+    accountBuilding = 2;
+  } else if (value == "Салон") {
+    accountBuilding = 3;
+  }
+
+  if (accountOffer == 1 && accountBuilding == 1) {
+    accountFinalPrice = accountM2 * 0.12 + 30;
+  } else if (accountOffer == 1 && accountBuilding == 2) {
+    accountFinalPrice = accountM2 * 0.18 + 30;
+  } else if (accountOffer == 1 && accountBuilding == 3) {
+    accountFinalPrice = accountM2 * 0.24 + 30;
+  }
+
+  if (accountOffer == 2 && accountBuilding == 1) {
+    accountFinalPrice = accountM2 * 0.14 + 60;
+  } else if (accountOffer == 2 && accountBuilding == 2) {
+    accountFinalPrice = accountM2 * 0.2 + 60;
+  } else if (accountOffer == 2 && accountBuilding == 3) {
+    accountFinalPrice = accountM2 * 0.26 + 60;
+  }
+
+  if (accountOffer == 3 && accountBuilding == 1) {
+    accountFinalPrice = accountM2 * 0.16 + 90;
+  } else if (accountOffer == 3 && accountBuilding == 2) {
+    accountFinalPrice = accountM2 * 0.22 + 90;
+  } else if (accountOffer == 3 && accountBuilding == 3) {
+    accountFinalPrice = accountM2 * 0.28 + 90;
+  }
+
+  finalPrice.html(accountFinalPrice + " лв.");
+});
+
+$(".offer").click(function () {
+  var value = $(this).val();
+  var accountM2 = $("#account-m2").val();
+
+  if (value == "Основна") {
+    accountOffer = 1;
+  } else if (value == "Премиум") {
+    accountOffer = 2;
+  } else if (value == "Вип") {
+    accountOffer = 3;
+  }
+
+  if (accountOffer == 1 && accountBuilding == 1) {
+    accountFinalPrice = accountM2 * 0.12 + 30;
+  } else if (accountOffer == 1 && accountBuilding == 2) {
+    accountFinalPrice = accountM2 * 0.18 + 30;
+  } else if (accountOffer == 1 && accountBuilding == 3) {
+    accountFinalPrice = accountM2 * 0.24 + 30;
+  }
+
+  if (accountOffer == 2 && accountBuilding == 1) {
+    accountFinalPrice = accountM2 * 0.14 + 60;
+  } else if (accountOffer == 2 && accountBuilding == 2) {
+    accountFinalPrice = accountM2 * 0.2 + 60;
+  } else if (accountOffer == 2 && accountBuilding == 3) {
+    accountFinalPrice = accountM2 * 0.26 + 60;
+  }
+
+  if (accountOffer == 3 && accountBuilding == 1) {
+    accountFinalPrice = accountM2 * 0.16 + 90;
+  } else if (accountOffer == 3 && accountBuilding == 2) {
+    accountFinalPrice = accountM2 * 0.22 + 90;
+  } else if (accountOffer == 3 && accountBuilding == 3) {
+    accountFinalPrice = accountM2 * 0.28 + 90;
+  }
+
+  finalPrice.html(accountFinalPrice + " лв.");
 });

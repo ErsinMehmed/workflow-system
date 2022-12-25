@@ -1,4 +1,5 @@
 <?php
+
 function jsonResponseMain($query, $successMessage, $errorMessage)
 {
     if ($query) {

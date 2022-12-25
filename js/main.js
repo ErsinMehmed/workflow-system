@@ -201,6 +201,7 @@ $(".account-m2").keyup(function () {
   }
 
   finalPrice.html(accountFinalPrice + " лв.");
+  $("#input-account-price").val(accountFinalPrice);
 });
 
 $(".building").click(function () {
@@ -240,6 +241,7 @@ $(".building").click(function () {
   }
 
   finalPrice.html(accountFinalPrice + " лв.");
+  $("#input-account-price").val(accountFinalPrice);
 });
 
 $(".offer").click(function () {
@@ -279,4 +281,5 @@ $(".offer").click(function () {
   }
 
   finalPrice.html(accountFinalPrice + " лв.");
+  $("#input-account-price").val(accountFinalPrice);
 });

@@ -4,9 +4,7 @@ createApp({
   data() {
     return {
       scY: 0,
-      startY: 0,
       progress: 0,
-      direction: null,
       passwordReg: true,
       phoneCountry: "BG",
       countryCode: "+359",
@@ -27,6 +25,98 @@ createApp({
       address: null,
       addressLength: "0/200",
       addressCount: 0,
+      countries: [
+        {
+          name: "Австрия",
+          image: ["../images/austria-flag.png"],
+          countryCode: "AT",
+          code: "+43",
+        },
+        {
+          name: "Белгия",
+          image: ["../images/belgium-flag.png"],
+          countryCode: "BE",
+          code: "+32",
+        },
+        {
+          name: "България",
+          image: ["../images/bulgaria-flag.png"],
+          countryCode: "BG",
+          code: "+359",
+        },
+        {
+          name: "Великобритания",
+          image: ["../images/britain-flag.png"],
+          countryCode: "UK",
+          code: "+44",
+        },
+        {
+          name: "Германия",
+          image: ["../images/germany-flag.png"],
+          countryCode: "DE",
+          code: "+49",
+        },
+        {
+          name: "Дания",
+          image: ["../images/denmark-flag.png"],
+          countryCode: "DK",
+          code: "+45",
+        },
+        {
+          name: "Испания",
+          image: ["../images/spain-flag.png"],
+          countryCode: "ES",
+          code: "+34",
+        },
+        {
+          name: "Италия",
+          image: ["../images/italy-flag.png"],
+          countryCode: "IT",
+          code: "+39",
+        },
+        {
+          name: "Нидерландия",
+          image: ["../images/netherland-flag.png"],
+          countryCode: "NL",
+          code: "+31",
+        },
+        {
+          name: "Полша",
+          image: ["../images/poland-flag.png"],
+          countryCode: "PL",
+          code: "+48",
+        },
+        {
+          name: "Португалия",
+          image: ["../images/portugal-flag.png"],
+          countryCode: "PT",
+          code: "+351",
+        },
+        {
+          name: "Финландия",
+          image: ["../images/finland-flag.png"],
+          countryCode: "FI",
+          code: "+358",
+        },
+        {
+          name: "Франция",
+          image: ["../images/france-flag.png"],
+          countryCode: "FR",
+          code: "+33",
+        },
+        {
+          name: "Чехия",
+          image: ["../images/check-flag.png"],
+          countryCode: "CZ",
+          code: "+420",
+        },
+        {
+          name: "Швеция",
+          image: ["../images/sweden-flag.png"],
+          countryCode: "SE",
+          code: "+46",
+        },
+      ],
       cities: [
         {
           name: "Бургас",
@@ -72,7 +162,6 @@ createApp({
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("scroll", this.updateProgressIndicator);
-    window.addEventListener("scroll", this.scrollDetector);
   },
 
   methods: {
@@ -97,18 +186,6 @@ createApp({
       var top = element.offsetTop;
       window.scrollTo(0, top);
       this.hideScrollBtn = false;
-    },
-
-    scrollDetector: function () {
-      var scrollY = window.scrollY;
-
-      if (scrollY > this.startY) {
-        this.direction = true;
-      } else {
-        this.direction = false;
-      }
-
-      this.startY = scrollY;
     },
 
     onFileChange(e) {

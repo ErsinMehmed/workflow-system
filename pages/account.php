@@ -57,12 +57,10 @@ $email = $_SESSION['email'];
         </button>
       </div>
 
-
-
       <!--Navbar section start-->
       <nav class="bg-white border-b border-slate-200 shadow-md sm:px-0 pt-3 md:py-3 top-0 sticky z-30">
         <div class="bg-white flex flex-wrap sm:px-5 md:px-6 lg:px-12 pb-3 md:pb-0 items-center justify-between">
-          <a href="home.html" class="flex items-center pl-5 sm:pl-0">
+          <a href="home.php" class="flex items-center pl-5 sm:pl-0">
             <img src="../images/main-logo.png" class="h-7 mr-3 md:h-12" alt="Main logo" />
           </a>
           <div class="flex items-center pr-5 sm:pr-0">
@@ -73,11 +71,12 @@ $email = $_SESSION['email'];
             while ($rows = mysqli_fetch_array($query_run)) {
               if ($rows["image"] != "") {
             ?>
-                <img src="../action/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90 updatePhoto">
+                <img src="../action/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all
+              rounded-full object-cover md:hidden active:scale-90 updatePhoto">
               <?php
               } else {
               ?>
-                <img src="../images/user.png" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90">
+                <img src="../images/user.png" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90" />
             <?php
               }
             } ?>
@@ -134,13 +133,15 @@ $email = $_SESSION['email'];
                 if ($rows["image"] != "") {
               ?>
                   <li>
-                    <img src="../action/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 updatePhoto ">
+                    <img src="../action/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75
+                  transition-all rounded-full object-cover hidden md:block
+                  active:scale-90 updatePhoto ">
                   </li>
                 <?php
                 } else {
                 ?>
                   <li>
-                    <img src="../images/user.png" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90">
+                    <img src="../images/user.png" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90" />
                   </li>
               <?php
                 }
@@ -213,7 +214,9 @@ $email = $_SESSION['email'];
             ?>
               <div class="sm:flex items-center sm:space-x-4">
                 <?php if ($rows["image"] != "") { ?>
-                  <img class="object-fill w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0 updatePhoto" :src="profileImgPreview ? profileImgPreview : '../action/customer-images/<?= $rows["image"] ?>'" alt="Profile photo" />
+                  <img class="object-fill w-24 h-24 rounded-full shadow-lg mx-auto
+                sm:mx-0 updatePhoto" :src="profileImgPreview ? profileImgPreview
+                : '../action/customer-images/<?= $rows["image"] ?>'" alt="Profile photo" />
                 <?php } else { ?>
                   <img class="object-fill w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0" :src="profileImgPreview ? profileImgPreview : '../images/user.png'" alt="Profile photo" />
                 <?php } ?>
@@ -223,7 +226,7 @@ $email = $_SESSION['email'];
                     <button v-show="profileImgPreview != null" @click="profileImgPreview = null" type="submit" class="w-full block py-2 px-6 text-sm font-bold text-white focus:outline-none bg-blue-500 rounded-lg shadow-md border border-blue-500 hover:bg-blue-600 transition-all active:scale-90">
                       Запази
                     </button>
-                    <input type="hidden" id="getCutomerEmail" name="customerEmail" value="<?= $email ?>">
+                    <input type="hidden" id="getCutomerEmail" name="customerEmail" value="<?= $email ?>" />
                     <label class="w-full block py-2 px-6 text-sm font-bold text-blue-600 hover:text-blue-700 focus:outline-none bg-white rounded-lg shadow-md border border-gray-100 hover:bg-gray-50 transition-all active:scale-90 cursor-pointer" for="profile-photo-input">
                       <div class="text-center">Избери</div>
                       <input @change="profilePhotoUpdate" id="profile-photo-input" name="customerImage" type="file" class="hidden" accept="image/png, image/jpg, image/jpeg" />
@@ -348,7 +351,7 @@ $email = $_SESSION['email'];
             <form id="update-customer-password">
               <div class="w-full mt-6">
                 <div class="sm:w-1/2 pr-2.5">
-                  <input type="hidden" value="<?= $email ?>" name="customerEmail">
+                  <input type="hidden" value="<?= $email ?>" name="customerEmail" />
                   <label for="old-password" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                     Стара парола
                   </label>
@@ -651,29 +654,33 @@ $email = $_SESSION['email'];
 
             while ($rows = mysqli_fetch_array($query_run)) {
             ?>
-              <div class="w-full mt-6 flex items-center gap-10 flex-wrap gap-y-4">
-                <div class="flex items-center">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  <span><?= $rows["name"] ?></span>
+              <form id="customer-order-form">
+                <div class="w-full mt-6 flex items-center gap-10 flex-wrap gap-y-4">
+                  <div class="flex items-center">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span><?= $rows["name"] ?></span>
+                    <input type="hidden" name="customerName" value="<?= $rows["name"] ?>">
+                  </div>
+                  <div class="flex items-center">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                    </svg>
+                    <span><?= $rows["email"] ?></span>
+                    <input type="hidden" name="customerEmail" value="<?= $rows["email"] ?>">
+                  </div>
+                  <div class="flex items-center">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                    </svg>
+                    <span><?= $rows["phone"] ?></span>
+                    <input type="hidden" name="customerPhone" value="<?= $rows["phone"] ?>">
+                  </div>
                 </div>
-                <div class="flex items-center">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                  </svg>
-                  <span><?= $rows["email"] ?></span>
-                </div>
-                <div class="flex items-center">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                  </svg>
-                  <span><?= $rows["phone"] ?></span>
-                </div>
-              </div>
-            <?php } ?>
-            <hr class="w-full my-4" />
-            <form id="customer-order-form">
+              <?php } ?>
+              <hr class="w-full my-4" />
+
               <div class="block md:hidden ml-1 mb-1.5 font-semibold text-sm text-slate-700">
                 Квадратура на обекта
               </div>
@@ -738,7 +745,7 @@ $email = $_SESSION['email'];
               <ul class="flex flex-wrap gap-6 my-3.5">
                 <div id="tooltip-basic" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                   <div v-for="(service, index) in services" class="flex mt-1.5 items-center">
-                    <svg v-show="index < 3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1 text-green-500">
+                    <svg v-show="index < 3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 text-green-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div v-show="index < 3">{{service}}</div>
@@ -761,7 +768,7 @@ $email = $_SESSION['email'];
                 </li>
                 <div id="tooltip-premium" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                   <div v-for="(service, index) in services" class="flex mt-1.5 items-center">
-                    <svg v-show="index < 5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1 text-green-500">
+                    <svg v-show="index < 5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 text-green-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div v-show="index < 5">{{service}}</div>
@@ -784,7 +791,7 @@ $email = $_SESSION['email'];
                 </li>
                 <div id="tooltip-vip" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                   <div v-for="service in services" class="flex mt-1.5 items-center">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1 text-green-500">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 text-green-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>{{service}}</div>
@@ -813,12 +820,12 @@ $email = $_SESSION['email'];
               <div class="my-4 sm:flex items-center sm:space-x-5 space-y-4 sm:space-y-0">
                 <div class="sm:w-1/2">
                   <div class="relative">
-                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                       </svg>
                     </div>
-                    <input datepicker datepicker-autohide value="today()" name="date" type="text" class="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5" placeholder="Изберете дата" />
+                    <input type="date" name="date" min="<?php echo date("Y-m-d", strtotime('+1 day', time())); ?>" value="<?php echo date("Y-m-d", strtotime('+1 day', time())); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5 " placeholder="Изберете дата" />
                   </div>
                 </div>
                 <div class="w-1/2 flex space-x-5">
@@ -851,16 +858,18 @@ $email = $_SESSION['email'];
                       <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
                       </svg>
-
                       <div class="text-sm font-semibold text-slate-700 text-center">
                         В брой
                       </div>
                     </div>
                   </label>
                 </div>
+                <div id="tooltip-card-payment" role="tooltip" class="hidden text-center font-medium text-slate-700 md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+                  Не се притеснявайте ! Нашият екип ще носи POS терминал при посещението на имота Ви.
+                </div>
                 <div>
                   <input class="sr-only peer" type="radio" value="С карта" name="payment" id="card" />
-                  <label class="flex justify-center items-center w-28 h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" for="card">
+                  <label data-tooltip-target="tooltip-card-payment" data-tooltip-placement="bottom" class="flex justify-center items-center w-28 h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" for="card">
                     <div class="flex items-center">
                       <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
@@ -892,7 +901,7 @@ $email = $_SESSION['email'];
               <label for="address" class="block ml-1 mb-1.5 mt-4 font-semibold text-sm md:text-base text-slate-700">
                 Вашият адрес
               </label>
-              <textarea @keyup="charCountAddress" id="address" name="address" v-model="address" rows="2" :class="{
+              <textarea @keyup="charCountAddress" minlength="5" id="address" name="address" v-model="address" rows="2" :class="{
                     'focus:border-red-500 border-red-500 bg-red-50': addressCount >= 200,
                   }" class="block p-2.5 w-full text-sm text-gray-900 bg-slate-50 rounded-lg border border-gray-300 focus:ring-0 focus:outline-none focus:border-gray-400 resize-none md:resize-y" placeholder="Напишете адреса си тук..."></textarea>
               <div :class="{
@@ -901,10 +910,10 @@ $email = $_SESSION['email'];
                 {{ addressLength }}
               </div>
 
-              <label for="address" class="block ml-1 mb-1.5 mt-4 font-semibold text-sm md:text-base text-slate-700">
+              <label for="information" class="block ml-1 mb-1.5 mt-4 font-semibold text-sm md:text-base text-slate-700">
                 Допълнителна информация
               </label>
-              <textarea @keyup="charCount" id="address" v-model="information" name="information" rows="2" :class="{
+              <textarea @keyup="charCount" id="information" v-model="information" name="information" rows="2" :class="{
                     'focus:border-red-500 border-red-500 bg-red-50': informationCount >= 200,
                 }" class="block p-2.5 w-full text-sm text-gray-900 bg-slate-50 rounded-lg border border-gray-300 focus:ring-0 focus:outline-none focus:border-gray-400 resize-none md:resize-y" placeholder="Пишете тук..."></textarea>
               <div :class="{
@@ -913,30 +922,36 @@ $email = $_SESSION['email'];
                 {{ informationLength }}
               </div>
 
-              <div class="sm:flex justify-start lg:justify-end mt-6">
-                <button type="submit" class="w-full sm:w-auto text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-0 font-semibold rounded-lg text-sm px-5 py-2.5 transition-all active:scale-90">
-                  Направи поръчка
-                </button>
-              </div>
-
               <!--Price toast-->
               <div v-show="orderSection" class="fixed md:flex bottom-4 right-4 items-center justify-center p-3 w-24 md:w-32 text-slate-700 bg-white rounded-md shadow-2xl border border-slate-100" :class="{'lg:right-4': scY < 300, 'lg:right-16': scY > 300}">
                 <div id="account-toast-price" class="font-semibold text-sm md:text-base">
                   0 лв.
                 </div>
-                <input type="hidden" id="input-account-price" name="price">
+                <input type="hidden" id="input-account-price" name="price" />
               </div>
 
-              <!--Price toast-->
-              <div v-show="orderSection" class="hidden md:block fixed md:flex bottom-20 right-4 items-center justify-center py-2 px-3 w-32 text-slate-700 bg-white rounded-md shadow-lg border border-slate-100" :class="{'lg:right-4': scY < 300, 'lg:right-16': scY > 300}">
+              <div id="tooltip-m2" role="tooltip" class="hidden font-medium text-slate-700 md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 -mt-1 mr-1 inline-flex">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Минимума е 10 квадратни метра.</span>
+              </div>
+              <!--M2 toast-->
+              <div v-show="orderSection" data-tooltip-target="tooltip-m2" data-tooltip-placement="left" class="hidden md:block fixed md:flex bottom-20 right-4 items-center justify-center py-2 px-3 w-32 text-slate-700 bg-white rounded-md shadow-lg border border-slate-100" :class="{'lg:right-4': scY < 300, 'lg:right-16': scY > 300}">
                 <div class="">
                   <label for="account-m2" class="block mb-1.5 text-sm font-semibold text-slate-700 text-center">
                     Квадратура
                   </label>
-                  <input type="text" id="account-m2" name="m2" class="bg-slate-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-300 block w-full p-1.5 text-center account-m2" maxlength="4" placeholder="m2" />
+                  <input minlength="2" type="text" id="account-m2" name="m2" class="bg-slate-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-300 block w-full p-1.5 text-center account-m2" maxlength="4" placeholder="m2" />
                 </div>
               </div>
-            </form>
+
+              <div class="sm:flex justify-start lg:justify-end mt-6">
+                <button type="submit" class="w-full sm:w-auto text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-0 font-semibold rounded-lg text-sm px-5 py-2.5 transition-all active:scale-90">
+                  Направи поръчка
+                </button>
+              </div>
+              </form>
           </div>
         </div>
       </div>
@@ -948,7 +963,6 @@ $email = $_SESSION['email'];
   <script src="../js/main-vue.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/ajax.js"></script>
-  <script src="https://unpkg.com/flowbite@1.5.5/dist/datepicker.js"></script>
   <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
 </body>
 

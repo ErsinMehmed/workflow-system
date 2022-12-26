@@ -200,8 +200,8 @@ $(".account-m2").keyup(function () {
     accountFinalPrice = value * 0.28 + 90;
   }
 
-  finalPrice.html(accountFinalPrice + " лв.");
-  $("#input-account-price").val(accountFinalPrice);
+  finalPrice.html(accountFinalPrice.toFixed(2) + " лв.");
+  $("#input-account-price").val(accountFinalPrice.toFixed(2));
 });
 
 $(".building").click(function () {
@@ -240,8 +240,8 @@ $(".building").click(function () {
     accountFinalPrice = accountM2 * 0.28 + 90;
   }
 
-  finalPrice.html(accountFinalPrice + " лв.");
-  $("#input-account-price").val(accountFinalPrice);
+  finalPrice.html(accountFinalPrice.toFixed(2) + " лв.");
+  $("#input-account-price").val(accountFinalPrice.toFixed(2));
 });
 
 $(".offer").click(function () {
@@ -280,6 +280,6 @@ $(".offer").click(function () {
     accountFinalPrice = accountM2 * 0.28 + 90;
   }
 
-  finalPrice.html(accountFinalPrice + " лв.");
-  $("#input-account-price").val(accountFinalPrice);
+  finalPrice.html(accountFinalPrice.toFixed(2) + " лв.");
+  $("#input-account-price").val(accountFinalPrice.toFixed(2));
 });

@@ -5,6 +5,8 @@ date_default_timezone_set('Europe/Sofia');
 include 'dbconn.php';
 include 'function.php';
 
+error_reporting(E_ERROR | E_PARSE);
+
 //Create profile
 if (isset($_POST['save_customer'])) {
 
@@ -29,6 +31,7 @@ if (isset($_POST['save_customer'])) {
     $query = mysqli_query($con, $selQuery);
 
     if (mysqli_num_rows($query) == 0) {
+
         if ($password == $passwordRep) {
             $query = "INSERT INTO customer (name,email,password,phone) VALUES ('$fullName','$email','$password','$phone')";
             $query_run = mysqli_query($con, $query);
@@ -44,6 +47,7 @@ if (isset($_POST['save_customer'])) {
 
 //Login
 if (isset($_POST['login_info'])) {
+
     $email =  ($_POST['email']);
     $password = ($_POST['passowrdLogin']);
 
@@ -66,6 +70,7 @@ if (isset($_POST['login_info'])) {
 
 //Update customer information
 if (isset($_POST['update_customer'])) {
+
     $userEmail = $_POST['userEmail'];
     $username = $_POST['username'];
     $phone = $_POST['phoneAccount'];
@@ -88,6 +93,7 @@ if (isset($_POST['update_customer'])) {
 
 //Upload photo
 if (isset($_POST['update_customer_image'])) {
+
     $userEmail = $_POST['customerEmail'];
     $filename = $_FILES['customerImage']['name'];
     $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
@@ -105,12 +111,13 @@ if (isset($_POST['update_customer_image'])) {
         $query = "UPDATE customer SET image='$filename' WHERE email='$userEmail'";
         $query_run = mysqli_query($con, $query);
 
-        jsonResponseMain($query_run, 'Снимката е добавена', 'Снимката не е добавена');
+        jsonResponseMain($query_run, 'Снимката е обновена', 'Снимката не е обновена');
     }
 }
 
 //Update password
 if (isset($_POST['update_customer_password'])) {
+
     $userEmail = $_POST['customerEmail'];
     $oldPassword = $_POST['oldPassword'];
     $newPassword = $_POST['newPassword'];
@@ -123,7 +130,6 @@ if (isset($_POST['update_customer_password'])) {
         ];
         echo json_encode($res);
     } else {
-
         $query = "SELECT * FROM customer WHERE email='$userEmail' AND password='$oldPassword'";
         $query_run = mysqli_query($con, $query);
 
@@ -146,4 +152,37 @@ if (isset($_POST['update_customer_password'])) {
 if (isset($_POST['action'])) {
     unset($_SESSION['email']);
     jsonResponse(200, 'Успешно излизане');
+}
+
+//Custoemer make order
+if (isset($_POST['customer_order'])) {
+
+    $customerName = $_POST['customerName'];
+    $customerEmail = $_POST['customerEmail'];
+    $customerPhone = $_POST['customerPhone'];
+    $building = $_POST['building'];
+    $offer = $_POST['offer'];
+    $date = $_POST['date'];
+    $time = $_POST['time'];
+    $payment = $_POST['payment'];
+    $city = $_POST['city'];
+    $address = $_POST['address'];
+    $information = $_POST['information'];
+    $price = $_POST['price'];
+    $m2 = $_POST['m2'];
+    $curDT = date('Y-m-d H:i:s');
+
+    if ($building == NULL || $offer == NULL || $time == NULL || $payment == NULL || $city == NULL || $address == NULL || $m2 == NULL || $price == NULL) {
+        $res = [
+            'status' => 422,
+            'message' => 'Попълнете всички полета'
+        ];
+        echo json_encode($res);
+        return;
+    }
+
+    $query = "INSERT INTO orders (customerName,address,room,m2,status,pay,price,date,offer,addDate,phone,view,time,email,city) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city')";
+    $query_run = mysqli_query($con, $query);
+
+    jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
 }

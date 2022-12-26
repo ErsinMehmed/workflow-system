@@ -46,9 +46,9 @@ $email = $_SESSION['email'];
     </div>
 
     <!--Navbar section start-->
-    <nav v-show="!direction" class="bg-white border-b border-slate-200 shadow-md sm:px-0 pt-3 md:py-3 top-0 sticky z-30">
+    <nav class="bg-white border-b border-slate-200 shadow-md sm:px-0 pt-3 md:py-3 top-0 sticky z-30">
       <div class="bg-white flex flex-wrap sm:px-5 md:px-6 lg:px-12 pb-3 md:pb-0 items-center justify-between">
-        <a href="home.html" class="flex items-center pl-5 sm:pl-0">
+        <a href="home.php" class="flex items-center pl-5 sm:pl-0">
           <img src="../images/main-logo.png" class="h-7 mr-3 md:h-12" alt="Main logo" />
         </a>
         <div class="flex items-center pr-5 sm:pr-0">
@@ -68,7 +68,7 @@ $email = $_SESSION['email'];
         <div class="hidden w-full md:block md:w-auto relative" id="navbar-default">
           <ul class="flex items-center flex-col -mb-3 md:-mb-0.5 p-4 mt-4 border border-gray-100 md:rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-semibold md:border-0 md:bg-white">
             <li>
-              <a href="home.html" class="flex items-center py-2 pl-3 pr-4 text-white bg-blue-600 rounded-md md:bg-transparent md:text-blue-700 md:p-0 active:scale-90" aria-current="page">
+              <a href="home.php" class="flex items-center py-2 pl-3 pr-4 text-white bg-blue-600 rounded-md md:bg-transparent md:text-blue-700 md:p-0 active:scale-90" aria-current="page">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 md:hidden">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                 </svg>
@@ -110,13 +110,15 @@ $email = $_SESSION['email'];
 
             ?>
                 <li>
-                  <a href="account.php"><img src="../action/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 updatePhoto"></a>
+                  <a href="account.php"><img src="../action/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75
+                  transition-all rounded-full object-cover hidden md:block
+                  active:scale-90 updatePhoto"></a>
                 </li>
               <?php
               } else {
               ?>
-                <li data-modal-toggle="authentication-modal">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor" class="w-10 h-10 text-slate-700 cursor-pointer hover:opacity-75 transition-all  hidden md:block active:scale-90">
+                <li data-modal-toggle="authentication-modal" class="">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor" class="w-10 h-10 -mr-3.5 text-slate-700 cursor-pointer hover:opacity-75 transition-all hidden md:block active:scale-90">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </li>
@@ -277,123 +279,11 @@ $email = $_SESSION['email'];
                   </button>
                   <div id="dropdown-states" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-md shadow w-44">
                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="states-button">
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'AT'}" @click="phoneCountry = 'AT'; countryCode = '+43'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
+                      <li v-for="country in countries">
+                        <div :class="{ 'bg-gray-100' : phoneCountry == country.countryCode}" @click="phoneCountry = country.countryCode; countryCode = country.code" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
                           <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/austria-flag.png" alt="austria flag" />
-                            Австрия
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'BE'}" @click="phoneCountry = 'BE'; countryCode = '+32'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/belgium-flag.png" alt="belgium flag" />
-                            Белгия
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'BG'}" @click="phoneCountry = 'BG'; countryCode = '+359'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/bulgaria-flag.png" alt="bulgaria flag" />
-                            България
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'UK'}" @click="phoneCountry = 'UK'; countryCode = '+44'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/britain-flag.png" alt="britain flag" />
-                            Великобритания
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'DE'}" @click="phoneCountry = 'DE'; countryCode = '+49'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/germany-flag.png" alt="germany flag" />
-                            Германия
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'DK'}" @click="phoneCountry = 'DK'; countryCode = '+45'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/denmark-flag.png" alt="denmark flag" />
-                            Дания
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'ES'}" @click="phoneCountry = 'ES'; countryCode = '+34'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/spain-flag.png" alt="spain flag" />
-                            Испания
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'IT'}" @click="phoneCountry = 'IT'; countryCode = '+39'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/italy-flag.png" alt="italy flag" />
-                            Италия
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'NL'}" @click="phoneCountry = 'NL'; countryCode = '+31'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/netherland-flag.png" alt="netherland flag" />
-                            Нидерландия
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'PL'}" @click="phoneCountry = 'PL'; countryCode = '+48'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/poland-flag.png" alt="poland flag" />
-                            Полша
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'PT'}" @click="phoneCountry = 'PT'; countryCode = '+351'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/portugal-flag.png" alt="portugal flag" />
-                            Португалия
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'FI'}" @click="phoneCountry = 'FI'; countryCode = '+358'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/finland-flag.png" alt="finland flag" />
-                            Финландия
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'FR'}" @click="phoneCountry = 'FR'; countryCode = '+33'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/france-flag.png" alt="france flag" />
-                            Франция
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'CZ'}" @click="phoneCountry = 'CZ'; countryCode = '+420'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/check-flag.png" alt="chezh flag" />
-                            Чехия
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div :class="{ 'bg-gray-100' : phoneCountry == 'SE'}" @click="phoneCountry = 'SE'; countryCode = '+46'" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" src="../images/sweden-flag.png" alt="sweden flag" />
-                            Швеция
+                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" :src="country.image" :alt="country.name" />
+                            {{country.name}}
                           </div>
                         </div>
                       </li>
@@ -1203,9 +1093,15 @@ $email = $_SESSION['email'];
                 Ароматизиране
               </li>
             </ul>
-            <button type="button" onclick="location.replace('order.html')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
-              Направете поръчка
-            </button>
+            <?php if ($email) { ?>
+              <button type="button" onclick="location.replace('account.php')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
+                Направете поръчка
+              </button>
+            <?php } else { ?>
+              <button type="button" onclick="location.replace('order.php')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
+                Направете поръчка
+              </button>
+            <?php } ?>
           </div>
 
           <!--Premium offer-->
@@ -1261,9 +1157,15 @@ $email = $_SESSION['email'];
                 Ароматизиране
               </li>
             </ul>
-            <button type="button" onclick="location.replace('order.html')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
-              Направете поръчка
-            </button>
+            <?php if ($email) { ?>
+              <button type="button" onclick="location.replace('account.php')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
+                Направете поръчка
+              </button>
+            <?php } else { ?>
+              <button type="button" onclick="location.replace('order.php')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
+                Направете поръчка
+              </button>
+            <?php } ?>
           </div>
 
           <!--Vip offer-->
@@ -1319,9 +1221,15 @@ $email = $_SESSION['email'];
                 Ароматизиране
               </li>
             </ul>
-            <button type="button" onclick="location.replace('order.html')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
-              Направете поръчка
-            </button>
+            <?php if ($email) { ?>
+              <button type="button" onclick="location.replace('account.php')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
+                Направете поръчка
+              </button>
+            <?php } else { ?>
+              <button type="button" onclick="location.replace('order.php')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
+                Направете поръчка
+              </button>
+            <?php } ?>
           </div>
         </div>
       </div>

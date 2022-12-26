@@ -18,6 +18,7 @@ $(document).ready(function () {
     });
   }
 
+  //Customer register
   $(document).on("submit", "#sign-in-form", function (e) {
     e.preventDefault();
 
@@ -32,6 +33,7 @@ $(document).ready(function () {
         alertify.error(res.message);
       } else if (res.status == 200) {
         $("#sign-in-form")[0].reset();
+        $("signUp-modal").hide();
         alertify.success(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
@@ -43,6 +45,7 @@ $(document).ready(function () {
     });
   });
 
+  //Customer login
   $(document).on("submit", "#sing-up-form", function (e) {
     e.preventDefault();
 
@@ -65,6 +68,7 @@ $(document).ready(function () {
     });
   });
 
+  //Update customer information
   $(document).on("submit", "#user-info-form", function (e) {
     e.preventDefault();
 
@@ -85,6 +89,7 @@ $(document).ready(function () {
     });
   });
 
+  //Update customer profile image
   $(document).on("submit", "#customer-image-form", function (e) {
     e.preventDefault();
 
@@ -116,6 +121,7 @@ $(document).ready(function () {
     });
   });
 
+  //Update customer passowrd
   $(document).on("submit", "#update-customer-password", function (e) {
     e.preventDefault();
 
@@ -138,6 +144,7 @@ $(document).ready(function () {
     });
   });
 
+  //Customer profile logout
   $("#log-out").on("click", function () {
     var action = "data";
 
@@ -152,6 +159,52 @@ $(document).ready(function () {
           window.location.href = "home.php";
         }
       },
+    });
+  });
+
+  //Customer make order
+  $(document).on("submit", "#customer-order-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("customer_order", true);
+
+    postData("../action/customer.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+      alertify.set("notifier", "position", "top-center");
+
+      if (res.status == 422) {
+        alertify.error(res.message);
+      } else if (res.status == 200) {
+        $("#customer-order-form")[0].reset();
+        $("#account-toast-price").html("0 лв.");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  //Customer make order
+  $(document).on("submit", "#guest-order-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("guest_order", true);
+
+    postData("../action/order.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+      alertify.set("notifier", "position", "top-center");
+
+      if (res.status == 422) {
+        alertify.error(res.message);
+      } else if (res.status == 200) {
+        $("#guest-order-form")[0].reset();
+        $("#account-toast-price").html("0 лв.");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
     });
   });
 });

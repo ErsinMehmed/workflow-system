@@ -110,7 +110,7 @@ $email = $_SESSION['email'];
 
             ?>
                 <li>
-                  <a href="account.php"><img src="../action/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75
+                  <a href="account.php"><img src="../uploaded-files/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75
                   transition-all rounded-full object-cover hidden md:block
                   active:scale-90 updatePhoto"></a>
                 </li>

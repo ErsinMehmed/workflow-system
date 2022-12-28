@@ -83,6 +83,7 @@ if (isset($_POST['update_customer'])) {
             'message' => 'Попълнете всички полета'
         ];
         echo json_encode($res);
+        return;
     } else {
         $query = "UPDATE customer SET username='$username', phone='$phone', city='$city', address='$address' WHERE email='$userEmail'";
         $query_run = mysqli_query($con, $query);
@@ -98,7 +99,7 @@ if (isset($_POST['update_customer_image'])) {
     $filename = $_FILES['customerImage']['name'];
     $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
     $extensions_arr = array("jpg", "jpeg", "png");
-    move_uploaded_file($_FILES["customerImage"]["tmp_name"], 'customer-images/' . $filename);
+    move_uploaded_file($_FILES["customerImage"]["tmp_name"], '../uploaded-files/customer-images/' . $filename);
 
 
     if ($filename == NULL) {
@@ -107,6 +108,7 @@ if (isset($_POST['update_customer_image'])) {
             'message' => 'Не сте избрали снимка'
         ];
         echo json_encode($res);
+        return;
     } else {
         $query = "UPDATE customer SET image='$filename' WHERE email='$userEmail'";
         $query_run = mysqli_query($con, $query);
@@ -129,6 +131,7 @@ if (isset($_POST['update_customer_password'])) {
             'message' => 'Попълнете всички полета'
         ];
         echo json_encode($res);
+        return;
     } else {
         $query = "SELECT * FROM customer WHERE email='$userEmail' AND password='$oldPassword'";
         $query_run = mysqli_query($con, $query);
@@ -165,6 +168,7 @@ if (isset($_POST['customer_order'])) {
     $date = $_POST['date'];
     $time = $_POST['time'];
     $payment = $_POST['payment'];
+    $invoice = $_POST['invoice'];
     $city = $_POST['city'];
     $address = $_POST['address'];
     $information = $_POST['information'];
@@ -172,17 +176,78 @@ if (isset($_POST['customer_order'])) {
     $m2 = $_POST['m2'];
     $curDT = date('Y-m-d H:i:s');
 
-    if ($building == NULL || $offer == NULL || $time == NULL || $payment == NULL || $city == NULL || $address == NULL || $m2 == NULL || $price == NULL) {
+    if ($building == NULL || $offer == NULL || $time == NULL || $payment == NULL || $invoice == NULL || $city == NULL || $address == NULL || $m2 == NULL || $price == NULL) {
         $res = [
             'status' => 422,
             'message' => 'Попълнете всички полета'
         ];
         echo json_encode($res);
         return;
-    }
+    } else {
+        $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,email,city,invoice,customer_kind,information) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city','$invoice','Потребител','$information')";
+        $query_run = mysqli_query($con, $query);
 
-    $query = "INSERT INTO orders (customerName,address,room,m2,status,pay,price,date,offer,addDate,phone,view,time,email,city) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city')";
+        jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
+    }
+}
+
+//Get customer history data
+if (isset($_GET['id'])) {
+    $id = mysqli_real_escape_string($con, $_GET['id']);
+
+    $query = "SELECT * FROM orders WHERE id='$id'";
     $query_run = mysqli_query($con, $query);
 
-    jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
+    if (mysqli_num_rows($query_run) == 1) {
+        $order = mysqli_fetch_array($query_run);
+
+        $res = [
+            'status' => 200,
+            'data' => $order
+        ];
+        echo json_encode($res);
+        return;
+    } else {
+        jsonResponse(404, 'Клиента не е намерен');
+    }
+}
+
+//Upload customer room image
+if (isset($_POST['customer_upload_room'])) {
+
+    $filename = $_FILES['roomImage']['name'];
+    $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+    $extensions_arr = array("jpg", "jpeg", "png");
+    move_uploaded_file($_FILES["roomImage"]["tmp_name"], '../uploaded-files/room-images/' . $filename);
+    $customerEmail = $_POST['customerEmail'];
+
+    if ($filename == NULL) {
+        $res = [
+            'status' => 422,
+            'message' => 'Изберете снимка'
+        ];
+        echo json_encode($res);
+        return;
+    } else {
+        $queryq = "SELECT * FROM customer WHERE email='$customerEmail'";
+        $query_runq = mysqli_query($con, $queryq);
+
+        while ($rows = mysqli_fetch_array($query_runq)) {
+            if ($rows["image_room1"] == NULL) {
+                $queryy = "UPDATE customer SET image_room1='$filename' WHERE email='$customerEmail'";
+                $query_runn = mysqli_query($con, $queryy);
+                jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
+            } else if ($rows["image_room2"] == NULL) {
+                $queryy = "UPDATE customer SET image_room2='$filename' WHERE email='$customerEmail'";
+                $query_runn = mysqli_query($con, $queryy);
+                jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
+            } else if ($rows["image_room3"] == NULL) {
+                $queryy = "UPDATE customer SET image_room3='$filename' WHERE email='$customerEmail'";
+                $query_runn = mysqli_query($con, $queryy);
+                jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
+            } else {
+                jsonResponse(404, 'Вече сте добавили 3 снимки');
+            }
+        }
+    }
 }

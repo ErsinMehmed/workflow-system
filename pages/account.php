@@ -14,7 +14,7 @@ $email = $_SESSION['email'];
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <link rel="shortcut icon" href="../images/title.png" />
-  <link href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/flowbite@latest/dist/flowbite.min.css" />
   <link rel="stylesheet" href="../css/app.css" />
   <link rel="stylesheet" href="../css/alert.css" />
 
@@ -71,7 +71,7 @@ $email = $_SESSION['email'];
             while ($rows = mysqli_fetch_array($query_run)) {
               if ($rows["image"] != "") {
             ?>
-                <img src="../action/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all
+                <img src="../uploaded-files/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all
               rounded-full object-cover md:hidden active:scale-90 updatePhoto">
               <?php
               } else {
@@ -133,7 +133,7 @@ $email = $_SESSION['email'];
                 if ($rows["image"] != "") {
               ?>
                   <li>
-                    <img src="../action/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75
+                    <img src="../uploaded-files/customer-images/<?= $rows["image"] ?>" alt="Profile image" class="w-8 h-8 cursor-pointer hover:opacity-75
                   transition-all rounded-full object-cover hidden md:block
                   active:scale-90 updatePhoto ">
                   </li>
@@ -216,7 +216,7 @@ $email = $_SESSION['email'];
                 <?php if ($rows["image"] != "") { ?>
                   <img class="object-fill w-24 h-24 rounded-full shadow-lg mx-auto
                 sm:mx-0 updatePhoto" :src="profileImgPreview ? profileImgPreview
-                : '../action/customer-images/<?= $rows["image"] ?>'" alt="Profile photo" />
+                : '../uploaded-files/customer-images/<?= $rows["image"] ?>'" alt="Profile photo" />
                 <?php } else { ?>
                   <img class="object-fill w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0" :src="profileImgPreview ? profileImgPreview : '../images/user.png'" alt="Profile photo" />
                 <?php } ?>
@@ -389,163 +389,255 @@ $email = $_SESSION['email'];
             <div class="font-semibold mb-1 sm:mb-2 text-slate-500 text-sm md:text-base text-center sm:text-left">
               Тук можете да прегледате всички ваши поръчки към днешна дата.
             </div>
-            <div class="flex items-center justify-center space-x-5 space-y-5 mt-8 w-full">
-              <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 w-full">
-                <!-- 1 card -->
-                <div class="relative bg-white py-4 px-5 rounded-3xl w-full sm:w-56 md:w-80 lg:w-64 shadow-xl border border-slate-50 hover:bg-slate-50 transition-all">
-                  <div class="text-white flex items-center absolute rounded-full p-3 shadow-xl bg-blue-50 border border-blue-100 left-4 -top-6">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-7 w-7 text-blue-400">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                    </svg>
-                  </div>
-                  <div class="mt-5">
-                    <p class="text-xl font-semibold my-2">Основна</p>
-                    <div class="flex text-gray-400 text-sm">
-                      <svg class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      <p>Варна</p>
-                    </div>
-                    <div class="flex space-x-2 text-gray-400 text-sm my-3">
-                      <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <p>134.80 лв.</p>
-                    </div>
-                    <div class="flex space-x-2 text-gray-400 text-sm my-3">
-                      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      <p>25.12.2022</p>
-                    </div>
-                    <div class="border-t-2"></div>
-                    <div class="">
-                      <div class="my-2">
-                        <p class="font-semibold text-base mb-2">Екип</p>
-                        <div class="space-y-2">
-                          <div class="flex items-center">
-                            <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="w-6 h-6 rounded-full mr-1.5" />
-                            <div class="font-semibold text-slate-700">
-                              Иван Стормев
-                            </div>
-                          </div>
-                          <div class="flex items-center">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxSqK0tVELGWDYAiUY1oRrfnGJCKSKv95OGUtm9eKG9HQLn769YDujQi1QFat32xl-BiY&usqp=CAU" class="w-6 h-6 rounded-full mr-1.5" />
-                            <div class="font-semibold text-slate-700">
-                              Виктор Ковачев
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+            <div class="sm:flex items-cneter space-y-4 sm:space-y-0 sm:space-x-5 my-5">
+              <div class="relative w-full sm:w-1/2">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                  </svg>
                 </div>
-
-                <!-- 1 card -->
-                <div class="relative bg-white py-4 px-5 rounded-3xl w-full sm:w-56 md:w-80 lg:w-64 shadow-xl border border-slate-50 hover:bg-slate-50 transition-all">
-                  <div class="text-white flex items-center absolute rounded-full p-3 shadow-xl bg-orange-50 border border-orange-100 left-4 -top-6">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-7 w-7 text-orange-400">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
-                    </svg>
-                  </div>
-                  <div class="mt-5">
-                    <p class="text-xl font-semibold my-2">Премиум</p>
-                    <div class="flex text-gray-400 text-sm">
-                      <svg class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      <p>Варна</p>
-                    </div>
-                    <div class="flex space-x-2 text-gray-400 text-sm my-3">
-                      <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <p>134.80 лв.</p>
-                    </div>
-                    <div class="flex space-x-2 text-gray-400 text-sm my-3">
-                      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      <p>25.12.2022</p>
-                    </div>
-                    <div class="border-t-2"></div>
-                    <div class="">
-                      <div class="my-2">
-                        <p class="font-semibold text-base mb-2">Екип</p>
-                        <div class="space-y-2">
-                          <div class="flex items-center">
-                            <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="w-6 h-6 rounded-full mr-1.5" />
-                            <div class="font-semibold text-slate-700">
-                              Иван Стормев
-                            </div>
-                          </div>
-                          <div class="flex items-center">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxSqK0tVELGWDYAiUY1oRrfnGJCKSKv95OGUtm9eKG9HQLn769YDujQi1QFat32xl-BiY&usqp=CAU" class="w-6 h-6 rounded-full mr-1.5" />
-                            <div class="font-semibold text-slate-700">
-                              Виктор Ковачев
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <input type="date" id="date-pcicker-account" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5 " placeholder="Изберете дата" />
+              </div>
+              <div class="relative w-full sm:w-1/2">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
+                  </svg>
                 </div>
+                <select id="account-offers" class="w-full bg-gray-50 border border-gray-300 text-gray-900 pl-10 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 block w-full p-2.5">
+                  <option selected value="Основна">Основна</option>
+                  <option value="Премиум">Премиум</option>
+                  <option value="Вип">Вип</option>
+                </select>
+              </div>
+            </div>
+            </form>
+            <div class="flex items-center justify-center space-x-5 space-y-5 mt-10 w-full">
+              <div id="history-section" class="grid gap-12 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 w-full">
+                <?php
+                $query = "SELECT * FROM orders WHERE email = '$email' ORDER BY add_date DESC LIMIT 10";
+                $query_run = mysqli_query($con, $query);
 
-                <!-- 1 card -->
-                <div class="relative bg-white py-4 px-5 rounded-3xl w-full sm:w-56 md:w-80 lg:w-64 shadow-xl border border-slate-50 hover:bg-slate-50 transition-all">
-                  <div class="text-white flex items-center absolute rounded-full p-3 shadow-xl bg-red-50 border border-red-100 left-4 -top-6">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-7 w-7 text-red-400">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
-                    </svg>
-                  </div>
-                  <div class="mt-5">
-                    <p class="text-xl font-semibold my-2">Вип</p>
-                    <div class="flex text-gray-400 text-sm">
-                      <svg class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                while ($rows = mysqli_fetch_array($query_run)) {
+                ?>
+                  <!-- Offer card -->
+                  <div class="relative bg-white py-3 px-4 rounded-3xl w-full sm:w-56 md:w-80 lg:w-64 shadow-xl border border-slate-50 hover:bg-slate-50 transition-all">
+                    <div class="text-white flex items-center absolute rounded-full p-3 shadow-xl bg-blue-50 border border-blue-100 left-4 -top-6">
+                      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-7 w-7 text-blue-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <p>Варна</p>
                     </div>
-                    <div class="flex space-x-2 text-gray-400 text-sm my-3">
-                      <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <p>134.80 лв.</p>
-                    </div>
-                    <div class="flex space-x-2 text-gray-400 text-sm my-3">
-                      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      <p>25.12.2022</p>
-                    </div>
-                    <div class="border-t-2"></div>
-                    <div class="">
-                      <div class="my-2">
-                        <p class="font-semibold text-base mb-2">Екип</p>
-                        <div class="space-y-2">
-                          <div class="flex items-center">
-                            <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="w-6 h-6 rounded-full mr-1.5" />
-                            <div class="font-semibold text-slate-700">
-                              Иван Стормев
-                            </div>
-                          </div>
-                          <div class="flex items-center">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxSqK0tVELGWDYAiUY1oRrfnGJCKSKv95OGUtm9eKG9HQLn769YDujQi1QFat32xl-BiY&usqp=CAU" class="w-6 h-6 rounded-full mr-1.5" />
-                            <div class="font-semibold text-slate-700">
-                              Виктор Ковачев
-                            </div>
-                          </div>
-                        </div>
+                    <div class="mt-5">
+                      <p class="text-xl font-semibold my-2"><?= $rows['offer'] ?></p>
+                      <div class="flex text-gray-400 text-sm">
+                        <svg class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <p><?= $rows['city'] ?></p>
                       </div>
+                      <div class="flex space-x-2 text-gray-400 text-sm my-3">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+                        </svg>
+                        <p><?= $rows['room'] ?></p>
+                      </div>
+                      <div class="flex space-x-2 text-gray-400 text-sm my-3">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p><?= $rows['price'] ?> лв.</p>
+                      </div>
+                      <div class="flex space-x-2 text-gray-400 text-sm my-3">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <p><?= date("d.m.Y", strtotime($rows['date'])) ?></p>
+                      </div>
+                      <div class="border-t-2"></div>
+                      <button type="button" data-modal-toggle="history-modal" value="<?= $rows['id'] ?>" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-0 font-semibold rounded-xl w-full text-sm px-5 py-2 mt-2.5 focus:outline-none transition-all history-view">Виж повече</button>
+                    </div>
+                  </div>
+                <?php
+                }
+                ?>
+              </div>
+            </div>
+            <?php
+            if (mysqli_num_rows($query_run) == 0) {
+            ?>
+              <div class="w-full text-center font-semibold md:text-lg mt-6 md:mt-8 lg:mt-10">Нямате направени поръчки към днешна дата.</div>
+            <?php
+            }
+            ?>
+          </div>
+
+
+          <!-- Offer modal -->
+          <div id="history-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+            <div class="relative w-full h-full max-w-lg md:h-auto md:mt-40">
+              <!-- Modal content -->
+              <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <button type="button" class="absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="history-modal">
+                  <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                  </svg>
+                </button>
+                <!-- Modal body -->
+                <div class="p-6 pt-8 pr-10 space-y-6 text-slate-700">
+                  <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
+                    <div class="w-full sm:w-1/2">
+                      <div class="text-sm md:text-base font-semibold mb-1">Дата на заявката</div>
+                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                          <path d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" />
+                          <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z" clip-rule="evenodd" />
+                        </svg>
+                        <div id="add_date"></div>
+                      </div>
+                    </div>
+                    <div class="w-full sm:w-1/2">
+                      <div class="text-sm md:text-base font-semibold mb-1">Час на заявката</div>
+                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                          <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
+                        </svg>
+                        <div id="add_time"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
+                    <div class="w-full sm:w-1/2">
+                      <div class="text-sm md:text-base font-semibold mb-1">Име на клиент</div>
+                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                          <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
+                        </svg>
+                        <div id="customer_name"></div>
+                      </div>
+                    </div>
+                    <div class="w-full sm:w-1/2">
+                      <div class="text-sm md:text-base font-semibold mb-1">Телефонен номер</div>
+                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                        <svg viewBox=" 0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                          <path fill-rule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clip-rule="evenodd" />
+                        </svg>
+                        <div id="customer_phone"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
+                    <div class="w-full sm:w-1/2">
+                      <div class="text-sm md:text-base font-semibold mb-1">Помещение</div>
+                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                          <path d="M11.584 2.376a.75.75 0 01.832 0l9 6a.75.75 0 11-.832 1.248L12 3.901 3.416 9.624a.75.75 0 01-.832-1.248l9-6z" />
+                          <path fill-rule="evenodd" d="M20.25 10.332v9.918H21a.75.75 0 010 1.5H3a.75.75 0 010-1.5h.75v-9.918a.75.75 0 01.634-.74A49.109 49.109 0 0112 9c2.59 0 5.134.202 7.616.592a.75.75 0 01.634.74zm-7.5 2.418a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75zm3-.75a.75.75 0 01.75.75v6.75a.75.75 0 01-1.5 0v-6.75a.75.75 0 01.75-.75zM9 12.75a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75z" clip-rule="evenodd" />
+                          <path d="M12 7.875a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" />
+                        </svg>
+                        <div id="customer_building"></div>
+                      </div>
+                    </div>
+                    <div class="w-full sm:w-1/2">
+                      <div class="text-sm md:text-base font-semibold mb-1">Оферта</div>
+                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                          <path fill-rule="evenodd" d="M7.5 5.25a3 3 0 013-3h3a3 3 0 013 3v.205c.933.085 1.857.197 2.774.334 1.454.218 2.476 1.483 2.476 2.917v3.033c0 1.211-.734 2.352-1.936 2.752A24.726 24.726 0 0112 15.75c-2.73 0-5.357-.442-7.814-1.259-1.202-.4-1.936-1.541-1.936-2.752V8.706c0-1.434 1.022-2.7 2.476-2.917A48.814 48.814 0 017.5 5.455V5.25zm7.5 0v.09a49.488 49.488 0 00-6 0v-.09a1.5 1.5 0 011.5-1.5h3a1.5 1.5 0 011.5 1.5zm-3 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+                          <path d="M3 18.4v-2.796a4.3 4.3 0 00.713.31A26.226 26.226 0 0012 17.25c2.892 0 5.68-.468 8.287-1.335.252-.084.49-.189.713-.311V18.4c0 1.452-1.047 2.728-2.523 2.923-2.12.282-4.282.427-6.477.427a49.19 49.19 0 01-6.477-.427C4.047 21.128 3 19.852 3 18.4z" />
+                        </svg>
+                        <div id="customer_offer"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
+                    <div class="w-full sm:w-1/2">
+                      <div class="text-sm md:text-base font-semibold mb-1">Дата на изпълнение</div>
+                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                          <path d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" />
+                          <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z" clip-rule="evenodd" />
+                        </svg>
+                        <div id="do_date"></div>
+                      </div>
+                    </div>
+                    <div class="w-full sm:w-1/2">
+                      <div class="text-sm md:text-base font-semibold mb-1">Час на изпълнение</div>
+                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                          <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
+                        </svg>
+                        <div id="do_time"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
+                    <div class="w-full sm:w-1/2">
+                      <div class="text-sm md:text-base font-semibold mb-1">Начин на плащане</div>
+                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                          <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
+                          <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" clip-rule="evenodd" />
+                        </svg>
+                        <div id="customer_payment"></div>
+                      </div>
+                    </div>
+                    <div class="w-full sm:w-1/2">
+                      <div class="text-sm md:text-base font-semibold mb-1">Фактура</div>
+                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                          <path fill-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625zM7.5 15a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 017.5 15zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H8.25z" clip-rule="evenodd" />
+                          <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
+                        </svg>
+                        <div id="customer_invoice"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
+                    <div class="w-full sm:w-1/2">
+                      <div class="text-sm md:text-base font-semibold mb-1">Квадратура</div>
+                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                          <path fill-rule="evenodd" d="M8.161 2.58a1.875 1.875 0 011.678 0l4.993 2.498c.106.052.23.052.336 0l3.869-1.935A1.875 1.875 0 0121.75 4.82v12.485c0 .71-.401 1.36-1.037 1.677l-4.875 2.437a1.875 1.875 0 01-1.676 0l-4.994-2.497a.375.375 0 00-.336 0l-3.868 1.935A1.875 1.875 0 012.25 19.18V6.695c0-.71.401-1.36 1.036-1.677l4.875-2.437zM9 6a.75.75 0 01.75.75V15a.75.75 0 01-1.5 0V6.75A.75.75 0 019 6zm6.75 3a.75.75 0 00-1.5 0v8.25a.75.75 0 001.5 0V9z" clip-rule="evenodd" />
+                        </svg>
+                        <div id="customer_m2"></div>
+                      </div>
+                    </div>
+                    <div class="w-full sm:w-1/2">
+                      <div class="text-sm md:text-base font-semibold mb-1">Цена</div>
+                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                          <path d="M10.464 8.746c.227-.18.497-.311.786-.394v2.795a2.252 2.252 0 01-.786-.393c-.394-.313-.546-.681-.546-1.004 0-.323.152-.691.546-1.004zM12.75 15.662v-2.824c.347.085.664.228.921.421.427.32.579.686.579.991 0 .305-.152.671-.579.991a2.534 2.534 0 01-.921.42z" />
+                          <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v.816a3.836 3.836 0 00-1.72.756c-.712.566-1.112 1.35-1.112 2.178 0 .829.4 1.612 1.113 2.178.502.4 1.102.647 1.719.756v2.978a2.536 2.536 0 01-.921-.421l-.879-.66a.75.75 0 00-.9 1.2l.879.66c.533.4 1.169.645 1.821.75V18a.75.75 0 001.5 0v-.81a4.124 4.124 0 001.821-.749c.745-.559 1.179-1.344 1.179-2.191 0-.847-.434-1.632-1.179-2.191a4.122 4.122 0 00-1.821-.75V8.354c.29.082.559.213.786.393l.415.33a.75.75 0 00.933-1.175l-.415-.33a3.836 3.836 0 00-1.719-.755V6z" clip-rule="evenodd" />
+                        </svg>
+                        <div id="customer_price"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-full my-2.5">
+                    <div class="text-sm md:text-base font-semibold mb-1">Адрес</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+                        <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+                      </svg>
+                      <div id="customer_address"></div>
+                    </div>
+                  </div>
+                  <div class="w-full my-2.5">
+                    <div class="text-sm md:text-base font-semibold mb-1">Допълнителна информация</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+                      </svg>
+                      <div id="customer_information"></div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
 
           <!--Documents section-->
           <div v-show="documentSection" class="md:w-[80%] shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700">
@@ -557,45 +649,118 @@ $email = $_SESSION['email'];
               предоставим най-добите услиги. В тази секция можете да откриете
               и фактурите си (ако сте заявили).
             </div>
-            <form action="">
-              <div class="w-full mt-6">
-                <div class="ml-1 mb-1.5 font-semibold text-sm">
-                  Снимка на обект
+            <?php
+            $query = "SELECT * FROM customer WHERE email = '$email' AND image_room1 != '' AND image_room2 != '' AND image_room3 != ''";
+            $query_run = mysqli_query($con, $query);
+
+            if (mysqli_num_rows($query_run) == 0) {
+            ?>
+              <form id="room-images-form">
+                <div class="w-full mt-6">
+                  <div class="ml-1 mb-1.5 font-semibold text-sm md:text-base">
+                    Снимка на обект (MAX 3)
+                  </div>
+                  <div class="flex items-center justify-center w-full">
+                    <label @dragover="dragOver" @dragleave="dragFile = false" @drop="fileDropped" for="photo-file" :class="dragFile ? 'bg-blue-50 border-blue-200' : 'bg-gray-50 border-gray-300'" class="flex flex-col items-center justify-center group w-full h-48 md:h-44 lg:h-40 2xl:h-36 border-2 hover:border-blue-200 border-dashed rounded-lg cursor-pointer hover:bg-blue-50 transition-all">
+                      <div v-show="imagePreview == null" class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg aria-hidden="true" :class="dragFile ? 'text-blue-300' : 'text-gray-400'" class="w-10 h-10 mb-2 group-hover:text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        <p :class="dragFile ? 'text-blue-400' : 'text-gray-500'" class="mb-2 text-sm group-hover:text-blue-400">
+                          <span v-show="!dragFile" class="font-semibold">
+                            Натиснете или провлачете за да добавите снимка
+                          </span>
+                          <span v-show="dragFile" class="font-semibold">
+                            Пуснете файла тук
+                          </span>
+                        </p>
+                        <p :class="dragFile ? 'text-blue-400' : 'text-gray-500'" class="text-xs group-hover:text-blue-400">
+                          PNG, JPG или JPEG (МАКС. 2MB)
+                        </p>
+                      </div>
+                      <div v-show="imagePreview != null" class="w-full h-full rounded-lg">
+                        <img class="h-48 md:h-44 lg:h-40 2xl:h-36 w-full object-cover rounded-lg" :src="imagePreview" />
+                      </div>
+                      <input type="hidden" value="<?= $email ?>" name="customerEmail">
+                      <input id="photo-file" v-model="selectedFile" @change="onFileChange" type="file" name="roomImage" class="hidden" accept="image/png, image/jpg, image/jpeg" />
+                    </label>
+                  </div>
+                  <div v-show="imagePreview != null" class="md:hidden w-full my-2.5 text-center text-sm">
+                    Натиснете върху снимката за да я смените.
+                  </div>
+                  <div class="sm:flex justify-end mt-3">
+                    <button @click="imagePreview = null" type="submit" class="w-full sm:w-auto text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-0 font-semibold rounded-lg text-sm px-5 py-2.5 transition-all active:scale-90">
+                      Запази промените
+                    </button>
+                  </div>
                 </div>
-                <div class="flex items-center justify-center w-full">
-                  <label for="photo-file" class="flex flex-col items-center justify-center group w-full h-48 md:h-44 lg:h-40 2xl:h-36 border-2 border-gray-300 hover:border-blue-200 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-blue-50 transition-all">
-                    <div v-show="imagePreview == null" class="flex flex-col items-center justify-center pt-5 pb-6">
-                      <svg aria-hidden="true" class="w-10 h-10 mb-2 text-gray-400 group-hover:text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                      </svg>
-                      <p class="mb-2 text-sm text-gray-500 group-hover:text-blue-400">
-                        <span class="font-semibold">
-                          Натиснете за да добавите файл
-                        </span>
-                      </p>
-                      <p class="text-xs text-gray-500 group-hover:text-blue-400">
-                        PNG, JPG или JPEG (МАКС. 2MB)
-                      </p>
+              </form>
+            <?php
+            }
+            ?>
+            <div id="document-section">
+              <?php
+
+              $query = "SELECT * FROM customer WHERE email = '$email' AND image_room1 != '' OR image_room2 != '' OR image_room3 != ''";
+              $query_run = mysqli_query($con, $query);
+
+              if (mysqli_num_rows($query_run) > 0) {
+                while ($rows = mysqli_fetch_array($query_run)) {
+              ?>
+                  <div class="w-full my-4">
+                    <div class="ml-1 font-semibold text-sm md:text-base">Вашите снимки</div>
+                    <div class="ml-1 mb-3 text-xs md:text-sm font-semibold text-slate-500">(Натиснете върху снимката за да я премахнете)</div>
+                    <div class="flex flex-wrap items-center gap-5">
+                      <?php
+                      if ($rows["image_room1"] != '') {
+                      ?>
+                        <div id="1" class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-slate-100 hover:brightness-90 room-img group transition-all cursor-pointer shadow-lg">
+                          <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/customer-images/<?= $rows["image_room1"] ?>" alt="">
+                          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white ">
+                              <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
+                            </svg>
+                          </div>
+                        </div>
+
+                      <?php
+                      }
+                      if ($rows["image_room2"] != '') {
+                      ?>
+                        <div id="2" class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-slate-100 hover:brightness-90 group room-img transition-all cursor-pointer shadow-lg">
+                          <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/customer-images/<?= $rows["image_room2"] ?>" alt="">
+                          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white ">
+                              <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
+                            </svg>
+                          </div>
+                        </div>
+
+                      <?php
+                      }
+                      if ($rows["image_room3"] != '') {
+                      ?>
+                        <div id="3" class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-slate-100 hover:brightness-90 group room-img transition-all cursor-pointer shadow-lg">
+                          <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/customer-images/<?= $rows["image_room3"] ?>" alt="">
+                          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white ">
+                              <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
+                            </svg>
+                          </div>
+                        </div>
+                      <?php
+                      }
+                      ?>
                     </div>
-                    <div v-show="imagePreview != null" class="w-full border-2 border-blue-200 border-dashed rounded-lg">
-                      <img class="h-48 md:h-44 lg:h-40 2xl:h-36 w-full object-cover rounded-lg" :src="imagePreview" />
-                    </div>
-                    <input id="photo-file" @change="onFileChange" type="file" class="hidden" accept="image/png, image/jpg, image/jpeg" />
-                  </label>
-                </div>
-                <div v-show="imagePreview != null" class="md:hidden w-full my-2.5 text-center text-sm">
-                  Натиснете върху снимката за да я смените.
-                </div>
-                <div class="sm:flex justify-end mt-3">
-                  <button type="submit" class="w-full sm:w-auto text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-0 font-semibold rounded-lg text-sm px-5 py-2.5 transition-all active:scale-90">
-                    Запази промените
-                  </button>
-                </div>
-              </div>
-            </form>
+                  </div>
+              <?php
+                }
+              }
+              ?>
+            </div>
             <hr class="w-full my-5" />
             <div class="w-full">
-              <div class="ml-1 mb-2.5 font-semibold text-sm">Фактури</div>
+              <div class="ml-1 mb-2.5 font-semibold text-sm md:text-base">Фактури</div>
               <div class="flex items-center w-full space-x-8">
                 <div class="px-4 py-2 rounded-lg shadow-xl bg-white flex justify-center items-center border border-slate-100">
                   <div>
@@ -645,7 +810,7 @@ $email = $_SESSION['email'];
               Направи поръчка
             </h1>
             <div class="font-semibold mb-1 sm:mb-2 text-slate-500 text-sm md:text-base text-center sm:text-left">
-              Вече може да нправите лесно поръчка и Вашият профил! Вече имаме
+              Вече може да направите лесно поръчка и Вашият профил! Вече имаме
               част от вашите данни.
             </div>
             <?php
@@ -674,8 +839,8 @@ $email = $_SESSION['email'];
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                     </svg>
-                    <span><?= $rows["phone"] ?></span>
-                    <input type="hidden" name="customerPhone" value="<?= $rows["phone"] ?>">
+                    <span class="order-section"><?= $rows["phone"] ?></span>
+                    <input class="order-section" type="hidden" name="customerPhone" value="<?= $rows["phone"] ?>">
                   </div>
                 </div>
               <?php } ?>
@@ -830,7 +995,7 @@ $email = $_SESSION['email'];
                 </div>
                 <div class="w-1/2 flex space-x-5">
                   <div>
-                    <input class="sr-only peer" type="radio" value="преди" name="time" id="time-before" />
+                    <input class="sr-only peer" type="radio" value="преди 13:00" name="time" id="time-before" />
                     <label class="flex justify-center items-center w-28 sm:w-32 md:w-28 lg:w-32 h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" for="time-before">
                       <div class="px-2 text-sm font-semibold text-slate-700 text-center">
                         Преди 13:00
@@ -838,7 +1003,7 @@ $email = $_SESSION['email'];
                     </label>
                   </div>
                   <div>
-                    <input class="sr-only peer" type="radio" value="след" name="time" id="time-after" />
+                    <input class="sr-only peer" type="radio" value="след 13:00" name="time" id="time-after" />
                     <label class="flex justify-center items-center w-28 sm:w-32 md:w-28 lg:w-32 h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" for="time-after">
                       <div class="px-2 text-sm font-semibold text-slate-700 text-center">
                         След 13:00
@@ -876,6 +1041,40 @@ $email = $_SESSION['email'];
                       </svg>
                       <div class="text-sm font-semibold text-slate-700 text-center">
                         С карта
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <div class="block ml-1 my-4 font-semibold text-sm md:text-base text-slate-700">
+                Желаете ли фактура
+              </div>
+              <div class="flex flex-wrap items-center gap-3.5">
+                <div id="tooltip-invoice" role="tooltip" class="hidden text-center font-medium text-slate-700 md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+                  Можете да намерите Вашите фактури в раздел документи след като бъде извършено почистването.
+                </div>
+                <div>
+                  <input class="sr-only peer" type="radio" value="Да" name="invoice" id="yes" />
+                  <label data-tooltip-target="tooltip-invoice" data-tooltip-placement="bottom" class="flex justify-center items-center w-28 h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" for="yes">
+                    <div class="flex items-center">
+                      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <div class="text-sm font-semibold text-slate-700 text-center">
+                        Да
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                <div>
+                  <input class="sr-only peer" type="radio" value="Не" name="invoice" id="no" />
+                  <label class="flex justify-center items-center w-28 h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" for="no">
+                    <div class="flex items-center">
+                      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <div class="text-sm font-semibold text-slate-700 text-center">
+                        Не
                       </div>
                     </div>
                   </label>
@@ -936,6 +1135,7 @@ $email = $_SESSION['email'];
                 </svg>
                 <span>Минимума е 10 квадратни метра.</span>
               </div>
+
               <!--M2 toast-->
               <div v-show="orderSection" data-tooltip-target="tooltip-m2" data-tooltip-placement="left" class="hidden md:block fixed md:flex bottom-20 right-4 items-center justify-center py-2 px-3 w-32 text-slate-700 bg-white rounded-md shadow-lg border border-slate-100" :class="{'lg:right-4': scY < 300, 'lg:right-16': scY > 300}">
                 <div class="">
@@ -957,13 +1157,12 @@ $email = $_SESSION['email'];
       </div>
     </div>
   </section>
-
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
   <script src="../js/main-vue.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/ajax.js"></script>
-  <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+  <script src="https://unpkg.com/flowbite@latest/dist/flowbite.js"></script>
 </body>
 
 </html>

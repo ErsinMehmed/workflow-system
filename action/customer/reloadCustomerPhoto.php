@@ -1,5 +1,5 @@
 <?php
-include 'dbconn.php';
+include '../dbconn.php';
 
 if (isset($_POST['userEmail'])) {
     $email =  ($_POST['userEmail']);
@@ -8,6 +8,6 @@ if (isset($_POST['userEmail'])) {
     $query_run = mysqli_query($con, $selQuery);
 
     while ($rows = mysqli_fetch_array($query_run)) {
-        die("../action/customer-images/" . $rows['image']);
+        die("../uploaded-files/customer-images/" . $rows['image']);
     }
 }

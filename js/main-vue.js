@@ -3,6 +3,8 @@ const { createApp } = Vue;
 createApp({
   data() {
     return {
+      selectedFile: null,
+      dragFile: false,
       scY: 0,
       progress: 0,
       passwordReg: true,
@@ -168,12 +170,14 @@ createApp({
     handleScroll: function () {
       this.scY = window.scrollY;
     },
+
     goTop: function () {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
     },
+
     updateProgressIndicator() {
       const { documentElement, body } = document;
       let windowScroll = body.scrollTop || documentElement.scrollTop;
@@ -186,11 +190,6 @@ createApp({
       var top = element.offsetTop;
       window.scrollTo(0, top);
       this.hideScrollBtn = false;
-    },
-
-    onFileChange(e) {
-      const fileData = e.target.files[0];
-      this.imagePreview = URL.createObjectURL(fileData);
     },
 
     profilePhotoUpdate(e) {
@@ -220,6 +219,22 @@ createApp({
       } else {
         this.addressLength = char + "/" + 200;
       }
+    },
+    onFileChange(event) {
+      const fileData = event.target.files[0];
+      this.imagePreview = URL.createObjectURL(fileData);
+    },
+
+    dragOver(event) {
+      event.preventDefault();
+      this.dragFile = true;
+    },
+
+    fileDropped(event) {
+      event.preventDefault();
+      file = event.dataTransfer.files[0];
+      this.selectedFile = file;
+      this.imagePreview = URL.createObjectURL(file);
     },
   },
 }).mount("#app");

@@ -32,7 +32,7 @@ if (isset($_POST['guest_order'])) {
         return;
     }
 
-    $query = "INSERT INTO orders (customerName,address,room,m2,status,pay,price,date,offer,addDate,phone,view,time,city) VALUES ('$name','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$phone','1','$time','$city')";
+    $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,city,customer_kind,information) VALUES ('$name','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$phone','1','$time','$city','Гост','$information')";
     $query_run = mysqli_query($con, $query);
 
     jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');

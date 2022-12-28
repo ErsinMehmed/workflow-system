@@ -495,7 +495,7 @@
               </div>
               <div class="w-1/2 flex space-x-5">
                 <div>
-                  <input class="sr-only peer" type="radio" value="преди" name="time" id="time-before" />
+                  <input class="sr-only peer" type="radio" value="преди 13:00" name="time" id="time-before" />
                   <label class="flex justify-center items-center w-28 sm:w-32 md:w-28 lg:w-32 h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" for="time-before">
                     <div class="px-2 text-sm font-semibold text-slate-700 text-center">
                       Преди 13:00
@@ -503,7 +503,7 @@
                   </label>
                 </div>
                 <div>
-                  <input class="sr-only peer" type="radio" value="след" name="time" id="time-after" />
+                  <input class="sr-only peer" type="radio" value="след 13:00" name="time" id="time-after" />
                   <label class="flex justify-center items-center w-28 sm:w-32 md:w-28 lg:w-32 h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" for="time-after">
                     <div class="px-2 text-sm font-semibold text-slate-700 text-center">
                       След 13:00

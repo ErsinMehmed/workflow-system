@@ -7,12 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <link rel="shortcut icon" href="../images/title.png" />
-  <link href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
   <link rel="stylesheet" href="../css/app.css" />
   <link rel="stylesheet" href="../css/alert.css" />
 
-  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <title>Carpet Cleaning - Поръчка</title>
 </head>
@@ -105,7 +104,7 @@
       <div id="authentication-modal" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
         <div class="relative w-full h-full max-w-md md:h-auto">
           <!-- Modal content -->
-          <div class="relative bg-white rounded-lg shadow bg-gray-100">
+          <div class="relative rounded-lg shadow bg-gray-100">
             <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all" data-modal-toggle="authentication-modal">
               <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -204,7 +203,7 @@
       <div id="signUp-modal" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
         <div class="relative w-full h-full max-w-md md:h-auto md:mt-32">
           <!-- Modal content -->
-          <div class="relative bg-white rounded-lg shadow bg-gray-100">
+          <div class="relative rounded-lg shadow bg-gray-100">
             <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all" data-modal-toggle="signUp-modal">
               <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -408,7 +407,7 @@
               Изберете вид оферта
             </div>
             <ul class="flex flex-wrap gap-6 my-3.5">
-              <div id="tooltip-basic" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+              <div id="tooltip-basic" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                 <div v-for="(service, index) in services" class="flex mt-1.5 items-center">
                   <svg v-show="index < 3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 text-green-500">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -431,7 +430,7 @@
                   </div>
                 </label>
               </li>
-              <div id="tooltip-premium" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+              <div id="tooltip-premium" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                 <div v-for="(service, index) in services" class="flex mt-1.5 items-center">
                   <svg v-show="index < 5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 text-green-500">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -454,7 +453,7 @@
                   </div>
                 </label>
               </li>
-              <div id="tooltip-vip" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+              <div id="tooltip-vip" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                 <div v-for="service in services" class="flex mt-1.5 items-center">
                   <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 text-green-500">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -490,7 +489,10 @@
                       <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                     </svg>
                   </div>
-                  <input type="date" min="<?php echo date("Y-m-d", strtotime('+1 day', time())); ?>" value="<?php echo date("Y-m-d", strtotime('+1 day', time())); ?>" name="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5" placeholder="Изберете дата" />
+                  <input type="date" min="<?php echo date("Y-m-d", strtotime('+1 day', time())); ?>" value="<?php echo date("Y-m-d", strtotime('+1 day', time())); ?>" name="date" class="bg-gray-50 border border-gray-300
+                    text-gray-900 text-sm rounded-lg focus:ring-0
+                    focus:border-gray-400 focus:outline-none block w-full pl-10
+                    p-2.5" placeholder="Изберете дата" />
                 </div>
               </div>
               <div class="w-1/2 flex space-x-5">
@@ -529,7 +531,7 @@
                   </div>
                 </label>
               </div>
-              <div id="tooltip-card-payment" role="tooltip" class="hidden text-center font-medium text-slate-700 md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+              <div id="tooltip-card-payment" role="tooltip" class="hidden text-center font-medium md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                 Не се притеснявайте ! Нашият екип ще носи POS терминал при
                 посещението на имота Ви.
               </div>
@@ -596,14 +598,14 @@
               <input type="hidden" id="input-account-price" name="price" />
             </div>
 
-            <div id="tooltip-m2" role="tooltip" class="hidden font-medium text-slate-700 md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+            <div id="tooltip-m2" role="tooltip" class="hidden font-medium md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
               <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 -mt-1 mr-1 inline-flex">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span>Минимума е 10 квадратни метра.</span>
             </div>
             <!--М2 toast-->
-            <div data-tooltip-target="tooltip-m2" data-tooltip-placement="left" class="hidden md:block fixed md:flex bottom-20 right-4 items-center justify-center py-2 px-3 w-32 text-slate-700 bg-white rounded-md shadow-lg border border-slate-100" :class="{'lg:right-4': scY < 300, 'lg:right-16': scY > 300}">
+            <div data-tooltip-target="tooltip-m2" data-tooltip-placement="left" class="hidden fixed md:flex bottom-20 right-4 items-center justify-center py-2 px-3 w-32 text-slate-700 bg-white rounded-md shadow-lg border border-slate-100" :class="{'lg:right-4': scY < 300, 'lg:right-16': scY > 300}">
               <div class="">
                 <label for="account-m2" class="block mb-1.5 text-sm font-semibold text-slate-700 text-center">
                   Квадратура
@@ -628,8 +630,7 @@
   <script src="../js/main-vue.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/ajax.js"></script>
-  <script src="https://unpkg.com/flowbite@1.5.5/dist/datepicker.js"></script>
-  <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+  <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 </body>
 
 </html>

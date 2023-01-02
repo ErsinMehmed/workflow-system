@@ -33,6 +33,8 @@ if (isset($_POST['save_customer'])) {
     if (mysqli_num_rows($query) == 0) {
 
         if ($password == $passwordRep) {
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
             $query = "INSERT INTO customer (name,email,password,phone) VALUES ('$fullName','$email','$password','$phone')";
             $query_run = mysqli_query($con, $query);
 
@@ -49,22 +51,24 @@ if (isset($_POST['save_customer'])) {
 if (isset($_POST['login_info'])) {
 
     $email =  ($_POST['email']);
-    $password = ($_POST['passowrdLogin']);
 
-    $query = "SELECT * FROM customer WHERE email='$email' AND password='$password'";
+    $query = "SELECT * FROM customer WHERE email='$email'";
     $query_run = mysqli_query($con, $query);
 
-    if (mysqli_num_rows($query_run) == 1) {
-        $_SESSION['email'] = $email;
+    while ($rows = mysqli_fetch_array($query_run)) {
 
-        $res = [
-            'status' => 200,
-            'userEmail' => $email,
-        ];
-        echo json_encode($res);
-        return;
-    } else {
-        jsonResponse(500, 'Грешен имейл или парола');
+        if (password_verify($_POST['passowrdLogin'], $rows['password'])) {
+            $_SESSION['email'] = $email;
+
+            $res = [
+                'status' => 200,
+                'userEmail' => $email,
+            ];
+            echo json_encode($res);
+            return;
+        } else {
+            jsonResponse(500, 'Грешен имейл или парола');
+        }
     }
 }
 
@@ -121,11 +125,10 @@ if (isset($_POST['update_customer_image'])) {
 if (isset($_POST['update_customer_password'])) {
 
     $userEmail = $_POST['customerEmail'];
-    $oldPassword = $_POST['oldPassword'];
     $newPassword = $_POST['newPassword'];
     $newPasswordRep = $_POST['newPasswordRep'];
 
-    if ($oldPassword == NULL || $newPassword == NULL || $newPasswordRep == NULL) {
+    if ($newPassword == NULL || $newPasswordRep == NULL) {
         $res = [
             'status' => 422,
             'message' => 'Попълнете всички полета'
@@ -133,20 +136,25 @@ if (isset($_POST['update_customer_password'])) {
         echo json_encode($res);
         return;
     } else {
-        $query = "SELECT * FROM customer WHERE email='$userEmail' AND password='$oldPassword'";
+        $query = "SELECT * FROM customer WHERE email='$userEmail'";
         $query_run = mysqli_query($con, $query);
 
-        if (mysqli_num_rows($query_run) == 1) {
-            if ($newPassword == $newPasswordRep) {
-                $queryy = "UPDATE customer SET password='$newPassword' WHERE email='$userEmail'";
-                $query_runn = mysqli_query($con, $queryy);
+        while ($rows = mysqli_fetch_array($query_run)) {
 
-                jsonResponseMain($query_runn, 'Паролата е обновена', 'Паролата не е обновена');
+            if (password_verify($_POST['oldPassword'], $rows['password'])) {
+                if ($newPassword == $newPasswordRep) {
+                    $newPassword = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
+
+                    $queryy = "UPDATE customer SET password='$newPassword' WHERE email='$userEmail'";
+                    $query_runn = mysqli_query($con, $queryy);
+
+                    jsonResponseMain($query_runn, 'Паролата е обновена', 'Паролата не е обновена');
+                } else {
+                    jsonResponse(430, 'Паролите не съвпадат');
+                }
             } else {
-                jsonResponse(430, 'Паролите не съвпадат');
+                jsonResponse(510, 'Старата паролата е грешна');
             }
-        } else {
-            jsonResponse(510, 'Паролата е грешна');
         }
     }
 }
@@ -249,5 +257,25 @@ if (isset($_POST['customer_upload_room'])) {
                 jsonResponse(404, 'Вече сте добавили 3 снимки');
             }
         }
+    }
+}
+
+//Delete customer photo
+if (isset($_POST['imgID'])) {
+    $imgID = $_POST['imgID'];
+    $customerEmail = $_SESSION['email'];
+
+    if ($imgID == 1) {
+        $query = "UPDATE customer SET image_room1='' WHERE email='$customerEmail'";
+        $query_run = mysqli_query($con, $query);
+        jsonResponseMain($query_run, 'Снимакта е изтрита', 'Снимката не е изтрита');
+    } else if ($imgID == 2) {
+        $query = "UPDATE customer SET image_room2='' WHERE email='$customerEmail'";
+        $query_run = mysqli_query($con, $query);
+        jsonResponseMain($query_run, 'Снимакта е изтрита', 'Снимката не е изтрита');
+    } else if ($imgID == 3) {
+        $query = "UPDATE customer SET image_room3='' WHERE email='$customerEmail'";
+        $query_run = mysqli_query($con, $query);
+        jsonResponseMain($query_run, 'Снимакта е изтрита', 'Снимката не е изтрита');
     }
 }

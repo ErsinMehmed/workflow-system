@@ -27,6 +27,14 @@ createApp({
       address: null,
       addressLength: "0/200",
       addressCount: 0,
+      dashOrder: true,
+      dashUser: false,
+      dashTeam: false,
+      dashWarehouse: false,
+      dashSupplier: false,
+      dashClient: false,
+      dashSection: "Заявки",
+      toggleSlidebar: true,
       countries: [
         {
           name: "Австрия",

@@ -33,7 +33,7 @@ $(document).ready(function () {
         alertify.error(res.message);
       } else if (res.status == 200) {
         $("#sign-in-form")[0].reset();
-        $("signUp-modal").hide();
+        $("signUp-modal").fadeOut();
         alertify.success(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
@@ -83,7 +83,7 @@ $(document).ready(function () {
         alertify.error(res.message);
       } else if (res.status == 200) {
         alertify.success(res.message);
-        $(".order-section").load(document.URL + " .order-section");
+        $(".order-section").load(location.href + " .order-section");
       } else if (res.status == 500) {
         alertify.error(res.message);
       }
@@ -113,7 +113,7 @@ $(document).ready(function () {
           type: "POST",
           data: { userEmail: userEmail },
           success: function (data) {
-            $(".updatePhoto").attr("src", data);
+            $(".update-photo").attr("src", data);
           },
         });
       } else if (res.status == 500) {
@@ -177,7 +177,9 @@ $(document).ready(function () {
       if (res.status == 422) {
         alertify.error(res.message);
       } else if (res.status == 200) {
-        $("#history-section").load(location.href + " #history-section>*", "");
+        $("#history-section-load").load(
+          "../pages/account.php #history-section-load"
+        );
         $("#account-toast-price").html("0 лв.");
         $("#customer-order-form")[0].reset();
         alertify.success(res.message);
@@ -219,6 +221,8 @@ $(document).ready(function () {
       if (res.status == 404) {
         alert(res.message);
       } else if (res.status == 200) {
+        $("#history-modal").removeClass("hidden");
+        $("#history-modal").addClass("block");
         var date = res.data.add_date.split(" ");
         var finalDate = date[0].replaceAll("-", ".").split(".");
 
@@ -294,7 +298,7 @@ $(document).ready(function () {
       if (res.status == 422) {
         alertify.error(res.message);
       } else if (res.status == 200) {
-        $("#document-section").load(location.href + " #document-section>*", "");
+        $("#document-section").load(location.href + " #document-section");
         $("#room-images-form")[0].reset();
         alertify.success(res.message);
       } else if (res.status == 404) {
@@ -305,21 +309,31 @@ $(document).ready(function () {
     });
   });
 
+  //Delete room image
   $(".room-img").on("click", function () {
-    var img = $(this).attr("id");
-    console.log(img);
-    /*var date = $("#date-pcicker-account").val();
+    var imgID = $(this).attr("id");
 
     $.ajax({
       url: "../action/customer.php",
       type: "POST",
       data: {
-        offer: offer,
-        date: date,
+        imgID: imgID,
       },
-      success: function (data) {
-        $("#history-section").html(data);
+      success: function (responese) {
+        var res = jQuery.parseJSON(responese);
+        alertify.set("notifier", "position", "top-center");
+        if (res.status == 200) {
+          $("#document-section").load(location.href + " #document-section");
+          alertify.success(res.message);
+        } else if (res.status == 500) {
+          alertify.error(res.message);
+        }
       },
-    });*/
+    });
+  });
+
+  $(document).on("click", "#close-history-modal", function () {
+    $("#history-modal").removeClass("block");
+    $("#history-modal").addClass("hidden");
   });
 });

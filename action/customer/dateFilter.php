@@ -47,7 +47,7 @@ if (isset($_POST['date'])) {
                         <p><?= date("d.m.Y", strtotime($rows['date'])) ?></p>
                     </div>
                     <div class="border-t-2"></div>
-                    <button type="button" data-modal-toggle="history-modal" value="<?= $rows['id'] ?>" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-0 font-semibold rounded-xl w-full text-sm px-5 py-2 mt-2.5 focus:outline-none transition-all history-view">Виж повече</button>
+                    <button type="button" value="<?= $rows['id'] ?>" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-0 font-semibold rounded-xl w-full text-sm px-5 py-2 mt-2.5 focus:outline-none transition-all history-view">Виж повече</button>
                 </div>
             </div>
         <?php }

@@ -16,12 +16,9 @@ $email = $_SESSION['email'];
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <link rel="shortcut icon" href="../images/title.png" />
-  <link href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <link rel="stylesheet" href="../css/app.css" />
   <link rel="stylesheet" href="../css/alert.css" />
-  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=Dancing Script" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -66,7 +63,7 @@ $email = $_SESSION['email'];
           </button>
         </div>
         <div class="hidden w-full md:block md:w-auto relative" id="navbar-default">
-          <ul class="flex items-center flex-col -mb-3 md:-mb-0.5 p-4 mt-4 border border-gray-100 md:rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-semibold md:border-0 md:bg-white">
+          <ul class="flex flex-col -mb-3 md:-mb-0.5 p-4 mt-4 border border-gray-100 md:rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-semibold md:border-0 md:bg-white">
             <li>
               <a href="home.php" class="flex items-center py-2 pl-3 pr-4 text-white bg-blue-600 rounded-md md:bg-transparent md:text-blue-700 md:p-0 active:scale-90" aria-current="page">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 md:hidden">
@@ -100,30 +97,34 @@ $email = $_SESSION['email'];
                 Контакти
               </a>
             </li>
-
             <?php
             $query = "SELECT * FROM customer WHERE email = '$email'";
             $query_run = mysqli_query($con, $query);
 
-            while ($rows = mysqli_fetch_array($query_run)) {
-              if ($email) {
-
+            if ($email) {
+              while ($rows = mysqli_fetch_array($query_run)) {
+                if ($rows["image"] != "") {
             ?>
-                <li>
-                  <a href="account.php"><img src="../uploaded-files/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75
-                  transition-all rounded-full object-cover hidden md:block
-                  active:scale-90 updatePhoto"></a>
-                </li>
+                  <li>
+                    <a href="account.php"><img src="../uploaded-files/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 update-photo"></a>
+                  </li>
+                <?php
+                } else {
+                ?>
+                  <li>
+                    <a href="account.php"><img src="../images/user.png" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 update-photo"></a>
+                  </li>
               <?php
-              } else {
-              ?>
-                <li data-modal-toggle="authentication-modal" class="">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor" class="w-10 h-10 -mr-3.5 text-slate-700 cursor-pointer hover:opacity-75 transition-all hidden md:block active:scale-90">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </li>
-            <?php
+                }
               }
+            } else {
+              ?>
+              <li data-modal-toggle="authentication-modal" class="">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor" class="w-10 h-10 -mt-1 -mr-3.5 text-slate-700 cursor-pointer hover:opacity-75 transition-all hidden md:block active:scale-90">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </li>
+            <?php
             }
             ?>
             <li>
@@ -138,7 +139,7 @@ $email = $_SESSION['email'];
     <div id="authentication-modal" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
       <div class="relative w-full h-full max-w-md md:h-auto">
         <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow bg-gray-100">
+        <div class="relative  rounded-lg shadow bg-gray-100">
           <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all" data-modal-toggle="authentication-modal">
             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -237,7 +238,7 @@ $email = $_SESSION['email'];
     <div id="signUp-modal" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
       <div class="relative w-full h-full max-w-md md:h-auto md:mt-32">
         <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow bg-gray-100">
+        <div class="relative  rounded-lg shadow bg-gray-100">
           <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all" data-modal-toggle="signUp-modal">
             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -418,7 +419,7 @@ $email = $_SESSION['email'];
           </div>
         </div>
         <!-- Slider indicators -->
-        <div class="flex lg:hidden lg:group-hover:flex absolute z-30 flex space-x-3 -translate-x-1/2 bottom-3 md:bottom-8 left-1/2">
+        <div class="flex lg:hidden lg:group-hover:flex absolute z-30 space-x-3 -translate-x-1/2 bottom-3 md:bottom-8 left-1/2">
           <button type="button" class="w-2 h-2 md:w-3 md:h-3 rounded-full" data-carousel-slide-to="0"></button>
           <button type="button" class="w-2 h-2 md:w-3 md:h-3 rounded-full" data-carousel-slide-to="1"></button>
           <button type="button" class="w-2 h-2 md:w-3 md:h-3 rounded-full" data-carousel-slide-to="2"></button>
@@ -525,7 +526,7 @@ $email = $_SESSION['email'];
           <h1 class="font-extrabold md:text-lg lg:text-2xl xl:text-3xl lg:pr-20 xl:pr-36 mt-5 md:mt-0 text-center md:text-left">
             Ние сме задължени да даваме само най-добрите услуги
           </h1>
-          <div style="box-shadow: 0 0 25px rgb(0 0 0 / 8%)" class="border-l-4 border-blue-400 text-sm lg:text-lg xl:text-xl italic font-semibold p-6 lg:p-8 my-3 sm:my-4 lg:my-5 lg:hover:scale-105 transition-all duration-700 cursor-default sm:mx-6 sm:mx-10 md:mx-0">
+          <div style="box-shadow: 0 0 25px rgb(0 0 0 / 8%)" class="border-l-4 border-blue-400 text-sm lg:text-lg xl:text-xl italic font-semibold p-6 lg:p-8 my-3 sm:my-4 lg:my-5 lg:hover:scale-105 transition-all duration-700 cursor-default sm:mx-6 md:mx-0">
             Нашият оперативен екип е 24 часа на разположение в денонощието !
             Доверете ни се !
           </div>
@@ -1020,7 +1021,7 @@ $email = $_SESSION['email'];
             </div>
             <div class="flex mt-2 md:mt-3">
               <input id="slider" type="range" value="1000" min="0" max="2000" class="w-full h-2 mr-5 mt-3.5" />
-              <input type="text" id="final" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:bg-transparent focus:outline-none focus:ring-0 block w-full py-2 w-16 font-semibold text-center transition-all" value="1000" />
+              <input type="text" id="final" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:bg-transparent focus:outline-none focus:ring-0 block py-2 w-16 font-semibold text-center transition-all" value="1000" />
             </div>
           </div>
           <div style="
@@ -1406,7 +1407,7 @@ $email = $_SESSION['email'];
   <script src="../js/main-vue.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/ajax.js"></script>
-  <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+  <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 </body>
 
 </html>

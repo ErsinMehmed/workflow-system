@@ -14,12 +14,11 @@ $email = $_SESSION['email'];
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <link rel="shortcut icon" href="../images/title.png" />
-  <link rel="stylesheet" href="https://unpkg.com/flowbite@latest/dist/flowbite.min.css" />
   <link rel="stylesheet" href="../css/app.css" />
   <link rel="stylesheet" href="../css/alert.css" />
 
-  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <title>Carpet Cleaning - Акаунт</title>
 </head>
@@ -41,7 +40,7 @@ $email = $_SESSION['email'];
       </div>
 
       <!--Message toast-->
-      <div v-show="imagePreview != null && documentSection" id="toast-message" class="hidden md:flex fixed bottom-4 right-4 items-center p-4 w-full max-w-sm text-gray-500 bg-white rounded-lg shadow-xl border border-slate-50" :class="{'right-4': scY < 300, 'right-16': scY > 300}" role="alert">
+      <div v-show="imagePreview != null && documentSection" id="toast-message" class="hidden md:flex fixed top-24 right-4 items-center p-4 w-full max-w-sm text-gray-500 bg-white rounded-lg shadow-xl border border-slate-100" role="alert">
         <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-green-500 bg-green-100 rounded-lg">
           <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -50,7 +49,7 @@ $email = $_SESSION['email'];
         <div class="ml-3 text-sm font-normal">
           Натиснете върху снимката за да я смените.
         </div>
-        <button type="button" class="bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:outline-none focus:ring-0 p-1.5 hover:bg-gray-50 inline-flex h-8 w-8" data-dismiss-target="#toast-message" aria-label="Close">
+        <button type="button" class="bg-white text-gray-400 hover:text-gray-700 rounded-lg focus:outline-none focus:ring-0 p-1.5 hover:bg-gray-50 inline-flex h-8 w-8 transition-all" data-dismiss-target="#toast-message" aria-label="Close">
           <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
           </svg>
@@ -71,8 +70,7 @@ $email = $_SESSION['email'];
             while ($rows = mysqli_fetch_array($query_run)) {
               if ($rows["image"] != "") {
             ?>
-                <img src="../uploaded-files/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all
-              rounded-full object-cover md:hidden active:scale-90 updatePhoto">
+                <img src="../uploaded-files/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90 update-photo">
               <?php
               } else {
               ?>
@@ -135,7 +133,7 @@ $email = $_SESSION['email'];
                   <li>
                     <img src="../uploaded-files/customer-images/<?= $rows["image"] ?>" alt="Profile image" class="w-8 h-8 cursor-pointer hover:opacity-75
                   transition-all rounded-full object-cover hidden md:block
-                  active:scale-90 updatePhoto ">
+                  active:scale-90 update-photo">
                   </li>
                 <?php
                 } else {
@@ -158,7 +156,7 @@ $email = $_SESSION['email'];
       <div class="h-screen md:h-full md:mt-10 w-full md:flex md:justify-center md:items-center md:my-10">
         <div class="w-full md:w-[50rem] lg:w-[55rem] xl:w-[65rem] 2xl:w-[66rem] md:shadow-xl py-6 px-6 md:py-8 md:px-10 md:rounded-xl md:border border-slate-50 md:flex md:space-x-10">
           <div class="w-full md:w-[20%]">
-            <ul class="flex justify-between md:block md:space-y-3 text-slate-600 font-semibold sm:px-6 md:px-0 pb-3 md:pb-4 md:pb-0 md:mt-0">
+            <ul class="flex justify-between md:block md:space-y-3 text-slate-600 font-semibold sm:px-6 md:px-0 pb-3 md:pb-0 md:mt-0">
               <li @click="accountSection = true; passowrdSection = false;  historySection= false; documentSection = false; orderSection = false" :class="accountSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-5 md:h-5 md:mr-1">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -214,8 +212,7 @@ $email = $_SESSION['email'];
             ?>
               <div class="sm:flex items-center sm:space-x-4">
                 <?php if ($rows["image"] != "") { ?>
-                  <img class="object-fill w-24 h-24 rounded-full shadow-lg mx-auto
-                sm:mx-0 updatePhoto" :src="profileImgPreview ? profileImgPreview
+                  <img class="object-fill w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0 update-photo" :src="profileImgPreview ? profileImgPreview
                 : '../uploaded-files/customer-images/<?= $rows["image"] ?>'" alt="Profile photo" />
                 <?php } else { ?>
                   <img class="object-fill w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0" :src="profileImgPreview ? profileImgPreview : '../images/user.png'" alt="Profile photo" />
@@ -361,10 +358,10 @@ $email = $_SESSION['email'];
               <hr class="w-full my-5 sm:my-6" />
               <div class="sm:flex items-center sm:space-x-5 space-y-4 sm:space-y-0">
                 <div class="sm:w-1/2">
-                  <label for="full-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                  <label for="newPassword" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                     Нова парола
                   </label>
-                  <input type="password" minlength="8" id="full-name" name="newPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="••••••••••" />
+                  <input type="password" minlength="8" id="newPassword" name="newPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="••••••••••" />
                 </div>
                 <div class="sm:w-1/2">
                   <label for="passwordRep" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
@@ -404,7 +401,7 @@ $email = $_SESSION['email'];
                     <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
                   </svg>
                 </div>
-                <select id="account-offers" class="w-full bg-gray-50 border border-gray-300 text-gray-900 pl-10 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 block w-full p-2.5">
+                <select id="account-offers" class="w-full bg-gray-50 border border-gray-300 text-gray-900 pl-10 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 block p-2.5">
                   <option selected value="Основна">Основна</option>
                   <option value="Премиум">Премиум</option>
                   <option value="Вип">Вип</option>
@@ -412,7 +409,7 @@ $email = $_SESSION['email'];
               </div>
             </div>
             </form>
-            <div class="flex items-center justify-center space-x-5 space-y-5 mt-10 w-full">
+            <div id="history-section-load" class="flex items-center justify-center space-x-5 space-y-5 mt-10 w-full">
               <div id="history-section" class="grid gap-12 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 w-full">
                 <?php
                 $query = "SELECT * FROM orders WHERE email = '$email' ORDER BY add_date DESC LIMIT 10";
@@ -455,7 +452,7 @@ $email = $_SESSION['email'];
                         <p><?= date("d.m.Y", strtotime($rows['date'])) ?></p>
                       </div>
                       <div class="border-t-2"></div>
-                      <button type="button" data-modal-toggle="history-modal" value="<?= $rows['id'] ?>" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-0 font-semibold rounded-xl w-full text-sm px-5 py-2 mt-2.5 focus:outline-none transition-all history-view">Виж повече</button>
+                      <button @click="modalHistory = true" type="button" value="<?= $rows['id'] ?>" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-0 font-semibold rounded-xl w-full text-sm px-5 py-2 mt-2.5 focus:outline-none transition-all history-view">Виж повече</button>
                     </div>
                   </div>
                 <?php
@@ -471,173 +468,6 @@ $email = $_SESSION['email'];
             }
             ?>
           </div>
-
-
-          <!-- Offer modal -->
-          <div id="history-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-            <div class="relative w-full h-full max-w-lg md:h-auto md:mt-40">
-              <!-- Modal content -->
-              <div class="relative bg-white rounded-lg shadow">
-                <!-- Modal header -->
-                <button type="button" class="absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="history-modal">
-                  <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                  </svg>
-                </button>
-                <!-- Modal body -->
-                <div class="p-6 pt-8 pr-10 space-y-6 text-slate-700">
-                  <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
-                    <div class="w-full sm:w-1/2">
-                      <div class="text-sm md:text-base font-semibold mb-1">Дата на заявката</div>
-                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                          <path d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" />
-                          <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z" clip-rule="evenodd" />
-                        </svg>
-                        <div id="add_date"></div>
-                      </div>
-                    </div>
-                    <div class="w-full sm:w-1/2">
-                      <div class="text-sm md:text-base font-semibold mb-1">Час на заявката</div>
-                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                          <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
-                        </svg>
-                        <div id="add_time"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
-                    <div class="w-full sm:w-1/2">
-                      <div class="text-sm md:text-base font-semibold mb-1">Име на клиент</div>
-                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                          <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
-                        </svg>
-                        <div id="customer_name"></div>
-                      </div>
-                    </div>
-                    <div class="w-full sm:w-1/2">
-                      <div class="text-sm md:text-base font-semibold mb-1">Телефонен номер</div>
-                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                        <svg viewBox=" 0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                          <path fill-rule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clip-rule="evenodd" />
-                        </svg>
-                        <div id="customer_phone"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
-                    <div class="w-full sm:w-1/2">
-                      <div class="text-sm md:text-base font-semibold mb-1">Помещение</div>
-                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                          <path d="M11.584 2.376a.75.75 0 01.832 0l9 6a.75.75 0 11-.832 1.248L12 3.901 3.416 9.624a.75.75 0 01-.832-1.248l9-6z" />
-                          <path fill-rule="evenodd" d="M20.25 10.332v9.918H21a.75.75 0 010 1.5H3a.75.75 0 010-1.5h.75v-9.918a.75.75 0 01.634-.74A49.109 49.109 0 0112 9c2.59 0 5.134.202 7.616.592a.75.75 0 01.634.74zm-7.5 2.418a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75zm3-.75a.75.75 0 01.75.75v6.75a.75.75 0 01-1.5 0v-6.75a.75.75 0 01.75-.75zM9 12.75a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75z" clip-rule="evenodd" />
-                          <path d="M12 7.875a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" />
-                        </svg>
-                        <div id="customer_building"></div>
-                      </div>
-                    </div>
-                    <div class="w-full sm:w-1/2">
-                      <div class="text-sm md:text-base font-semibold mb-1">Оферта</div>
-                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                          <path fill-rule="evenodd" d="M7.5 5.25a3 3 0 013-3h3a3 3 0 013 3v.205c.933.085 1.857.197 2.774.334 1.454.218 2.476 1.483 2.476 2.917v3.033c0 1.211-.734 2.352-1.936 2.752A24.726 24.726 0 0112 15.75c-2.73 0-5.357-.442-7.814-1.259-1.202-.4-1.936-1.541-1.936-2.752V8.706c0-1.434 1.022-2.7 2.476-2.917A48.814 48.814 0 017.5 5.455V5.25zm7.5 0v.09a49.488 49.488 0 00-6 0v-.09a1.5 1.5 0 011.5-1.5h3a1.5 1.5 0 011.5 1.5zm-3 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
-                          <path d="M3 18.4v-2.796a4.3 4.3 0 00.713.31A26.226 26.226 0 0012 17.25c2.892 0 5.68-.468 8.287-1.335.252-.084.49-.189.713-.311V18.4c0 1.452-1.047 2.728-2.523 2.923-2.12.282-4.282.427-6.477.427a49.19 49.19 0 01-6.477-.427C4.047 21.128 3 19.852 3 18.4z" />
-                        </svg>
-                        <div id="customer_offer"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
-                    <div class="w-full sm:w-1/2">
-                      <div class="text-sm md:text-base font-semibold mb-1">Дата на изпълнение</div>
-                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                          <path d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" />
-                          <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z" clip-rule="evenodd" />
-                        </svg>
-                        <div id="do_date"></div>
-                      </div>
-                    </div>
-                    <div class="w-full sm:w-1/2">
-                      <div class="text-sm md:text-base font-semibold mb-1">Час на изпълнение</div>
-                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                          <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
-                        </svg>
-                        <div id="do_time"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
-                    <div class="w-full sm:w-1/2">
-                      <div class="text-sm md:text-base font-semibold mb-1">Начин на плащане</div>
-                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                          <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
-                          <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" clip-rule="evenodd" />
-                        </svg>
-                        <div id="customer_payment"></div>
-                      </div>
-                    </div>
-                    <div class="w-full sm:w-1/2">
-                      <div class="text-sm md:text-base font-semibold mb-1">Фактура</div>
-                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                          <path fill-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625zM7.5 15a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 017.5 15zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H8.25z" clip-rule="evenodd" />
-                          <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
-                        </svg>
-                        <div id="customer_invoice"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
-                    <div class="w-full sm:w-1/2">
-                      <div class="text-sm md:text-base font-semibold mb-1">Квадратура</div>
-                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                          <path fill-rule="evenodd" d="M8.161 2.58a1.875 1.875 0 011.678 0l4.993 2.498c.106.052.23.052.336 0l3.869-1.935A1.875 1.875 0 0121.75 4.82v12.485c0 .71-.401 1.36-1.037 1.677l-4.875 2.437a1.875 1.875 0 01-1.676 0l-4.994-2.497a.375.375 0 00-.336 0l-3.868 1.935A1.875 1.875 0 012.25 19.18V6.695c0-.71.401-1.36 1.036-1.677l4.875-2.437zM9 6a.75.75 0 01.75.75V15a.75.75 0 01-1.5 0V6.75A.75.75 0 019 6zm6.75 3a.75.75 0 00-1.5 0v8.25a.75.75 0 001.5 0V9z" clip-rule="evenodd" />
-                        </svg>
-                        <div id="customer_m2"></div>
-                      </div>
-                    </div>
-                    <div class="w-full sm:w-1/2">
-                      <div class="text-sm md:text-base font-semibold mb-1">Цена</div>
-                      <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                          <path d="M10.464 8.746c.227-.18.497-.311.786-.394v2.795a2.252 2.252 0 01-.786-.393c-.394-.313-.546-.681-.546-1.004 0-.323.152-.691.546-1.004zM12.75 15.662v-2.824c.347.085.664.228.921.421.427.32.579.686.579.991 0 .305-.152.671-.579.991a2.534 2.534 0 01-.921.42z" />
-                          <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v.816a3.836 3.836 0 00-1.72.756c-.712.566-1.112 1.35-1.112 2.178 0 .829.4 1.612 1.113 2.178.502.4 1.102.647 1.719.756v2.978a2.536 2.536 0 01-.921-.421l-.879-.66a.75.75 0 00-.9 1.2l.879.66c.533.4 1.169.645 1.821.75V18a.75.75 0 001.5 0v-.81a4.124 4.124 0 001.821-.749c.745-.559 1.179-1.344 1.179-2.191 0-.847-.434-1.632-1.179-2.191a4.122 4.122 0 00-1.821-.75V8.354c.29.082.559.213.786.393l.415.33a.75.75 0 00.933-1.175l-.415-.33a3.836 3.836 0 00-1.719-.755V6z" clip-rule="evenodd" />
-                        </svg>
-                        <div id="customer_price"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="w-full my-2.5">
-                    <div class="text-sm md:text-base font-semibold mb-1">Адрес</div>
-                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                        <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
-                        <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
-                      </svg>
-                      <div id="customer_address"></div>
-                    </div>
-                  </div>
-                  <div class="w-full my-2.5">
-                    <div class="text-sm md:text-base font-semibold mb-1">Допълнителна информация</div>
-                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
-                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
-                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
-                      </svg>
-                      <div id="customer_information"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
 
           <!--Documents section-->
           <div v-show="documentSection" class="md:w-[80%] shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700">
@@ -700,8 +530,7 @@ $email = $_SESSION['email'];
             ?>
             <div id="document-section">
               <?php
-
-              $query = "SELECT * FROM customer WHERE email = '$email' AND image_room1 != '' OR image_room2 != '' OR image_room3 != ''";
+              $query = "SELECT * FROM customer WHERE email = '$email' AND (image_room1 != '' OR image_room2 != '' OR image_room3 != '')";
               $query_run = mysqli_query($con, $query);
 
               if (mysqli_num_rows($query_run) > 0) {
@@ -714,40 +543,44 @@ $email = $_SESSION['email'];
                       <?php
                       if ($rows["image_room1"] != '') {
                       ?>
-                        <div id="1" class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-slate-100 hover:brightness-90 room-img group transition-all cursor-pointer shadow-lg">
-                          <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/customer-images/<?= $rows["image_room1"] ?>" alt="">
-                          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full">
-                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white ">
-                              <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
-                            </svg>
+                        <Transition>
+                          <div id="1" class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-slate-100 hover:brightness-90 room-img group cursor-pointer shadow-lg">
+                            <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/room-images/<?= $rows["image_room1"] ?>" alt="">
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90">
+                              <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white ">
+                                <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
+                              </svg>
+                            </div>
                           </div>
-                        </div>
-
+                        </Transition>
                       <?php
                       }
                       if ($rows["image_room2"] != '') {
                       ?>
-                        <div id="2" class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-slate-100 hover:brightness-90 group room-img transition-all cursor-pointer shadow-lg">
-                          <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/customer-images/<?= $rows["image_room2"] ?>" alt="">
-                          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full">
-                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white ">
-                              <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
-                            </svg>
+                        <Transition>
+                          <div id="2" class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-slate-100 hover:brightness-90 room-img group cursor-pointer shadow-lg">
+                            <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/room-images/<?= $rows["image_room2"] ?>" alt="">
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90">
+                              <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white">
+                                <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
+                              </svg>
+                            </div>
                           </div>
-                        </div>
-
+                        </Transition>
                       <?php
                       }
                       if ($rows["image_room3"] != '') {
                       ?>
-                        <div id="3" class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-slate-100 hover:brightness-90 group room-img transition-all cursor-pointer shadow-lg">
-                          <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/customer-images/<?= $rows["image_room3"] ?>" alt="">
-                          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full">
-                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white ">
-                              <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
-                            </svg>
+                        <Transition>
+                          <div id="3" class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-slate-100 hover:brightness-90 group room-img cursor-pointer shadow-lg">
+                            <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/room-images/<?= $rows["image_room3"] ?>" alt="">
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90">
+                              <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white ">
+                                <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
+                              </svg>
+                            </div>
                           </div>
-                        </div>
+                        </Transition>
                       <?php
                       }
                       ?>
@@ -908,7 +741,7 @@ $email = $_SESSION['email'];
                 Изберете вид оферта
               </div>
               <ul class="flex flex-wrap gap-6 my-3.5">
-                <div id="tooltip-basic" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+                <div id="tooltip-basic" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                   <div v-for="(service, index) in services" class="flex mt-1.5 items-center">
                     <svg v-show="index < 3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 text-green-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -931,7 +764,7 @@ $email = $_SESSION['email'];
                     </div>
                   </label>
                 </li>
-                <div id="tooltip-premium" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+                <div id="tooltip-premium" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                   <div v-for="(service, index) in services" class="flex mt-1.5 items-center">
                     <svg v-show="index < 5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 text-green-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -954,7 +787,7 @@ $email = $_SESSION['email'];
                     </div>
                   </label>
                 </li>
-                <div id="tooltip-vip" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+                <div id="tooltip-vip" role="tooltip" class="hidden md:inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                   <div v-for="service in services" class="flex mt-1.5 items-center">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 text-green-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -1029,7 +862,7 @@ $email = $_SESSION['email'];
                     </div>
                   </label>
                 </div>
-                <div id="tooltip-card-payment" role="tooltip" class="hidden text-center font-medium text-slate-700 md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+                <div id="tooltip-card-payment" role="tooltip" class="hidden text-center font-medium md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                   Не се притеснявайте ! Нашият екип ще носи POS терминал при посещението на имота Ви.
                 </div>
                 <div>
@@ -1050,7 +883,7 @@ $email = $_SESSION['email'];
                 Желаете ли фактура
               </div>
               <div class="flex flex-wrap items-center gap-3.5">
-                <div id="tooltip-invoice" role="tooltip" class="hidden text-center font-medium text-slate-700 md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+                <div id="tooltip-invoice" role="tooltip" class="hidden text-center font-medium text-slate-700 md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm bg-white rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                   Можете да намерите Вашите фактури в раздел документи след като бъде извършено почистването.
                 </div>
                 <div>
@@ -1097,10 +930,10 @@ $email = $_SESSION['email'];
                 </div>
               </div>
 
-              <label for="address" class="block ml-1 mb-1.5 mt-4 font-semibold text-sm md:text-base text-slate-700">
+              <label for="customerAddress" class="block ml-1 mb-1.5 mt-4 font-semibold text-sm md:text-base text-slate-700">
                 Вашият адрес
               </label>
-              <textarea @keyup="charCountAddress" minlength="5" id="address" name="address" v-model="address" rows="2" :class="{
+              <textarea @keyup="charCountAddress" minlength="5" id="customerAddress" name="address" v-model="address" rows="2" :class="{
                     'focus:border-red-500 border-red-500 bg-red-50': addressCount >= 200,
                   }" class="block p-2.5 w-full text-sm text-gray-900 bg-slate-50 rounded-lg border border-gray-300 focus:ring-0 focus:outline-none focus:border-gray-400 resize-none md:resize-y" placeholder="Напишете адреса си тук..."></textarea>
               <div :class="{
@@ -1129,7 +962,7 @@ $email = $_SESSION['email'];
                 <input type="hidden" id="input-account-price" name="price" />
               </div>
 
-              <div id="tooltip-m2" role="tooltip" class="hidden font-medium text-slate-700 md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm text-white bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+              <div id="tooltip-m2" role="tooltip" class="hidden font-medium md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 -mt-1 mr-1 inline-flex">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -1137,7 +970,7 @@ $email = $_SESSION['email'];
               </div>
 
               <!--M2 toast-->
-              <div v-show="orderSection" data-tooltip-target="tooltip-m2" data-tooltip-placement="left" class="hidden md:block fixed md:flex bottom-20 right-4 items-center justify-center py-2 px-3 w-32 text-slate-700 bg-white rounded-md shadow-lg border border-slate-100" :class="{'lg:right-4': scY < 300, 'lg:right-16': scY > 300}">
+              <div v-show="orderSection" data-tooltip-target="tooltip-m2" data-tooltip-placement="left" class="hidden fixed md:flex bottom-20 right-4 items-center justify-center py-2 px-3 w-32 text-slate-700 bg-white rounded-md shadow-lg border border-slate-100" :class="{'lg:right-4': scY < 300, 'lg:right-16': scY > 300}">
                 <div class="">
                   <label for="account-m2" class="block mb-1.5 text-sm font-semibold text-slate-700 text-center">
                     Квадратура
@@ -1155,14 +988,183 @@ $email = $_SESSION['email'];
           </div>
         </div>
       </div>
+
+      <!-- Offer modal -->
+      <div id="history-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+        <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex 2xl:items-center justify-center">
+          <div class="relative w-full h-full max-w-lg h-auto">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+              <!-- Modal header -->
+              <button id="close-history-modal" type="button" class="absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+              </button>
+              <!-- Modal body -->
+              <div class="p-6 pt-8 pr-10 space-y-6 text-slate-700">
+                <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
+                  <div class="w-full sm:w-1/2">
+                    <div class="text-sm md:text-base font-semibold mb-1">Дата на заявката</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" />
+                        <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z" clip-rule="evenodd" />
+                      </svg>
+                      <div id="add_date"></div>
+                    </div>
+                  </div>
+                  <div class="w-full sm:w-1/2">
+                    <div class="text-sm md:text-base font-semibold mb-1">Час на заявката</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
+                      </svg>
+                      <div id="add_time"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
+                  <div class="w-full sm:w-1/2">
+                    <div class="text-sm md:text-base font-semibold mb-1">Име на клиент</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
+                      </svg>
+                      <div id="customer_name"></div>
+                    </div>
+                  </div>
+                  <div class="w-full sm:w-1/2">
+                    <div class="text-sm md:text-base font-semibold mb-1">Телефонен номер</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox=" 0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path fill-rule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clip-rule="evenodd" />
+                      </svg>
+                      <div id="customer_phone"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
+                  <div class="w-full sm:w-1/2">
+                    <div class="text-sm md:text-base font-semibold mb-1">Помещение</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path d="M11.584 2.376a.75.75 0 01.832 0l9 6a.75.75 0 11-.832 1.248L12 3.901 3.416 9.624a.75.75 0 01-.832-1.248l9-6z" />
+                        <path fill-rule="evenodd" d="M20.25 10.332v9.918H21a.75.75 0 010 1.5H3a.75.75 0 010-1.5h.75v-9.918a.75.75 0 01.634-.74A49.109 49.109 0 0112 9c2.59 0 5.134.202 7.616.592a.75.75 0 01.634.74zm-7.5 2.418a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75zm3-.75a.75.75 0 01.75.75v6.75a.75.75 0 01-1.5 0v-6.75a.75.75 0 01.75-.75zM9 12.75a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75z" clip-rule="evenodd" />
+                        <path d="M12 7.875a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" />
+                      </svg>
+                      <div id="customer_building"></div>
+                    </div>
+                  </div>
+                  <div class="w-full sm:w-1/2">
+                    <div class="text-sm md:text-base font-semibold mb-1">Оферта</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path fill-rule="evenodd" d="M7.5 5.25a3 3 0 013-3h3a3 3 0 013 3v.205c.933.085 1.857.197 2.774.334 1.454.218 2.476 1.483 2.476 2.917v3.033c0 1.211-.734 2.352-1.936 2.752A24.726 24.726 0 0112 15.75c-2.73 0-5.357-.442-7.814-1.259-1.202-.4-1.936-1.541-1.936-2.752V8.706c0-1.434 1.022-2.7 2.476-2.917A48.814 48.814 0 017.5 5.455V5.25zm7.5 0v.09a49.488 49.488 0 00-6 0v-.09a1.5 1.5 0 011.5-1.5h3a1.5 1.5 0 011.5 1.5zm-3 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+                        <path d="M3 18.4v-2.796a4.3 4.3 0 00.713.31A26.226 26.226 0 0012 17.25c2.892 0 5.68-.468 8.287-1.335.252-.084.49-.189.713-.311V18.4c0 1.452-1.047 2.728-2.523 2.923-2.12.282-4.282.427-6.477.427a49.19 49.19 0 01-6.477-.427C4.047 21.128 3 19.852 3 18.4z" />
+                      </svg>
+                      <div id="customer_offer"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
+                  <div class="w-full sm:w-1/2">
+                    <div class="text-sm md:text-base font-semibold mb-1">Дата на изпълнение</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" />
+                        <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z" clip-rule="evenodd" />
+                      </svg>
+                      <div id="do_date"></div>
+                    </div>
+                  </div>
+                  <div class="w-full sm:w-1/2">
+                    <div class="text-sm md:text-base font-semibold mb-1">Час на изпълнение</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
+                      </svg>
+                      <div id="do_time"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
+                  <div class="w-full sm:w-1/2">
+                    <div class="text-sm md:text-base font-semibold mb-1">Начин на плащане</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
+                        <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" clip-rule="evenodd" />
+                      </svg>
+                      <div id="customer_payment"></div>
+                    </div>
+                  </div>
+                  <div class="w-full sm:w-1/2">
+                    <div class="text-sm md:text-base font-semibold mb-1">Фактура</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path fill-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625zM7.5 15a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 017.5 15zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H8.25z" clip-rule="evenodd" />
+                        <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
+                      </svg>
+                      <div id="customer_invoice"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6 sm:my-2.5">
+                  <div class="w-full sm:w-1/2">
+                    <div class="text-sm md:text-base font-semibold mb-1">Квадратура</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path fill-rule="evenodd" d="M8.161 2.58a1.875 1.875 0 011.678 0l4.993 2.498c.106.052.23.052.336 0l3.869-1.935A1.875 1.875 0 0121.75 4.82v12.485c0 .71-.401 1.36-1.037 1.677l-4.875 2.437a1.875 1.875 0 01-1.676 0l-4.994-2.497a.375.375 0 00-.336 0l-3.868 1.935A1.875 1.875 0 012.25 19.18V6.695c0-.71.401-1.36 1.036-1.677l4.875-2.437zM9 6a.75.75 0 01.75.75V15a.75.75 0 01-1.5 0V6.75A.75.75 0 019 6zm6.75 3a.75.75 0 00-1.5 0v8.25a.75.75 0 001.5 0V9z" clip-rule="evenodd" />
+                      </svg>
+                      <div id="customer_m2"></div>
+                    </div>
+                  </div>
+                  <div class="w-full sm:w-1/2">
+                    <div class="text-sm md:text-base font-semibold mb-1">Цена</div>
+                    <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                        <path d="M10.464 8.746c.227-.18.497-.311.786-.394v2.795a2.252 2.252 0 01-.786-.393c-.394-.313-.546-.681-.546-1.004 0-.323.152-.691.546-1.004zM12.75 15.662v-2.824c.347.085.664.228.921.421.427.32.579.686.579.991 0 .305-.152.671-.579.991a2.534 2.534 0 01-.921.42z" />
+                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v.816a3.836 3.836 0 00-1.72.756c-.712.566-1.112 1.35-1.112 2.178 0 .829.4 1.612 1.113 2.178.502.4 1.102.647 1.719.756v2.978a2.536 2.536 0 01-.921-.421l-.879-.66a.75.75 0 00-.9 1.2l.879.66c.533.4 1.169.645 1.821.75V18a.75.75 0 001.5 0v-.81a4.124 4.124 0 001.821-.749c.745-.559 1.179-1.344 1.179-2.191 0-.847-.434-1.632-1.179-2.191a4.122 4.122 0 00-1.821-.75V8.354c.29.082.559.213.786.393l.415.33a.75.75 0 00.933-1.175l-.415-.33a3.836 3.836 0 00-1.719-.755V6z" clip-rule="evenodd" />
+                      </svg>
+                      <div id="customer_price"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="w-full my-2.5">
+                  <div class="text-sm md:text-base font-semibold mb-1">Адрес</div>
+                  <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                      <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+                      <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+                    </svg>
+                    <div id="customer_address"></div>
+                  </div>
+                </div>
+                <div class="w-full my-2.5">
+                  <div class="text-sm md:text-base font-semibold mb-1">Допълнителна информация</div>
+                  <div class="flex items-center py-1.5 px-2.5 shadow-lg border border-slate-100 rounded-md bg-blue-50">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-1.5 text-blue-300">
+                      <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+                    </svg>
+                    <div id="customer_information"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+
   </section>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
   <script src="../js/main-vue.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/ajax.js"></script>
-  <script src="https://unpkg.com/flowbite@latest/dist/flowbite.js"></script>
+  <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 </body>
 
 </html>

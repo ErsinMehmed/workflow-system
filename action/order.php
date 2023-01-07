@@ -11,6 +11,7 @@ if (isset($_POST['guest_order'])) {
 
     $name = $_POST['name'];
     $phone = $_POST['phone'];
+    $email = $_POST['email'];
     $building = $_POST['building'];
     $offer = $_POST['offer'];
     $date = $_POST['date'];
@@ -23,17 +24,20 @@ if (isset($_POST['guest_order'])) {
     $m2 = $_POST['m2'];
     $curDT = date('Y-m-d H:i:s');
 
-    if ($building == NULL || $offer == NULL || $time == NULL || $payment == NULL || $city == NULL || $address == NULL || $m2 == NULL || $price == NULL) {
-        $res = [
-            'status' => 422,
-            'message' => 'Попълнете всички полета'
-        ];
-        echo json_encode($res);
-        return;
+    if ($building == NULL || $offer == NULL || $time == NULL || $payment == NULL || $city == NULL || $address == NULL || $m2 == NULL || $price == NULL || $email == NULL) {
+
+        jsonResponse(500, 'Попълнете всички полета');
+    } else {
+        $selQuery = "SELECT * FROM customer WHERE email = '$email'";
+        $query = mysqli_query($con, $selQuery);
+
+        if (mysqli_num_rows($query) == 0) {
+            $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,city,customer_kind,information,email) VALUES ('$name','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$phone','1','$time','$city','Гост','$information','$email')";
+            $query_run = mysqli_query($con, $query);
+
+            jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
+        } else {
+            jsonResponse(500, 'Въведеният имейл вече съществува');
+        }
     }
-
-    $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,city,customer_kind,information) VALUES ('$name','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$phone','1','$time','$city','Гост','$information')";
-    $query_run = mysqli_query($con, $query);
-
-    jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
 }

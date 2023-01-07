@@ -40,3 +40,75 @@
   transform: translateX(20px);
   opacity: 0;
 }
+
+.loader__wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 50;
+  background-color: white;
+}
+.loader {
+  --sz: 7rem;
+  width: calc(var(--sz) * 2);
+  height: var(--sz);
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+.loader__sq {
+  --p-sz: calc(var(--sz) / 4);
+  --m-offset: calc((var(--p-sz) * -1) * 0.75);
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 50%;
+}
+.loader__sq::before,
+.loader__sq::after {
+  width: var(--p-sz);
+  height: var(--p-sz);
+  content: "";
+  position: relative;
+  transform: translateY(calc((var(--sz) - var(--p-sz)) * -1));
+  animation: loader-box-bounce 0.5s cubic-bezier(0.3, 0.5, 0.4, 0.95)
+    calc(var(--i) * 0.06s) infinite alternate-reverse;
+}
+.loader__sq:first-of-type {
+  margin-right: var(--m-offset);
+}
+.loader__sq:first-of-type::before {
+  --i: 1;
+  border: 3px solid #ff7ab5;
+  border-radius: 50%;
+}
+.loader__sq:first-of-type::after {
+  --i: 3;
+  background-color: #c643fb;
+}
+@supports (clip-path: circle()) {
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+.loader__sq:nth-of-type(2)::before {
+  --i: 2;
+  border: 3px solid #ffb650;
+}
+.loader__sq:nth-of-type(2)::after {
+  --i: 4;
+  background-color: #2fe2dd;
+  border-radius: 50%;
+}
+@supports (clip-path: circle()) {
+  border-radius: 0;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+@keyframes loader-box-bounce {
+  to {
+    transform: translateY(0);
+  }
+}

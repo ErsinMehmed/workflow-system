@@ -28,6 +28,13 @@ $email = $_SESSION['email'];
 </head>
 
 <body class="scroll-smooth">
+  <!-- Page loader -->
+  <div id="site-load" class="loader__wrap" role="alertdialog" aria-busy="true" aria-live="polite" aria-label="Loading…">
+    <div class="loader" aria-hidden="true">
+      <div class="loader__sq"></div>
+      <div class="loader__sq"></div>
+    </div>
+  </div>
   <div id="app">
     <!--Scroll detector-->
     <div class="w-full h-1 rounded-r-full fixed z-40 top-0 left-0 bg-blue-400" :style="{ width: progress }"></div>
@@ -247,14 +254,14 @@ $email = $_SESSION['email'];
           <div class="px-6 py-6 lg:px-8 text-slate-700">
             <h3 class="mb-4 text-xl font-semibold">Създайте профил</h3>
             <form id="sign-in-form" class="space-y-5">
-              <div class="flex space-x-5">
-                <div>
+              <div class="flex items-center space-x-5 w-full">
+                <div class="w-1/2">
                   <label for="first_name" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
                     Име
                   </label>
                   <input type="text" id="first_name" name="firstName" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5" placeholder="Въведете име" minlength="2" />
                 </div>
-                <div>
+                <div class="w-1/2">
                   <label for="family_name" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
                     Фамилия
                   </label>
@@ -1407,6 +1414,7 @@ $email = $_SESSION['email'];
   <script src="../js/main-vue.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/ajax.js"></script>
+  <script src="../loader/siteLoader.js"></script>
   <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 </body>
 

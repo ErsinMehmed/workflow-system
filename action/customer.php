@@ -17,6 +17,7 @@ if (isset($_POST['save_customer'])) {
     $password = $_POST['password'];
     $passwordRep = $_POST['passwordRep'];
     $fullName = $firstName . " " . $familyName;
+    $curDT = date('Y-m-d');
 
     if ($firstName == NULL || $familyName == NULL || $email == NULL || $phone == NULL || $password == NULL || $passwordRep == NULL) {
         $res = [
@@ -35,7 +36,7 @@ if (isset($_POST['save_customer'])) {
         if ($password == $passwordRep) {
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-            $query = "INSERT INTO customer (name,email,password,phone) VALUES ('$fullName','$email','$password','$phone')";
+            $query = "INSERT INTO customer (name,email,password,phone,created_at) VALUES ('$fullName','$email','$password','$phone','$curDT')";
             $query_run = mysqli_query($con, $query);
 
             jsonResponseMain($query_run, 'Успешна регистрация', 'Неуспешна регистрация');
@@ -185,17 +186,17 @@ if (isset($_POST['customer_order'])) {
     $curDT = date('Y-m-d H:i:s');
 
     if ($building == NULL || $offer == NULL || $time == NULL || $payment == NULL || $invoice == NULL || $city == NULL || $address == NULL || $m2 == NULL || $price == NULL) {
-        $res = [
-            'status' => 422,
-            'message' => 'Попълнете всички полета'
-        ];
-        echo json_encode($res);
-        return;
-    } else {
-        $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,email,city,invoice,customer_kind,information) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city','$invoice','Потребител','$information')";
-        $query_run = mysqli_query($con, $query);
 
-        jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
+        jsonResponse(500, 'Попълнете всички полета');
+    } else {
+        if (is_numeric($m2)) {
+            $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,email,city,invoice,customer_kind,information) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city','$invoice','Потребител','$information')";
+            $query_run = mysqli_query($con, $query);
+
+            jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
+        } else {
+            jsonResponse(500, 'Полето квадратура приема само числа');
+        }
     }
 }
 
@@ -230,12 +231,8 @@ if (isset($_POST['customer_upload_room'])) {
     $customerEmail = $_POST['customerEmail'];
 
     if ($filename == NULL) {
-        $res = [
-            'status' => 422,
-            'message' => 'Изберете снимка'
-        ];
-        echo json_encode($res);
-        return;
+
+        jsonResponse(500, 'Попълнете всички полета');
     } else {
         $queryq = "SELECT * FROM customer WHERE email='$customerEmail'";
         $query_runq = mysqli_query($con, $queryq);

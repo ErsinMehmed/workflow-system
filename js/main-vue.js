@@ -15,7 +15,7 @@ createApp({
       passwordState: true,
       passwordRegRep: true,
       accountSection: true,
-      passowrdSection: false,
+      passwordSection: false,
       historySection: false,
       documentSection: false,
       imagePreview: null,
@@ -34,7 +34,7 @@ createApp({
       dashSupplier: false,
       dashClient: false,
       dashSection: "Заявки",
-      toggleSlidebar: true,
+      toggleSidebar: true,
       countries: [
         {
           name: "Австрия",
@@ -159,12 +159,12 @@ createApp({
       ],
       services: [
         "Основно почистване",
-        "Пофесионални препарати ",
-        "Почистване на прозорци ",
+        "Пофесионални препарати",
+        "Почистване на прозорци",
         "Пръскане за вредители",
-        "Цялостно почистване ",
-        "Почистване на общи части ",
-        "Ароматизиране ",
+        "Цялостно почистване",
+        "Почистване на общи части",
+        "Ароматизиране",
       ],
     };
   },

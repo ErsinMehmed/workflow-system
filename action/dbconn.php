@@ -1,7 +1,7 @@
 <?php
 
-$con = mysqli_connect("localhost","root","","system");
+$con = mysqli_connect("localhost", "root", "123", "ersin");
 
-if(!$con){
-    die('Неуспешно свързване'. mysqli_connect_error());
+if (!$con) {
+    die('Неуспешно свързване' . mysqli_connect_error());
 }

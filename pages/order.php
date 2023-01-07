@@ -18,6 +18,13 @@
 
 <body>
   <section>
+    <!-- Page loader -->
+    <div id="site-load" class="loader__wrap" role="alertdialog" aria-busy="true" aria-live="polite" aria-label="Loading…">
+      <div class="loader" aria-hidden="true">
+        <div class="loader__sq"></div>
+        <div class="loader__sq"></div>
+      </div>
+    </div>
     <div id="app">
       <!--Scroll detector-->
       <div class="w-full h-1 rounded-r-full fixed z-40 top-0 left-0 bg-blue-400" :style="{ width: progress }"></div>
@@ -346,6 +353,12 @@
                 <input type="text" id="phone-number" name="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведете телефон" />
               </div>
             </div>
+            <div class="w-full mb-4">
+              <label for="email" minlength="3" class="block ml-1 mb-1 text-sm md:text-base font-semibold text-slate-700">
+                Имейл
+              </label>
+              <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведете имейл" />
+            </div>
             <div class="block md:hidden ml-1 mb-1.5 font-semibold text-sm text-slate-700">
               Квадратура на обекта
             </div>
@@ -630,6 +643,7 @@
   <script src="../js/main-vue.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/ajax.js"></script>
+  <script src="../loader/siteLoader.js"></script>
   <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 </body>
 

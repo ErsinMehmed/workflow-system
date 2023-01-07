@@ -24,6 +24,13 @@ $email = $_SESSION['email'];
 </head>
 
 <body>
+  <!-- Page loader -->
+  <div id="site-load" class="loader__wrap" role="alertdialog" aria-busy="true" aria-live="polite" aria-label="Loading…">
+    <div class="loader" aria-hidden="true">
+      <div class="loader__sq"></div>
+      <div class="loader__sq"></div>
+    </div>
+  </div>
   <section>
     <div id="app">
       <!--Scroll detector-->
@@ -157,31 +164,31 @@ $email = $_SESSION['email'];
         <div class="w-full md:w-[50rem] lg:w-[55rem] xl:w-[65rem] 2xl:w-[66rem] md:shadow-xl py-6 px-6 md:py-8 md:px-10 md:rounded-xl md:border border-slate-50 md:flex md:space-x-10">
           <div class="w-full md:w-[20%]">
             <ul class="flex justify-between md:block md:space-y-3 text-slate-600 font-semibold sm:px-6 md:px-0 pb-3 md:pb-0 md:mt-0">
-              <li @click="accountSection = true; passowrdSection = false;  historySection= false; documentSection = false; orderSection = false" :class="accountSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
+              <li @click="accountSection = true; passwordSection = false;  historySection= false; documentSection = false; orderSection = false" :class="accountSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-5 md:h-5 md:mr-1">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <span class="hidden md:block">Акаунт</span>
               </li>
-              <li @click="passowrdSection = true; accountSection = false;  historySection = false; documentSection = false; orderSection = false" :class="passowrdSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
+              <li @click="passwordSection = true; accountSection = false;  historySection = false; documentSection = false; orderSection = false" :class="passwordSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-5 md:h-5 md:mr-1">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                 </svg>
                 <span class="hidden md:block">Парола</span>
               </li>
-              <li @click=" historySection = true; accountSection = false;  passowrdSection = false; documentSection = false; orderSection = false" :class=" historySection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
+              <li @click=" historySection = true; accountSection = false;  passwordSection = false; documentSection = false; orderSection = false" :class=" historySection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-5 md:h-5 md:mr-1">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <span class="hidden md:block">История</span>
               </li>
-              <li @click="documentSection = true; accountSection = false;  passowrdSection = false; historySection = false; orderSection = false" :class="documentSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
+              <li @click="documentSection = true; accountSection = false;  passwordSection = false; historySection = false; orderSection = false" :class="documentSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-5 md:h-5 md:mr-1">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
                 </svg>
                 <span class="hidden md:block">Документи</span>
               </li>
-              <li @click="orderSection = true; documentSection = false; accountSection = false;  passowrdSection = false; historySection = false" :class=" orderSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
+              <li @click="orderSection = true; documentSection = false; accountSection = false;  passwordSection = false; historySection = false" :class=" orderSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-5 md:h-5 md:mr-1">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                 </svg>
@@ -238,7 +245,7 @@ $email = $_SESSION['email'];
                     <label for="full-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                       Име
                     </label>
-                    <input type="text" id="full-name" value="<?= $rows['name'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 cursor-not-allowed" readonly />
+                    <input type="text" id="full-name" value="<?= $rows['name'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 focus:outline-none cursor-not-allowed" readonly />
                   </div>
                   <div class="sm:w-1/2">
                     <label for="username" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
@@ -253,7 +260,7 @@ $email = $_SESSION['email'];
                     <label for="userEmail" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                       Имейл
                     </label>
-                    <input id="userEmail" name="userEmail" value="<?= $rows['email'] ?>" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 cursor-not-allowed" readonly />
+                    <input id="userEmail" name="userEmail" value="<?= $rows['email'] ?>" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 focus:outline-none cursor-not-allowed" readonly />
                   </div>
                   <div class="sm:w-1/2">
                     <label for="phone-number" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
@@ -274,7 +281,7 @@ $email = $_SESSION['email'];
                         </option>
                       </select>
                     <?php } else { ?>
-                      <input readonly type="text" name="city" value="<?= $rows['city'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 cursor-not-allowed" />
+                      <input readonly type="text" name="city" value="<?= $rows['city'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 focus:outline-none cursor-not-allowed" />
                     <?php } ?>
                   </div>
                   <div class="sm:w-1/2">
@@ -338,7 +345,7 @@ $email = $_SESSION['email'];
           </div>
 
           <!--Passowrd section-->
-          <div v-show="passowrdSection" class="md:w-[80%] shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700">
+          <div v-show="passwordSection" class="md:w-[80%] shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700">
             <h1 class="font-bold text-2xl mb-6 md:mb-8 text-center sm:text-left">
               Парола
             </h1>
@@ -393,7 +400,7 @@ $email = $_SESSION['email'];
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                   </svg>
                 </div>
-                <input type="date" id="date-pcicker-account" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5 " placeholder="Изберете дата" />
+                <input type="date" id="date-picker-account" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5 " placeholder="Изберете дата" />
               </div>
               <div class="relative w-full sm:w-1/2">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -512,7 +519,7 @@ $email = $_SESSION['email'];
                         <img class="h-48 md:h-44 lg:h-40 2xl:h-36 w-full object-cover rounded-lg" :src="imagePreview" />
                       </div>
                       <input type="hidden" value="<?= $email ?>" name="customerEmail">
-                      <input id="photo-file" v-model="selectedFile" @change="onFileChange" type="file" name="roomImage" class="hidden" accept="image/png, image/jpg, image/jpeg" />
+                      <input id="photo-file" @change="onFileChange" type="file" name="roomImage" class="hidden" accept="image/png, image/jpg, image/jpeg" />
                     </label>
                   </div>
                   <div v-show="imagePreview != null" class="md:hidden w-full my-2.5 text-center text-sm">
@@ -991,11 +998,9 @@ $email = $_SESSION['email'];
 
       <!-- Offer modal -->
       <div id="history-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
-        <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex 2xl:items-center justify-center">
-          <div class="relative w-full h-full max-w-lg h-auto">
-            <!-- Modal content -->
+        <div class="h-full p-4 overflow-x-hidden overflow-y-auto flex 2xl:items-center justify-center">
+          <div class="relative w-full max-w-lg h-auto">
             <div class="relative bg-white rounded-lg shadow">
-              <!-- Modal header -->
               <button id="close-history-modal" type="button" class="absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -1164,6 +1169,7 @@ $email = $_SESSION['email'];
   <script src="../js/main-vue.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/ajax.js"></script>
+  <script src="../loader/siteLoader.js"></script>
   <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 </body>
 

@@ -6,8 +6,9 @@ include 'dbconn.php';
 include 'function.php';
 
 error_reporting(E_ERROR | E_PARSE);
+$curDT = date('Y-m-d H:i:s');
 
-//Create order
+// Create order
 if (isset($_POST['admin_order'])) {
 
     $name = $_POST['customerName'];
@@ -22,7 +23,6 @@ if (isset($_POST['admin_order'])) {
     $information = $_POST['information'];
     $price = $_POST['customerPrice'];
     $m2 = $_POST['m2'];
-    $curDT = date('Y-m-d H:i:s');
 
     if ($name == NULL || $phone == NULL || $address == NULL || $m2 == NULL || $email == NULL) {
 
@@ -46,7 +46,7 @@ if (isset($_POST['admin_order'])) {
     }
 }
 
-//Get order data
+// Get order data
 if (isset($_GET['id'])) {
     $id = mysqli_real_escape_string($con, $_GET['id']);
 
@@ -67,7 +67,7 @@ if (isset($_GET['id'])) {
     }
 }
 
-//Update order data
+// Update order data
 if (isset($_POST['admin_order_update'])) {
 
     $id = $_POST['id'];
@@ -89,11 +89,11 @@ if (isset($_POST['admin_order_update'])) {
         $query = "UPDATE orders SET phone='$phone', room='$room', offer='$offer', date='$date', time='$time', pay='$payment', address='$address', information='$information', price='$price', m2='$m2' WHERE id='$id'";
         $query_run = mysqli_query($con, $query);
 
-        jsonResponseMain($query_run, 'Данните са обновени', 'Данните не са обновени');
+        jsonResponseMain($query_run, 'Заявка номер ' . $id . ' е обновена', 'Заявката не е обновена');
     }
 }
 
-//Get customer information
+// Get customer information
 if (isset($_GET['email'])) {
     $email = mysqli_real_escape_string($con, $_GET['email']);
 
@@ -111,5 +111,30 @@ if (isset($_GET['email'])) {
         return;
     } else {
         jsonResponse(404, 'Клиента не е намерен');
+    }
+}
+
+// Set order of team
+if (isset($_POST['admin_set_order'])) {
+
+    $orderDate = $_POST['orderDate'];
+    $teamID =  ($_POST['teamId']);
+    $orderID =  ($_POST['orderId']);
+    $user1 =  ($_POST['userName1']);
+    $user2 =  ($_POST['userName2']);
+    $userID1 =  ($_POST['userID1']);
+    $userID2 =  ($_POST['userID2']);
+    $teamName = ($_POST['teamName']);
+    if ($user1 == NULL || $user2 == NULL) {
+
+        jsonResponse(500, 'Попълнете всички полета');
+    } else {
+        $query = "INSERT INTO set_order (team_id,order_id,user1,user2,user1_id,user2_id,team_name,date,view,order_date) VALUES ('$teamID','$orderID','$user1','$user2','$userID1','$userID2','$teamName','$curDT','1','$orderDate')";
+        $query_run = mysqli_query($con, $query);
+
+        $query = "UPDATE orders SET team_id = '$teamID', status = 'Назначена' WHERE id='$orderID'";
+        $query_runn = mysqli_query($con, $query);
+
+        jsonResponseMain($query_run, 'Заявката е добавена на екип ' . $teamName, 'Заявката не е добавена на екип ' . $teamName);
     }
 }

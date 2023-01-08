@@ -23,7 +23,7 @@ $date = date("Y-m-d");
 </head>
 
 <body>
-  <!-- This is an example component -->
+  <!-- Page loader -->
   <div id="load-dashboard" class="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-slate-800 flex flex-col items-center justify-center">
     <div role="status">
       <svg aria-hidden="true" class="w-8 h-8 md:w-10 md:h-10 2xl:w-14 2xl:h-14 mb-2 md:mr-1 text-gray-100 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none">
@@ -33,6 +33,7 @@ $date = date("Y-m-d");
     </div>
     <h2 class="text-center text-gray-100 text-xl xl:text-2xl 2xl:text-3xl font-semibold">Зареждане...</h2>
   </div>
+  <!-- Dashboard -->
   <div id="app">
     <div class="flex overflow-hidden">
       <Transition name="slide-fade">
@@ -372,12 +373,14 @@ $date = date("Y-m-d");
                                 <?= date("d.m.Y", strtotime($rows['date'])) ?>
                               </td>
                               <td class="px-4 py-5 flex items-center justify-center border-b border-gray-200 bg-white text-sm text-center space-x-1.5">
-                                <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-order">
-                                  <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
-                                    <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
-                                  </svg>
-                                </button>
-                                <button type="button" class="bg-green-500 hover:bg-green-600 p-2 rounded-md transition-all focus:outline-none active:scale-90">
+                                <?php if ($rows["status"] == "Назначи") { ?>
+                                  <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-order">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                      <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
+                                    </svg>
+                                  </button>
+                                <?php } ?>
+                                <button value="<?= $rows["id"] ?>" type="button" class="bg-green-500 hover:bg-green-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 set-order">
                                   <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
                                     <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" />
                                   </svg>
@@ -403,7 +406,7 @@ $date = date("Y-m-d");
                 <div class="relative w-full h-full max-w-lg">
                   <div class="relative bg-white rounded-lg shadow mb-6">
                     <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
-                      <div class=" text-slate-700 font-bold text-2xl">Заявка</div>
+                      <div class=" text-slate-700 font-bold text-xl">Добави заявка</div>
                       <button type="button" class=" absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-add-order-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                           <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -482,7 +485,7 @@ $date = date("Y-m-d");
                 <div class="relative w-full h-full max-w-lg mt-10">
                   <div class="relative bg-white rounded-lg shadow mb-6">
                     <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
-                      <div class=" text-slate-700 font-bold text-2xl">Заявка</div>
+                      <div class=" text-slate-700 font-bold text-xl">Редактиране заявката</div>
                       <button type="button" class=" absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-order-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                           <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -558,7 +561,7 @@ $date = date("Y-m-d");
                 <div class="relative w-full max-w-lg h-auto">
                   <div class="relative bg-white rounded-lg shadow">
                     <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
-                      <div class=" text-slate-700 font-bold text-2xl">Клиент</div>
+                      <div class=" text-slate-700 font-bold text-xl">Клиент</div>
                       <button type="button" class=" absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center customer-order-modal-close">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                           <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -590,6 +593,53 @@ $date = date("Y-m-d");
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Set order modal -->
+            <div id="set-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
+                <div class="relative w-full h-full max-w-lg">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                      <div class=" text-slate-700 font-bold text-xl">Назначи заявка</div>
+                      <button type="button" class=" absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-set-order-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <!-- Modal body -->
+                    <form id="set-order-form">
+                      <div class="px-5 py-4 space-y-6 text-slate-700">
+                        <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
+                          <div class="w-full">
+                            <input type="hidden" id="order-date" name="orderDate">
+                            <input type="hidden" id="team-id-set" name="teamId">
+                            <input type="hidden" id="order-id-set" name="orderId">
+                            <input type="hidden" id="team-name" name="teamName">
+                            <label for="select-team" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете екип</label>
+                            <select id="select-team" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 mb-4"></select>
+                            <label for="user1-set-order" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Служител 1
+                            </label>
+                            <input type="text" readonly id="user1-set-order" name="userName1" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-300 w-full p-2.5" />
+                            <input type="hidden" id="user1-id-set-order" name="userID1">
+                            <label for="user2-set-order" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Служител 2
+                            </label>
+                            <input type="text" readonly id="user2-set-order" name="userName2" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-300 w-full p-2.5" />
+                            <input type="hidden" id="user2-id-set-order" name="userID2">
+                          </div>
+                        </div>
+                      </div>
+                      <div id="hide-set-order-btn" class="w-full border-t border-gray-200 p-3 flex justify-end items-center">
+                        <button type="button" class="text-slate-700 border border-slate-400 bg-transparent hover:bg-gray-100 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90 close-set-order-modal">Откажи</button>
+                        <button type="submit" class="text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90">Запази</button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -635,7 +685,9 @@ $date = date("Y-m-d");
                   <table id="user-table" class="min-w-full leading-normal">
                     <thead>
                       <tr>
-                        <th class="border-b-2 border-gray-200 bg-gray-100 text-center"></th>
+                        <th class="pr-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          снимка
+                        </th>
                         <th class="pr-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
                           име
                         </th>
@@ -697,21 +749,28 @@ $date = date("Y-m-d");
                               <?php } ?>
                             </td>
                             <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                              <?php if ($rows["team"] != '') {
+                              <?php if ($rows["team_name"] != '') {
                                 echo $rows["team_name"];
                               } else { ?>
                                 Няма
                               <?php } ?>
                             </td>
                             <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                              <?= date("d.m.Y", strtotime($rows['date_in'])) ?>
+                              <?= date("d.m.Y", strtotime($rows['in_date'])) ?>
                             </td>
                             <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center space-x-1.5">
-                              <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-user">
-                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
-                                  <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
-                                </svg>
-                              </button>
+                              <?php if ($rows["status"] != 0) { ?>
+                                <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-user">
+                                  <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                    <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
+                                  </svg>
+                                </button>
+                                <button value="<?= $rows["id"] ?>" type="button" class="bg-green-500 hover:bg-green-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-user-password">
+                                  <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                    <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd" />
+                                  </svg>
+                                </button>
+                              <?php } ?>
                             </td>
                           </tr>
                         <?php }
@@ -732,7 +791,7 @@ $date = date("Y-m-d");
                 <div class="relative w-full h-full max-w-lg">
                   <div class="relative bg-white rounded-lg shadow mb-6">
                     <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
-                      <div class=" text-slate-700 font-bold text-2xl">Потребител</div>
+                      <div class=" text-slate-700 font-bold text-xl">Добави потребител</div>
                       <button type="button" class=" absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-add-user-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                           <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -794,7 +853,7 @@ $date = date("Y-m-d");
                 <div class="relative w-full h-full max-w-lg">
                   <div class="relative bg-white rounded-lg shadow mb-6">
                     <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
-                      <div class=" text-slate-700 font-bold text-2xl">Потребител</div>
+                      <div class=" text-slate-700 font-bold text-xl">Редактиране потребител</div>
                       <button type="button" class=" absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-edit-user-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                           <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -853,6 +912,50 @@ $date = date("Y-m-d");
                 </div>
               </div>
             </div>
+
+            <!-- Edit user passowrd modal -->
+            <div id="user-password-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
+                <div class="relative w-full h-full max-w-lg">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                      <div class=" text-slate-700 font-bold text-xl">Задаване на парола</div>
+                      <button type="button" class=" absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-user-password-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <!-- Modal body -->
+                    <form id="user-password-form">
+                      <div class="px-5 py-4 space-y-6 text-slate-700">
+                        <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
+                          <div class="w-full">
+                            <input type="hidden" id="user-pass-id" name="userID">
+                            <label for="user-username" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Потребителско име
+                            </label>
+                            <input type="text" readonly id="user-username" name="userUsername" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-300 w-full p-2.5" />
+                            <label for="user-passowrd" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Парола
+                            </label>
+                            <input type="password" minlength="2" id="user-passowrd" name="userPassword" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи парола" />
+                            <label for="user-passowrd-rep" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Повтори парола
+                            </label>
+                            <input type="password" minlength="2" id="user-passowrd-rep" name="userPassowrdRep" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Повтори парола" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w-full border-t border-gray-200 p-3 flex justify-end items-center">
+                        <button type="button" class="text-slate-700 border border-slate-400 bg-transparent hover:bg-gray-100 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90 close-user-password-modal">Откажи</button>
+                        <button type="submit" class="text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90">Запази</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </main>
 
           <!-- Team section -->
@@ -884,7 +987,7 @@ $date = date("Y-m-d");
                           номер
                         </th>
                         <th class="pr-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
-                          име
+                          име на екип
                         </th>
                         <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
                           статус
@@ -896,33 +999,32 @@ $date = date("Y-m-d");
                           служител 2
                         </th>
                         <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          назначени задачи
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
                           действия
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                      $query = "SELECT * FROM users WHERE status = '1'";
+                      $query = "SELECT * FROM teams WHERE  	delete_team  != 'yes'";
                       $query_run = mysqli_query($con, $query);
 
                       if (mysqli_num_rows($query_run) > 0) {
                         while ($rows = mysqli_fetch_array($query_run)) {
                       ?>
                           <tr>
-                            <td class="bg-white border-b border-gray-200 px-2 py-5"><img src="../uploaded-files/user-images/<?= $rows["image"] ?>" alt="" class="w-10 h-10 rounded-full object-cover mx-auto" /></td>
                             <td class="pr-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                              <?= $rows["name"] ?>
+                              <?= $rows["id"] ?>
                             </td>
                             <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
                               <p class="text-gray-900 whitespace-no-wrap">
-                                <?= $rows["pid"] ?>
+                                <?= $rows["name"] ?>
                               </p>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                              <?= $rows["position"] ?>
-                            </td>
                             <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm">
-                              <?php if ($rows["status"] == 1) { ?>
+                              <?php if ($rows["status"] == "Yes") { ?>
                                 <span class="w-8 h-8 rounded-full bg-green-200 flex items-center justify-center mx-auto">
                                   <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-green-500">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
@@ -938,22 +1040,29 @@ $date = date("Y-m-d");
                               <?php } ?>
                             </td>
                             <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                              <?php if ($rows["team"] != '') {
-                                echo $rows["team_name"];
-                              } else { ?>
-                                Няма
-                              <?php } ?>
+                              <?= $rows["user1_name"] ?>
                             </td>
                             <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                              <?= date("d.m.Y", strtotime($rows['date_in'])) ?>
+                              <?= $rows["user2_name"] ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <button type="button" value="<?= $rows['id']; ?>" class="h-8 w-8 bg-blue-100 hover:bg-blue-200 text-blue-800 focus:outline-none text-xs font-semibold rounded-md active:scale-90 transition-all prevOrd">
+                                <?php
+                                $id = $rows['id'];
+
+                                $queryy = "SELECT * FROM orders WHERE team_id = '$id' AND date >= '$date'";
+                                $query_runn = mysqli_query($con, $queryy);
+
+                                if (mysqli_num_rows($query_runn) > 0) {
+                                  echo mysqli_num_rows($query_runn);
+                                } else {
+                                ?>
+                                  0
+                                <?php } ?>
+                              </button>
                             </td>
                             <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center space-x-1.5">
-                              <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-user">
-                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
-                                  <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
-                                </svg>
-                              </button>
-                              <button type="button" class="bg-red-500 hover:bg-red-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-user">
+                              <button type="button" value="<?= $rows["id"] ?>" class="bg-red-500 hover:bg-red-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 delete-team">
                                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
                                   <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
                                 </svg>
@@ -971,6 +1080,59 @@ $date = date("Y-m-d");
                 </div>
               </div>
             </div>
+
+            <!-- Add team modal -->
+            <div id="add-team-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
+                <div class="relative w-full h-full max-w-lg">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                      <div class="text-slate-700 font-bold text-xl">Добави екип</div>
+                      <button type="button" class=" absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-add-team-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <!-- Modal body -->
+                    <form id="add-team-form">
+                      <div class="px-5 py-4 space-y-6 text-slate-700">
+                        <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
+                          <div class="w-full">
+                            <label for="team-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Име на екип
+                            </label>
+                            <input type="text" id="team-name" name="teamName" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи име на екип" />
+                            <div class="mb-4">
+                              <label for="team-user1" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                Служител 1
+                              </label>
+                              <input type="text" id="team-user1" name="teamUser1" autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
+                              <input type="hidden" id="team-user1-pid" name="teamUser1Pid">
+                              <input type="hidden" id="team-user1-id" name="teamUser1Id">
+                              <div id="user-name1-dropdown" class="hidden absolute w-[90.5%] sm:w-[92.2%] bg-gray-50 border border-gray-400 border-t-0 shadow-lg rounded-b-lg -mt-1 z-50"></div>
+                            </div>
+                            <div class="mb-4">
+                              <label for="team-user2" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                Служител 2
+                              </label>
+                              <input type="text" minlength="2" id="team-user2" name="teamUser2" autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
+                              <input type="hidden" id="team-user2-pid" name="teamUser2Pid">
+                              <input type="hidden" id="team-user2-id" name="teamUser2Id">
+                              <div id="user-name2-dropdown" class="hidden absolute w-[90.5%] sm:w-[92.2%] bg-gray-50 border border-gray-400 border-t-0 shadow-lg rounded-b-lg -mt-1 z-50"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w-full border-t border-gray-200 p-3 flex justify-end items-center">
+                        <button type="button" class="text-slate-700 border border-slate-400 bg-transparent hover:bg-gray-100 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90 close-add-team-modal">Откажи</button>
+                        <button type="submit" class="text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90">Запази</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </main>
         </div>
       </Transition>
@@ -980,6 +1142,7 @@ $date = date("Y-m-d");
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
   <script src="../js/main-vue.js"></script>
+  <script src="../js/main.js"></script>
   <script src="../js/ajax.js"></script>
   <script src="../loader/dashLoader.js"></script>
   <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>

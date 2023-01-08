@@ -7,6 +7,16 @@ $("#open-nav-bar").click(function () {
   $("#navbar-default").slideToggle("slow");
 });
 
+$("#user-status").change(function () {
+  if ($(this)[0].selectedIndex == 0) {
+    $("#hidden-out-date-input").removeClass("block");
+    $("#hidden-out-date-input").addClass("hidden");
+  } else if ($(this)[0].selectedIndex == 1) {
+    $("#hidden-out-date-input").removeClass("hidden");
+    $("#hidden-out-date-input").addClass("block");
+  }
+});
+
 $("#select-buil").on("change", function () {
   var x = document.getElementById("select-buil").selectedIndex;
   var n = $("#slider").val();

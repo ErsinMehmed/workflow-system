@@ -19,7 +19,9 @@ $query_run = mysqli_query($con, $query);
 ?>
 <thead>
     <tr>
-        <th class="border-b-2 border-gray-200 bg-gray-100 text-center"></th>
+        <th class="pr-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+            снимка
+        </th>
         <th class="pr-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
             име
         </th>
@@ -78,21 +80,28 @@ if (mysqli_num_rows($query_run) > 0) {
                     <?php } ?>
                 </td>
                 <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                    <?php if ($rows["team"] != '') {
+                    <?php if ($rows["team_name"] != '') {
                         echo $rows["team_name"];
                     } else { ?>
                         Няма
                     <?php } ?>
                 </td>
                 <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                    <?= date("d.m.Y", strtotime($rows['date_in'])) ?>
+                    <?= date("d.m.Y", strtotime($rows['in_date'])) ?>
                 </td>
                 <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center space-x-1.5">
-                    <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-user">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
-                            <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
-                        </svg>
-                    </button>
+                    <?php if ($rows["status"] != 0) { ?>
+                        <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-user">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
+                            </svg>
+                        </button>
+                        <button value="<?= $rows["id"] ?>" type="button" class="bg-green-500 hover:bg-green-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-user-password">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    <?php } ?>
                 </td>
             </tr>
         <?php }

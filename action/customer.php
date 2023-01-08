@@ -20,56 +20,56 @@ if (isset($_POST['save_customer'])) {
     $curDT = date('Y-m-d');
 
     if ($firstName == NULL || $familyName == NULL || $email == NULL || $phone == NULL || $password == NULL || $passwordRep == NULL) {
-        $res = [
-            'status' => 422,
-            'message' => 'Попълнете всички полета'
-        ];
-        echo json_encode($res);
-        return;
-    }
 
-    $selQuery = "SELECT * FROM customer WHERE email = '$email'";
-    $query = mysqli_query($con, $selQuery);
-
-    if (mysqli_num_rows($query) == 0) {
-
-        if ($password == $passwordRep) {
-            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-            $query = "INSERT INTO customer (name,email,password,phone,created_at) VALUES ('$fullName','$email','$password','$phone','$curDT')";
-            $query_run = mysqli_query($con, $query);
-
-            jsonResponseMain($query_run, 'Успешна регистрация', 'Неуспешна регистрация');
-        } else {
-            jsonResponse(430, 'Въведените пароли не съвпадат');
-        }
+        jsonResponse(500, 'Попълнете всички полета');
     } else {
-        jsonResponse(400, 'Въведеният имейл вече съществува');
+        $selQuery = "SELECT * FROM customer WHERE email = '$email'";
+        $query = mysqli_query($con, $selQuery);
+
+        if (mysqli_num_rows($query) == 0) {
+
+            if ($password == $passwordRep) {
+                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+                $query = "INSERT INTO customer (name,email,password,phone,created_at) VALUES ('$fullName','$email','$password','$phone','$curDT')";
+                $query_run = mysqli_query($con, $query);
+
+                jsonResponseMain($query_run, 'Успешна регистрация', 'Неуспешна регистрация');
+            } else {
+                jsonResponse(500, 'Въведените пароли не съвпадат');
+            }
+        } else {
+            jsonResponse(500, 'Въведеният имейл вече съществува');
+        }
     }
 }
 
 //Login
 if (isset($_POST['login_info'])) {
 
-    $email =  ($_POST['email']);
+    $email = ($_POST['email']);
 
     $query = "SELECT * FROM customer WHERE email='$email'";
     $query_run = mysqli_query($con, $query);
 
-    while ($rows = mysqli_fetch_array($query_run)) {
+    if (mysqli_num_rows($query_run) > 0) {
+        while ($rows = mysqli_fetch_array($query_run)) {
 
-        if (password_verify($_POST['passowrdLogin'], $rows['password'])) {
-            $_SESSION['email'] = $email;
+            if (password_verify($_POST['passowrdLogin'], $rows['password'])) {
+                $_SESSION['email'] = $email;
 
-            $res = [
-                'status' => 200,
-                'userEmail' => $email,
-            ];
-            echo json_encode($res);
-            return;
-        } else {
-            jsonResponse(500, 'Грешен имейл или парола');
+                $res = [
+                    'status' => 200,
+                    'userEmail' => $email,
+                ];
+                echo json_encode($res);
+                return;
+            } else {
+                jsonResponse(500, 'Грешена парола');
+            }
         }
+    } else {
+        jsonResponse(500, 'Грешен имейл');
     }
 }
 
@@ -83,12 +83,8 @@ if (isset($_POST['update_customer'])) {
     $address = $_POST['address'];
 
     if ($username == NULL || $phone == NULL || $address == NULL) {
-        $res = [
-            'status' => 422,
-            'message' => 'Попълнете всички полета'
-        ];
-        echo json_encode($res);
-        return;
+
+        jsonResponse(500, 'Попълнете всички полета');
     } else {
         $query = "UPDATE customer SET username='$username', phone='$phone', city='$city', address='$address' WHERE email='$userEmail'";
         $query_run = mysqli_query($con, $query);
@@ -102,18 +98,12 @@ if (isset($_POST['update_customer_image'])) {
 
     $userEmail = $_POST['customerEmail'];
     $filename = $_FILES['customerImage']['name'];
-    $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-    $extensions_arr = array("jpg", "jpeg", "png");
-    move_uploaded_file($_FILES["customerImage"]["tmp_name"], '../uploaded-files/customer-images/' . $filename);
+    uploadPhoto($filename, "customerImage", '../uploaded-files/customer-images/');
 
 
     if ($filename == NULL) {
-        $res = [
-            'status' => 422,
-            'message' => 'Не сте избрали снимка'
-        ];
-        echo json_encode($res);
-        return;
+
+        jsonResponse(500, 'Попълнете всички полета');
     } else {
         $query = "UPDATE customer SET image='$filename' WHERE email='$userEmail'";
         $query_run = mysqli_query($con, $query);
@@ -130,12 +120,8 @@ if (isset($_POST['update_customer_password'])) {
     $newPasswordRep = $_POST['newPasswordRep'];
 
     if ($newPassword == NULL || $newPasswordRep == NULL) {
-        $res = [
-            'status' => 422,
-            'message' => 'Попълнете всички полета'
-        ];
-        echo json_encode($res);
-        return;
+
+        jsonResponse(500, 'Попълнете всички полета');
     } else {
         $query = "SELECT * FROM customer WHERE email='$userEmail'";
         $query_run = mysqli_query($con, $query);
@@ -224,11 +210,9 @@ if (isset($_GET['id'])) {
 //Upload customer room image
 if (isset($_POST['customer_upload_room'])) {
 
-    $filename = $_FILES['roomImage']['name'];
-    $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-    $extensions_arr = array("jpg", "jpeg", "png");
-    move_uploaded_file($_FILES["roomImage"]["tmp_name"], '../uploaded-files/room-images/' . $filename);
     $customerEmail = $_POST['customerEmail'];
+    $filename = $_FILES['roomImage']['name'];
+    uploadPhoto($filename, "roomImage", '../uploaded-files/room-images/');
 
     if ($filename == NULL) {
 

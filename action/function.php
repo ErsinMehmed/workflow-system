@@ -28,3 +28,10 @@ function jsonResponse($number, $message)
     echo json_encode($res);
     return;
 }
+
+function uploadPhoto($filename, $imgName, $path)
+{
+    $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+    $extensions_arr = array("jpg", "jpeg", "png");
+    move_uploaded_file($_FILES[$imgName]["tmp_name"], $path . $filename);
+}

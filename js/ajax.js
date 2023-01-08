@@ -34,7 +34,7 @@ $(document).ready(function () {
 
   alertify.set("notifier", "position", "top-center");
 
-  //Customer register
+  // Customer register
   $(document).on("submit", "#sign-in-form", function (e) {
     e.preventDefault();
 
@@ -58,7 +58,7 @@ $(document).ready(function () {
     });
   });
 
-  //Customer login
+  // Customer login
   $(document).on("submit", "#sing-up-form", function (e) {
     e.preventDefault();
 
@@ -78,7 +78,7 @@ $(document).ready(function () {
     });
   });
 
-  //Update customer information
+  // Update customer information
   $(document).on("submit", "#user-info-form", function (e) {
     e.preventDefault();
 
@@ -97,7 +97,7 @@ $(document).ready(function () {
     });
   });
 
-  //Update customer profile image
+  // Update customer profile image
   $(document).on("submit", "#customer-image-form", function (e) {
     e.preventDefault();
 
@@ -109,26 +109,16 @@ $(document).ready(function () {
     postData("../action/Customer.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
-      if (res.status == 422) {
-        alertify.error(res.message);
-      } else if (res.status == 200) {
+      if (res.status == 200) {
         alertify.success(res.message);
-
-        $.ajax({
-          url: "../action/Customer/ReloadPhoto.php",
-          type: "POST",
-          data: { userEmail: userEmail },
-          success: function (data) {
-            $(".update-photo").attr("src", data);
-          },
-        });
+        location.reload(true);
       } else if (res.status == 500) {
         alertify.error(res.message);
       }
     });
   });
 
-  //Update customer password
+  // Update customer password
   $(document).on("submit", "#update-customer-password", function (e) {
     e.preventDefault();
 
@@ -148,7 +138,7 @@ $(document).ready(function () {
     });
   });
 
-  //Customer profile logout
+  // Customer profile logout
   $("#log-out").on("click", function () {
     var action = "data";
 
@@ -166,7 +156,7 @@ $(document).ready(function () {
     });
   });
 
-  //Customer make order
+  // Customer make order
   $(document).on("submit", "#customer-order-form", function (e) {
     e.preventDefault();
 
@@ -189,7 +179,7 @@ $(document).ready(function () {
     });
   });
 
-  //Guest make order
+  // Guest make order
   $(document).on("submit", "#guest-order-form", function (e) {
     e.preventDefault();
 
@@ -209,7 +199,7 @@ $(document).ready(function () {
     });
   });
 
-  //Get customer history modal data
+  // Get customer history modal data
   $(document).on("click", ".history-view", function () {
     var id = $(this).val();
 
@@ -245,7 +235,7 @@ $(document).ready(function () {
     });
   });
 
-  //Date filter history section
+  // Date filter history section
   $("#date-picker-account").on("change", function () {
     var date = $(this).val();
     var offer = $("#account-offers").val();
@@ -263,7 +253,7 @@ $(document).ready(function () {
     });
   });
 
-  //Offer filter history section
+  // Offer filter history section
   $("#account-offers").on("change", function () {
     var offer = $(this).val();
     var date = $("#date-picker-account").val();
@@ -281,7 +271,7 @@ $(document).ready(function () {
     });
   });
 
-  //Customer upload room image form
+  // Customer upload room image form
   $(document).on("submit", "#room-images-form", function (e) {
     e.preventDefault();
 
@@ -302,7 +292,7 @@ $(document).ready(function () {
     });
   });
 
-  //Delete room image
+  // Delete room image
   $(".room-img").on("click", function () {
     var imgID = $(this).attr("id");
 
@@ -324,7 +314,7 @@ $(document).ready(function () {
     });
   });
 
-  //Admin make order
+  // Admin make order
   $(document).on("submit", "#add-order-form", function (e) {
     e.preventDefault();
 
@@ -352,7 +342,7 @@ $(document).ready(function () {
 
   closeModal(".close-add-order-modal", "#add-order-modal");
 
-  //Get order data for edit
+  // Get order data for edit
   $(document).on("click", ".edit-order", function () {
     var id = $(this).val();
 
@@ -410,7 +400,7 @@ $(document).ready(function () {
     });
   });
 
-  //Update order data
+  // Update order data
   $(document).on("submit", "#update-order-form", function (e) {
     e.preventDefault();
 
@@ -433,7 +423,7 @@ $(document).ready(function () {
 
   closeModal(".close-order-modal", "#order-modal");
 
-  //Show customer information
+  // Show customer information
   $(document).on("click", ".show-customer", function () {
     var email = $(this).val();
 
@@ -459,7 +449,7 @@ $(document).ready(function () {
     });
   });
 
-  //Date filter dashboard order section
+  // Date filter dashboard order section
   $("#order-filter-date").on("change", function () {
     var date = $(this).val();
     var text = $("#search-order").val();
@@ -477,7 +467,7 @@ $(document).ready(function () {
     });
   });
 
-  //Date filter dashboard order section
+  // Date filter dashboard order section
   $("#search-order").on("keyup", function () {
     var text = $(this).val();
     var date = $("#order-filter-date").val();
@@ -501,7 +491,7 @@ $(document).ready(function () {
 
   openModal("#add-user-btn", "#add-user-modal");
 
-  //Admin create user
+  // Admin create user
   $(document).on("submit", "#add-user-form", function (e) {
     e.preventDefault();
 
@@ -523,7 +513,7 @@ $(document).ready(function () {
     });
   });
 
-  //Get user data for edit
+  // Get user data for edit
   $(document).on("click", ".edit-user", function () {
     var id = $(this).val();
 
@@ -535,10 +525,16 @@ $(document).ready(function () {
         $("#edit-user-modal").removeClass("hidden");
         $("#edit-user-modal").addClass("block");
 
-        if (res.data.pay == "В брой") {
-          $('#pay-edit option[value="В брой"]').attr("selected", "selected");
-        } else if (res.data.pay == "С карта") {
-          $('#pay-edit option[value="С карта"]').attr("selected", "selected");
+        if (res.data.position == "Хигиенист") {
+          $('#user-position-edit option[value="Хигиенист"]').attr(
+            "selected",
+            "selected"
+          );
+        } else if (res.data.position == "Шофьор") {
+          $('#user-position-edit option[value="Шофьор"]').attr(
+            "selected",
+            "selected"
+          );
         }
 
         $("#user-id").val(res.data.id);
@@ -551,9 +547,72 @@ $(document).ready(function () {
     });
   });
 
+  // Admin update user
+  $(document).on("submit", "#edit-user-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_update_user", true);
+
+    postData("../action/AdminUsers.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#edit-user-form")[0].reset();
+        $("#edit-user-modal").removeClass("block");
+        $("#edit-user-modal").addClass("hidden");
+        $("#user-table").load(location.href + " #user-table");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
   closeModal(".close-edit-user-modal", "#edit-user-modal");
 
-  //User search by name and pid
+  // Get user data for change password
+  $(document).on("click", ".edit-user-password", function () {
+    var id = $(this).val();
+
+    getData("../action/AdminUsers.php?id=" + id, function (response) {
+      var res = jQuery.parseJSON(response);
+      if (res.status == 404) {
+        alert(res.message);
+      } else if (res.status == 200) {
+        $("#user-password-modal").removeClass("hidden");
+        $("#user-password-modal").addClass("block");
+
+        $("#user-pass-id").val(res.data.id);
+        $("#user-username").val(res.data.username);
+      }
+    });
+  });
+
+  closeModal(".close-user-password-modal", "#user-password-modal");
+
+  // Admin set new user password
+  $(document).on("submit", "#user-password-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_set_user_password", true);
+
+    postData("../action/AdminUsers.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#user-password-form")[0].reset();
+        $("#user-password-modal").removeClass("block");
+        $("#user-password-modal").addClass("hidden");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // User search by name and pid
   $("#search-user").on("keyup", function () {
     var text = $(this).val();
     var position = $("#select-position").val();
@@ -573,7 +632,7 @@ $(document).ready(function () {
     });
   });
 
-  //User position filter
+  // User position filter
   $("#select-position").on("change", function () {
     var text = $("#search-user").val();
     var position = $(this).val();
@@ -593,7 +652,7 @@ $(document).ready(function () {
     });
   });
 
-  //User status filter
+  // User status filter
   $("#select-status").on("change", function () {
     var text = $("#search-user").val();
     var position = $("#select-position").val();
@@ -612,4 +671,194 @@ $(document).ready(function () {
       },
     });
   });
+
+  openModal("#add-team-btn", "#add-team-modal");
+
+  closeModal(".close-add-team-modal", "#add-team-modal");
+
+  // User1 live secarch add team
+  $(document).on("keyup", "#team-user1", function () {
+    var user = $(this).val();
+
+    $.ajax({
+      url: "../action/team/UserSearch.php",
+      type: "POST",
+      data: { user: user },
+      success: function (data) {
+        $("#user-name1-dropdown").removeClass("hidden");
+        $("#user-name1-dropdown").html(data);
+
+        if (user == "") {
+          $("#user-name1-dropdown").addClass("hidden");
+        }
+      },
+    });
+  });
+
+  // Get user1 name and insert in input
+  $(document).on("click", ".get-name", function () {
+    var selected = $(this).html();
+    var getID = $(".user1").html();
+    var split = selected.split("-");
+    $("#team-user1").val(split[0]);
+    $("#team-user1-pid").val(split[1]);
+    $("#team-user1-id").val(getID);
+
+    $("#user-name1-dropdown").addClass("hidden");
+  });
+
+  // User2 live secarch add team
+  $(document).on("keyup", "#team-user2", function () {
+    var user = $(this).val();
+
+    $.ajax({
+      url: "../action/team/UserSearch2.php",
+      type: "POST",
+      data: { user: user },
+      success: function (data) {
+        $("#user-name2-dropdown").removeClass("hidden");
+        $("#user-name2-dropdown").html(data);
+
+        if (user == "") {
+          $("#user-name2-dropdown").addClass("hidden");
+        }
+      },
+    });
+  });
+
+  // Get user2 name and insert in input
+  $(document).on("click", ".get-namee", function () {
+    var selected = $(this).html();
+    var getID = $(".user2").html();
+    var split = selected.split("-");
+    $("#team-user2").val(split[0]);
+    $("#team-user2-pid").val(split[1]);
+    $("#team-user2-id").val(getID);
+
+    $("#user-name2-dropdown").addClass("hidden");
+  });
+
+  // Admin create team
+  $(document).on("submit", "#add-team-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_team", true);
+
+    postData("../action/AdminTeams.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#add-team-form")[0].reset();
+        $("#add-team-modal").removeClass("block");
+        $("#add-team-modal").addClass("hidden");
+        $("#user-table").load(location.href + " #user-table");
+        $("#team-table").load(location.href + " #team-table");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // Admin set order
+  $(document).on("click", ".set-order", function () {
+    var id = $(this).val();
+    $("#user1-set-order").val("");
+    $("#user2-set-order").val("");
+    $("#select-team").prop("disabled", false);
+    $("#hide-set-order-btn").removeClass("hidden");
+
+    getData("../action/AdminOrders.php?id=" + id, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 404) {
+        alertify.error(res.message);
+      } else if (res.status == 200) {
+        $("#set-order-modal").removeClass("hidden");
+        $("#set-order-modal").addClass("block");
+
+        if (res.data.team_id == 0) {
+          $("#order-id-set").val(res.data.id);
+          $("#order-date").val(res.data.date);
+        } else {
+          var id = res.data.team_id;
+
+          getData("../action/AdminTeams.php?id=" + id, function (response) {
+            var res = jQuery.parseJSON(response);
+
+            if (res.status == 404) {
+              alertify.error(res.message);
+            } else if (res.status == 200) {
+              $("#user1-set-order").val(res.data.user1_name);
+              $("#user2-set-order").val(res.data.user2_name);
+              $("#select-team").append(
+                "<option selected>" + res.data.name + "</option>"
+              );
+              $("#select-team").prop("disabled", "disabled");
+              $("#hide-set-order-btn").addClass("hidden");
+            }
+          });
+        }
+      }
+    });
+
+    var actionOr = "data";
+
+    $.ajax({
+      url: "../action/team/Select.php",
+      type: "POST",
+      data: {
+        actionOr: actionOr,
+      },
+      success: function (data) {
+        $("#select-team").html(data);
+      },
+    });
+  });
+
+  // Admin select team for order
+  $("#select-team").on("change", function () {
+    var id = $(this).val();
+
+    getData("../action/AdminTeams.php?id=" + id, function (response) {
+      var res = jQuery.parseJSON(response);
+      if (res.status == 404) {
+        alertify.error(res.message);
+      } else if (res.status == 200) {
+        $("#team-id-set").val(res.data.id);
+        $("#team-name").val(res.data.name);
+        $("#user1-set-order").val(res.data.user1_name);
+        $("#user1-id-set-order").val(res.data.user1_id);
+        $("#user2-set-order").val(res.data.user2_name);
+        $("#user2-id-set-order").val(res.data.user2_id);
+      }
+    });
+  });
+
+  // Admin set order
+  $(document).on("submit", "#set-order-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_set_order", true);
+
+    postData("../action/adminOrders.php", formData, function (response) {
+      console.log(response);
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#set-order-form")[0].reset();
+        $("#set-order-modal").removeClass("block");
+        $("#set-order-modal").addClass("hidden");
+        $("#order-table").load(location.href + " #order-table");
+        $("#team-table").load(location.href + " #team-table");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  closeModal(".close-set-order-modal", "#set-order-modal");
 });

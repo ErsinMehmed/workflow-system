@@ -19,20 +19,25 @@ if (isset($_POST['admin_user'])) {
     $date = $_POST['userPickDate'];
     $address = $_POST['userAddress'];
     $filename = $_FILES['userImg']['name'];
-    $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-    $extensions_arr = array("jpg", "jpeg", "png");
-    move_uploaded_file($_FILES["userImg"]["tmp_name"], '../uploaded-files/user-images/' . $filename);
-
+    uploadPhoto($filename, "userImg", '../uploaded-files/user-images/');
 
     if ($name == NULL || $egn == NULL || $pid == NULL || $phone == NULL || $filename == NULL || $address == NULL) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        if (is_numeric($egn)) {
-            $query = "INSERT INTO users (image,name,pid,address,date_in,status,position,egn,phone,dob) VALUES ('$filename','$name','$pid','$address','$date','1','$position','$egn','$phone','$dob')";
-            $query_run = mysqli_query($con, $query);
+        $query = "SELECT * FROM users WHERE pid = '$pid'";
+        $query_run = mysqli_query($con, $query);
 
-            jsonResponseMain($query_run, 'Успешно добавихте потребителя', 'Неуспешно добавяне на потребителя');
+        if (is_numeric($egn)) {
+
+            if (mysqli_num_rows($query_run) == 0) {
+                $query = "INSERT INTO users (image,name,pid,address,in_date,status,position,egn,phone,dob,username) VALUES ('$filename','$name','$pid','$address','$date','1','$position','$egn','$phone','$dob','$pid')";
+                $query_run = mysqli_query($con, $query);
+
+                jsonResponseMain($query_run, 'Успешно добавихте потребителя', 'Неуспешно добавяне на потребителя');
+            } else {
+                jsonResponse(500, 'Въведения ПИД вече съществува');
+            }
         } else {
             jsonResponse(500, 'Полето ЕГН трябва да съдържа само цифри');
         }
@@ -57,5 +62,60 @@ if (isset($_GET['id'])) {
         return;
     } else {
         jsonResponse(404, 'Заявката не е намерена');
+    }
+}
+
+//Update user information
+if (isset($_POST['admin_update_user'])) {
+
+    $id = $_POST['id'];
+    $name = $_POST['userName'];
+    $egn = $_POST['userEgn'];
+    $dob = $_POST['userDob'];
+    $phone = $_POST['userPhone'];
+    $position = $_POST['userPosition'];
+    $status = $_POST['userStatus'];
+    $outDate = $_POST['userOutDate'];
+    $address = $_POST['userAddress'];
+    $filename = $_FILES['userImg']['name'];
+
+    if ($name == NULL || $egn == NULL || $dob == NULL || $phone == NULL || $position == NULL || $status == NULL || $address == NULL) {
+
+        jsonResponse(500, 'Попълнете всички полета');
+    } else {
+        if ($filename == NULL) {
+            $query = "UPDATE users SET name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
+        } else {
+            uploadPhoto($filename, "userImg", '../uploaded-files/user-images/');
+            $query = "UPDATE users SET image='$filename', name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
+        }
+
+        $query_run = mysqli_query($con, $query);
+
+        jsonResponseMain($query_run, 'Данните на ' . $name . ' са обновени', 'Данните не са обновени');
+    }
+}
+
+//Update password
+if (isset($_POST['admin_set_user_password'])) {
+
+    $id = $_POST['userID'];
+    $password = $_POST['userPassword'];
+    $passwordRep = $_POST['userPassowrdRep'];
+
+    if ($password == NULL || $passwordRep == NULL) {
+
+        jsonResponse(500, 'Попълнете всички полета');
+    } else {
+        if ($password == $passwordRep) {
+            $password = password_hash($_POST['userPassword'], PASSWORD_DEFAULT);
+
+            $queryy = "UPDATE users SET password='$password' WHERE id='$id'";
+            $query_runn = mysqli_query($con, $queryy);
+
+            jsonResponseMain($query_runn, 'Паролата е обновена', 'Паролата не е обновена');
+        } else {
+            jsonResponse(500, 'Паролите не съвпадат');
+        }
     }
 }

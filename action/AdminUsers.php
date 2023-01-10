@@ -29,9 +29,8 @@ if (isset($_POST['admin_user'])) {
         $query_run = mysqli_query($con, $query);
 
         if (is_numeric($egn)) {
-
             if (mysqli_num_rows($query_run) == 0) {
-                $query = "INSERT INTO users (image,name,pid,address,in_date,status,position,egn,phone,dob,username) VALUES ('$filename','$name','$pid','$address','$date','1','$position','$egn','$phone','$dob','$pid')";
+                $query = "INSERT INTO users (image,name,pid,address,in_date,status,team_id,position,egn,phone,dob,username,team_name) VALUES ('$filename','$name','$pid','$address','$date','1','0','$position','$egn','$phone','$dob','$pid','')";
                 $query_run = mysqli_query($con, $query);
 
                 jsonResponseMain($query_run, 'Успешно добавихте потребителя', 'Неуспешно добавяне на потребителя');
@@ -78,21 +77,39 @@ if (isset($_POST['admin_update_user'])) {
     $outDate = $_POST['userOutDate'];
     $address = $_POST['userAddress'];
     $filename = $_FILES['userImg']['name'];
+    $date = date('Y-m-d');
 
     if ($name == NULL || $egn == NULL || $dob == NULL || $phone == NULL || $position == NULL || $status == NULL || $address == NULL) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        if ($filename == NULL) {
-            $query = "UPDATE users SET name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
+        if ($status == 0) {
+            $query = "SELECT * FROM set_order WHERE (user1_id = '$id' OR user2_id = '$id') AND order_date >= '$date'";
+            $query_run = mysqli_query($con, $query);
+
+            if (mysqli_num_rows($query_run) == 0) {
+                $queryy = "UPDATE teams SET delete_team='yes' WHERE user1_id = '$id' OR user2_id = '$id'";
+                $query_runn = mysqli_query($con, $queryy);
+
+                $query = "UPDATE users SET name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
+                $query_run = mysqli_query($con, $query);
+
+                jsonResponseMain($query_run, 'Данните на ' . $name . ' са обновени', 'Данните не са обновени');
+            } else {
+                jsonResponse(500, 'Служителя има назначени задачи към текущия момент');
+            }
         } else {
-            uploadPhoto($filename, "userImg", '../uploaded-files/user-images/');
-            $query = "UPDATE users SET image='$filename', name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
+            if ($filename == NULL) {
+                $query = "UPDATE users SET name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
+            } else {
+                uploadPhoto($filename, "userImg", '../uploaded-files/user-images/');
+                $query = "UPDATE users SET image='$filename', name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
+            }
+
+            $query_run = mysqli_query($con, $query);
+
+            jsonResponseMain($query_run, 'Данните на ' . $name . ' са обновени', 'Данните не са обновени');
         }
-
-        $query_run = mysqli_query($con, $query);
-
-        jsonResponseMain($query_run, 'Данните на ' . $name . ' са обновени', 'Данните не са обновени');
     }
 }
 

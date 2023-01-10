@@ -1,6 +1,6 @@
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 2s ease;
+  transition: opacity 0.3s ease;
 }
 
 .v-enter-from,
@@ -51,6 +51,7 @@
   z-index: 50;
   background-color: white;
 }
+
 .loader {
   --sz: 7rem;
   width: calc(var(--sz) * 2);
@@ -59,6 +60,7 @@
   display: flex;
   justify-content: space-evenly;
 }
+
 .loader__sq {
   --p-sz: calc(var(--sz) / 4);
   --m-offset: calc((var(--p-sz) * -1) * 0.75);
@@ -69,6 +71,7 @@
   height: 100%;
   width: 50%;
 }
+
 .loader__sq::before,
 .loader__sq::after {
   width: var(--p-sz);
@@ -79,36 +82,119 @@
   animation: loader-box-bounce 0.5s cubic-bezier(0.3, 0.5, 0.4, 0.95)
     calc(var(--i) * 0.06s) infinite alternate-reverse;
 }
+
 .loader__sq:first-of-type {
   margin-right: var(--m-offset);
 }
+
 .loader__sq:first-of-type::before {
   --i: 1;
   border: 3px solid #ff7ab5;
   border-radius: 50%;
 }
+
 .loader__sq:first-of-type::after {
   --i: 3;
   background-color: #c643fb;
 }
+
 @supports (clip-path: circle()) {
   clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
 }
+
 .loader__sq:nth-of-type(2)::before {
   --i: 2;
   border: 3px solid #ffb650;
 }
+
 .loader__sq:nth-of-type(2)::after {
   --i: 4;
   background-color: #2fe2dd;
   border-radius: 50%;
 }
+
 @supports (clip-path: circle()) {
   border-radius: 0;
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
 }
+
 @keyframes loader-box-bounce {
   to {
     transform: translateY(0);
   }
+}
+
+.st0 {
+  fill: #fff;
+}
+
+.st1 {
+  fill: #b5dfea;
+}
+
+.st2 {
+  opacity: 0.55;
+  fill: #90cedd;
+}
+
+.st3 {
+  fill: #d7f0f9;
+}
+
+.st4 {
+  fill: #0582c1;
+}
+
+.st5 {
+  fill: #79c9e8;
+}
+
+.st6 {
+  fill: #ffbf4d;
+}
+
+.st7 {
+  fill: #00668e;
+}
+
+.st8 {
+  fill: #05556d;
+}
+
+.st9 {
+  fill: #f98d3d;
+}
+
+.st10 {
+  fill: #ed701b;
+}
+
+.st11 {
+  fill: none;
+}
+
+.st12 {
+  fill: #efaa3a;
+}
+
+.st13 {
+  opacity: 0.29;
+  fill: #f98d2b;
+}
+
+.st14 {
+  fill: #49b4d6;
+}
+
+.st15 {
+  fill: #ff9f50;
+}
+
+.st16 {
+  fill: #f77e2d;
+}
+
+.st17 {
+  opacity: 0.55;
+  fill: url(#SVGID_1_);
 }

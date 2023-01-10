@@ -176,7 +176,7 @@ if (isset($_POST['customer_order'])) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         if (is_numeric($m2)) {
-            $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,email,city,invoice,customer_kind,information) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city','$invoice','Потребител','$information')";
+            $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,email,city,invoice,customer_kind,information,team_id) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city','$invoice','Потребител','$information','0')";
             $query_run = mysqli_query($con, $query);
 
             jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
@@ -242,8 +242,8 @@ if (isset($_POST['customer_upload_room'])) {
 }
 
 //Delete customer photo
-if (isset($_POST['imgID'])) {
-    $imgID = $_POST['imgID'];
+if (isset($_POST['delete_customer_img'])) {
+    $imgID = $_POST['imgId'];
     $customerEmail = $_SESSION['email'];
 
     if ($imgID == 1) {

@@ -35,6 +35,17 @@ createApp({
       dashClient: false,
       dashSection: "Заявки",
       toggleSidebar: true,
+      showFilter: false,
+      mobOrder: true,
+      mobWarehouse: false,
+      mobProfile: false,
+      showSearchInput: false,
+      activeOrder: true,
+      finishedOrder: false,
+      mobileCurrPassword: false,
+      mobileNewPassword: false,
+      mobileRepPassword: false,
+      productCount: 0,
       countries: [
         {
           name: "Австрия",

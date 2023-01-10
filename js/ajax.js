@@ -101,7 +101,7 @@ $(document).ready(function () {
   $(document).on("submit", "#customer-image-form", function (e) {
     e.preventDefault();
 
-    var userEmail = $("#getCutomerEmail").val();
+    var userEmail = $("#getCustomerEmail").val();
 
     var formData = new FormData(this);
     formData.append("update_customer_image", true);
@@ -292,27 +292,37 @@ $(document).ready(function () {
     });
   });
 
-  // Delete room image
+  // Open delete room image modal
   $(".room-img").on("click", function () {
-    var imgID = $(this).attr("id");
+    $("#delete-img-id").val($(this).attr("id"));
+    $("#delete-customer-img-modal").removeClass("hidden");
+    $("#delete-customer-img-modal").addClass("block");
+  });
 
-    $.ajax({
-      url: "../action/customer.php",
-      type: "POST",
-      data: {
-        imgID: imgID,
-      },
-      success: function (response) {
-        var res = jQuery.parseJSON(response);
-        if (res.status == 200) {
-          $("#document-section").load(location.href + " #document-section");
-          alertify.success(res.message);
-        } else if (res.status == 500) {
-          alertify.error(res.message);
-        }
-      },
+  // Delete room image
+  $(document).on("submit", "#delete-customer-img-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("delete_customer_img", true);
+
+    postData("../action/Customer.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#delete-customer-img-modal").removeClass("block");
+        $("#delete-customer-img-modal").addClass("hidden");
+        $("#document-section").load(location.href + " #document-section");
+        alertify.success(res.message);
+      } else if (res.status == 404) {
+        alertify.error(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
     });
   });
+
+  closeModal(".close-delete-customer-img-modal", "#delete-customer-img-modal");
 
   // Admin make order
   $(document).on("submit", "#add-order-form", function (e) {
@@ -394,7 +404,7 @@ $(document).ready(function () {
         $("#pick-date-edit").val(res.data.date);
         $("#customer-m2-edit").val(res.data.m2);
         $("#address-edit").val(res.data.address);
-        $("#infomation-edit").val(res.data.information);
+        $("#information-edit").val(res.data.information);
         $("#customer-price-edit").val(res.data.price + " лв.");
       }
     });
@@ -827,7 +837,7 @@ $(document).ready(function () {
         alertify.error(res.message);
       } else if (res.status == 200) {
         $("#team-id-set").val(res.data.id);
-        $("#team-name").val(res.data.name);
+        $("#team-name-set").val(res.data.name);
         $("#user1-set-order").val(res.data.user1_name);
         $("#user1-id-set-order").val(res.data.user1_id);
         $("#user2-set-order").val(res.data.user2_name);
@@ -844,7 +854,6 @@ $(document).ready(function () {
     formData.append("admin_set_order", true);
 
     postData("../action/adminOrders.php", formData, function (response) {
-      console.log(response);
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -861,4 +870,83 @@ $(document).ready(function () {
   });
 
   closeModal(".close-set-order-modal", "#set-order-modal");
+
+  // Admin show setted orders
+  $(document).on("click", ".prevOrd", function () {
+    $("#team-order-modal").removeClass("hidden");
+    $("#team-order-modal").addClass("block");
+    var teamId = $(this).val();
+
+    $.ajax({
+      url: "../action/team/TeamOrders.php",
+      type: "POST",
+      data: {
+        teamId: teamId,
+      },
+      success: function (data) {
+        $("#team-orders").html(data);
+      },
+    });
+  });
+
+  closeModal(".close-team-order-modal", "#team-order-modal");
+
+  // Admin delete modal team
+  $(document).on("click", ".delete-team", function () {
+    $("#delete-team-modal").removeClass("hidden");
+    $("#delete-team-modal").addClass("block");
+    $("#delete-team-id").val($(this).val());
+  });
+
+  closeModal(".close-delete-team-modal", "#delete-team-modal");
+
+  // Team search by id or name
+  $("#search-team").on("keyup", function () {
+    var text = $(this).val();
+
+    $.ajax({
+      url: "../action/team/Filter.php",
+      type: "POST",
+      data: {
+        text: text,
+      },
+      success: function (data) {
+        $("#team-table").html(data);
+      },
+    });
+  });
+
+  // Admin delete team
+  $(document).on("submit", "#delete-team-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_delete_team", true);
+
+    postData("../action/adminTeams.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#delete-team-modal").removeClass("block");
+        $("#delete-team-modal").addClass("hidden");
+        $("#user-table").load(location.href + " #user-table");
+        $("#team-table").load(location.href + " #team-table");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  openModal("#sort-btn", "#sort-order-modal");
+
+  closeModal(".close-sort-order-modal", "#sort-order-modal");
+
+  openModal("#show-product-btn", "#product-show-modal");
+
+  closeModal(".close-show-product-modal", "#product-show-modal");
+
+  openModal("#make-order-btn", "#product-order-modal");
+
+  closeModal(".close-product-order-modal", "#product-order-modal");
 });

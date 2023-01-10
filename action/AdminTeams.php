@@ -23,11 +23,11 @@ if (isset($_POST['admin_team'])) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         if ($pid1 != $pid2) {
-            $selQuery = "SELECT * FROM teams WHERE name = '$name'";
+            $selQuery = "SELECT * FROM teams WHERE name = '$name' AND delete_team <> 'yes'";
             $query = mysqli_query($con, $selQuery);
 
             if (mysqli_num_rows($query) == 0) {
-                $query = "INSERT INTO teams (name,user1_name,user2_name,user1_id,user2_id) VALUES ('$name','$user1','$user2','$id1','$id2')";
+                $query = "INSERT INTO teams (name,status,user1_name,user2_name,user1_id,user2_id,delete_team) VALUES ('$name','No','$user1','$user2','$id1','$id2','')";
                 $query_run = mysqli_query($con, $query);
 
                 jsonResponseMain($query_run, 'Успешно добавихте екип ' . $name . '', 'Неуспешно добавяне на екип');
@@ -71,5 +71,27 @@ if (isset($_GET['id'])) {
         return;
     } else {
         jsonResponse(404, 'Заявката не е намерена');
+    }
+}
+
+//Create team
+if (isset($_POST['admin_delete_team'])) {
+
+    $id = $_POST['teamId'];
+    $date = date('Y-m-d');
+
+    $query = "SELECT * FROM orders WHERE team_id = '$id' AND date >= '$date'";
+    $query_run = mysqli_query($con, $query);
+
+    if (mysqli_num_rows($query_run) == 0) {
+        $query = "UPDATE users SET team_id = '0', team_name = '' WHERE team_id = '$id'";
+        $query_run = mysqli_query($con, $query);
+
+        $queryy = "UPDATE teams SET delete_team = 'yes' WHERE id = '$id'";
+        $query_runn = mysqli_query($con, $queryy);
+
+        jsonResponseMain($query_run, 'Успешно изтриване', 'Неуспешно изтриване');
+    } else {
+        jsonResponse(500, 'Има настоящи назначени задачи на този екип');
     }
 }

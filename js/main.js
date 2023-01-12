@@ -293,3 +293,93 @@ $(".offer").click(function () {
   finalPrice.html(accountFinalPrice.toFixed(2) + " лв.");
   $("#input-account-price").val(accountFinalPrice.toFixed(2));
 });
+
+$("#first-star").click(function () {
+  $(".fa-star").removeClass("text-gray-300");
+  $(".fa-star").removeClass("text-yellow-400");
+  $("#first-star").addClass("text-yellow-400");
+  $("#second-star, #third-star, #fourth-star, #fifth-star").addClass(
+    "text-gray-300"
+  );
+  $("#stars-count").val(1);
+  $("#rate-star-value").html(1);
+});
+
+$("#second-star").click(function () {
+  $(".fa-star").removeClass("text-gray-300");
+  $(".fa-star").removeClass("text-yellow-400");
+  $("#first-star, #second-star").addClass("text-yellow-400");
+  $("#third-star, #fourth-star, #fifth-star").addClass("text-gray-300");
+  $("#stars-count").val(2);
+  $("#rate-star-value").html(2);
+});
+
+$("#third-star").click(function () {
+  $(".fa-star").removeClass("text-gray-300");
+  $(".fa-star").removeClass("text-yellow-400");
+  $("#first-star, #second-star, #third-star").addClass("text-yellow-400");
+  $("#fourth-star, #fifth-star").addClass("text-gray-300");
+  $("#stars-count").val(3);
+  $("#rate-star-value").html(3);
+});
+
+$("#fourth-star").click(function () {
+  $(".fa-star").removeClass("text-gray-300");
+  $(".fa-star").removeClass("text-yellow-400");
+  $("#first-star, #second-star, #third-star, #fourth-star").addClass(
+    "text-yellow-400"
+  );
+  $("#fifth-star").addClass("text-gray-300");
+  $("#stars-count").val(4);
+  $("#rate-star-value").html(4);
+});
+
+$("#fifth-star").click(function () {
+  $(".fa-star").removeClass("text-gray-300");
+  $(".fa-star").removeClass("text-yellow-400");
+  $(
+    "#first-star, #second-star, #third-star, #fourth-star, #fifth-star"
+  ).addClass("text-yellow-400");
+  $("#stars-count").val(5);
+  $("#rate-star-value").html(5);
+});
+
+$("#first-star").hover(function () {
+  $(".fa-star").removeClass("text-gray-300");
+  $(".fa-star").removeClass("text-yellow-400");
+  $("#first-star").addClass("text-yellow-400");
+  $("#second-star, #third-star, #fourth-star, #fifth-star").addClass(
+    "text-gray-300"
+  );
+});
+
+$("#second-star").hover(function () {
+  $(".fa-star").removeClass("text-gray-300");
+  $(".fa-star").removeClass("text-yellow-400");
+  $("#first-star, #second-star").addClass("text-yellow-400");
+  $("#third-star, #fourth-star, #fifth-star").addClass("text-gray-300");
+});
+
+$("#third-star").hover(function () {
+  $(".fa-star").removeClass("text-gray-300");
+  $(".fa-star").removeClass("text-yellow-400");
+  $("#first-star, #second-star, #third-star").addClass("text-yellow-400");
+  $("#fourth-star, #fifth-star").addClass("text-gray-300");
+});
+
+$("#fourth-star").hover(function () {
+  $(".fa-star").removeClass("text-gray-300");
+  $(".fa-star").removeClass("text-yellow-400");
+  $("#first-star, #second-star, #third-star, #fourth-star").addClass(
+    "text-yellow-400"
+  );
+  $("#fifth-star").addClass("text-gray-300");
+});
+
+$("#fifth-star").hover(function () {
+  $(".fa-star").removeClass("text-gray-300");
+  $(".fa-star").removeClass("text-yellow-400");
+  $(
+    "#first-star, #second-star, #third-star, #fourth-star, #fifth-star"
+  ).addClass("text-yellow-400");
+});

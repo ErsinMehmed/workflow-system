@@ -14,9 +14,10 @@ createApp({
       hamburgerIcon: true,
       passwordState: true,
       passwordRegRep: true,
-      accountSection: true,
+      accountSection: false,
       passwordSection: false,
       historySection: false,
+      rateSection: true,
       documentSection: false,
       imagePreview: null,
       profileImgPreview: null,
@@ -45,7 +46,24 @@ createApp({
       mobileCurrPassword: false,
       mobileNewPassword: false,
       mobileRepPassword: false,
+      mobileLoginPass: false,
+      startOrder: false,
+      orderStateStep: 0,
       productCount: 0,
+      orderState: [
+        "Почистване на повърхности",
+        "Почистване на стъклени повърхности",
+        "Почистване на общи части",
+        "Почистване на под",
+        "Приключване на задачата",
+      ],
+      orderImg: [
+        "../images/overCleaning.jpg",
+        "../images/windowCleaning.jpg",
+        "../images/bathroomCleaning.jpg",
+        "../images/floorCleaning.png",
+        "../images/doneCleaning.png",
+      ],
       countries: [
         {
           name: "Австрия",
@@ -239,6 +257,7 @@ createApp({
         this.addressLength = char + "/" + 200;
       }
     },
+
     onFileChange(event) {
       const fileData = event.target.files[0];
       this.imagePreview = URL.createObjectURL(fileData);

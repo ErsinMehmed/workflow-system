@@ -7,7 +7,7 @@ include 'function.php';
 
 error_reporting(E_ERROR | E_PARSE);
 
-//Create profile
+// Create profile
 if (isset($_POST['save_customer'])) {
 
     $firstName = $_POST['firstName'];
@@ -44,7 +44,7 @@ if (isset($_POST['save_customer'])) {
     }
 }
 
-//Login
+// Login
 if (isset($_POST['login_info'])) {
 
     $email = ($_POST['email']);
@@ -73,7 +73,7 @@ if (isset($_POST['login_info'])) {
     }
 }
 
-//Update customer information
+// Update customer information
 if (isset($_POST['update_customer'])) {
 
     $userEmail = $_POST['userEmail'];
@@ -93,7 +93,7 @@ if (isset($_POST['update_customer'])) {
     }
 }
 
-//Upload photo
+// Upload photo
 if (isset($_POST['update_customer_image'])) {
 
     $userEmail = $_POST['customerEmail'];
@@ -112,7 +112,7 @@ if (isset($_POST['update_customer_image'])) {
     }
 }
 
-//Update password
+// Update password
 if (isset($_POST['update_customer_password'])) {
 
     $userEmail = $_POST['customerEmail'];
@@ -137,22 +137,22 @@ if (isset($_POST['update_customer_password'])) {
 
                     jsonResponseMain($query_runn, 'Паролата е обновена', 'Паролата не е обновена');
                 } else {
-                    jsonResponse(430, 'Паролите не съвпадат');
+                    jsonResponse(500, 'Паролите не съвпадат');
                 }
             } else {
-                jsonResponse(510, 'Старата паролата е грешна');
+                jsonResponse(500, 'Старата паролата е грешна');
             }
         }
     }
 }
 
-//Log out
+// Log out
 if (isset($_POST['action'])) {
     unset($_SESSION['email']);
     jsonResponse(200, 'Успешно излизане');
 }
 
-//Custoemer make order
+// Custoemer make order
 if (isset($_POST['customer_order'])) {
 
     $customerName = $_POST['customerName'];
@@ -186,7 +186,7 @@ if (isset($_POST['customer_order'])) {
     }
 }
 
-//Get customer history data
+// Get customer history data
 if (isset($_GET['id'])) {
     $id = mysqli_real_escape_string($con, $_GET['id']);
 
@@ -207,7 +207,7 @@ if (isset($_GET['id'])) {
     }
 }
 
-//Upload customer room image
+// Upload customer room image
 if (isset($_POST['customer_upload_room'])) {
 
     $customerEmail = $_POST['customerEmail'];
@@ -241,7 +241,7 @@ if (isset($_POST['customer_upload_room'])) {
     }
 }
 
-//Delete customer photo
+// Delete customer photo
 if (isset($_POST['delete_customer_img'])) {
     $imgID = $_POST['imgId'];
     $customerEmail = $_SESSION['email'];
@@ -258,5 +258,26 @@ if (isset($_POST['delete_customer_img'])) {
         $query = "UPDATE customer SET image_room3='' WHERE email='$customerEmail'";
         $query_run = mysqli_query($con, $query);
         jsonResponseMain($query_run, 'Снимакта е изтрита', 'Снимката не е изтрита');
+    }
+}
+
+// Rate services
+if (isset($_POST['customer_rate'])) {
+
+    $rating = $_POST['rating'];
+    $orderId = $_POST['id'];
+    $teamId = $_POST['team_id'];
+    $text = $_POST['text'];
+
+    if ($teamId == NULL || $rating == NULL) {
+        jsonResponse(500, 'Попълнете всички полета');
+    } else {
+        $query = "INSERT INTO team_rating (team_id,rating) VALUES ('$teamId','$rating')";
+        $query_run = mysqli_query($con, $query);
+
+        $query = "UPDATE orders SET customer_opinion='$text' WHERE id='$orderId'";
+        $query_run = mysqli_query($con, $query);
+
+        jsonResponseMain($query_run, 'Благодарим за вашато мнение', '');
     }
 }

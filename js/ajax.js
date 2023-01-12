@@ -179,6 +179,27 @@ $(document).ready(function () {
     });
   });
 
+  // Customer rate services
+  $(document).on("submit", "#customer-opinion-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("customer_rate", true);
+
+    postData("../action/Customer.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#customer-opinion-modal").removeClass("block");
+        $("#customer-opinion-modal").addClass("hidden");
+        $("#customer-opinion-form")[0].reset();
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
   // Guest make order
   $(document).on("submit", "#guest-order-form", function (e) {
     e.preventDefault();
@@ -205,8 +226,8 @@ $(document).ready(function () {
 
     getData("../action/Customer.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
-      if (res.status == 404) {
-        alert(res.message);
+      if (res.status == 500) {
+        alertify.error(res.message);
       } else if (res.status == 200) {
         $("#history-modal").removeClass("hidden");
         $("#history-modal").addClass("block");
@@ -358,8 +379,8 @@ $(document).ready(function () {
 
     getData("../action/AdminOrders.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
-      if (res.status == 404) {
-        alert(res.message);
+      if (res.status == 500) {
+        alertify.error(res.message);
       } else if (res.status == 200) {
         $("#order-modal").removeClass("hidden");
         $("#order-modal").addClass("block");
@@ -405,7 +426,7 @@ $(document).ready(function () {
         $("#customer-m2-edit").val(res.data.m2);
         $("#address-edit").val(res.data.address);
         $("#information-edit").val(res.data.information);
-        $("#customer-price-edit").val(res.data.price + " лв.");
+        $("#customer-price-edit").val(res.data.price);
       }
     });
   });
@@ -529,8 +550,8 @@ $(document).ready(function () {
 
     getData("../action/AdminUsers.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
-      if (res.status == 404) {
-        alert(res.message);
+      if (res.status == 500) {
+        alertify.error(res.message);
       } else if (res.status == 200) {
         $("#edit-user-modal").removeClass("hidden");
         $("#edit-user-modal").addClass("block");
@@ -587,8 +608,8 @@ $(document).ready(function () {
 
     getData("../action/AdminUsers.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
-      if (res.status == 404) {
-        alert(res.message);
+      if (res.status == 500) {
+        alertify.error(res.message);
       } else if (res.status == 200) {
         $("#user-password-modal").removeClass("hidden");
         $("#user-password-modal").addClass("block");
@@ -938,6 +959,258 @@ $(document).ready(function () {
     });
   });
 
+  // Mobile login
+  $(document).on("submit", "#mobile-login-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("mobile_login", true);
+
+    postData("../action/Mobile.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        location.reload();
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // Mobile logout
+  $("#mobile-log-out").on("click", function () {
+    var action = "data";
+
+    $.ajax({
+      url: "../action/Mobile.php",
+      type: "POST",
+      data: { action: action },
+      success: function (response) {
+        var res = jQuery.parseJSON(response);
+
+        if (res.status == 200) {
+          location.reload();
+        }
+      },
+    });
+  });
+
+  // Mobile update password
+  $(document).on("submit", "#update-password-mobile-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("mobile_password_update", true);
+
+    postData("../action/Mobile.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#update-password-mobile-form")[0].reset();
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // Check selected radio input
+  function getChecklistItems() {
+    var result = $("input:radio:checked").get();
+
+    var data = $.map(result, function (element) {
+      return $(element).val();
+    });
+
+    return data.join("-");
+  }
+
+  $(".order-state-btn").on("click", function () {
+    $("#active-btn").val($(this).attr("id"));
+  });
+
+  // Mobile sort order
+  $("#search-mobile-order").on("keyup", function () {
+    var text = $(this).val();
+    var orderBy = getChecklistItems();
+    var orderState = $("#active-btn").val();
+
+    if (orderState == 1) {
+      $.ajax({
+        url: "../action/mobile/Sort.php",
+        type: "POST",
+        data: { text: text, orderBy: orderBy },
+        success: function (response) {
+          $("#active-order-section").html(response);
+        },
+      });
+    } else {
+      $.ajax({
+        url: "../action/mobile/Sort1.php",
+        type: "POST",
+        data: { text: text, orderBy: orderBy },
+        success: function (response) {
+          $("#finished-order-section").html(response);
+        },
+      });
+    }
+  });
+
+  // Mobile get order data
+  $(".get-order-data").on("click", function () {
+    var id = $(this).val();
+    $(".order-start-loader").removeClass("hidden");
+    $(".order-start-loader").addClass("block");
+
+    getData("../action/adminOrders.php?id=" + id, function (response) {
+      var res = jQuery.parseJSON(response);
+      $("#order-id-cancel").val(res.data.id);
+
+      if (res.status == 404) {
+        alertify.error(res.message);
+      } else if (res.status == 200) {
+        if (res.data.status == "В процес") {
+          $("#end-order").val(res.data.id);
+          $("#order-not-started").removeClass("block");
+          $("#order-not-started").addClass("hidden");
+          $("#order-is-started").removeClass("hidden");
+          $("#order-is-started").addClass("block");
+        } else {
+          $("#end-order").val(res.data.id);
+          $("#order-not-started").removeClass("hidden");
+          $("#order-not-started").addClass("block");
+          $("#order-is-started").removeClass("block");
+          $("#order-is-started").addClass("hidden");
+
+          $(".start-order-btn").val(res.data.id + " " + res.data.team_id);
+          $("#customer-name-mobile").html(res.data.customer_name);
+          $("#address-mobile").html(res.data.address);
+          $("#pay-mobile").html(res.data.pay);
+          $("#offer-mobile").html(res.data.offer);
+          var date = res.data.date.split("-");
+          $("#date-time-mobile").html(
+            date[2] + "." + date[1] + "." + date[0] + " - " + res.data.time
+          );
+          $("#m2-mobile").html(res.data.m2 + " m2");
+          $("#price-mobile").html(res.data.price + " лв.");
+          $("#phone-mobile").html(res.data.phone);
+
+          if (res.data.information != "") {
+            $("#information-mobile").html(res.data.information);
+          } else {
+            $("#information-mobile").html("Няма допънителна информация");
+          }
+
+          if (
+            res.data.status == "Отказана" ||
+            res.data.status == "Приключена"
+          ) {
+            $("#order-start-btn").removeClass("flex");
+            $("#order-start-btn").addClass("hidden");
+          } else {
+            $("#order-start-btn").removeClass("hidden");
+            $("#order-start-btn").addClass("flex");
+          }
+        }
+
+        $(".order-start-loader").removeClass("block");
+        $(".order-start-loader").addClass("hidden");
+      }
+    });
+  });
+
+  // Mobile start order
+  $(".start-order-btn").on("click", function () {
+    var orderId = $(this).val();
+
+    $.ajax({
+      url: "../action/Mobile.php",
+      type: "POST",
+      data: { orderId: orderId },
+      success: function (response) {
+        var res = jQuery.parseJSON(response);
+        if (res.status == 200) {
+          $("#order-not-started").removeClass("block");
+          $("#order-not-started").addClass("hidden");
+          $("#order-is-started").removeClass("hidden");
+          $("#order-is-started").addClass("block");
+        } else if (res.status == 500) {
+          alertify.error(res.message);
+        }
+      },
+    });
+  });
+
+  // Mobile end order
+  $("#end-order").on("click", function () {
+    var orderEndId = $(this).val();
+
+    $.ajax({
+      url: "../action/Mobile.php",
+      type: "POST",
+      data: { orderEndId: orderEndId },
+      success: function (response) {
+        var res = jQuery.parseJSON(response);
+        console.log(response);
+        if (res.status == 200) {
+          location.reload();
+        }
+      },
+    });
+  });
+
+  // Mobile cancel order
+  $(document).on("submit", "#order-cancel-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("mobile_cancel_order", true);
+
+    postData("../action/Mobile.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#cancel-order-modal").removeClass("block");
+        $("#cancel-order-modal").addClass("hidden");
+        location.reload();
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // Dashboard cancel reason modal
+  $(".show-cancel-dashboard").on("click", function () {
+    var id = $(this).val();
+    $("#cancel-order-reason-modal").removeClass("hidden");
+    $("#cancel-order-reason-modal").addClass("block");
+
+    getData("../action/adminOrders.php?id=" + id, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#cancel-reason-textarea").val(res.data.cancel_reason);
+      }
+    });
+  });
+
+  // Account get order id and team id
+  $(".open-rating-modal").on("click", function () {
+    var id = $(this).val().split(" ");
+    $("#get-order-id").val(id[0]);
+    $("#get-team-id").val(id[1]);
+  });
+
+  openModal(".open-rating-modal", "#customer-opinion-modal");
+
+  closeModal(".close-customer-opinion-modal", "#customer-opinion-modal");
+
+  closeModal(".cancel-order-reason-modal", "#cancel-order-reason-modal");
+
+  openModal(".open-cancel-modal", "#cancel-order-modal");
+
+  closeModal(".close-cancel-order-modal", "#cancel-order-modal");
+
   openModal("#sort-btn", "#sort-order-modal");
 
   closeModal(".close-sort-order-modal", "#sort-order-modal");
@@ -949,4 +1222,8 @@ $(document).ready(function () {
   openModal("#make-order-btn", "#product-order-modal");
 
   closeModal(".close-product-order-modal", "#product-order-modal");
+
+  $("#active-order").html($(".active-order-count").val());
+
+  $("#finished-order").html($(".finished-order-count").val());
 });

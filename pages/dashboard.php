@@ -336,10 +336,10 @@ $date = date("Y-m-d");
                                     <span class="relative"><?= $rows["status"] ?></span>
                                   </span>
                                 <?php } else if ($rows["status"] == 'Отказана') { ?>
-                                  <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                    <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                                    <span class="relative"><?= $rows["status"] ?></span>
-                                  </span>
+                                  <button value="<?= $rows["id"] ?>" class="relative inline-block px-3 py-1 group font-semibold text-red-900 leading-tight focus:outline-none show-cancel-dashboard">
+                                    <span aria-hidden class="absolute inset-0 bg-red-200 group-hover:bg-red-300 transition-all opacity-50 rounded-full"></span>
+                                    <span class="group-hover:underline transition-all relative"><?= $rows["status"] ?></span>
+                                  </button>
                                 <?php } else if ($rows["status"] == 'Изтекла') { ?>
                                   <span class="relative inline-block px-3 py-1 font-semibold text-gray-900 leading-tight">
                                     <span aria-hidden class="absolute inset-0 bg-gray-200 opacity-50 rounded-full"></span>
@@ -474,6 +474,28 @@ $date = date("Y-m-d");
                         <button type="submit" class="text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90">Запази</button>
                       </div>
                     </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cancel reason modal -->
+            <div id="cancel-order-reason-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex items-center justify-center">
+                <div class="relative w-full h-auto max-w-lg">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                      <div class=" text-slate-700 font-bold text-xl">Причина за отказа</div>
+                      <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center cancel-order-reason-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="px-5 py-4">
+                      <textarea id="cancel-reason-textarea" readonly rows="3" class="block p-2.5 w-full text-sm text-slate-700 rounded border border-slate-300 focus:outline-none resize-none"></textarea>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -939,11 +961,11 @@ $date = date("Y-m-d");
                             <label for="user-passowrd" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Парола
                             </label>
-                            <input type="password" minlength="2" id="user-passowrd" name="userPassword" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи парола" />
+                            <input type="password" minlength="5" autocomplete="off" id="user-passowrd" name="userPassword" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи парола" />
                             <label for="user-passowrd-rep" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Повтори парола
                             </label>
-                            <input type="password" minlength="2" id="user-passowrd-rep" name="userPassowrdRep" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Повтори парола" />
+                            <input type="password" minlength="5" autocomplete="off" id="user-passowrd-rep" name="userPassowrdRep" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Повтори парола" />
                           </div>
                         </div>
                       </div>
@@ -1000,6 +1022,9 @@ $date = date("Y-m-d");
                         </th>
                         <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
                           назначени задачи
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          средна оценка
                         </th>
                         <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
                           действия
@@ -1061,7 +1086,19 @@ $date = date("Y-m-d");
                                   0
                                 </button>
                               <?php } ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm flex justify-center">
+                              <div class="h-8 w-8 bg-blue-100 text-blue-800 text-xs font-semibold rounded-md flex items-center justify-center">
+                                <?php
+                                $id = $rows['id'];
 
+                                $sql_run = "SELECT CAST(AVG(rating) AS DECIMAL(10,1)) AS rating FROM team_rating WHERE team_id = '$id'";
+                                $result = $con->query($sql_run);
+                                while ($row = mysqli_fetch_array($result)) {
+                                  echo $row['rating'];
+                                }
+                                ?>
+                              </div>
                             </td>
                             <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center space-x-1.5">
                               <button type="button" value="<?= $rows["id"] ?>" class="bg-red-500 hover:bg-red-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 delete-team">

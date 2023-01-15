@@ -101,14 +101,11 @@ $(document).ready(function () {
   $(document).on("submit", "#customer-image-form", function (e) {
     e.preventDefault();
 
-    var userEmail = $("#getCustomerEmail").val();
-
     var formData = new FormData(this);
     formData.append("update_customer_image", true);
 
     postData("../action/Customer.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
-
       if (res.status == 200) {
         alertify.success(res.message);
         location.reload(true);
@@ -193,6 +190,7 @@ $(document).ready(function () {
         $("#customer-opinion-modal").removeClass("block");
         $("#customer-opinion-modal").addClass("hidden");
         $("#customer-opinion-form")[0].reset();
+        $("#rate-section").load(location.href + " #rate-section");
         alertify.success(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
@@ -202,6 +200,7 @@ $(document).ready(function () {
 
   // Guest make order
   $(document).on("submit", "#guest-order-form", function (e) {
+    history - view;
     e.preventDefault();
 
     var formData = new FormData(this);
@@ -314,7 +313,7 @@ $(document).ready(function () {
   });
 
   // Open delete room image modal
-  $(".room-img").on("click", function () {
+  $(document).on("click", ".room-img", function (e) {
     $("#delete-img-id").val($(this).attr("id"));
     $("#delete-customer-img-modal").removeClass("hidden");
     $("#delete-customer-img-modal").addClass("block");
@@ -453,6 +452,27 @@ $(document).ready(function () {
   });
 
   closeModal(".close-order-modal", "#order-modal");
+
+  // Send invoice to customer profile
+  $(document).on("click", ".send-invoice", function (e) {
+    var orderIdInvoice = $(this).val();
+
+    $.ajax({
+      url: "../action/adminOrders.php",
+      type: "POST",
+      data: { orderIdInvoice: orderIdInvoice },
+      success: function (response) {
+        var res = jQuery.parseJSON(response);
+
+        if (res.status == 200) {
+          $("#order-table").load(location.href + " #order-table");
+          alertify.success(res.message);
+        } else if (res.status == 500) {
+          alertify.error(res.message);
+        }
+      },
+    });
+  });
 
   // Show customer information
   $(document).on("click", ".show-customer", function () {
@@ -1056,32 +1076,35 @@ $(document).ready(function () {
     }
   });
 
+  $(document).on("click", ".update-order-steps", function () {
+    $("#active-order-account").load(location.href + " #active-order-account");
+  });
+
   // Mobile get order data
-  $(".get-order-data").on("click", function () {
+  $(document).on("click", ".get-order-data", function () {
     var id = $(this).val();
+
     $(".order-start-loader").removeClass("hidden");
     $(".order-start-loader").addClass("block");
 
     getData("../action/adminOrders.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
-      $("#order-id-cancel").val(res.data.id);
 
-      if (res.status == 404) {
-        alertify.error(res.message);
-      } else if (res.status == 200) {
+      if (res.status == 200) {
         if (res.data.status == "В процес") {
           $("#end-order").val(res.data.id);
+          $("#mobOrder").addClass("hidden");
           $("#order-not-started").removeClass("block");
           $("#order-not-started").addClass("hidden");
           $("#order-is-started").removeClass("hidden");
           $("#order-is-started").addClass("block");
         } else {
           $("#end-order").val(res.data.id);
+          $("#mobOrder").addClass("hidden");
           $("#order-not-started").removeClass("hidden");
           $("#order-not-started").addClass("block");
           $("#order-is-started").removeClass("block");
           $("#order-is-started").addClass("hidden");
-
           $(".start-order-btn").val(res.data.id + " " + res.data.team_id);
           $("#customer-name-mobile").html(res.data.customer_name);
           $("#address-mobile").html(res.data.address);
@@ -1119,6 +1142,19 @@ $(document).ready(function () {
     });
   });
 
+  // Set steps from order
+  $(".next-step-mobile").on("click", function () {
+    const id = $("#end-order").val();
+    const step = $(this).val();
+
+    $.ajax({
+      url: "../action/Mobile.php",
+      type: "POST",
+      data: { step: step, id: id },
+      success: function (response) {},
+    });
+  });
+
   // Mobile start order
   $(".start-order-btn").on("click", function () {
     var orderId = $(this).val();
@@ -1130,6 +1166,9 @@ $(document).ready(function () {
       success: function (response) {
         var res = jQuery.parseJSON(response);
         if (res.status == 200) {
+          $("#active-order-section").load(
+            location.href + " #active-order-section"
+          );
           $("#order-not-started").removeClass("block");
           $("#order-not-started").addClass("hidden");
           $("#order-is-started").removeClass("hidden");
@@ -1151,7 +1190,7 @@ $(document).ready(function () {
       data: { orderEndId: orderEndId },
       success: function (response) {
         var res = jQuery.parseJSON(response);
-        console.log(response);
+
         if (res.status == 200) {
           location.reload();
         }
@@ -1196,10 +1235,157 @@ $(document).ready(function () {
 
   // Account get order id and team id
   $(".open-rating-modal").on("click", function () {
-    var id = $(this).val().split(" ");
+    const id = $(this).val().split(" ");
     $("#get-order-id").val(id[0]);
     $("#get-team-id").val(id[1]);
   });
+
+  const getJson = async (id) => {
+    const url = `../action/adminOrders.php?id=${id}`;
+    const response = await fetch(url);
+    const text = await response.text();
+    const data = JSON.parse(text).data;
+    return data;
+  };
+
+  $(".print-invoice").on("click", async function () {
+    var id = $(this).val();
+    const myData = await getJson(id);
+    const prEl = await print(myData);
+  });
+
+  async function print(jsonData) {
+    const preparePrint = () => {
+      var winPrint = window.open(
+        "",
+        "",
+        "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
+      );
+
+      winPrint.document.write(
+        `<!DOCTYPE html>
+		<html>
+			<head>
+				<script src="https:cdn.tailwindcss.com"></script>
+				<title>Фактура-${jsonData.customer_name}-${jsonData.date}</title>
+
+				<style>
+				@media print {
+					@page {
+						margin-top: 0;
+						margin-bottom: 0;
+					}
+					body {
+						padding-top: 72px;
+						padding-bottom: 72px ;
+					}
+				}
+				</style>
+			</head>
+		<body>
+			<div class="text-blue-700 font-bold text-4xl mt-16">${
+        jsonData.company_name
+      }</div>
+			<div class="text-blue-500 mt-1 text-2xl font-semibold">${jsonData.date
+        .replaceAll("-", ".")
+        .split(".")
+        .reverse()
+        .join(".")}</div>
+      <div class="text-blue-700 text-2xl font-semibold mt-16">ФАКТУРА №${
+        jsonData.id
+      }</div>
+      <div class="w-full flex mt-3 text-slate-700">
+        <div class="w-1/2">
+            <div class="p-2.5 text-center text-xl bg-blue-100 font-semibold border border-blue-600">Клиентски данни</div>
+             <div class="p-2.5 border border-t-0 border-blue-600">
+                <div class="flex items-center">
+                  <span class="font-semibold mr-2">Име:</span><span>${
+                    jsonData.customer_name
+                  }</span>
+                </div>
+                <div class="flex items-center mt-1.5">
+                  <span class="font-semibold mr-2">Телефон:</span><span>${
+                    jsonData.phone
+                  }</span>
+                </div>
+                <div class="flex items-center mt-1.5">
+                  <span class="font-semibold mr-2">Адрес:</span><span>${
+                    jsonData.city + ", " + jsonData.address
+                  }</span>
+                </div>
+            </div>
+        </div>
+        <div class="w-1/2">
+            <div class="p-2.5 text-center text-xl bg-blue-100 font-semibold border border-l-0 border-blue-600">Фирмени данни</div>
+            <div class="p-2.5 border border-t-0 border-l-0 border-blue-600">
+                <div class="flex items-center">
+                  <span class="font-semibold mr-2">Име:</span><span>${
+                    jsonData.company_name
+                  }</span>
+                </div>
+                <div class="flex items-center mt-1.5">
+                  <span class="font-semibold mr-2">ЕИК:</span><span>${
+                    jsonData.company_eik
+                  }</span>
+                </div>
+                <div class="flex items-center mt-1.5">
+                  <span class="font-semibold mr-2">Адрес:</span><span>${
+                    jsonData.city + ", " + jsonData.address
+                  }</span>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="mt-5">
+        <div class="flex text-slate-700">
+          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 font-semibold border border-blue-600">
+            Номер
+          </div>
+          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 font-semibold border border-l-0 border-blue-600">
+            Услуга
+          </div>
+          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 font-semibold border border-l-0 border-blue-600">
+            Оферта
+          </div>
+          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 font-semibold border border-l-0 border-blue-600">
+            ДДС
+          </div>
+          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 font-semibold border border-l-0 border-blue-600">
+            Крайна цена
+          </div>
+        </div>
+        <div class="flex text-slate-700">
+          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 border-t-0 border border-blue-600">
+            ${jsonData.id}
+          </div>
+          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 border border-t-0 border-l-0 border-blue-600">
+            Почистване
+          </div>
+          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 border border-t-0 border-l-0 border-blue-600">
+           ${jsonData.offer}
+          </div>
+           <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 border border-t-0 border-l-0 border-blue-600">
+           ${(jsonData.price * 1.2 - jsonData.price).toFixed(2)} лв.
+          </div>
+          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 border border-t-0 border-l-0 border-blue-600">
+            ${jsonData.price} лв.
+          </div>
+        </div>
+      </div>
+      <div class="text-blue-700 text-xl font-semibold mt-4">Благодарим Ви, че избрахте нас !</div>
+      <div class="text-slate-700 text-xl font-semibold">Carpet Services</div>
+      <div class="text-slate-700 mt-13">Варна, ул. Васил Гергов 26</div>
+		</body>
+		</html>`
+      );
+
+      return winPrint;
+    };
+    const printeEl = await await preparePrint(jsonData);
+    setTimeout(() => {
+      printeEl.print();
+    }, 100);
+  }
 
   openModal(".open-rating-modal", "#customer-opinion-modal");
 
@@ -1226,4 +1412,25 @@ $(document).ready(function () {
   $("#active-order").html($(".active-order-count").val());
 
   $("#finished-order").html($(".finished-order-count").val());
+
+  $("#order-btn").on("click", function () {
+    $("#order-not-started").addClass("hidden");
+    $("#order-is-started").addClass("hidden");
+    $("#mobOrder").removeClass("hidden");
+    $("#mobOrder").addClass("block");
+  });
+
+  $("#profile-btn").on("click", function () {
+    $("#order-not-started").addClass("hidden");
+    $("#order-is-started").addClass("hidden");
+    $("#mobOrder").removeClass("hidden");
+    $("#mobOrder").addClass("block");
+  });
+
+  $("#warehouse-btn").on("click", function () {
+    $("#order-not-started").addClass("hidden");
+    $("#order-is-started").addClass("hidden");
+    $("#mobOrder").removeClass("hidden");
+    $("#mobOrder").addClass("block");
+  });
 });

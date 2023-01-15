@@ -95,6 +95,7 @@ if (isset($_POST['text'])) {
                         </div>
                     </div>
                 </button>
+
             <?php
             }
         } else {

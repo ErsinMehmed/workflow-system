@@ -38,7 +38,7 @@ if (isset($_POST['admin_order'])) {
 
                 jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
             } else {
-                jsonResponse(500, 'Въведеният имейл вече съществува');
+                jsonResponse(500, 'Въведеният имейл вече свързан към профил');
             }
         } else {
             jsonResponse(500, 'Полето квадратура приема само числа');
@@ -48,6 +48,7 @@ if (isset($_POST['admin_order'])) {
 
 // Get order data
 if (isset($_GET['id'])) {
+
     $id = mysqli_real_escape_string($con, $_GET['id']);
 
     $query = "SELECT * FROM orders WHERE id='$id'";
@@ -95,6 +96,7 @@ if (isset($_POST['admin_order_update'])) {
 
 // Get customer information
 if (isset($_GET['email'])) {
+
     $email = mysqli_real_escape_string($con, $_GET['email']);
 
     $query = "SELECT * FROM customer WHERE email='$email'";
@@ -126,15 +128,25 @@ if (isset($_POST['admin_set_order'])) {
     $userID2 =  ($_POST['userID2']);
     $teamName = ($_POST['teamName']);
     if ($user1 == NULL || $user2 == NULL) {
-
         jsonResponse(500, 'Попълнете всички полета');
     } else {
+        $queryy = "UPDATE orders SET team_id = '$teamID', status = 'Назначена' WHERE id='$orderID'";
+        $query_runn = mysqli_query($con, $queryy);
+
         $query = "INSERT INTO set_order (team_id,order_id,user1,user2,user1_id,user2_id,team_name,date,view,order_date) VALUES ('$teamID','$orderID','$user1','$user2','$userID1','$userID2','$teamName','$curDT','1','$orderDate')";
         $query_run = mysqli_query($con, $query);
 
-        $query = "UPDATE orders SET team_id = '$teamID', status = 'Назначена' WHERE id='$orderID'";
-        $query_runn = mysqli_query($con, $query);
-
         jsonResponseMain($query_run, 'Заявката е добавена на екип ' . $teamName, 'Заявката не е добавена на екип ' . $teamName);
     }
+}
+
+// Send invoice to customer
+if (isset($_POST['orderIdInvoice'])) {
+
+    $id = $_POST['orderIdInvoice'];
+
+    $query = "UPDATE orders SET invoice_document = 'yes' WHERE id='$id'";
+    $query_run = mysqli_query($con, $query);
+
+    jsonResponseMain($query_run, 'Фактурата е изпратена успешно', 'Фактурата не е изпратена');
 }

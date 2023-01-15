@@ -99,16 +99,20 @@ if (isset($_POST['update_customer_image'])) {
     $userEmail = $_POST['customerEmail'];
     $filename = $_FILES['customerImage']['name'];
     uploadPhoto($filename, "customerImage", '../uploaded-files/customer-images/');
+    $filesize = $_FILES['customerImage']['size'];
+    $filesize = number_format($filesize / 1048576, 2);
 
+    if ($filesize < 2) {
+        if ($filename == NULL) {
+            jsonResponse(500, 'Попълнете всички полета');
+        } else {
+            $query = "UPDATE customer SET image='$filename' WHERE email='$userEmail'";
+            $query_run = mysqli_query($con, $query);
 
-    if ($filename == NULL) {
-
-        jsonResponse(500, 'Попълнете всички полета');
+            jsonResponseMain($query_run, 'Снимката е обновена', 'Снимката не е обновена');
+        }
     } else {
-        $query = "UPDATE customer SET image='$filename' WHERE email='$userEmail'";
-        $query_run = mysqli_query($con, $query);
-
-        jsonResponseMain($query_run, 'Снимката е обновена', 'Снимката не е обновена');
+        jsonResponse(500, 'Снимката, която се опитвате да добавите е по-голяма от 2MB');
     }
 }
 
@@ -152,7 +156,7 @@ if (isset($_POST['action'])) {
     jsonResponse(200, 'Успешно излизане');
 }
 
-// Custoemer make order
+// Customer make order
 if (isset($_POST['customer_order'])) {
 
     $customerName = $_POST['customerName'];
@@ -169,6 +173,8 @@ if (isset($_POST['customer_order'])) {
     $information = $_POST['information'];
     $price = $_POST['price'];
     $m2 = $_POST['m2'];
+    $company = $_POST['company'];
+    $eik = $_POST['eik'];
     $curDT = date('Y-m-d H:i:s');
 
     if ($building == NULL || $offer == NULL || $time == NULL || $payment == NULL || $invoice == NULL || $city == NULL || $address == NULL || $m2 == NULL || $price == NULL) {
@@ -176,7 +182,7 @@ if (isset($_POST['customer_order'])) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         if (is_numeric($m2)) {
-            $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,email,city,invoice,customer_kind,information,team_id) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city','$invoice','Потребител','$information','0')";
+            $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,email,city,invoice,customer_kind,information,team_id,company_name,company_eik) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city','$invoice','Потребител','$information','0','$company','$eik')";
             $query_run = mysqli_query($con, $query);
 
             jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
@@ -213,31 +219,37 @@ if (isset($_POST['customer_upload_room'])) {
     $customerEmail = $_POST['customerEmail'];
     $filename = $_FILES['roomImage']['name'];
     uploadPhoto($filename, "roomImage", '../uploaded-files/room-images/');
+    $filesize = $_FILES['roomImage']['size'];
+    $filesize = number_format($filesize / 1048576, 2);
 
-    if ($filename == NULL) {
+    if ($filesize < 2) {
+        if ($filename == NULL) {
 
-        jsonResponse(500, 'Попълнете всички полета');
-    } else {
-        $queryq = "SELECT * FROM customer WHERE email='$customerEmail'";
-        $query_runq = mysqli_query($con, $queryq);
+            jsonResponse(500, 'Добавете снимка');
+        } else {
+            $queryq = "SELECT * FROM customer WHERE email='$customerEmail'";
+            $query_runq = mysqli_query($con, $queryq);
 
-        while ($rows = mysqli_fetch_array($query_runq)) {
-            if ($rows["image_room1"] == NULL) {
-                $queryy = "UPDATE customer SET image_room1='$filename' WHERE email='$customerEmail'";
-                $query_runn = mysqli_query($con, $queryy);
-                jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
-            } else if ($rows["image_room2"] == NULL) {
-                $queryy = "UPDATE customer SET image_room2='$filename' WHERE email='$customerEmail'";
-                $query_runn = mysqli_query($con, $queryy);
-                jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
-            } else if ($rows["image_room3"] == NULL) {
-                $queryy = "UPDATE customer SET image_room3='$filename' WHERE email='$customerEmail'";
-                $query_runn = mysqli_query($con, $queryy);
-                jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
-            } else {
-                jsonResponse(404, 'Вече сте добавили 3 снимки');
+            while ($rows = mysqli_fetch_array($query_runq)) {
+                if ($rows["image_room1"] == NULL) {
+                    $queryy = "UPDATE customer SET image_room1='$filename' WHERE email='$customerEmail'";
+                    $query_runn = mysqli_query($con, $queryy);
+                    jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
+                } else if ($rows["image_room2"] == NULL) {
+                    $queryy = "UPDATE customer SET image_room2='$filename' WHERE email='$customerEmail'";
+                    $query_runn = mysqli_query($con, $queryy);
+                    jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
+                } else if ($rows["image_room3"] == NULL) {
+                    $queryy = "UPDATE customer SET image_room3='$filename' WHERE email='$customerEmail'";
+                    $query_runn = mysqli_query($con, $queryy);
+                    jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
+                } else {
+                    jsonResponse(404, 'Вече сте добавили 3 снимки');
+                }
             }
         }
+    } else {
+        jsonResponse(500, 'Снимката, която се опитвате да добавите е по-голяма от 2MB');
     }
 }
 

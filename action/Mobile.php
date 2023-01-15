@@ -109,6 +109,17 @@ if (isset($_POST['mobile_cancel_order'])) {
     }
 }
 
+// Order step update
+if (isset($_POST['step'])) {
+
+    $id = $_POST['id'];
+    $step = $_POST['step'];
+
+    $query = "UPDATE orders SET step = '$step' WHERE id='$id'";
+    $query_run = mysqli_query($con, $query);
+    jsonResponseMain($query_run, 'Задачата е актуализиране', 'Задачата не е актуализиране');
+}
+
 // End order
 if (isset($_POST['orderEndId'])) {
 

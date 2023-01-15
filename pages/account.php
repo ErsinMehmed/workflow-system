@@ -52,7 +52,7 @@ $email = $_SESSION['email'];
         </div>
 
         <!--Message toast-->
-        <div v-show="imagePreview != null && documentSection" id="toast-message" class="hidden md:flex fixed top-24 right-4 items-center p-4 w-full max-w-sm text-gray-500 bg-white rounded-lg shadow-xl border border-slate-100" role="alert">
+        <div v-show="imagePreview != null && documentSection" id="toast-message" class="hidden md:flex fixed z-40 top-24 right-4 items-center p-4 w-full max-w-sm text-gray-500 bg-white rounded-lg shadow-xl border border-slate-100" role="alert">
           <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-green-500 bg-green-100 rounded-lg">
             <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -161,46 +161,59 @@ $email = $_SESSION['email'];
         <!--Main section-->
         <div class="h-screen md:h-full md:mt-10 w-full md:flex md:justify-center md:items-center md:my-10">
           <div class="w-full md:w-[50rem] lg:w-[55rem] xl:w-[65rem] 2xl:w-[66rem] md:shadow-xl py-6 px-6 md:py-8 md:px-10 md:rounded-xl md:border border-slate-50 md:flex md:space-x-10">
-            <div class="w-full md:w-[20%]">
+            <div class="w-full md:w-[20%] mx-auto">
               <ul class="flex justify-between md:block md:space-y-3 text-slate-600 font-semibold sm:px-6 md:px-0 pb-3 md:pb-0 md:mt-0">
-                <li @click="accountSection = true; passwordSection = false;  historySection= false; documentSection = false; orderSection = false; rateSection = false" :class="accountSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-5 md:h-5 md:mr-1">
+                <li @click="accountSection = true; passwordSection = false;  historySection= false; documentSection = false; orderSection = false; rateSection = false ; activeOrders = false" :class="accountSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-2.5 md:py-1.5 px-2.5 md:pl-3 transition-all rounded-lg md:rounded-xl cursor-pointer active:scale-90">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <span class="hidden md:block">Акаунт</span>
                 </li>
-                <li @click="passwordSection = true; accountSection = false;  historySection = false; documentSection = false; orderSection = false; rateSection = false" :class="passwordSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-5 md:h-5 md:mr-1">
+                <li @click="passwordSection = true; accountSection = false;  historySection = false; documentSection = false; orderSection = false; rateSection = false; activeOrders = false" :class="passwordSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-2.5 md:py-1.5 px-2.5 md:pl-3 transition-all rounded-lg md:rounded-xl cursor-pointer active:scale-90">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                   </svg>
                   <span class="hidden md:block">Парола</span>
                 </li>
-                <li @click=" historySection = true; accountSection = false;  passwordSection = false; documentSection = false; orderSection = false; rateSection = false" :class=" historySection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-5 md:h-5 md:mr-1">
+                <?php
+                $query = "SELECT * FROM orders WHERE email = '$email' AND status = 'В процес'";
+                $query_run = mysqli_query($con, $query);
+                while ($rows = mysqli_fetch_array($query_run)) {
+                  if ($rows["step"] > 0 && $rows["step"] < 5) { ?>
+                    <li @click="activeOrders = true; passwordSection = false; accountSection = false;  historySection = false; documentSection = false; orderSection = false; rateSection = false" :class="activeOrders ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-2.5 md:py-1.5 px-2.5 md:pl-3 transition-all rounded-lg md:rounded-xl cursor-pointer active:scale-90">
+                      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+                      </svg>
+                      <span class="hidden md:block">Активни</span>
+                    </li>
+                <?php }
+                } ?>
+                <li @click=" historySection = true; accountSection = false;  passwordSection = false; documentSection = false; orderSection = false; rateSection = false; activeOrders = false" :class=" historySection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-2.5 md:py-1.5 px-2.5 md:pl-3 transition-all rounded-lg md:rounded-xl cursor-pointer active:scale-90">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span class="hidden md:block">История</span>
                 </li>
-                <li @click="documentSection = true; accountSection = false;  passwordSection = false; historySection = false; orderSection = false; rateSection = false" :class="documentSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-5 md:h-5 md:mr-1">
+                <li @click="documentSection = true; accountSection = false;  passwordSection = false; historySection = false; orderSection = false; rateSection = false; activeOrders = false" :class="documentSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-2.5 md:py-1.5 px-2.5 md:pl-3 transition-all rounded-lg md:rounded-xl cursor-pointer active:scale-90">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
                   </svg>
                   <span class="hidden md:block">Документи</span>
                 </li>
-                <li @click="orderSection = true; documentSection = false; accountSection = false;  passwordSection = false; historySection = false; rateSection = false" :class="orderSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-5 md:h-5 md:mr-1">
+                <li @click="orderSection = true; documentSection = false; accountSection = false;  passwordSection = false; historySection = false; rateSection = false; activeOrders = false" :class="orderSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-2.5 md:py-1.5 px-2.5 md:pl-3 transition-all rounded-lg md:rounded-xl cursor-pointer active:scale-90">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                   </svg>
                   <span class="hidden md:block">Поръчка</span>
                 </li>
-                <li @click="rateSection = true; orderSection = false; documentSection = false; accountSection = false;  passwordSection = false; historySection = false" :class="rateSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-5 md:h-5 md:mr-1">
+                <li @click="rateSection = true; orderSection = false; documentSection = false; accountSection = false;  passwordSection = false; historySection = false; activeOrders = false" :class="rateSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-2.5 md:py-1.5 px-2.5 md:pl-3 transition-all rounded-lg md:rounded-xl cursor-pointer active:scale-90">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                   </svg>
                   <span class="hidden md:block">Оценки</span>
                 </li>
                 <li id="log-out" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90 bg-white hover:bg-[#deebfd] hover:text-slate-700">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 md:w-5 md:h-5 md:mr-1">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                   </svg>
                   <span class="hidden md:block">Изход</span>
@@ -386,6 +399,147 @@ $email = $_SESSION['email'];
               </form>
             </div>
 
+            <!-- Active order section -->
+            <div id="active-order-account" v-show="activeOrders" class="w-full md:w-[80%]">
+              <?php
+              $query = "SELECT * FROM orders WHERE email = '$email' AND status = 'В процес'";
+              $query_run = mysqli_query($con, $query);
+              while ($rows = mysqli_fetch_array($query_run)) {
+              ?>
+                <div class="w-full shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700 animate__animated animate__fadeIn">
+                  <div class="grid gap-6 row-gap-10 lg:grid-cols-2">
+                    <div class="lg:py-6 lg:pr-16">
+                      <div class="flex">
+                        <div class="flex flex-col items-center mr-4">
+                          <div>
+                            <?php if ($rows["step"] >= 1) { ?>
+                              <div class="flex items-center bg-green-100 justify-center w-10 h-10 border border-green-200 rounded-full">
+                                <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 text-green-400">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                </svg>
+                              </div>
+                            <?php } else { ?>
+                              <div class="flex items-center justify-center w-10 h-10 border rounded-full">
+                                <svg class="w-4 text-gray-600" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                  <line fill="none" stroke-miterlimit="10" x1="12" y1="2" x2="12" y2="22"></line>
+                                  <polyline fill="none" stroke-miterlimit="10" points="19,15 12,22 5,15"></polyline>
+                                </svg>
+                              </div>
+                            <?php } ?>
+                          </div>
+                          <div class="w-px h-full bg-gray-300"></div>
+                        </div>
+                        <div class="pt-1 pb-8">
+                          <p class="mb-1.5 text-lg font-bold">Стъпка 1</p>
+                          <p class="text-gray-700 text-sm">
+                            Нашият екип внимателно почиства всички ваши мебели и техника.
+                          </p>
+                        </div>
+                      </div>
+                      <div class="flex">
+                        <div class="flex flex-col items-center mr-4">
+                          <div>
+                            <?php if ($rows["step"] >= 2) { ?>
+                              <div class="flex items-center bg-green-100 justify-center w-10 h-10 border border-green-200 rounded-full">
+                                <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 text-green-400">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                </svg>
+                              </div>
+                            <?php } else { ?>
+                              <div class="flex items-center justify-center w-10 h-10 border rounded-full">
+                                <svg class="w-4 text-gray-600" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                  <line fill="none" stroke-miterlimit="10" x1="12" y1="2" x2="12" y2="22"></line>
+                                  <polyline fill="none" stroke-miterlimit="10" points="19,15 12,22 5,15"></polyline>
+                                </svg>
+                              </div>
+                            <?php } ?>
+                          </div>
+                          <div class="w-px h-full bg-gray-300"></div>
+                        </div>
+                        <div class="pt-1 pb-8">
+                          <p class="mb-1.5 text-lg font-bold">Стъпка 2</p>
+                          <p class="text-gray-700 text-sm">
+                            Екипа почиства вашите прозорци и стъклени повърхности.
+                          </p>
+                        </div>
+                      </div>
+                      <div class="flex">
+                        <div class="flex flex-col items-center mr-4">
+                          <div>
+                            <?php if ($rows["step"] >= 3) { ?>
+                              <div class="flex items-center bg-green-100 justify-center w-10 h-10 border border-green-200 rounded-full">
+                                <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 text-green-400">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                </svg>
+                              </div>
+                            <?php } else { ?>
+                              <div class="flex items-center justify-center w-10 h-10 border rounded-full">
+                                <svg class="w-4 text-gray-600" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                  <line fill="none" stroke-miterlimit="10" x1="12" y1="2" x2="12" y2="22"></line>
+                                  <polyline fill="none" stroke-miterlimit="10" points="19,15 12,22 5,15"></polyline>
+                                </svg>
+                              </div>
+                            <?php } ?>
+                          </div>
+                          <div class="w-px h-full bg-gray-300"></div>
+                        </div>
+                        <div class="pt-1 pb-8">
+                          <p class="mb-1.5 text-lg font-bold">Стъпка 3</p>
+                          <p class="text-gray-700 text-sm">
+                            Почти свършихме! Екипът в момента почиства всички бани, тоалетни и градински пространства.
+                          </p>
+                        </div>
+                      </div>
+                      <div class="flex">
+                        <div class="flex flex-col items-center mr-4">
+                          <div>
+                            <?php if ($rows["step"] >= 4) { ?>
+                              <div class="flex items-center bg-green-100 justify-center w-10 h-10 border border-green-200 rounded-full">
+                                <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 text-green-400">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                </svg>
+                              </div>
+                            <?php } else { ?>
+                              <div class="flex items-center justify-center w-10 h-10 border rounded-full">
+                                <svg class="w-4 text-gray-600" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                  <line fill="none" stroke-miterlimit="10" x1="12" y1="2" x2="12" y2="22"></line>
+                                  <polyline fill="none" stroke-miterlimit="10" points="19,15 12,22 5,15"></polyline>
+                                </svg>
+                              </div>
+                            <?php } ?>
+                          </div>
+                        </div>
+                        <div class="pt-1 pb-8">
+                          <p class="mb-1.5 text-lg font-bold">Стъпка 4</p>
+                          <p class="text-gray-700 text-sm">
+                            Ето, че сме на края! Екипът почиства професионално вашият под с голямо внимание.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="relative">
+                      <?php if ($rows["step"] == 1) { ?>
+                        <img class="inset-0 object-cover object-bottom w-full rounded shadow-lg lg:absolute lg:h-full" src="../images/overCleaning.jpg" alt="" />
+                      <?php } ?>
+                      <?php if ($rows["step"] == 2) { ?>
+                        <img class="inset-0 object-cover object-bottom w-full rounded shadow-lg lg:absolute lg:h-full" src="../images/windowCleaning.jpg" alt="" />
+                      <?php } ?>
+                      <?php if ($rows["step"] == 3) { ?>
+                        <img class="inset-0 object-cover object-bottom w-full rounded shadow-lg lg:absolute lg:h-full" src="../images/bathroomCleaning.jpg" alt="" />
+                      <?php } ?>
+                      <?php if ($rows["step"] == 4) { ?>
+                        <img class="inset-0 object-cover object-bottom w-full rounded shadow-lg lg:absolute lg:h-full" src="../images/floorCleaning.png" alt="" />
+                      <?php } ?>
+                    </div>
+                  </div>
+                  <button :class="{'right-16' : scY > 300}" class="fixed bottom-4 right-4 flex items-center justify-center bg-blue-500 text-white active:scale-90 transition-all hover:bg-blue-400 w-28 h-10 rounded-xl font-semibold update-order-steps"><span>Обнови</span><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 ml-1">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                    </svg>
+                  </button>
+                </div>
+              <?php } ?>
+            </div>
+
             <!--History section-->
             <div v-show="historySection" class="md:w-[80%] shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700 animate__animated animate__fadeIn">
               <h1 class="font-bold text-2xl mb-6 md:mb-8 text-center sm:text-left">
@@ -524,7 +678,7 @@ $email = $_SESSION['email'];
                       Натиснете върху снимката за да я смените.
                     </div>
                     <div class="sm:flex justify-end mt-3">
-                      <button @click="imagePreview = null" type="submit" class="w-full sm:w-auto text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-0 font-semibold rounded-lg text-sm px-5 py-2.5 transition-all active:scale-90">
+                      <button @click="imagePreview = null" type="submit" class="w-full sm:w-auto text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-0 font-semibold rounded-lg text-sm px-4 py-2 transition-all active:scale-90">
                         Запази промените
                       </button>
                     </div>
@@ -545,10 +699,10 @@ $email = $_SESSION['email'];
                         <?php
                         if ($rows["image_room1"] != '') { ?>
                           <Transition>
-                            <div class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-slate-100 hover:brightness-90 group cursor-pointer shadow-lg">
+                            <div class="w-20 h-20 md:w-[120px] md:h-[120px] rounded-lg border border-slate-100 hover:brightness-90 group cursor-pointer shadow-lg transition-all">
                               <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/room-images/<?= $rows["image_room1"] ?>" alt="">
-                              <div id="1" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90 room-img">
-                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white ">
+                              <div id="1" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-11 md:h-11 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90 room-img">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 md:w-6 md:h-6 text-white ">
                                   <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
                                 </svg>
                               </div>
@@ -558,10 +712,10 @@ $email = $_SESSION['email'];
                         }
                         if ($rows["image_room2"] != '') { ?>
                           <Transition>
-                            <div class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-slate-100 hover:brightness-90 group cursor-pointer shadow-lg">
+                            <div class="w-20 h-20 md:w-[120px] md:h-[120px] rounded-lg border border-slate-100 hover:brightness-90 group cursor-pointer shadow-lg transition-all">
                               <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/room-images/<?= $rows["image_room2"] ?>" alt="">
-                              <div id="2" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90 room-img">
-                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white">
+                              <div id="2" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-11 md:h-11 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90 room-img">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 md:w-6 md:h-6 text-white">
                                   <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
                                 </svg>
                               </div>
@@ -571,10 +725,10 @@ $email = $_SESSION['email'];
                         }
                         if ($rows["image_room3"] != '') { ?>
                           <Transition>
-                            <div class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-slate-100 hover:brightness-90 group cursor-pointer shadow-lg">
+                            <div class="w-20 h-20 md:w-[120px] md:h-[120px] rounded-lg border border-slate-100 hover:brightness-90 group cursor-pointer shadow-lg transition-all">
                               <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/room-images/<?= $rows["image_room3"] ?>" alt="">
-                              <div id="3" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90 room-img">
-                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white ">
+                              <div id="3" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-11 md:h-11 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90 room-img">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 md:w-6 md:h-6 text-white ">
                                   <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
                                 </svg>
                               </div>
@@ -589,33 +743,39 @@ $email = $_SESSION['email'];
               </div>
               <hr class="w-full my-5" />
               <div class="w-full">
-                <div class="ml-1 mb-2.5 font-semibold text-sm md:text-base">Фактури</div>
-                <div class="flex items-center w-full space-x-8">
-                  <div class="px-4 py-2 rounded-lg shadow-xl bg-white flex justify-center items-center border border-slate-100">
-                    <div>
-                      <svg viewBox="0 0 512 512" style="enable-background: new 0 0 512 512" class="w-12 h-12 lg:w-16 lg:h-16 mx-auto mb-1">
-                        <circle style="fill: #a7cefc" cx="256" cy="256" r="256" />
-                        <path style="fill: #a7cefc" d="M508.497,298.324L373.226,163.052l-103.291,104.01L145.67,402.101l109.894,109.894
-                        c0.147,0,0.291,0.005,0.436,0.005C382.966,512,488.324,419.566,508.497,298.324z" />
-                        <polygon style="fill: #f4e3c3" points="299.386,89.212 145.67,89.212 145.67,402.101 373.226,402.101 373.226,163.052 " />
-                        <polygon style="fill: #fed8b2" points="373.226,163.052 299.386,89.212 254.85,89.212 254.85,402.101 373.226,402.101 " />
-                        <polygon style="fill: #ffd15d" points="299.386,163.052 373.226,163.052 299.386,89.212 " />
-                        <rect x="211.178" y="188.768" style="fill: #f9b54c" width="128.431" height="6.896" />
-                        <rect x="168.943" y="188.768" style="fill: #f9b54c" width="28.444" height="6.896" />
-                        <rect x="211.178" y="217.212" style="fill: #f9b54c" width="128.431" height="6.896" />
-                        <rect x="168.943" y="217.212" style="fill: #f9b54c" width="28.444" height="6.896" />
-                        <rect x="211.178" y="245.657" style="fill: #f9b54c" width="128.431" height="6.896" />
-                        <rect x="168.943" y="245.657" style="fill: #f9b54c" width="28.444" height="6.896" />
-                        <rect x="211.178" y="274.101" style="fill: #f9b54c" width="128.431" height="6.896" />
-                        <rect x="168.943" y="274.101" style="fill: #f9b54c" width="28.444" height="6.896" />
-                        <rect x="237.899" y="343.488" style="fill: #f9b54c" width="56.889" height="6.896" />
+                <div class="ml-1 mb-2.5 -mt-2.5 font-semibold text-sm md:text-base">Фактури</div>
+                <div class="flex items-center w-full space-x-5">
+                  <?php
+                  $query = "SELECT * FROM orders WHERE email = '$email' AND invoice_document != ''";
+                  $query_run = mysqli_query($con, $query);
 
-                        <rect x="254.845" y="188.768" style="fill: #f4a200" width="84.764" height="6.896" />
-                        <rect x="254.845" y="217.212" style="fill: #f4a200" width="84.764" height="6.896" />
-                        <rect x="254.845" y="245.657" style="fill: #f4a200" width="84.764" height="6.896" />
-                        <rect x="254.845" y="274.101" style="fill: #f4a200" width="84.764" height="6.896" />
-                        <rect x="254.845" y="343.488" style="fill: #f4a200" width="39.943" height="6.896" />
-                        <path style="fill: #f4a200" d="M340.34,334.932c1.5,0,2.717-1.217,2.717-2.717v-1.857c0-5.627-5.32-10.214-11.936-10.393v-0.71
+                  if (mysqli_num_rows($query_run) > 0) {
+                    while ($rows = mysqli_fetch_array($query_run)) { ?>
+                      <button value="<?= $rows["id"] ?>" type="button" class="px-4 py-2 rounded-lg shadow-lg bg-white flex justify-center items-center border border-slate-100 cursor-pointer hover:opacity-80 transition-all active:scale-90 focus:ouline-none print-invoice">
+                        <div>
+                          <svg viewBox="0 0 512 512" style="enable-background: new 0 0 512 512" class="w-14 h-14 lg:w-20 lg:h-20 mx-auto mb-1">
+                            <circle style="fill: #a7cefc" cx="256" cy="256" r="256" />
+                            <path style="fill: #a7cefc" d="M508.497,298.324L373.226,163.052l-103.291,104.01L145.67,402.101l109.894,109.894
+                            c0.147,0,0.291,0.005,0.436,0.005C382.966,512,488.324,419.566,508.497,298.324z" />
+                            <polygon style="fill: #f4e3c3" points="299.386,89.212 145.67,89.212 145.67,402.101 373.226,402.101 373.226,163.052 " />
+                            <polygon style="fill: #fed8b2" points="373.226,163.052 299.386,89.212 254.85,89.212 254.85,402.101 373.226,402.101 " />
+                            <polygon style="fill: #ffd15d" points="299.386,163.052 373.226,163.052 299.386,89.212 " />
+                            <rect x="211.178" y="188.768" style="fill: #f9b54c" width="128.431" height="6.896" />
+                            <rect x="168.943" y="188.768" style="fill: #f9b54c" width="28.444" height="6.896" />
+                            <rect x="211.178" y="217.212" style="fill: #f9b54c" width="128.431" height="6.896" />
+                            <rect x="168.943" y="217.212" style="fill: #f9b54c" width="28.444" height="6.896" />
+                            <rect x="211.178" y="245.657" style="fill: #f9b54c" width="128.431" height="6.896" />
+                            <rect x="168.943" y="245.657" style="fill: #f9b54c" width="28.444" height="6.896" />
+                            <rect x="211.178" y="274.101" style="fill: #f9b54c" width="128.431" height="6.896" />
+                            <rect x="168.943" y="274.101" style="fill: #f9b54c" width="28.444" height="6.896" />
+                            <rect x="237.899" y="343.488" style="fill: #f9b54c" width="56.889" height="6.896" />
+
+                            <rect x="254.845" y="188.768" style="fill: #f4a200" width="84.764" height="6.896" />
+                            <rect x="254.845" y="217.212" style="fill: #f4a200" width="84.764" height="6.896" />
+                            <rect x="254.845" y="245.657" style="fill: #f4a200" width="84.764" height="6.896" />
+                            <rect x="254.845" y="274.101" style="fill: #f4a200" width="84.764" height="6.896" />
+                            <rect x="254.845" y="343.488" style="fill: #f4a200" width="39.943" height="6.896" />
+                            <path style="fill: #f4a200" d="M340.34,334.932c1.5,0,2.717-1.217,2.717-2.717v-1.857c0-5.627-5.32-10.214-11.936-10.393v-0.71
                         c0-1.5-1.217-2.717-2.717-2.717c-1.5,0-2.717,1.217-2.717,2.717v0.71c-6.616,0.179-11.936,4.765-11.936,10.393v3.713
                         c0,5.627,5.32,10.214,11.936,10.392v13.665c-3.562-0.155-6.501-2.36-6.501-4.96v-1.857c0-1.5-1.217-2.717-2.717-2.717
                         c-1.5,0-2.717,1.217-2.717,2.717v1.857c0,5.627,5.32,10.214,11.936,10.392v0.71c0,1.5,1.217,2.717,2.717,2.717
@@ -623,12 +783,26 @@ $email = $_SESSION['email'];
                         c3.562,0.155,6.501,2.36,6.501,4.96v1.857C337.624,333.715,338.839,334.932,340.34,334.932z M319.185,334.072v-3.713
                         c0-2.6,2.939-4.806,6.501-4.96v13.634C322.124,338.877,319.185,336.672,319.185,334.072z M337.624,349.456v3.713
                         c0,2.6-2.939,4.805-6.501,4.96v-13.634C334.684,344.65,337.624,346.857,337.624,349.456z" />
-                      </svg>
-                      <div class="text-sm text-slate-700 font-semibold">
-                        08.04.2022
-                      </div>
-                    </div>
-                  </div>
+                          </svg>
+                          <div class="text-sm text-slate-700 font-semibold text-center flex items-center justify-center">
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-0.5 text-slate-500">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                            </svg>
+                            <span><?= $rows['offer'] ?></span>
+                          </div>
+                          <div class="text-sm text-slate-700 font-semibold text-center flex items-center justify-center">
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-0.5 text-slate-500">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                            </svg>
+
+                            <span><?= date("d.m.Y", strtotime($rows['date'])) ?></span>
+                          </div>
+                        </div>
+                      </button>
+                    <?php }
+                  } else { ?>
+                    <div class="text-center text-slate-700 font-semibold mt-10">Нямате налични фактури</div>
+                  <?php } ?>
                 </div>
               </div>
             </div>
@@ -883,7 +1057,7 @@ $email = $_SESSION['email'];
                   </div>
                   <div>
                     <input class="sr-only peer" type="radio" value="Да" name="invoice" id="yes" />
-                    <label data-tooltip-target="tooltip-invoice" data-tooltip-placement="bottom" class="flex justify-center items-center w-28 h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" for="yes">
+                    <label @click="invoiceState = true" data-tooltip-target="tooltip-invoice" data-tooltip-placement="bottom" class="flex justify-center items-center w-28 h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" for="yes">
                       <div class="flex items-center">
                         <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -896,7 +1070,7 @@ $email = $_SESSION['email'];
                   </div>
                   <div>
                     <input class="sr-only peer" type="radio" value="Не" name="invoice" id="no" />
-                    <label class="flex justify-center items-center w-28 h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" for="no">
+                    <label @click="invoiceState = false" class="flex justify-center items-center w-28 h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" for="no">
                       <div class="flex items-center">
                         <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -908,13 +1082,27 @@ $email = $_SESSION['email'];
                     </label>
                   </div>
                 </div>
+                <div v-show="invoiceState" class="sm:flex items-center sm:space-x-5 space-y-4 sm:space-y-0 mt-4 animate__animated animate__fadeIn">
+                  <div class="sm:w-1/2">
+                    <label for="company-name" class="block ml-1 mb-1 font-semibold text-sm md:text-base text-slate-700">
+                      Име на фирмата
+                    </label>
+                    <input type="text" minlength="2" id="company-name" name="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведете име" />
+                  </div>
+                  <div class="sm:w-1/2">
+                    <label for="company-eik" class="block ml-1 mb-1 font-semibold text-sm md:text-base text-slate-700">
+                      ЕИК на фирмата
+                    </label>
+                    <input type="text" minlength="12" id="company-eik" name="eik" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведете ЕИК" />
+                  </div>
+                </div>
                 <div class="block ml-1 my-4 font-semibold text-sm md:text-base text-slate-700">
                   Изберете град
                 </div>
                 <div class="flex flex-wrap items-center gap-3.5">
                   <div v-for="city in cities">
                     <input class="sr-only peer" type="radio" :value="city.name" name="city" :id="city.name" />
-                    <label class="flex justify-center items-center w-28 h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" :for="city.name">
+                    <label class="flex justify-center items-center w-[122px] h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" :for="city.name">
                       <div class="text-sm font-semibold text-slate-700 text-center flex">
                         <div>
                           <img class="object-fill w-5 h-5 rounded-full mr-1" :src="city.image" :alt="city.name" />
@@ -990,14 +1178,18 @@ $email = $_SESSION['email'];
               <div class="font-semibold mb-1 sm:mb-2 text-slate-500 text-sm md:text-base text-center sm:text-left">
                 Оценете нашата работа и нашите служители, по този начин ще ни помогнете да подобрим нашите услуги и да предоставим по-качествени услуги следващият път.
               </div>
-              <div class="mt-6 space-y-5">
-                <?php $query = "SELECT * FROM orders WHERE email = '$email' AND status = 'Приключена' AND customer_opinion IS NULL";
+              <div id="rate-section" class="mt-6 space-y-5">
+                <?php $query = "SELECT * FROM orders WHERE email = '$email' AND status = 'Приключена' AND (customer_opinion IS NULL OR customer_opinion = '')";
                 $query_run = mysqli_query($con, $query);
 
                 if (mysqli_num_rows($query_run) > 0) {
                   while ($rows = mysqli_fetch_array($query_run)) { ?>
-                    <div class="w-full rounded-lg border border-slate-100 shadow-lg p-2 px-6 flex items-center justify-between">
-                      <div class="flex items-center space-x-12 2xl:space-x-9">
+                    <div class='break-inside relative overflow-hidden flex flex-col justify-between space-y-2 text-sm rounded-lg w-full p-3.5 px-4 bg-white text-black border border-slate-100 shadow-lg'>
+                      <div class='flex items-center justify-between font-semibold'>
+                        <span class='uppercase text-xs text-green-500'>Приключена успешно</span>
+                        <span class='text-xs text-slate-500'>#carpetservices</span>
+                      </div>
+                      <div class='flex items-center space-x-3'>
                         <div class="h-10 w-10 bg-blue-300 shadow-lg rounded-full flex items-center justify-center">
                           <?php if ($rows['room'] == 'Къща') { ?>
                             <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-slate-100">
@@ -1013,38 +1205,41 @@ $email = $_SESSION['email'];
                             </svg>
                           <?php } ?>
                         </div>
-                        <div>
-                          <div class="font-semibold text-center">Дата и час</div>
-                          <div class="flex items-center my-0.5 font-semibold text-sm">
-                            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-1 fill-slate-50">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span><?= date("H:i", strtotime($rows['end_time'])) ?></span>
+                        <div class="flex items-center">
+                          <div class="flex items-center my-0.5 mr-1.5">
+                            <span>Задачата е завършена на <span class="font-semibold"><?= date("d.m.Y", strtotime($rows['date'])) ?></span></span>
                           </div>
-                          <div class="flex items-center my-0.5 font-semibold text-sm">
-                            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-1 fill-slate-50">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                            </svg>
-                            <span><?= date("d.m.Y", strtotime($rows['date'])) ?></span>
+                          <div class="flex items-center my-0.5">
+                            <span>в <span class="font-semibold"><?= date("H:i", strtotime($rows['end_time'])) ?></span> часа</span>
                           </div>
-                        </div>
-                        <div class="text-slate-700">
-                          <div class="font-semibold text-center -mb-1">Екип</div>
-                          <?php
-                          $teamID = $rows['team_id'];
-                          $query = "SELECT * FROM users WHERE team_id = '$teamID'";
-                          $query_run = mysqli_query($con, $query);
-
-                          while ($row = mysqli_fetch_array($query_run)) { ?>
-                            <div class="flex items-center my-0.5 font-semibold text-sm"><img src="../uploaded-files/user-images/<?= $row["image"] ?>" alt="" class="w-6 h-6 rounded-full object-cover mr-1" /><span><?= $row['name'] ?></span></div>
-                          <?php } ?>
                         </div>
                       </div>
-                      <button value="<?= $rows['id'] . ' ' . $rows['team_id'] ?>" class="focus:outline-none bg-blue-400 hover:bg-blue-500 transition-all rounded-lg text-white active:scale-90 p-1.5 open-rating-modal">
-                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                        </svg>
-                      </button>
+                      <div class='flex justify-between items-center'>
+                        <div>
+                          <dd class='flex items-center justify-start -space-x-1.5'>
+                            <div class="mr-2.5 text-sm font-semibold text-slate-700">Екип</div>
+                            <?php
+                            $teamID = $rows['team_id'];
+                            $queryy = "SELECT * FROM users WHERE team_id = '$teamID'";
+                            $query_runn = mysqli_query($con, $queryy);
+
+                            while ($row = mysqli_fetch_array($query_runn)) { ?>
+                              <div data-popover id="<?= $row['pid'] ?>" role="tooltip" class="absolute z-10 invisible inline-block w-56 text-sm font-light text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0">
+                                <div class="px-2.5 py-1.5 font-semibold">
+                                  <p><?= $row['name'] ?> - <?= $row['position'] ?></p>
+                                </div>
+                              </div>
+                              <img data-popover-target="<?= $row['pid'] ?>" class='w-8 h-8 rounded-full ring-2 border border-slate-100 ring-white cursor-pointer hover:opacity-80 transition-all' src="../uploaded-files/user-images/<?= $row["image"] ?>" alt='avatar' />
+                            <?php } ?>
+                          </dd>
+                        </div>
+                        <button value="<?= $rows['id'] . ' ' . $rows['team_id'] ?>" class='flex items-center justify-center text-sm font-semibold rounded-full px-4 py-1 space-x-1 border-2 border-blue-400 transition-all bg-white hover:bg-blue-400 hover:text-white text-blue-400 active:scale-90 open-rating-modal'>
+                          <span>Оценка</span>
+                          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   <?php }
                 } else { ?>
@@ -1058,54 +1253,46 @@ $email = $_SESSION['email'];
         <!-- Customer opinion modal -->
         <div id="customer-opinion-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
           <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-            <div class="relative w-full h-auto max-w-lg">
-              <div class="relative bg-white rounded-lg shadow mb-6">
-                <div class="flex items-center justify-between px-6 pt-4 pb-2">
-                  <div class=" text-slate-700 font-bold text-xl">Оцени нашите услуги</div>
-                  <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-customer-opinion-modal">
-                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                  </button>
-                </div>
+            <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fasterer">
+              <div class="relative bg-white rounded-xl shadow mb-6">
                 <!-- Modal body -->
+                <div class="px-12 py-5">
+                  <h2 class="text-gray-800 text-2xl text-center font-semibold">Оценете нашите услуги</h2>
+                </div>
                 <form id="customer-opinion-form">
                   <input type="hidden" id="stars-count" name="rating" />
                   <input type="hidden" id="get-order-id" name="id" />
                   <input type="hidden" id="get-team-id" name="team_id" />
-                  <div class="px-5 py-2 text-slate-700">
-                    <label class="block ml-1 mb-1 font-semibold text-sm md:text-base text-slate-700">
-                      Вашата оценка
-                    </label>
-                    <div class="flex items-center">
-                      <div class="flex items-center">
-                        <svg id="first-star" class="w-7 h-7 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                        </svg>
-                        <svg id="second-star" class="w-7 h-7 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                        </svg>
-                        <svg id="third-star" class="w-7 h-7 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                        </svg>
-                        <svg id="fourth-star" class="w-7 h-7 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                        </svg>
-                        <svg id="fifth-star" class="w-7 h-7 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                        </svg>
+                  <div class="bg-gray-200 py-4">
+                    <div class="px-14 py-2 text-slate-700">
+                      <label class="block ml-1 mb-1 font-semibold md:text-lg text-slate-700 text-center flex items-center justify-center">
+                        <span>Как оценявате нашите услуги ?</span>
+                        <div id="rate-star-value" class="bg-blue-400 w-6 h-6 rounded ml-2 flex text-sm items-center justify-center text-slate-50 font-semibold">0</div>
+                      </label>
+                      <div class="flex items-center justify-center">
+                        <div class="flex items-center">
+                          <svg id="first-star" class="w-10 h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                          </svg>
+                          <svg id="second-star" class="w-10 h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                          </svg>
+                          <svg id="third-star" class="w-10 h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                          </svg>
+                          <svg id="fourth-star" class="w-10 h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                          </svg>
+                          <svg id="fifth-star" class="w-10 h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                          </svg>
+                        </div>
                       </div>
-                      <div id="rate-star-value" class="bg-blue-400 w-7 h-7 rounded-md ml-2 flex items-center justify-center text-slate-50 font-semibold">0</div>
+                      <textarea rows="4" name="text" class="block bg-gray p-3 w-full text-sm text-slate-900 rounded-xl border border-gray-300 focus:border-gray-400 focus:outline-none resize-none mt-3.5" placeholder="Пишете тук..."></textarea>
+                      <button type="submit" class="py-2 mt-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:opacity-90 transition-all font-semibold rounded-xl text-white w-full">Оцени</button>
                     </div>
-                    <label class="block ml-1 mb-1 mt-2 font-semibold text-sm md:text-base text-slate-700">
-                      Вашето мнение
-                    </label>
-                    <textarea rows="3" name="text" class="block bg-gray p-2.5 w-full text-sm text-slate-900 rounded-lg border border-gray-300 focus:outline-none resize-none" placeholder="Пишете тук..."></textarea>
                   </div>
-                  <div class="w-full pt-2 pb-4 px-5 flex justify-end items-center">
-                    <button type="button" class="text-white bg-red-600 hover:bg-red-700 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90 close-customer-opinion-modal">Откажи</button>
-                    <button type="submit" class="text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90">Запази</button>
-                  </div>
+                  <div class="text-gray-600 hover:text-gray-400 transition-all font-semibold py-6 text-center cursor-pointer close-customer-opinion-modal">Може би по-късно</div>
                 </form>
               </div>
             </div>
@@ -1115,7 +1302,7 @@ $email = $_SESSION['email'];
         <!-- Offer modal -->
         <div id="history-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
           <div class="h-full p-4 overflow-x-hidden overflow-y-auto flex 2xl:items-center justify-center">
-            <div class="relative w-full max-w-lg h-auto">
+            <div class="relative w-full max-w-lg h-auto animate__animated animate__zoomIn animate__faster">
               <div class="relative bg-white rounded-lg shadow">
                 <button id="close-history-modal" type="button" class="absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
                   <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -1281,7 +1468,7 @@ $email = $_SESSION['email'];
       <!-- Delete customer room image modal -->
       <div id="delete-customer-img-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
         <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-          <div class="relative w-full h-auto max-w-md">
+          <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__faster">
             <div class="relative bg-white rounded-lg shadow mb-6">
               <!-- Modal body -->
               <div class="p-4 text-center">
@@ -1411,6 +1598,7 @@ $email = $_SESSION['email'];
       </div>
     </div>
   <?php } ?>
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
   <script src="../js/main-vue.js"></script>

@@ -385,6 +385,14 @@ $date = date("Y-m-d");
                                     <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" />
                                   </svg>
                                 </button>
+                                <?php if ($rows["status"] == "Приключена" && $rows["invoice_document"] == "" && $rows["invoice"] == "Да") { ?>
+                                  <button value="<?= $rows["id"] ?>" type="button" class="bg-amber-500 hover:bg-amber-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 send-invoice">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                      <path d="M7.5 3.375c0-1.036.84-1.875 1.875-1.875h.375a3.75 3.75 0 013.75 3.75v1.875C13.5 8.161 14.34 9 15.375 9h1.875A3.75 3.75 0 0121 12.75v3.375C21 17.16 20.16 18 19.125 18h-9.75A1.875 1.875 0 017.5 16.125V3.375z" />
+                                      <path d="M15 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0017.25 7.5h-1.875A.375.375 0 0115 7.125V5.25zM4.875 6H6v10.125A3.375 3.375 0 009.375 19.5H16.5v1.125c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 013 20.625V7.875C3 6.839 3.84 6 4.875 6z" />
+                                    </svg>
+                                  </button>
+                                <?php } ?>
                               </td>
                             <?php }
                         } else { ?>
@@ -445,7 +453,7 @@ $date = date("Y-m-d");
                             <label for="customer-m2" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Квадратура
                             </label>
-                            <input type="text" minlength="2" id="customer-m2" name="m2" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи квадратура" />
+                            <input type="text" minlength="2" maxlength="4" id="customer-m2" name="m2" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи квадратура" />
                             <label for="pick-date" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете дата</label>
                             <input type="date" id="pick-date" name="pickDate" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 mb-5" placeholder="Изберете дата" />
                             <label for="time" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете час</label>
@@ -1033,7 +1041,7 @@ $date = date("Y-m-d");
                     </thead>
                     <tbody>
                       <?php
-                      $query = "SELECT * FROM teams WHERE  	delete_team != 'yes'";
+                      $query = "SELECT * FROM teams WHERE delete_team != 'yes'";
                       $query_run = mysqli_query($con, $query);
 
                       if (mysqli_num_rows($query_run) > 0) {
@@ -1082,7 +1090,7 @@ $date = date("Y-m-d");
                                   <?php echo mysqli_num_rows($query_runn); ?>
                                 </button>
                               <?php } else { ?>
-                                <button type="button" class="h-8 w-8 bg-blue-100 hover:bg-blue-200 text-blue-800 focus:outline-none text-xs font-semibold rounded-md">
+                                <button type="button" class="h-8 w-8 bg-blue-100 text-blue-800 focus:outline-none text-xs font-semibold rounded-md cursor-default">
                                   0
                                 </button>
                               <?php } ?>
@@ -1111,7 +1119,7 @@ $date = date("Y-m-d");
                         <?php }
                       } else { ?>
                         <tr>
-                          <td colspan="7" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold">Не са намерени данни</td>
+                          <td colspan="8" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold">Не са намерени данни</td>
                         </tr>
                       <?php } ?>
                     </tbody>

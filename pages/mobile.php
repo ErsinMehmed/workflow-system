@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+date_default_timezone_set('Europe/Sofia');
 
 include '../action/dbconn.php';
 
@@ -45,10 +46,10 @@ $date_now = date("Y-m-d");
         <aside class="w-28 fixed" aria-label="Sidebar">
           <div class="px-3 py-4 overflow-y-auto bg-[#f8f8f8] h-screen">
             <ul class="flex-col space-y-4 text-slate-600">
-              <li @click="mobProfile = true; mobOrder = false; mobWarehouse = false; startOrder = false" class="flex items-center justify-center w-16 h-16 mx-auto rounded-full border-4 border-white bg-[#cde8f8] cursor-pointer mt-2 transition-all active:scale-90 shadow-xl ring-1 ring-slate-200">
+              <li id="profile-btn" @click="mobProfile = true; mobOrder = false; mobWarehouse = false" class="flex items-center justify-center w-16 h-16 mx-auto rounded-full border-4 border-white bg-[#cde8f8] cursor-pointer mt-2 transition-all active:scale-90 shadow-xl ring-1 ring-slate-200">
                 <img class="object-cover h-12 w-12" src="../images/title.png" alt="" />
               </li>
-              <li @click="mobOrder = true; mobWarehouse = false; mobProfile = false; startOrder = false" :class="mobOrder ? 'bg-blue-50':'bg-white'" class="h-[88px] w-[88px] rounded-md shadow-xl border border-slate-100 flex items-center justify-center cursor-pointer transition-all active:scale-90">
+              <li id="order-btn" @click="mobOrder = true; mobWarehouse = false; mobProfile = false" :class="mobOrder ? 'bg-blue-50':'bg-white'" class="h-[88px] w-[88px] rounded-md shadow-xl border border-slate-100 flex items-center justify-center cursor-pointer transition-all active:scale-90">
                 <div>
                   <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto fill-slate-50">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
@@ -58,7 +59,7 @@ $date_now = date("Y-m-d");
                   </span>
                 </div>
               </li>
-              <li @click="mobWarehouse = true; mobOrder = false; mobProfile = false; startOrder = false" :class="mobWarehouse ? 'bg-blue-50':'bg-white'" class="h-[88px] w-[88px] rounded-md shadow-xl border border-slate-100 flex items-center justify-center cursor-pointer transition-all active:scale-90">
+              <li id="warehouse-btn" @click="mobWarehouse = true; mobOrder = false; mobProfile = false" :class="mobWarehouse ? 'bg-blue-50':'bg-white'" class="h-[88px] w-[88px] rounded-md shadow-xl border border-slate-100 flex items-center justify-center cursor-pointer transition-all active:scale-90">
                 <div>
                   <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto fill-slate-50">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z" />
@@ -167,7 +168,7 @@ $date_now = date("Y-m-d");
             </div>
 
             <!-- Order section -->
-            <div v-show="mobOrder">
+            <div v-show="mobOrder" id="mobOrder">
               <div class="flex items-center justify-end bg-[#f8f8f8] w-full h-14 border-b-2 border-slate-200 px-5">
                 <div class="flex space-x-3.5">
                   <input type="text" id="search-mobile-order" :class="showSearchInput ? 'block' : 'hidden'" class="bg-white border border-blue-200 text-slate-800 text-sm rounded focus:bg-slate-50 focus:outline-none h-7 w-44 p-0.5 px-2 animate__animated animate__slideInDown" placeholder="Търсене" />
@@ -207,7 +208,7 @@ $date_now = date("Y-m-d");
                     while ($rows = mysqli_fetch_array($query_run)) {
                 ?>
                       <input class="active-order-count" type="hidden" value="<?= $num ?>" />
-                      <button @click="startOrder = true; mobOrder = false; mobProfile = false; mobWarehouse = false" class="w-full focus:outline-none get-order-data" type="button" value="<?= $rows['id'] ?>">
+                      <button class="w-full focus:outline-none get-order-data" type="button" value="<?= $rows['id'] ?>">
                         <div class="flex items-center justify-between w-full rounded border border-slate-100 shadow-lg p-3 cursor-pointer active:scale-95 transition-all">
                           <div class="flex items-center w-full">
                             <div class="h-10 w-10 bg-blue-300 shadow-lg rounded-full flex items-center justify-center">
@@ -281,6 +282,7 @@ $date_now = date("Y-m-d");
                   }
                 } ?>
               </div>
+
               <div v-show="finishedOrder" id="finished-order-section" class="px-4">
                 <?php
                 $query = "SELECT * FROM users WHERE pid = '$pid'";
@@ -298,7 +300,7 @@ $date_now = date("Y-m-d");
                     while ($rows = mysqli_fetch_array($query_run)) {
                 ?>
                       <input class="finished-order-count" type="hidden" value="<?= $num ?>" />
-                      <button @click="startOrder = true; mobOrder = false; mobProfile = false; mobWarehouse = false" class="w-full focus:outline-none mt-4 get-order-data" type="button" value="<?= $rows['id'] ?>">
+                      <button class="w-full focus:outline-none mt-4 get-order-data" type="button" value="<?= $rows['id'] ?>">
                         <div class="flex items-center justify-between w-full rounded border border-slate-100 shadow-lg p-3 cursor-pointer active:scale-95 transition-all">
                           <div class="flex items-center w-full">
                             <div class="h-10 w-10 bg-blue-300 shadow-lg rounded-full flex items-center justify-center">
@@ -375,9 +377,9 @@ $date_now = date("Y-m-d");
             </div>
 
             <!-- Order start section -->
-            <div v-show="startOrder">
+            <div id="order-not-started" class="hidden">
               <div class="flex items-center justify-end bg-[#f8f8f8] w-full h-14 border-b-2 border-slate-200"></div>
-              <div id="order-not-started" class="p-4">
+              <div class="p-4">
                 <div class="hidden bg-white absolute left-28 top-14 inset-0 z-40 order-start-loader">
                   <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                     <div role="status">
@@ -504,7 +506,10 @@ $date_now = date("Y-m-d");
                   </button>
                 </div>
               </div>
-              <div id="order-is-started" class="p-4">
+            </div>
+            <div id="order-is-started" class="hidden">
+              <div class="flex items-center justify-end bg-[#f8f8f8] w-full h-14 border-b-2 border-slate-200"></div>
+              <div class="p-4">
                 <img class="h-[30rem] w-[30rem] object-cover absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.16]" :src="orderImg[orderStateStep]">
                 <div class="p-6 mt-12 relative z-50">
                   <h1 class="text-2xl font-bold text-blue-400 mb-1">{{ orderState[orderStateStep] }}</h1>
@@ -586,7 +591,7 @@ $date_now = date("Y-m-d");
                         </div>
                       </div>
                       <div class="w-full flex justify-end mt-6">
-                        <button v-show="orderStateStep < 4" type="button" @click="orderStateStep++" class="bg-blue-500 py-2 rounded text-white font-semibold focus:outline-none active:scale-90 transition-all w-52">Напред</button>
+                        <button :value="orderStateStep" v-show="orderStateStep < 4" type="button" @click="orderStateStep++" class="bg-blue-500 py-2 rounded text-white font-semibold focus:outline-none active:scale-90 transition-all w-52 next-step-mobile">Напред</button>
                         <button id="end-order" v-show="orderStateStep == 4" type="button" class="bg-blue-500 p-2 rounded text-white font-semibold focus:outline-none active:scale-90 transition-all w-52 end-order">Край</button>
                       </div>
                     </div>

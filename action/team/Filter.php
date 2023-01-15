@@ -1,4 +1,5 @@
 <?php
+
 include '../dbconn.php';
 
 date_default_timezone_set('Europe/Sofia');
@@ -6,7 +7,7 @@ date_default_timezone_set('Europe/Sofia');
 $text = $_POST['text'];
 $date = date("Y-m-d");
 
-$query = "SELECT * FROM teams WHERE id LIKE '$text%' OR name LIKE '$text%'";
+$query = "SELECT * FROM teams WHERE (id LIKE '$text%' OR name LIKE '$text%') AND delete_team != 'yes'";
 $query_run = mysqli_query($con, $query);
 ?>
 <thead>
@@ -28,6 +29,9 @@ $query_run = mysqli_query($con, $query);
         </th>
         <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
             назначени задачи
+        </th>
+        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+            средна оценка
         </th>
         <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
             действия
@@ -71,20 +75,34 @@ if (mysqli_num_rows($query_run) > 0) {
                     <?= $rows["user2_name"] ?>
                 </td>
                 <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                    <button type="button" value="<?= $rows['id']; ?>" class="h-8 w-8 bg-blue-100 hover:bg-blue-200 text-blue-800 focus:outline-none text-xs font-semibold rounded-md active:scale-90 transition-all prevOrd">
+                    <?php
+                    $id = $rows['id'];
+
+                    $queryy = "SELECT * FROM orders WHERE team_id = '$id' AND date >= '$date'";
+                    $query_runn = mysqli_query($con, $queryy);
+
+                    if (mysqli_num_rows($query_runn) > 0) { ?>
+                        <button type="button" value="<?= $rows['id']; ?>" class="h-8 w-8 bg-blue-100 hover:bg-blue-200 text-blue-800 focus:outline-none text-xs font-semibold rounded-md active:scale-90 transition-all prevOrd">
+                            <?php echo mysqli_num_rows($query_runn); ?>
+                        </button>
+                    <?php } else { ?>
+                        <button type="button" class="h-8 w-8 bg-blue-100 text-blue-800 focus:outline-none text-xs font-semibold rounded-md cursor-default">
+                            0
+                        </button>
+                    <?php } ?>
+                </td>
+                <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm flex justify-center">
+                    <div class="h-8 w-8 bg-blue-100 text-blue-800 text-xs font-semibold rounded-md flex items-center justify-center">
                         <?php
                         $id = $rows['id'];
 
-                        $queryy = "SELECT * FROM orders WHERE team_id = '$id' AND date >= '$date'";
-                        $query_runn = mysqli_query($con, $queryy);
-
-                        if (mysqli_num_rows($query_runn) > 0) {
-                            echo mysqli_num_rows($query_runn);
-                        } else {
+                        $sql_run = "SELECT CAST(AVG(rating) AS DECIMAL(10,1)) AS rating FROM team_rating WHERE team_id = '$id'";
+                        $result = $con->query($sql_run);
+                        while ($row = mysqli_fetch_array($result)) {
+                            echo $row['rating'];
+                        }
                         ?>
-                            0
-                        <?php } ?>
-                    </button>
+                    </div>
                 </td>
                 <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center space-x-1.5">
                     <button type="button" value="<?= $rows["id"] ?>" class="bg-red-500 hover:bg-red-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 delete-team">
@@ -99,7 +117,7 @@ if (mysqli_num_rows($query_run) > 0) {
 } else {
         ?>
         <tr>
-            <td colspan="7" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold">Не са намерени данни</td>
+            <td colspan="8" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold">Не са намерени данни</td>
         </tr>
     <?php } ?>
         </tbody>

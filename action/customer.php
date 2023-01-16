@@ -182,6 +182,9 @@ if (isset($_POST['customer_order'])) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         if (is_numeric($m2)) {
+            $queryy = "UPDATE customer SET company_name='$company', company_eik = '$eik', address = '$address' WHERE email='$customerEmail'";
+            $query_runn = mysqli_query($con, $queryy);
+
             $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,email,city,invoice,customer_kind,information,team_id,company_name,company_eik) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city','$invoice','Потребител','$information','0','$company','$eik')";
             $query_run = mysqli_query($con, $query);
 

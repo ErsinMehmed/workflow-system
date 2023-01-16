@@ -270,8 +270,7 @@ $email = $_SESSION['email'];
                       <input type="text" name="username" id="username" value="<?= $rows['username'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Потребителско име" />
                     </div>
                   </div>
-                  <hr class="w-full mt-6 mb-5 sm:mt-7 sm:mb-6" />
-                  <div class="sm:flex items-center sm:space-x-5 space-y-4 sm:space-y-0">
+                  <div class="sm:flex items-center sm:space-x-5 space-y-4 sm:space-y-0 mt-6">
                     <div class="sm:w-1/2">
                       <label for="userEmail" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                         Имейл
@@ -283,28 +282,6 @@ $email = $_SESSION['email'];
                         Телефонен номер
                       </label>
                       <input type="text" id="phone-number" name="phoneAccount" value="<?= $rows['phone'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведете телефон" />
-                    </div>
-                  </div>
-                  <div class="sm:flex items-center sm:space-x-5 space-y-4 sm:space-y-0 mt-4">
-                    <div class="sm:w-1/2">
-                      <label for="city" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
-                        Град
-                      </label>
-                      <?php if ($rows['city'] == "") { ?>
-                        <select id="city" name="city" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 block w-full p-2.5">
-                          <option v-for="city in cities" :value="city.name">
-                            {{city.name}}
-                          </option>
-                        </select>
-                      <?php } else { ?>
-                        <input readonly type="text" name="city" value="<?= $rows['city'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 focus:outline-none cursor-not-allowed" />
-                      <?php } ?>
-                    </div>
-                    <div class="sm:w-1/2">
-                      <label for="address" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
-                        Адрес
-                      </label>
-                      <input type="text" name="address" id="address" value="<?= $rows['address'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведете адрес" />
                     </div>
                   </div>
                   <hr class="w-full mt-7 mb-6" />
@@ -400,7 +377,7 @@ $email = $_SESSION['email'];
             </div>
 
             <!-- Active order section -->
-            <div id="active-order-account" v-show="activeOrders" class="w-full md:w-[80%]">
+            <div v-show="activeOrders" id="active-order-account" class="w-full">
               <?php
               $query = "SELECT * FROM orders WHERE email = '$email' AND status = 'В процес'";
               $query_run = mysqli_query($con, $query);
@@ -408,7 +385,7 @@ $email = $_SESSION['email'];
               ?>
                 <div class="w-full shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700 animate__animated animate__fadeIn">
                   <div class="grid gap-6 row-gap-10 lg:grid-cols-2">
-                    <div class="lg:py-6 lg:pr-16">
+                    <div class="lg:py-5 lg:pr-16">
                       <div class="flex">
                         <div class="flex flex-col items-center mr-4">
                           <div>
@@ -519,23 +496,25 @@ $email = $_SESSION['email'];
                     </div>
                     <div class="relative">
                       <?php if ($rows["step"] == 1) { ?>
-                        <img class="inset-0 object-cover object-bottom w-full rounded shadow-lg lg:absolute lg:h-full" src="../images/overCleaning.jpg" alt="" />
+                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="../images/overCleaning.jpg" alt="" />
                       <?php } ?>
                       <?php if ($rows["step"] == 2) { ?>
-                        <img class="inset-0 object-cover object-bottom w-full rounded shadow-lg lg:absolute lg:h-full" src="../images/windowCleaning.jpg" alt="" />
+                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="../images/windowCleaning.jpg" alt="" />
                       <?php } ?>
                       <?php if ($rows["step"] == 3) { ?>
-                        <img class="inset-0 object-cover object-bottom w-full rounded shadow-lg lg:absolute lg:h-full" src="../images/bathroomCleaning.jpg" alt="" />
+                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="../images/bathroomCleaning.jpg" alt="" />
                       <?php } ?>
                       <?php if ($rows["step"] == 4) { ?>
-                        <img class="inset-0 object-cover object-bottom w-full rounded shadow-lg lg:absolute lg:h-full" src="../images/floorCleaning.png" alt="" />
+                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="../images/floorCleaning.png" alt="" />
                       <?php } ?>
                     </div>
                   </div>
-                  <button :class="{'right-16' : scY > 300}" class="fixed bottom-4 right-4 flex items-center justify-center bg-blue-500 text-white active:scale-90 transition-all hover:bg-blue-400 w-28 h-10 rounded-xl font-semibold update-order-steps"><span>Обнови</span><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 ml-1">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                    </svg>
-                  </button>
+                  <?php if ($rows["step"] < 4) { ?>
+                    <button :class="{'right-16' : scY > 300}" class="fixed bottom-4 right-4 flex items-center justify-center bg-blue-500 text-white active:scale-90 transition-all hover:bg-blue-400 w-28 h-10 rounded-xl font-semibold update-order-steps"><span>Обнови</span><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 ml-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                      </svg>
+                    </button>
+                  <?php } ?>
                 </div>
               <?php } ?>
             </div>
@@ -625,7 +604,7 @@ $email = $_SESSION['email'];
                 </div>
               </div>
               <?php if (mysqli_num_rows($query_run) == 0) { ?>
-                <div class="w-full text-center font-semibold md:text-lg mt-6 md:mt-8 lg:mt-10">Нямате направени поръчки към днешна дата.</div>
+                <div class="w-full text-center font-semibold text-slate-700 mt-6 md:mt-8 lg:mt-10">Нямате направени поръчки към днешна дата.</div>
               <?php } ?>
             </div>
 
@@ -794,14 +773,13 @@ $email = $_SESSION['email'];
                             <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-0.5 text-slate-500">
                               <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                             </svg>
-
                             <span><?= date("d.m.Y", strtotime($rows['date'])) ?></span>
                           </div>
                         </div>
                       </button>
                     <?php }
                   } else { ?>
-                    <div class="text-center text-slate-700 font-semibold mt-10">Нямате налични фактури</div>
+                    <div class="text-center text-slate-700 font-semibold mt-10 ml-1 w-full">Нямате налични фактури</div>
                   <?php } ?>
                 </div>
               </div>
@@ -1082,20 +1060,26 @@ $email = $_SESSION['email'];
                     </label>
                   </div>
                 </div>
-                <div v-show="invoiceState" class="sm:flex items-center sm:space-x-5 space-y-4 sm:space-y-0 mt-4 animate__animated animate__fadeIn">
-                  <div class="sm:w-1/2">
-                    <label for="company-name" class="block ml-1 mb-1 font-semibold text-sm md:text-base text-slate-700">
-                      Име на фирмата
-                    </label>
-                    <input type="text" minlength="2" id="company-name" name="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведете име" />
+                <?php
+                $query = "SELECT * FROM customer WHERE email = '$email'";
+                $query_run = mysqli_query($con, $query);
+
+                while ($rows = mysqli_fetch_array($query_run)) { ?>
+                  <div v-show="invoiceState" class="sm:flex items-center sm:space-x-5 space-y-4 sm:space-y-0 mt-4 animate__animated animate__fadeIn">
+                    <div class="sm:w-1/2">
+                      <label for="company-name" class="block ml-1 mb-1 font-semibold text-sm md:text-base text-slate-700">
+                        Име на фирмата
+                      </label>
+                      <input type="text" value="<?= $rows["company_name"] ?>" minlength="2" id="company-name" name="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведете име" />
+                    </div>
+                    <div class="sm:w-1/2">
+                      <label for="company-eik" class="block ml-1 mb-1 font-semibold text-sm md:text-base text-slate-700">
+                        ЕИК на фирмата
+                      </label>
+                      <input type="text" value="<?= $rows["company_eik"] ?>" minlength="12" maxlength="12" id="company-eik" name="eik" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведете ЕИК" />
+                    </div>
                   </div>
-                  <div class="sm:w-1/2">
-                    <label for="company-eik" class="block ml-1 mb-1 font-semibold text-sm md:text-base text-slate-700">
-                      ЕИК на фирмата
-                    </label>
-                    <input type="text" minlength="12" id="company-eik" name="eik" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведете ЕИК" />
-                  </div>
-                </div>
+                <?php } ?>
                 <div class="block ml-1 my-4 font-semibold text-sm md:text-base text-slate-700">
                   Изберете град
                 </div>
@@ -1189,8 +1173,8 @@ $email = $_SESSION['email'];
                         <span class='uppercase text-xs text-green-500'>Приключена успешно</span>
                         <span class='text-xs text-slate-500'>#carpetservices</span>
                       </div>
-                      <div class='flex items-center space-x-3'>
-                        <div class="h-10 w-10 bg-blue-300 shadow-lg rounded-full flex items-center justify-center">
+                      <div class='flex items-center sm:space-x-3'>
+                        <div class="hidden sm:flex h-10 w-10 bg-blue-300 shadow-lg rounded-full items-center justify-center">
                           <?php if ($rows['room'] == 'Къща') { ?>
                             <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-slate-100">
                               <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
@@ -1205,16 +1189,17 @@ $email = $_SESSION['email'];
                             </svg>
                           <?php } ?>
                         </div>
-                        <div class="flex items-center">
-                          <div class="flex items-center my-0.5 mr-1.5">
-                            <span>Задачата е завършена на <span class="font-semibold"><?= date("d.m.Y", strtotime($rows['date'])) ?></span></span>
+                        <div class="sm:flex items-center">
+                          <div class="flex items-center my-0.5 sm:mr-1.5">
+                            <div>Задачата е завършена на</div>
+                            <div class="font-semibold ml-1"><?= date("d.m.Y", strtotime($rows['date'])) ?></div>
                           </div>
                           <div class="flex items-center my-0.5">
-                            <span>в <span class="font-semibold"><?= date("H:i", strtotime($rows['end_time'])) ?></span> часа</span>
+                            <span> в <span class="font-semibold"><?= date("H:i", strtotime($rows['end_time'])) ?></span> часа</span>
                           </div>
                         </div>
                       </div>
-                      <div class='flex justify-between items-center'>
+                      <div class='sm:flex justify-between items-center'>
                         <div>
                           <dd class='flex items-center justify-start -space-x-1.5'>
                             <div class="mr-2.5 text-sm font-semibold text-slate-700">Екип</div>
@@ -1223,17 +1208,42 @@ $email = $_SESSION['email'];
                             $queryy = "SELECT * FROM users WHERE team_id = '$teamID'";
                             $query_runn = mysqli_query($con, $queryy);
 
-                            while ($row = mysqli_fetch_array($query_runn)) { ?>
-                              <div data-popover id="<?= $row['pid'] ?>" role="tooltip" class="absolute z-10 invisible inline-block w-56 text-sm font-light text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0">
-                                <div class="px-2.5 py-1.5 font-semibold">
-                                  <p><?= $row['name'] ?> - <?= $row['position'] ?></p>
+                            while ($row = mysqli_fetch_array($query_runn)) {
+                              $randomNumber = rand(); ?>
+                              <div data-popover id="<?= $randomNumber ?>" role="tooltip" class="absolute z-10 invisible inline-block w-48 text-sm font-light text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0">
+                                <div class="px-2.5 py-1.5 font-semibold flex space-x-3">
+                                  <img class='h-11 w-11 rounded object-cover' src="../uploaded-files/user-images/<?= $row["image"] ?>" alt='avatar' />
+                                  <div>
+                                    <p class="text-slate-700 font-bold"><?= $row['name'] ?></p>
+                                    <p><?= $row['position'] ?></p>
+                                  </div>
                                 </div>
                               </div>
-                              <img data-popover-target="<?= $row['pid'] ?>" class='w-8 h-8 rounded-full ring-2 border border-slate-100 ring-white cursor-pointer hover:opacity-80 transition-all' src="../uploaded-files/user-images/<?= $row["image"] ?>" alt='avatar' />
+                              <img data-popover-target="<?= $randomNumber ?>" class='w-8 h-8 rounded-full object-cover ring-2 border border-slate-100 ring-white cursor-pointer hover:opacity-80 transition-all' src="../uploaded-files/user-images/<?= $row["image"] ?>" alt='avatar' />
                             <?php } ?>
+                            <div class="mr-2.5 text-sm font-semibold text-slate-700 px-3 ">Рейтинг</div>
+                            <?php
+                            $teamID = $rows['team_id'];
+                            $queryyy = "SELECT CAST(AVG(rating) AS DECIMAL(10,1)) AS rating FROM team_rating WHERE team_id = '$teamID'";
+                            $query_runnn = mysqli_query($con, $queryyy);
+
+                            while ($row = mysqli_fetch_array($query_runnn)) {
+                              $randomNumber = rand(); ?>
+                              <div data-popover id="<?= $randomNumber ?>" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm font-semibold text-slate-700 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0">
+                                <div class="px-3 py-2">
+                                  <p>Средна оценка на този екип е <span class="font-bold"><?= $row['rating'] ?></span></p>
+                                </div>
+                                <div data-popper-arrow></div>
+                              </div>
+                              <?php if ($row['rating'] == "") { ?>
+                                <div class="w-7 h-7 text-sm bg-blue-400 flex items-center justify-center font-semibold text-white rounded-md">0.0</div>
+                              <?php } else { ?>
+                                <div data-popover-target="<?= $randomNumber ?>" class="w-7 h-7 text-sm bg-blue-400 hover:bg-blue-500 transition-all cursor-pointer flex items-center justify-center font-semibold text-white rounded-md"><?= $row['rating'] ?></div>
+                            <?php }
+                            } ?>
                           </dd>
                         </div>
-                        <button value="<?= $rows['id'] . ' ' . $rows['team_id'] ?>" class='flex items-center justify-center text-sm font-semibold rounded-full px-4 py-1 space-x-1 border-2 border-blue-400 transition-all bg-white hover:bg-blue-400 hover:text-white text-blue-400 active:scale-90 open-rating-modal'>
+                        <button value="<?= $rows['id'] . ' ' . $rows['team_id'] ?>" class='w-full sm:w-auto mt-2.5 sm:mt-0 flex items-center justify-center text-sm font-semibold rounded-full px-4 py-1 space-x-1 border-2 border-blue-400 transition-all bg-white hover:bg-blue-400 hover:text-white text-blue-400 active:scale-90 open-rating-modal'>
                           <span>Оценка</span>
                           <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -1256,7 +1266,7 @@ $email = $_SESSION['email'];
             <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fasterer">
               <div class="relative bg-white rounded-xl shadow mb-6">
                 <!-- Modal body -->
-                <div class="px-12 py-5">
+                <div class="px-8 md:px-10 xl:px-12 py-5">
                   <h2 class="text-gray-800 text-2xl text-center font-semibold">Оценете нашите услуги</h2>
                 </div>
                 <form id="customer-opinion-form">
@@ -1264,26 +1274,26 @@ $email = $_SESSION['email'];
                   <input type="hidden" id="get-order-id" name="id" />
                   <input type="hidden" id="get-team-id" name="team_id" />
                   <div class="bg-gray-200 py-4">
-                    <div class="px-14 py-2 text-slate-700">
+                    <div class="px-8 md:px-12 xl:px-14 py-2 text-slate-700">
                       <label class="block ml-1 mb-1 font-semibold md:text-lg text-slate-700 text-center flex items-center justify-center">
                         <span>Как оценявате нашите услуги ?</span>
                         <div id="rate-star-value" class="bg-blue-400 w-6 h-6 rounded ml-2 flex text-sm items-center justify-center text-slate-50 font-semibold">0</div>
                       </label>
                       <div class="flex items-center justify-center">
                         <div class="flex items-center">
-                          <svg id="first-star" class="w-10 h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                          <svg id="first-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                           </svg>
-                          <svg id="second-star" class="w-10 h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                          <svg id="second-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                           </svg>
-                          <svg id="third-star" class="w-10 h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                          <svg id="third-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                           </svg>
-                          <svg id="fourth-star" class="w-10 h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                          <svg id="fourth-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                           </svg>
-                          <svg id="fifth-star" class="w-10 h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                          <svg id="fifth-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                           </svg>
                         </div>

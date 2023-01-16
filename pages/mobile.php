@@ -501,8 +501,11 @@ $date_now = date("Y-m-d");
                   <button type="button" class="px-4 py-2 bg-red-500 text-white font-semibold rounded active:scale-90 transition-all w-52 open-cancel-modal">
                     Откажи
                   </button>
+                  <button type="button" class="px-4 py-2 bg-amber-500 text-white font-semibold rounded active:scale-90 transition-all w-52 open-photo-modal">
+                    Снимки
+                  </button>
                   <button type="button" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded active:scale-90 transition-all w-52 start-order-btn">
-                    Запази
+                    Старт
                   </button>
                 </div>
               </div>
@@ -687,6 +690,30 @@ $date_now = date("Y-m-d");
   </div>
   </div>
 
+  <!-- Images modal -->
+  <div id="order-photo-modal" class="bg-gray-800 hidden bg-opacity-50 fixed inset-0 z-40">
+    <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+      <div class="relative w-full h-auto animate__animated animate__zoomIn animate__fast image-modal">
+        <div class="relative bg-white rounded shadow mb-6">
+          <!-- Modal body -->
+          <div class="text-xl font-bold text-white bg-blue-500 py-2 rounded-t text-center">
+            Снимки на обекта
+          </div>
+          <div class="p-4 text-center flex items-center justify-center space-x-4">
+            <img id="first_img" class="w-[202px] h-[202px] object-cover rounded">
+            <img id="second_img" class="w-[202px] h-[202px] object-cover rounded">
+            <img id="third_img" class="w-[202px] h-[202px] object-cover rounded">
+          </div>
+          <div class="flex items-center pt-3 p-4">
+            <button type="button" class="flex-1 px-4 py-1.5 bg-slate-100 border border-slate-200 text-slate-700 text-sm font-semibold rounded active:scale-90 transition-all close-order-photo-modal">
+              Затвори
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Product order modal -->
   <div id="product-order-modal" class="bg-gray-800 hidden bg-opacity-50 fixed inset-0 z-40">
     <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
@@ -817,7 +844,6 @@ $date_now = date("Y-m-d");
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script src="../js/main-vue.js"></script>
 <script src="../js/main.js"></script>

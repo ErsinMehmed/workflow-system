@@ -430,6 +430,23 @@ $(document).ready(function () {
     });
   });
 
+  $(document).on("click", ".view-customer-opinion", function () {
+    var id = $(this).val();
+
+    getData("../action/AdminOrders.php?id=" + id, function (response) {
+      var res = jQuery.parseJSON(response);
+      if (res.status == 500) {
+        alertify.error(res.message);
+      } else if (res.status == 200) {
+        $("#customer-opinion-modal").removeClass("hidden");
+        $("#customer-opinion-modal").addClass("block");
+        $("#customer-opinion-orders").val(res.data.customer_opinion);
+      }
+    });
+  });
+
+  closeModal(".close-customer-opinion-modal", "#customer-opinion-modal");
+
   // Update order data
   $(document).on("submit", "#update-order-form", function (e) {
     e.preventDefault();
@@ -1092,6 +1109,7 @@ $(document).ready(function () {
 
       if (res.status == 200) {
         if (res.data.status == "В процес") {
+          $(".open-photo-modal").val(res.data.email);
           $("#end-order").val(res.data.id);
           $("#mobOrder").addClass("hidden");
           $("#order-not-started").removeClass("block");
@@ -1099,6 +1117,7 @@ $(document).ready(function () {
           $("#order-is-started").removeClass("hidden");
           $("#order-is-started").addClass("block");
         } else {
+          $(".open-photo-modal").val(res.data.email);
           $("#end-order").val(res.data.id);
           $("#mobOrder").addClass("hidden");
           $("#order-not-started").removeClass("hidden");
@@ -1138,6 +1157,58 @@ $(document).ready(function () {
 
         $(".order-start-loader").removeClass("block");
         $(".order-start-loader").addClass("hidden");
+      }
+    });
+  });
+
+  $(document).on("click", ".open-photo-modal", function () {
+    var email = $(this).val();
+
+    $("#order-photo-modal").removeClass("hidden");
+    $("#order-photo-modal").addClass("block");
+
+    getData("../action/adminOrders.php?email=" + email, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        if (res.data.image_room1 != null) {
+          $(".image-modal").addClass("max-w-sm");
+          $("#first_img").removeClass("hidden");
+          $("#first_img").addClass("block");
+          $("#first_img").attr(
+            "src",
+            "../uploaded-files/room-images/" + res.data.image_room1
+          );
+        } else {
+          $("#first_img").removeClass("block");
+          $("#first_img").addClass("hidden");
+        }
+
+        if (res.data.image_room2 != null) {
+          $(".image-modal").addClass("max-w-lg");
+          $("#second_img").removeClass("hidden");
+          $("#second_img").addClass("block");
+          $("#second_img").attr(
+            "src",
+            "../uploaded-files/room-images/" + res.data.image_room2
+          );
+        } else {
+          $("#second_img").removeClass("block");
+          $("#second_img").addClass("hidden");
+        }
+
+        if (res.data.image_room3 != null) {
+          $(".image-modal").addClass("max-w-3xl");
+          $("#third_img").removeClass("hidden");
+          $("#third_img").addClass("block");
+          $("#third_img").attr(
+            "src",
+            "../uploaded-files/room-images/" + res.data.image_room3
+          );
+        } else {
+          $("#third_img").removeClass("block");
+          $("#third_img").addClass("hidden");
+        }
       }
     });
   });
@@ -1387,6 +1458,10 @@ $(document).ready(function () {
     }, 100);
   }
 
+  openModal("#add-product-btn", "#add-product-modal");
+
+  closeModal(".close-add-product-modal", "#add-product-modal");
+
   openModal(".open-rating-modal", "#customer-opinion-modal");
 
   closeModal(".close-customer-opinion-modal", "#customer-opinion-modal");
@@ -1408,6 +1483,8 @@ $(document).ready(function () {
   openModal("#make-order-btn", "#product-order-modal");
 
   closeModal(".close-product-order-modal", "#product-order-modal");
+
+  closeModal(".close-order-photo-modal", "#order-photo-modal");
 
   $("#active-order").html($(".active-order-count").val());
 

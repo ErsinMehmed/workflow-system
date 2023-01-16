@@ -151,6 +151,13 @@ if (mysqli_num_rows($query_run) > 0) {
                                 <path d="M15 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0017.25 7.5h-1.875A.375.375 0 0115 7.125V5.25zM4.875 6H6v10.125A3.375 3.375 0 009.375 19.5H16.5v1.125c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 013 20.625V7.875C3 6.839 3.84 6 4.875 6z" />
                             </svg>
                         </button>
+                    <?php }
+                    if ($rows["status"] == "Приключена" && $rows["customer_opinion"] != "") { ?>
+                        <button value="<?= $rows["id"] ?>" type="button" class="bg-indigo-500 hover:bg-indigo-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 view-customer-opinion">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
                     <?php } ?>
                 </td>
             </tr>

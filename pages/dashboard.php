@@ -392,6 +392,13 @@ $date = date("Y-m-d");
                                       <path d="M15 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0017.25 7.5h-1.875A.375.375 0 0115 7.125V5.25zM4.875 6H6v10.125A3.375 3.375 0 009.375 19.5H16.5v1.125c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 013 20.625V7.875C3 6.839 3.84 6 4.875 6z" />
                                     </svg>
                                   </button>
+                                <?php }
+                                if ($rows["status"] == "Приключена" && $rows["customer_opinion"] != "") { ?>
+                                  <button value="<?= $rows["id"] ?>" type="button" class="bg-indigo-500 hover:bg-indigo-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 view-customer-opinion">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                      <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                                    </svg>
+                                  </button>
                                 <?php } ?>
                               </td>
                             <?php }
@@ -413,7 +420,7 @@ $date = date("Y-m-d");
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
                 <div class="relative w-full h-full max-w-lg">
                   <div class="relative bg-white rounded-lg shadow mb-6">
-                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                       <div class=" text-slate-700 font-bold text-xl">Добави заявка</div>
                       <button type="button" class="absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-add-order-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -492,7 +499,7 @@ $date = date("Y-m-d");
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex items-center justify-center">
                 <div class="relative w-full h-auto max-w-lg">
                   <div class="relative bg-white rounded-lg shadow mb-6">
-                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                       <div class=" text-slate-700 font-bold text-xl">Причина за отказа</div>
                       <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center cancel-order-reason-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -514,7 +521,7 @@ $date = date("Y-m-d");
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex 2xl:items-center justify-center">
                 <div class="relative w-full h-full max-w-lg mt-10">
                   <div class="relative bg-white rounded-lg shadow mb-6">
-                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                       <div class=" text-slate-700 font-bold text-xl">Редактиране заявката</div>
                       <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-order-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -590,7 +597,7 @@ $date = date("Y-m-d");
               <div class="h-full p-4 overflow-x-hidden overflow-y-auto flex items-center justify-center">
                 <div class="relative w-full max-w-lg h-auto">
                   <div class="relative bg-white rounded-lg shadow">
-                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                       <div class=" text-slate-700 font-bold text-xl">Клиент</div>
                       <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center customer-order-modal-close">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -633,7 +640,7 @@ $date = date("Y-m-d");
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
                 <div class="relative w-full h-full max-w-lg">
                   <div class="relative bg-white rounded-lg shadow mb-6">
-                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                       <div class=" text-slate-700 font-bold text-xl">Назначи заявка</div>
                       <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-set-order-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -670,6 +677,28 @@ $date = date("Y-m-d");
                         <button type="submit" class="text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90">Запази</button>
                       </div>
                     </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customer opinion modal -->
+            <div id="customer-opinion-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
+                <div class="relative w-full h-full max-w-lg">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
+                      <div class=" text-slate-700 font-bold text-xl">Мнение</div>
+                      <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-customer-opinion-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="px-5 py-4 space-y-6 text-slate-700">
+                      <textarea rows="3" id="customer-opinion-orders" name="text" readonly class="block bg-gray-50 p-3 w-full text-sm text-slate-900 rounded-lg border border-gray-300 focus:outline-none resize-none"></textarea>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -820,7 +849,7 @@ $date = date("Y-m-d");
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
                 <div class="relative w-full h-full max-w-lg">
                   <div class="relative bg-white rounded-lg shadow mb-6">
-                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                       <div class=" text-slate-700 font-bold text-xl">Добави потребител</div>
                       <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-add-user-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -882,7 +911,7 @@ $date = date("Y-m-d");
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
                 <div class="relative w-full h-full max-w-lg">
                   <div class="relative bg-white rounded-lg shadow mb-6">
-                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                       <div class=" text-slate-700 font-bold text-xl">Редактиране потребител</div>
                       <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-edit-user-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -948,7 +977,7 @@ $date = date("Y-m-d");
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
                 <div class="relative w-full h-auto max-w-lg">
                   <div class="relative bg-white rounded-lg shadow mb-6">
-                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                       <div class=" text-slate-700 font-bold text-xl">Задаване на парола</div>
                       <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-user-password-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -1103,9 +1132,12 @@ $date = date("Y-m-d");
                                 $sql_run = "SELECT CAST(AVG(rating) AS DECIMAL(10,1)) AS rating FROM team_rating WHERE team_id = '$id'";
                                 $result = $con->query($sql_run);
                                 while ($row = mysqli_fetch_array($result)) {
-                                  echo $row['rating'];
-                                }
-                                ?>
+                                  if ($row['rating'] == "") {
+                                    echo "0.0";
+                                  } else {
+                                    echo $row['rating'];
+                                  }
+                                } ?>
                               </div>
                             </td>
                             <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center space-x-1.5">
@@ -1133,7 +1165,7 @@ $date = date("Y-m-d");
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
                 <div class="relative w-full h-full max-w-lg">
                   <div class="relative bg-white rounded-lg shadow mb-6">
-                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                       <div class="text-slate-700 font-bold text-xl">Добави екип</div>
                       <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-add-team-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -1186,7 +1218,196 @@ $date = date("Y-m-d");
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
                 <div class="relative w-full h-auto max-w-lg">
                   <div class="relative bg-white rounded-lg shadow mb-6">
-                    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
+                      <div class="text-slate-700 font-bold text-xl">Заявки</div>
+                      <button type="button" class="absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-team-order-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="px-5 py-4 space-y-6 text-slate-700">
+                      <div id="team-orders" class="sm:flex items-center w-full gap-y-4 sm:gap-x-4">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Delete team modal -->
+            <div id="delete-team-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+                <div class="relative w-full h-auto max-w-md">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <!-- Modal body -->
+                    <div class="p-4 text-center">
+                      <div class="text-xl font-bold mb-3">Изтрий екипа</div>
+                      <h3 class="mb-5 text-sm text-gray-500">Сигурни ли сте, че искате да изтриете екипа? Информацията от приключените задачи на екипа ще се запазят.</h3>
+                      <form id="delete-team-form">
+                        <input id="delete-team-id" type="hidden" name="teamId">
+                        <div class="flex items-center mt-3">
+                          <button type="button" class="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md active:scale-90 transition-all close-delete-team-modal">
+                            Откажи
+                          </button>
+                          <button type="submit" class="flex-1 px-4 py-2 ml-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md active:scale-90 transition-all">
+                            Изтрий
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+
+          <!-- Warehouse section -->
+          <main v-show="dashWarehouse">
+            <div class="py-6 px-8">
+              <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
+                <div class="relative w-full sm:w-auto">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                  </div>
+                  <input type="text" id="search-product" placeholder="По номер или име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5" />
+                </div>
+                <div class="flex items-center space-x-3">
+                  <button id="add-product-btn" type="button" class="w-10 h-10 bg-blue-500 hover:bg-blue-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-7 h-7 text-white">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                  </button>
+                  <button type="button" class="w-10 h-10 bg-green-500 hover:bg-green-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7 text-white">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+                  <table id="team-table" class="min-w-full leading-normal">
+                    <thead>
+                      <tr>
+                        <th class="pr-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          номер
+                        </th>
+                        <th class="pr-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          продукт
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          наличност
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          вид
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          действия
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $query = "SELECT * FROM stock";
+                      $query_run = mysqli_query($con, $query);
+
+                      if (mysqli_num_rows($query_run) > 0) {
+                        while ($rows = mysqli_fetch_array($query_run)) {
+                      ?>
+                          <tr>
+                            <td class="pr-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <?= $rows["id"] ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <p class="text-gray-900 whitespace-no-wrap">
+                                <?= $rows["name"] ?>
+                              </p>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm">
+                              <div class="h-8 w-8 mx-auto bg-blue-100 text-blue-800 text-xs font-semibold rounded-md flex items-center justify-center"><?= $rows["quantity"] ?></div>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <?= $rows["kind"] ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white flex justify-center items-center space-x-1.5">
+                              <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                  <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
+                                </svg>
+                              </button>
+                              <button type="button" value="<?= $rows["id"] ?>" class="bg-red-500 hover:bg-red-600 p-2 rounded-md transition-all focus:outline-none active:scale-90">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                  <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
+                                </svg>
+                              </button>
+                            </td>
+                          </tr>
+                        <?php }
+                      } else { ?>
+                        <tr>
+                          <td colspan="4" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold">Не са намерени данни</td>
+                        </tr>
+                      <?php } ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Add product modal -->
+            <div id="add-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
+                <div class="relative w-full h-full max-w-lg">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
+                      <div class="text-slate-700 font-bold text-xl">Добави продукт</div>
+                      <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-add-product-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <!-- Modal body -->
+                    <form id="add-product-form">
+                      <div class="px-5 py-4 space-y-6 text-slate-700">
+                        <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
+                          <div class="w-full">
+                            <label for="product-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Име на продукт
+                            </label>
+                            <input type="text" id="produc-name" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
+                            <label for="product-kind" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Избери вид на продукта
+                            </label>
+                            <select id="product-kind" name="kind" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 mb-4">
+                              <option value="Препарати">Препарати</option>
+                              <option value="Техника">Техника</option>
+                              <option value="Екипировка">Екипировка</option>
+                              <option value="Пособия за чистене">Пособия за чистене</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w-full border-t border-gray-200 p-3 flex justify-end items-center">
+                        <button type="button" class="text-slate-700 border border-slate-400 bg-transparent hover:bg-gray-100 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90 close-add-product-modal">Откажи</button>
+                        <button type="submit" class="text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90">Запази</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Team order modal -->
+            <div id="team-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+                <div class="relative w-full h-auto max-w-lg">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                       <div class="text-slate-700 font-bold text-xl">Заявки</div>
                       <button type="button" class="absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-team-order-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

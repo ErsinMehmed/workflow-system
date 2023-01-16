@@ -99,7 +99,11 @@ if (mysqli_num_rows($query_run) > 0) {
                         $sql_run = "SELECT CAST(AVG(rating) AS DECIMAL(10,1)) AS rating FROM team_rating WHERE team_id = '$id'";
                         $result = $con->query($sql_run);
                         while ($row = mysqli_fetch_array($result)) {
-                            echo $row['rating'];
+                            if ($row['rating'] == "") {
+                                echo "0.0";
+                            } else {
+                                echo $row['rating'];
+                            }
                         }
                         ?>
                     </div>

@@ -7,7 +7,7 @@ include 'function.php';
 
 error_reporting(E_ERROR | E_PARSE);
 
-//Create team
+// Create team
 if (isset($_POST['admin_team'])) {
 
     $name = $_POST['teamName'];
@@ -53,7 +53,7 @@ if (isset($_POST['admin_team'])) {
     }
 }
 
-//Get team data
+// Get team data
 if (isset($_GET['id'])) {
     $id = mysqli_real_escape_string($con, $_GET['id']);
 
@@ -74,7 +74,7 @@ if (isset($_GET['id'])) {
     }
 }
 
-//Create team
+// Delete team 
 if (isset($_POST['admin_delete_team'])) {
 
     $id = $_POST['teamId'];

@@ -131,7 +131,7 @@ if (mysqli_num_rows($query_run) > 0) {
                 <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
                     <?= date("d.m.Y", strtotime($rows['date'])) ?>
                 </td>
-                <td class="px-4 py-5 flex items-center justify-center border-b border-gray-200 bg-white text-sm space-x-1.5">
+                <td class="px-4 py-5 flex items-center justify-center border-b border-gray-200 bg-white text-sm space-x-2">
                     <?php if ($curDate <= $rows['date'] && $rows["status"] == "Назначи") { ?>
                         <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-order">
                             <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">

@@ -17,9 +17,13 @@ if (isset($_POST['mobile_login'])) {
 
     if (mysqli_num_rows($query_run) > 0) {
         while ($rows = mysqli_fetch_array($query_run)) {
+            $userId = $rows['id'];
 
             if (password_verify($_POST['password'], $rows['password'])) {
                 $_SESSION['pid'] = $pid;
+
+                $queryy = "UPDATE teams SET status='Yes' WHERE (user1_id='$userId' OR user2_id='$userId') AND delete_team <> 'yes'";
+                $query_runn = mysqli_query($con, $queryy);
 
                 $res = [
                     'status' => 200,
@@ -37,6 +41,16 @@ if (isset($_POST['mobile_login'])) {
 
 // Logout
 if (isset($_POST['action'])) {
+    $pid = $_SESSION['pid'];
+    $query = "SELECT * FROM users WHERE pid='$pid'";
+    $query_run = mysqli_query($con, $query);
+
+    while ($rows = mysqli_fetch_array($query_run)) {
+        $userId = $rows['id'];
+
+        $queryy = "UPDATE teams SET status='No' WHERE (user1_id='$userId' OR user2_id='$userId') AND delete_team <> 'yes'";
+        $query_runn = mysqli_query($con, $queryy);
+    }
     unset($_SESSION['pid']);
     jsonResponse(200, 'Успешно излизане');
 }

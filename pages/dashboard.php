@@ -48,7 +48,7 @@ $date = date("Y-m-d");
                   <div class="hidden lg:block mb-1.5 ml-5 text-xs text-gray-100">
                     Действия
                   </div>
-                  <li @click="dashOrder = true; dashUser = false; dashTeam = false; dashWarehouse = false; dashSupplier = false; dashClient = false; dashSection = 'Заявки'" :class=" dashOrder ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b] bg-opacity-50' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
+                  <li @click="dashOrder = true; dashUser = false; dashTeam = false; dashWarehouse = false; dashSupplier = false; dashClient = false; productOrder = false; dashSection = 'Заявки'" :class=" dashOrder ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b] bg-opacity-50' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" />
                     </svg>
@@ -57,13 +57,13 @@ $date = date("Y-m-d");
                   <div class="hidden lg:block mb-1.5 mt-2 ml-5 text-xs text-gray-100">
                     Персонал
                   </div>
-                  <li @click="dashUser = true; dashOrder = false; dashTeam = false; dashWarehouse = false; dashSupplier = false; dashClient = false; dashSection = 'Потребители'" :class=" dashUser ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
+                  <li @click="dashUser = true; dashOrder = false; dashTeam = false; dashWarehouse = false; dashSupplier = false; dashClient = false; productOrder = false; dashSection = 'Потребители'" :class=" dashUser ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                     </svg>
                     <span class="ml-2.5 hidden lg:block">Потребители</span>
                   </li>
-                  <li @click="dashTeam = true; dashOrder = false; dashUser = false; dashWarehouse = false; dashSupplier = false; dashClient = false; dashSection = 'Екипи'" :class=" dashTeam ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
+                  <li @click="dashTeam = true; dashOrder = false; dashUser = false; dashWarehouse = false; dashSupplier = false; dashClient = false; productOrder = false; dashSection = 'Екипи'" :class=" dashTeam ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1 reload-team-table">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                     </svg>
@@ -72,19 +72,25 @@ $date = date("Y-m-d");
                   <div class="hidden lg:block mb-1.5 mt-2 ml-5 text-xs text-gray-100">
                     Номенклатури
                   </div>
-                  <li @click="dashWarehouse = true; dashOrder = false; dashUser = false; dashTeam = false; dashSupplier = false; dashClient = false; dashSection = 'Склад'" :class=" dashWarehouse ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
+                  <li @click="dashWarehouse = true; dashOrder = false; dashUser = false; dashTeam = false; dashSupplier = false; dashClient = false; productOrder = false; dashSection = 'Склад'" :class=" dashWarehouse ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                     </svg>
                     <span class="ml-2.5 hidden lg:block">Склад</span>
                   </li>
-                  <li @click="dashSupplier = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashClient = false; dashSection = 'Доставчици'" :class=" dashSupplier ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
+                  <li @click="productOrder = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashClient = false; dashSupplier = false; dashSection = 'Поръчки'" :class=" productOrder ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                    </svg>
+                    <span class="ml-2.5 hidden lg:block">Поръчки</span>
+                  </li>
+                  <li @click="dashSupplier = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashClient = false; productOrder = false; dashSection = 'Доставчици'" :class=" dashSupplier ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                     </svg>
                     <span class="ml-2.5 hidden lg:block">Доставчици</span>
                   </li>
-                  <li @click="dashClient = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashSupplier = false; dashSection = 'Клиенти'" :class=" dashClient ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
+                  <li @click="dashClient = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashSupplier = false; productOrder = false; dashSection = 'Клиенти'" :class=" dashClient ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -238,7 +244,7 @@ $date = date("Y-m-d");
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                       </svg>
                     </button>
-                    <button type="button" class="w-10 h-10 bg-green-500 hover:bg-green-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
+                    <button id="reload-order-table" type="button" class="w-10 h-10 bg-green-500 hover:bg-green-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
                       <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7 text-white">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                       </svg>
@@ -372,7 +378,7 @@ $date = date("Y-m-d");
                               <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
                                 <?= date("d.m.Y", strtotime($rows['date'])) ?>
                               </td>
-                              <td class="px-4 py-5 flex items-center justify-center border-b border-gray-200 bg-white text-sm text-center space-x-1.5">
+                              <td class="px-4 py-5 flex items-center justify-center border-b border-gray-200 bg-white text-sm text-center space-x-2">
                                 <?php if ($rows["status"] == "Назначи") { ?>
                                   <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-order">
                                     <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
@@ -436,15 +442,15 @@ $date = date("Y-m-d");
                             <label for="customer-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Име и фамилия
                             </label>
-                            <input type="text" minlength="2" id="customer-name" name="customerName" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
+                            <input type="text" minlength="2" id="customer-name" name="customerName" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
                             <label for="customer-phone" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Телефон
                             </label>
-                            <input type="text" minlength="2" id="customer-phone" name="customerPhone" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи телефон" />
+                            <input type="text" minlength="2" id="customer-phone" name="customerPhone" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи телефон" />
                             <label for="customer-email" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Имейл
                             </label>
-                            <input type="email" minlength="2" id="customer-email" name="customerEmail" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи имейл" />
+                            <input type="email" minlength="2" id="customer-email" name="customerEmail" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи имейл" />
                             <label for="room" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете помещение</label>
                             <select id="room" name="room" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 mb-4">
                               <option value="Къща">Къща</option>
@@ -460,7 +466,7 @@ $date = date("Y-m-d");
                             <label for="customer-m2" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Квадратура
                             </label>
-                            <input type="text" minlength="2" maxlength="4" id="customer-m2" name="m2" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи квадратура" />
+                            <input type="text" minlength="2" maxlength="4" id="customer-m2" name="m2" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи квадратура" />
                             <label for="pick-date" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете дата</label>
                             <input type="date" id="pick-date" name="pickDate" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 mb-5" placeholder="Изберете дата" />
                             <label for="time" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете час</label>
@@ -542,7 +548,7 @@ $date = date("Y-m-d");
                             <label for="customer-phone-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Телефон
                             </label>
-                            <input type="text" minlength="2" id="customer-phone-edit" name="customerPhone" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи телефон" />
+                            <input type="text" minlength="2" id="customer-phone-edit" name="customerPhone" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи телефон" />
                             <label for="room-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете помещение</label>
                             <select id="room-edit" name="room" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 mb-4">
                               <option value="Къща">Къща</option>
@@ -558,7 +564,7 @@ $date = date("Y-m-d");
                             <label for="customer-m2-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Квадратура
                             </label>
-                            <input type="text" minlength="2" id="customer-m2-edit" name="m2" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи квадратура" />
+                            <input type="text" minlength="2" id="customer-m2-edit" name="m2" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи квадратура" />
                             <label for="pick-date-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете дата</label>
                             <input type="date" id="pick-date-edit" name="pickDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 mb-5" placeholder="Изберете дата" />
                             <label for="time-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете час</label>
@@ -718,14 +724,14 @@ $date = date("Y-m-d");
                   <input type="text" id="search-user" placeholder="По име или пид" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5" />
                 </div>
                 <div class="relative w-full sm:w-48">
-                  <select id="select-position" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5">
+                  <select id="select-position" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 cursor-pointer">
                     <option value="Всички">Всички</option>
                     <option value="Хигиенист">Хигиенист</option>
                     <option value="Шофьор">Шофьор</option>
                   </select>
                 </div>
                 <div class="relative w-full sm:w-48">
-                  <select id="select-status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5">
+                  <select id="select-status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 cursor-pointer">
                     <option value="3">Всички</option>
                     <option value="1">Активен</option>
                     <option value="0">Напуснал</option>
@@ -817,7 +823,7 @@ $date = date("Y-m-d");
                             <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
                               <?= date("d.m.Y", strtotime($rows['in_date'])) ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center space-x-1.5">
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center space-x-2">
                               <?php if ($rows["status"] != 0) { ?>
                                 <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-user">
                                   <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
@@ -865,21 +871,21 @@ $date = date("Y-m-d");
                             <label for="user-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Име и фамилия
                             </label>
-                            <input type="text" minlength="2" id="user-name" name="userName" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
+                            <input type="text" minlength="2" id="user-name" name="userName" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
                             <label for="user-egn" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               ЕГН
                             </label>
-                            <input type="text" minlength="10" maxlength="10" id="user-egn" name="userEgn" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи ЕГН" />
+                            <input type="text" minlength="10" maxlength="10" id="user-egn" name="userEgn" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи ЕГН" />
                             <label class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете дата на раждане</label>
                             <input type="date" name="user-dob" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 mb-5" />
                             <label for="user-pid" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               ПИД
                             </label>
-                            <input type="text" minlength="5" maxlength="5" id="user-pid" name="userPid" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи ПИД" />
+                            <input type="text" minlength="5" maxlength="5" id="user-pid" name="userPid" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи ПИД" />
                             <label for="user-phone" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Телефон
                             </label>
-                            <input type="text" minlength="2" id="user-phone" name="userPhone" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи телефон" />
+                            <input type="text" minlength="2" id="user-phone" name="userPhone" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи телефон" />
                             <label for="user-img" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Снимка
                             </label>
@@ -928,17 +934,17 @@ $date = date("Y-m-d");
                             <label for="user-name-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Име и фамилия
                             </label>
-                            <input type="text" minlength="2" id="user-name-edit" name="userName" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
+                            <input type="text" minlength="2" id="user-name-edit" name="userName" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
                             <label for="user-egn-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               ЕГН
                             </label>
-                            <input type="text" minlength="10" maxlength="10" id="user-egn-edit" name="userEgn" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи ЕГН" />
+                            <input type="text" minlength="10" maxlength="10" id="user-egn-edit" name="userEgn" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи ЕГН" />
                             <label class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Дата на раждане</label>
                             <input type="date" id="user-dob-edit" name="userDob" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 mb-5" />
                             <label for="user-phone-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Телефон
                             </label>
-                            <input type="text" minlength="2" id="user-phone-edit" name="userPhone" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи телефон" />
+                            <input type="text" minlength="2" id="user-phone-edit" name="userPhone" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи телефон" />
                             <label for="user-img-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Снимка
                             </label>
@@ -998,11 +1004,11 @@ $date = date("Y-m-d");
                             <label for="user-passowrd" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Парола
                             </label>
-                            <input type="password" minlength="5" autocomplete="off" id="user-passowrd" name="userPassword" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи парола" />
+                            <input type="password" minlength="5" autocomplete="off" id="user-passowrd" name="userPassword" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи парола" />
                             <label for="user-passowrd-rep" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Повтори парола
                             </label>
-                            <input type="password" minlength="5" autocomplete="off" id="user-passowrd-rep" name="userPassowrdRep" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Повтори парола" />
+                            <input type="password" minlength="5" autocomplete="off" id="user-passowrd-rep" name="userPassowrdRep" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Повтори парола" />
                           </div>
                         </div>
                       </div>
@@ -1033,6 +1039,11 @@ $date = date("Y-m-d");
                   <button id="add-team-btn" type="button" class="w-10 h-10 bg-blue-500 hover:bg-blue-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-7 h-7 text-white">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                  </button>
+                  <button type="button" class="w-10 h-10 bg-green-500 hover:bg-green-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg reload-team-table">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7 text-white">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                     </svg>
                   </button>
                 </div>
@@ -1140,7 +1151,7 @@ $date = date("Y-m-d");
                                 } ?>
                               </div>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center space-x-1.5">
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center space-x-2">
                               <button type="button" value="<?= $rows["id"] ?>" class="bg-red-500 hover:bg-red-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 delete-team">
                                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
                                   <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
@@ -1181,7 +1192,7 @@ $date = date("Y-m-d");
                             <label for="team-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Име на екип
                             </label>
-                            <input type="text" id="team-name" name="teamName" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи име на екип" />
+                            <input type="text" id="team-name" name="teamName" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи име на екип" />
                             <div class="mb-4">
                               <label for="team-user1" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                                 Служител 1
@@ -1189,7 +1200,7 @@ $date = date("Y-m-d");
                               <input type="text" id="team-user1" name="teamUser1" autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
                               <input type="hidden" id="team-user1-pid" name="teamUser1Pid">
                               <input type="hidden" id="team-user1-id" name="teamUser1Id">
-                              <div id="user-name1-dropdown" class="hidden absolute w-[90.5%] sm:w-[92.2%] bg-gray-50 border border-gray-400 border-t-0 shadow-lg rounded-b-lg -mt-1 z-50"></div>
+                              <div id="user-name1-dropdown" class="hidden absolute w-[90.5%] sm:w-[92.2%] bg-gray-50 border border-gray-400 border-t-0 shadow-lg rounded-b-lg -mt-1 2xl:-mt-[5px] z-50"></div>
                             </div>
                             <div class="mb-4">
                               <label for="team-user2" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
@@ -1198,7 +1209,7 @@ $date = date("Y-m-d");
                               <input type="text" minlength="2" id="team-user2" name="teamUser2" autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
                               <input type="hidden" id="team-user2-pid" name="teamUser2Pid">
                               <input type="hidden" id="team-user2-id" name="teamUser2Id">
-                              <div id="user-name2-dropdown" class="hidden absolute w-[90.5%] sm:w-[92.2%] bg-gray-50 border border-gray-400 border-t-0 shadow-lg rounded-b-lg -mt-1 z-50"></div>
+                              <div id="user-name2-dropdown" class="hidden absolute w-[90.5%] sm:w-[92.2%] bg-gray-50 border border-gray-400 border-t-0 shadow-lg rounded-b-lg -mt-1 2xl:-mt-[5px] z-50"></div>
                             </div>
                           </div>
                         </div>
@@ -1275,22 +1286,36 @@ $date = date("Y-m-d");
                   </div>
                   <input type="text" id="search-product" placeholder="По номер или име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5" />
                 </div>
+                <div class="relative w-full sm:w-48">
+                  <select id="select-product-kind" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 cursor-pointer">
+                    <option value="Всички">Всички</option>
+                    <option value="Препарати">Препарати</option>
+                    <option value="Техника">Техника</option>
+                    <option value="Екипировка">Екипировка</option>
+                    <option value="Пособия за чистене">Пособия за чистене</option>
+                  </select>
+                </div>
                 <div class="flex items-center space-x-3">
                   <button id="add-product-btn" type="button" class="w-10 h-10 bg-blue-500 hover:bg-blue-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-7 h-7 text-white">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
                   </button>
-                  <button type="button" class="w-10 h-10 bg-green-500 hover:bg-green-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
+                  <button id="reload-product-table" type="button" class="w-10 h-10 bg-green-500 hover:bg-green-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7 text-white">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                    </svg>
+                  </button>
+                  <button id="set-product" type="button" class="w-10 h-10 bg-yellow-500 hover:bg-yellow-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-7 h-7 text-white">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
                     </svg>
                   </button>
                 </div>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
-                  <table id="team-table" class="min-w-full leading-normal">
+                  <table id="product-table" class="min-w-full leading-normal">
                     <thead>
                       <tr>
                         <th class="pr-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
@@ -1333,13 +1358,13 @@ $date = date("Y-m-d");
                             <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
                               <?= $rows["kind"] ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white flex justify-center items-center space-x-1.5">
-                              <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90">
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white flex justify-center items-center space-x-2">
+                              <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-product">
                                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
                                   <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
                                 </svg>
                               </button>
-                              <button type="button" value="<?= $rows["id"] ?>" class="bg-red-500 hover:bg-red-600 p-2 rounded-md transition-all focus:outline-none active:scale-90">
+                              <button type="button" value="<?= $rows["id"] ?>" class="bg-red-500 hover:bg-red-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 delete-product">
                                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
                                   <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
                                 </svg>
@@ -1360,8 +1385,8 @@ $date = date("Y-m-d");
 
             <!-- Add product modal -->
             <div id="add-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
-              <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
-                <div class="relative w-full h-full max-w-lg">
+              <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+                <div class="relative w-full h-auto max-w-lg">
                   <div class="relative bg-white rounded-lg shadow mb-6">
                     <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                       <div class="text-slate-700 font-bold text-xl">Добави продукт</div>
@@ -1379,7 +1404,7 @@ $date = date("Y-m-d");
                             <label for="product-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Име на продукт
                             </label>
-                            <input type="text" id="produc-name" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
+                            <input type="text" id="product-name" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
                             <label for="product-kind" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                               Избери вид на продукта
                             </label>
@@ -1402,42 +1427,108 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Team order modal -->
-            <div id="team-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+            <!-- Edit product modal -->
+            <div id="edit-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
                 <div class="relative w-full h-auto max-w-lg">
                   <div class="relative bg-white rounded-lg shadow mb-6">
                     <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
-                      <div class="text-slate-700 font-bold text-xl">Заявки</div>
-                      <button type="button" class="absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-team-order-modal">
+                      <div class="text-slate-700 font-bold text-xl">Редактиране на продукта</div>
+                      <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-edit-product-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                           <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                         </svg>
                       </button>
                     </div>
                     <!-- Modal body -->
-                    <div class="px-5 py-4 space-y-6 text-slate-700">
-                      <div id="team-orders" class="sm:flex items-center w-full gap-y-4 sm:gap-x-4">
+                    <form id="edit-product-form">
+                      <div class="px-5 py-4 space-y-6 text-slate-700">
+                        <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
+                          <div class="w-full">
+                            <input type="hidden" id="product-id-edit" name="id">
+                            <label for="product-name-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Име на продукт
+                            </label>
+                            <input type="text" id="product-name-edit" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
+                            <label for="product-kind-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Избери вид на продукта
+                            </label>
+                            <select id="product-kind-edit" name="kind" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 mb-4">
+                              <option value="Препарати">Препарати</option>
+                              <option value="Техника">Техника</option>
+                              <option value="Екипировка">Екипировка</option>
+                              <option value="Пособия за чистене">Пособия за чистене</option>
+                            </select>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                      <div class="w-full border-t border-gray-200 p-3 flex justify-end items-center">
+                        <button type="button" class="text-slate-700 border border-slate-400 bg-transparent hover:bg-gray-100 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90 close-edit-product-modal">Откажи</button>
+                        <button type="submit" class="text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90">Запази</button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Delete team modal -->
-            <div id="delete-team-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+            <!-- Set product to team -->
+            <div id="set-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+                <div class="relative w-full h-auto max-w-lg">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
+                      <div class="text-slate-700 font-bold text-xl">Добавяне на продукт към екип</div>
+                      <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-set-product-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <!-- Modal body -->
+                    <form id="set-product-form">
+                      <div class="px-5 py-4 space-y-4 text-slate-700">
+                        <div class="w-full">
+                          <label for="select-team-product" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете екип</label>
+                          <select id="select-team-product" name="team" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 mb-4"></select>
+                        </div>
+                        <div class="mb-4">
+                          <label for="set-product-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                            Име на продукт
+                          </label>
+                          <input type="text" id="set-product-name" name="name" autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
+                          <div id="set-product-name-dropdown" class="hidden absolute w-[90.5%] sm:w-[92.2%] bg-gray-50 border border-gray-400 border-t-0 shadow-lg rounded-b-lg -mt-1 2xl:-mt-[5px] z-50"></div>
+                        </div>
+                        <div>
+                          <label for="set-product-quantity" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                            Количество
+                          </label>
+                          <input type="text" id="set-product-quantity" name="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи количество" />
+                        </div>
+                      </div>
+                      <div class="w-full border-t border-gray-200 p-3 flex justify-end items-center">
+                        <button type="button" class="text-slate-700 border border-slate-400 bg-transparent hover:bg-gray-100 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90 close-set-product-modal">Откажи</button>
+                        <button type="submit" class="text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90">Запази</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Delete product modal -->
+            <div id="delete-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
                 <div class="relative w-full h-auto max-w-md">
                   <div class="relative bg-white rounded-lg shadow mb-6">
                     <!-- Modal body -->
                     <div class="p-4 text-center">
-                      <div class="text-xl font-bold mb-3">Изтрий екипа</div>
-                      <h3 class="mb-5 text-sm text-gray-500">Сигурни ли сте, че искате да изтриете екипа? Информацията от приключените задачи на екипа ще се запазят.</h3>
-                      <form id="delete-team-form">
-                        <input id="delete-team-id" type="hidden" name="teamId">
+                      <div class="text-xl font-bold mb-3">Изтрий продукта</div>
+                      <h3 class="mb-5 text-sm text-gray-500">Сигурни ли сте, че искате да изтриете продукта?</h3>
+                      <form id="delete-product-form">
+                        <input id="delete-product-id" type="hidden" name="id">
                         <div class="flex items-center mt-3">
-                          <button type="button" class="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md active:scale-90 transition-all close-delete-team-modal">
+                          <button type="button" class="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md active:scale-90 transition-all close-delete-product-modal">
                             Откажи
                           </button>
                           <button type="submit" class="flex-1 px-4 py-2 ml-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md active:scale-90 transition-all">
@@ -1450,6 +1541,208 @@ $date = date("Y-m-d");
                 </div>
               </div>
             </div>
+          </main>
+
+
+          <!-- Product order section -->
+          <main v-show="productOrder">
+            <div class="py-6 px-8">
+              <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
+                <div class="relative w-full sm:w-auto">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                  </div>
+                  <input type="text" id="search-order-product" placeholder="По номер или име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5" />
+                </div>
+                <div class="relative w-full sm:w-48">
+                  <select id="select-order-product-kind" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 cursor-pointer">
+                    <option value="Всички">Всички</option>
+                    <option value="Препарати">Препарати</option>
+                    <option value="Техника">Техника</option>
+                    <option value="Екипировка">Екипировка</option>
+                    <option value="Пособия за чистене">Пособия за чистене</option>
+                  </select>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <button id="add-product-order-btn" type="button" class="w-10 h-10 bg-blue-500 hover:bg-blue-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-7 h-7 text-white">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+                  <table id="product-order-table-table" class="min-w-full leading-normal">
+                    <thead>
+                      <tr>
+                        <th class="pr-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          номер
+                        </th>
+                        <th class="pr-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          продукт
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          количество
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          вид
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          доставчик
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          производител
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          ед. цена
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          цена
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          дата
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          действия
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $query = "SELECT * FROM product_order";
+                      $query_run = mysqli_query($con, $query);
+
+                      if (mysqli_num_rows($query_run) > 0) {
+                        while ($rows = mysqli_fetch_array($query_run)) {
+                      ?>
+                          <tr>
+                            <td class="pr-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <?= $rows["id"] ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <p class="text-gray-900 whitespace-no-wrap">
+                                <?= $rows["name"] ?>
+                              </p>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm">
+                              <div class="h-8 w-8 mx-auto bg-blue-100 text-blue-800 text-xs font-semibold rounded-md flex items-center justify-center"><?= $rows["quantity"] ?></div>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <?= $rows["kind"] ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <?= $rows["supplier"] ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <?= $rows["manufacturer"] ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <?= $rows["price_per_one"] . " лв." ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <?= $rows["total_price"] . " лв." ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <?= date("d.m.Y", strtotime($rows['date'])) ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 bg-white flex justify-center items-center space-x-2">
+                              <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-product-order">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                  <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
+                                </svg>
+                              </button>
+                              <button type="button" value="<?= $rows["id"] ?>" class="bg-red-500 hover:bg-red-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 delete-product-order">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                  <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
+                                </svg>
+                              </button>
+                            </td>
+                          </tr>
+                        <?php }
+                      } else { ?>
+                        <tr>
+                          <td colspan="10" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold">Не са намерени данни</td>
+                        </tr>
+                      <?php } ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Add product modal -->
+            <div id="add-order-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
+                <div class="relative w-full h-full max-w-lg">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
+                      <div class="text-slate-700 font-bold text-xl">Добави поръка</div>
+                      <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-order-product-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <!-- Modal body -->
+                    <form id="add-product-order-form">
+                      <div class="px-5 py-4 space-y-6 text-slate-700">
+                        <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
+                          <div class="w-full">
+                            <div class="mb-4">
+                              <label for="product-order-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                Име на продукт
+                              </label>
+                              <input type="text" id="product-order-name" name="name" autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
+                              <div id="product-name-dropdown" class="hidden absolute w-[90.5%] sm:w-[92.2%] bg-gray-50 border border-gray-400 border-t-0 shadow-lg rounded-b-lg -mt-1 2xl:-mt-[5px] z-50"></div>
+                            </div>
+                            <label for="product-order-quantity" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Количество
+                            </label>
+                            <input type="text" id="product-order-quantity" name="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5 price-calculate" placeholder="Въведи количество" />
+                            <label for="product-order-kind" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Избери вид на продукта
+                            </label>
+                            <select id="product-order-kind" name="kind" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 mb-4">
+                              <option value="Препарати">Препарати</option>
+                              <option value="Техника">Техника</option>
+                              <option value="Екипировка">Екипировка</option>
+                              <option value="Пособия за чистене">Пособия за чистене</option>
+                            </select>
+                            <div class="mb-4">
+                              <label for="product-order-supplier" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                Доставчик
+                              </label>
+                              <input type="text" id="product-order-supplier" name="supplier" autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведи доставчик" />
+                              <div id="supplier-name-dropdown" class="hidden absolute w-[90.5%] sm:w-[92.2%] bg-gray-50 border border-gray-400 border-t-0 shadow-lg rounded-b-lg -mt-1 2xl:-mt-[5px] z-50"></div>
+                            </div>
+                            <label for="product-order-manufacturer" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Производител
+                            </label>
+                            <input type="text" id="product-order-manufacturer" name="manufacturer" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none  focus:border-gray-400 w-full p-2.5" placeholder="Въведи производител" />
+                            <label for="product-order-one-price" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Единична цена
+                            </label>
+                            <input type="text" id="product-order-one-price" name="onePrice" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none  focus:border-gray-400 w-full p-2.5 price-calculate" placeholder="Въведи единична цена" />
+                            <label for="product-order-price" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Обща цена
+                            </label>
+                            <input readonly type="text" id="product-order-price" value="0.00 лв." name="price" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none w-full p-2.5" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w-full border-t border-gray-200 p-3 flex justify-end items-center">
+                        <button type="button" class="text-slate-700 border border-slate-400 bg-transparent hover:bg-gray-100 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90 close-order-product-modal">Откажи</button>
+                        <button type="submit" class="text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90">Запази</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </main>
         </div>
       </Transition>

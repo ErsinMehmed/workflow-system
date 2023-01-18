@@ -32,6 +32,7 @@ createApp({
       dashUser: false,
       dashTeam: false,
       dashWarehouse: false,
+      productOrder: false,
       dashSupplier: false,
       dashClient: false,
       dashSection: "Заявки",

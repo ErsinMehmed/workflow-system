@@ -103,7 +103,7 @@ if (isset($_POST['admin_update_user'])) {
                 $query = "UPDATE users SET name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
             } else {
                 uploadPhoto($filename, "userImg", '../uploaded-files/user-images/');
-                $query = "UPDATE users SET image='$filename', name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
+                $query = "UPDATE users SET image='$filename', name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob' WHERE id='$id'";
             }
 
             $query_run = mysqli_query($con, $query);

@@ -626,7 +626,6 @@ $(document).ready(function () {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#edit-user-form")[0].reset();
         $("#edit-user-modal").removeClass("block");
         $("#edit-user-modal").addClass("hidden");
         $("#user-table").load(location.href + " #user-table");
@@ -744,7 +743,105 @@ $(document).ready(function () {
 
   closeModal(".close-add-team-modal", "#add-team-modal");
 
-  // User1 live secarch add team
+  // Stock search by name
+  $(document).on("keyup", "#product-order-name", function () {
+    var product = $(this).val();
+
+    $.ajax({
+      url: "../action/product/ProductSearch.php",
+      type: "POST",
+      data: { product: product },
+      success: function (data) {
+        if (data != "") {
+          $("#product-name-dropdown").removeClass("hidden");
+          $("#product-name-dropdown").html(data);
+
+          $(window).click(function () {
+            $("#product-name-dropdown").addClass("hidden");
+          });
+        } else {
+          $("#product-name-dropdown").addClass("hidden");
+        }
+
+        if (product == "") {
+          $("#product-name-dropdown").addClass("hidden");
+        }
+      },
+    });
+  });
+
+  // Search stock supplier by name
+  $(document).on("keyup", "#product-order-supplier", function () {
+    var supplier = $(this).val();
+
+    $.ajax({
+      url: "../action/product/SupplierSearch.php",
+      type: "POST",
+      data: { supplier: supplier },
+      success: function (data) {
+        if (data != "") {
+          $("#supplier-name-dropdown").removeClass("hidden");
+          $("#supplier-name-dropdown").html(data);
+
+          $(window).click(function () {
+            $("#supplier-name-dropdown").addClass("hidden");
+          });
+        } else {
+          $("#supplier-name-dropdown").addClass("hidden");
+        }
+
+        if (supplier == "") {
+          $("#supplier-name-dropdown").addClass("hidden");
+        }
+      },
+    });
+  });
+
+  // Product search by name
+  $(document).on("keyup", "#set-product-name", function () {
+    var product = $(this).val();
+
+    $.ajax({
+      url: "../action/product/ProductSearch1.php",
+      type: "POST",
+      data: { product: product },
+      success: function (data) {
+        $("#set-product-name-dropdown").removeClass("hidden");
+        $("#set-product-name-dropdown").html(data);
+
+        if (product == "") {
+          $("#set-product-name-dropdown").addClass("hidden");
+        }
+
+        $(window).click(function () {
+          $("#set-product-name-dropdown").addClass("hidden");
+        });
+      },
+    });
+  });
+
+  // Get supplier name and insert in input
+  $(document).on("click", ".get-order-supplier", function () {
+    var selected = $(this).html();
+    $("#product-order-supplier").val(selected);
+    $("#supplier-name-dropdown").addClass("hidden");
+  });
+
+  // Get stock name and insert in input
+  $(document).on("click", ".get-product-name1", function () {
+    var selected = $(this).html();
+    $("#set-product-name").val(selected);
+    $("#set-product-name-dropdown").addClass("hidden");
+  });
+
+  // Get stock name and insert in input
+  $(document).on("click", ".get-product-name", function () {
+    var selected = $(this).html();
+    $("#product-order-name").val(selected);
+    $("#product-name-dropdown").addClass("hidden");
+  });
+
+  // User1 search add team
   $(document).on("keyup", "#team-user1", function () {
     var user = $(this).val();
 
@@ -759,6 +856,10 @@ $(document).ready(function () {
         if (user == "") {
           $("#user-name1-dropdown").addClass("hidden");
         }
+
+        $(window).click(function () {
+          $("#user-name1-dropdown").addClass("hidden");
+        });
       },
     });
   });
@@ -775,7 +876,7 @@ $(document).ready(function () {
     $("#user-name1-dropdown").addClass("hidden");
   });
 
-  // User2 live secarch add team
+  // User2 live search add team
   $(document).on("keyup", "#team-user2", function () {
     var user = $(this).val();
 
@@ -790,6 +891,10 @@ $(document).ready(function () {
         if (user == "") {
           $("#user-name2-dropdown").addClass("hidden");
         }
+
+        $(window).click(function () {
+          $("#user-name2-dropdown").addClass("hidden");
+        });
       },
     });
   });
@@ -885,6 +990,23 @@ $(document).ready(function () {
     });
   });
 
+  $(document).on("click", "#set-product", function () {
+    var actionOr = "data";
+
+    $.ajax({
+      url: "../action/team/Select.php",
+      type: "POST",
+      data: {
+        actionOr: actionOr,
+      },
+      success: function (data) {
+        $("#set-product-modal").removeClass("hidden");
+        $("#set-product-modal").addClass("block");
+        $("#select-team-product").html(data);
+      },
+    });
+  });
+
   // Admin select team for order
   $("#select-team").on("change", function () {
     var id = $(this).val();
@@ -900,6 +1022,71 @@ $(document).ready(function () {
         $("#user1-id-set-order").val(res.data.user1_id);
         $("#user2-set-order").val(res.data.user2_name);
         $("#user2-id-set-order").val(res.data.user2_id);
+      }
+    });
+  });
+
+  // Get data for product
+  $(document).on("click", ".edit-product", function () {
+    var id = $(this).val();
+
+    getData("../action/AdminWarehouse.php?id=" + id, function (response) {
+      var res = jQuery.parseJSON(response);
+      if (res.status == 404) {
+        alertify.error(res.message);
+      } else if (res.status == 200) {
+        $("#edit-product-modal").removeClass("hidden");
+        $("#edit-product-modal").addClass("block");
+
+        $("#product-id-edit").val(res.data.id);
+        $("#product-name-edit").val(res.data.name);
+
+        if (res.data.kind == "Препарати") {
+          $('#product-kind-edit option[value="Препарати"]').attr(
+            "selected",
+            "selected"
+          );
+        } else if (res.data.kind == "Техника") {
+          $('#product-kind-edit option[value="Техника"]').attr(
+            "selected",
+            "selected"
+          );
+        } else if (res.data.kind == "Екипировка") {
+          $('#product-kind-edit option[value="Екипировка"]').attr(
+            "selected",
+            "selected"
+          );
+        } else {
+          $('#product-kind-edit option[value="Пособия за чистене"]').attr(
+            "selected",
+            "selected"
+          );
+        }
+      }
+    });
+  });
+
+  // Admin create product order
+  $(document).on("submit", "#add-product-order-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_product_order", true);
+
+    postData("../action/AdminProducts.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+      console.log(response);
+      if (res.status == 200) {
+        $("#add-product-order-form")[0].reset();
+        $("#add-order-product-modal").removeClass("block");
+        $("#add-order-product-modal").addClass("hidden");
+        $("#product-table").load(location.href + " #product-table");
+        $("#product-order-table-table").load(
+          location.href + " #product-order-table-table"
+        );
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
       }
     });
   });
@@ -949,16 +1136,60 @@ $(document).ready(function () {
 
   closeModal(".close-team-order-modal", "#team-order-modal");
 
-  // Admin delete modal team
+  // Admin delete team modal open
   $(document).on("click", ".delete-team", function () {
     $("#delete-team-modal").removeClass("hidden");
     $("#delete-team-modal").addClass("block");
     $("#delete-team-id").val($(this).val());
   });
 
+  // Admin delete product modal open
+  $(document).on("click", ".delete-product", function () {
+    $("#delete-product-modal").removeClass("hidden");
+    $("#delete-product-modal").addClass("block");
+    $("#delete-product-id").val($(this).val());
+  });
+
+  closeModal(".close-delete-product-modal", "#delete-product-modal");
+
   closeModal(".close-delete-team-modal", "#delete-team-modal");
 
-  // Team search by id or name
+  // Product search by id or name
+  $("#search-product").on("keyup", function () {
+    var text = $(this).val();
+    var kind = $("#select-product-kind").val();
+
+    $.ajax({
+      url: "../action/product/Filter.php",
+      type: "POST",
+      data: {
+        text: text,
+        kind: kind,
+      },
+      success: function (data) {
+        $("#product-table").html(data);
+      },
+    });
+  });
+
+  // Product filter by kind
+  $("#select-product-kind").on("change", function () {
+    var kind = $(this).val();
+    var text = $("#search-product").val();
+
+    $.ajax({
+      url: "../action/product/Filter.php",
+      type: "POST",
+      data: {
+        text: text,
+        kind: kind,
+      },
+      success: function (data) {
+        $("#product-table").html(data);
+      },
+    });
+  });
+
   $("#search-team").on("keyup", function () {
     var text = $(this).val();
 
@@ -989,6 +1220,92 @@ $(document).ready(function () {
         $("#delete-team-modal").addClass("hidden");
         $("#user-table").load(location.href + " #user-table");
         $("#team-table").load(location.href + " #team-table");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // Admin delete product
+  $(document).on("submit", "#delete-product-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_delete_product", true);
+
+    postData("../action/AdminWarehouse.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#delete-product-modal").removeClass("block");
+        $("#delete-product-modal").addClass("hidden");
+        $("#product-table").load(location.href + " #product-table");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // Admin add product
+  $(document).on("submit", "#add-product-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_product", true);
+
+    postData("../action/AdminWarehouse.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#add-product-modal").removeClass("block");
+        $("#add-product-modal").addClass("hidden");
+        $("#product-table").load(location.href + " #product-table");
+        $("#add-product-form")[0].reset();
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // Admin edit product
+  $(document).on("submit", "#edit-product-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_edit_product", true);
+
+    postData("../action/AdminWarehouse.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#edit-product-modal").removeClass("block");
+        $("#edit-product-modal").addClass("hidden");
+        $("#product-table").load(location.href + " #product-table");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // Admin set product to team
+  $(document).on("submit", "#set-product-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_set_product", true);
+
+    postData("../action/AdminWarehouse.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#set-product-modal").removeClass("block");
+        $("#set-product-modal").addClass("hidden");
+        $("#product-table").load(location.href + " #product-table");
+        $("#set-product-form")[0].reset();
         alertify.success(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
@@ -1161,6 +1478,7 @@ $(document).ready(function () {
     });
   });
 
+  // Mobile show customer images
   $(document).on("click", ".open-photo-modal", function () {
     var email = $(this).val();
 
@@ -1468,6 +1786,8 @@ $(document).ready(function () {
 
   closeModal(".cancel-order-reason-modal", "#cancel-order-reason-modal");
 
+  closeModal(".close-set-product-modal", "#set-product-modal");
+
   openModal(".open-cancel-modal", "#cancel-order-modal");
 
   closeModal(".close-cancel-order-modal", "#cancel-order-modal");
@@ -1485,6 +1805,12 @@ $(document).ready(function () {
   closeModal(".close-product-order-modal", "#product-order-modal");
 
   closeModal(".close-order-photo-modal", "#order-photo-modal");
+
+  closeModal(".close-edit-product-modal", "#edit-product-modal");
+
+  openModal("#add-product-order-btn", "#add-order-product-modal");
+
+  closeModal(".close-order-product-modal", "#add-order-product-modal");
 
   $("#active-order").html($(".active-order-count").val());
 
@@ -1509,5 +1835,25 @@ $(document).ready(function () {
     $("#order-is-started").addClass("hidden");
     $("#mobOrder").removeClass("hidden");
     $("#mobOrder").addClass("block");
+  });
+
+  $(".price-calculate").keyup(function () {
+    const totalPrice = (
+      $("#product-order-quantity").val() * $("#product-order-one-price").val()
+    ).toFixed(2);
+
+    $("#product-order-price").val(totalPrice);
+  });
+
+  $(document).on("click", "#reload-order-table", function (e) {
+    $("#order-table").load(location.href + " #order-table");
+  });
+
+  $(document).on("click", ".reload-team-table", function (e) {
+    $("#team-table").load(location.href + " #team-table");
+  });
+
+  $(document).on("click", "#reload-product-table", function (e) {
+    $("#product-table").load(location.href + " #product-table");
   });
 });

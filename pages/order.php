@@ -6,9 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="shortcut icon" href="../images/title.png" />
-  <link rel="stylesheet" href="../css/app.css" />
-  <link rel="stylesheet" href="../css/alert.css" />
+  <link rel="shortcut icon" href="images/title.png" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/alert.css" />
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -42,14 +42,14 @@
       <!--Navbar section start-->
       <nav class="bg-white border-b border-slate-200 shadow-md sm:px-0 pt-3 md:py-3 top-0 sticky z-30">
         <div class="bg-white flex flex-wrap sm:px-5 md:px-6 lg:px-12 pb-3 md:pb-0 items-center justify-between">
-          <a href="home" class="flex items-center pl-5 sm:pl-0">
-            <img src="../images/main-logo.png" class="h-7 mr-3 md:h-12" alt="Main logo" />
+          <a href="index" class="flex items-center pl-5 sm:pl-0">
+            <img src="images/main-logo.png" class="h-7 mr-3 md:h-12" alt="Main logo" />
           </a>
           <div class="flex items-center pr-5 sm:pr-0">
             <svg data-modal-toggle="authentication-modal" fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor" class="w-8 h-8 text-slate-700 cursor-pointer hover:opacity-75 transition-all md:hidden">
               <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <img class="w-[26px] h-[25.5px] object-cover cursor-pointer hover:opacity-75 transition-all rounded-full md:hidden ml-2.5 mr-1" src="../images/britain-flag.png" alt="english" />
+            <img class="w-[26px] h-[25.5px] object-cover cursor-pointer hover:opacity-75 transition-all rounded-full md:hidden ml-2.5 mr-1" src="images/britain-flag.png" alt="english" />
             <button @click="hamburgerIcon = !hamburgerIcon" id="open-nav-bar" data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 pr-0 text-sm text-gray-500 rounded-lg md:hidden focus:outline-none focus:ring-0 transition-all" aria-controls="navbar-default" aria-expanded="false">
               <svg v-show="hamburgerIcon" class="w-8 h-8" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
@@ -62,7 +62,7 @@
           <div class="hidden w-full md:block md:w-auto relative" id="navbar-default">
             <ul class="flex items-center flex-col -mb-3 md:-mb-0.5 p-4 mt-4 border border-gray-100 md:rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-semibold md:border-0 md:bg-white">
               <li>
-                <a href="home" class="flex items-center py-2 pl-3 pr-4 text-gray-700 rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 transition-all active:scale-90">
+                <a href="index" class="flex items-center py-2 pl-3 pr-4 text-gray-700 rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 transition-all active:scale-90">
                   <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 md:hidden">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                   </svg>
@@ -100,7 +100,7 @@
                 </svg>
               </li>
               <li>
-                <img class="w-8 h-8 object-cover cursor-pointer hover:opacity-75 transition-all rounded-full hidden md:block" src="../images/britain-flag.png" alt="english" />
+                <img class="w-8 h-8 object-cover cursor-pointer hover:opacity-75 transition-all rounded-full hidden md:block" src="images/britain-flag.png" alt="english" />
               </li>
             </ul>
           </div>
@@ -640,10 +640,10 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-  <script src="../js/main-vue.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/ajax.js"></script>
-  <script src="../loader/siteLoader.js"></script>
+  <script src="js/main-vue.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/ajax.js"></script>
+  <script src="loader/siteLoader.js"></script>
   <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 </body>
 

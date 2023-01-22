@@ -3,7 +3,7 @@ session_start();
 error_reporting(0);
 date_default_timezone_set('Europe/Sofia');
 
-include '../action/dbconn.php';
+include 'action/dbconn.php';
 
 $pid = $_SESSION['pid'];
 $date_now = date("Y-m-d");
@@ -17,9 +17,9 @@ $date_now = date("Y-m-d");
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="shortcut icon" href="../images/title.png" />
-  <link rel="stylesheet" href="../css/app.css" />
-  <link rel="stylesheet" href="../css/alert.css" />
+  <link rel="shortcut icon" href="images/title.png" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/alert.css" />
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
@@ -46,8 +46,9 @@ $date_now = date("Y-m-d");
         <aside class="w-28 fixed" aria-label="Sidebar">
           <div class="px-3 py-4 overflow-y-auto bg-[#f8f8f8] h-screen">
             <ul class="flex-col space-y-4 text-slate-600">
-              <li id="profile-btn" @click="mobProfile = true; mobOrder = false; mobWarehouse = false" class="flex items-center justify-center w-16 h-16 mx-auto rounded-full border-4 border-white bg-[#cde8f8] cursor-pointer mt-2 transition-all active:scale-90 shadow-xl ring-1 ring-slate-200">
-                <img class="object-cover h-12 w-12" src="../images/title.png" alt="" />
+              <li id="profile-btn" @click="mobProfile = true; mobOrder = false; mobWarehouse = false">
+                <div class="flex items-center justify-center w-16 h-16 mx-auto rounded-full border-4 border-white bg-[#cde8f8] cursor-pointer mt-2 transition-all active:scale-90 shadow-xl ring-1 ring-slate-200"><img class="object-cover h-12 w-12" src="images/title.png" alt="" /></div>
+                <div class="text-[12.4px] font-bold text-center mt-1.5 text-slate-600">Carpet Services</div>
               </li>
               <li id="order-btn" @click="mobOrder = true; mobWarehouse = false; mobProfile = false" :class="mobOrder ? 'bg-blue-50':'bg-white'" class="h-[88px] w-[88px] rounded-md shadow-xl border border-slate-100 flex items-center justify-center cursor-pointer transition-all active:scale-90">
                 <div>
@@ -55,7 +56,7 @@ $date_now = date("Y-m-d");
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
                   </svg>
                   <span class="whitespace-nowrap text-center font-semibold">
-                    Заявки
+                    Задачи
                   </span>
                 </div>
               </li>
@@ -81,7 +82,7 @@ $date_now = date("Y-m-d");
                 </div>
               </li>
             </ul>
-            <li id="mobile-log-out" class="h-[88px] w-[88px] bg-white rounded-md shadow-xl border border-slate-100 flex items-center justify-center cursor-pointer transition-all active:scale-90 text-slate-600 mt-[304px]">
+            <li id="mobile-log-out" class="h-[88px] w-[88px] bg-white rounded-md shadow-xl border border-slate-100 flex items-center justify-center cursor-pointer transition-all active:scale-90 text-slate-600 mt-[269px]">
               <div>
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
@@ -100,7 +101,7 @@ $date_now = date("Y-m-d");
             <!-- Profile section -->
             <div v-show="mobProfile">
               <div class="flex items-center justify-end bg-[#f8f8f8] w-full h-14 border-b-2 border-slate-200"></div>
-              <div class="flex p-4 space-x-6">
+              <div class="flex p-4 space-x-5">
                 <div class="w-[40%] shadow-xl border border-slate-100 flex items-center justify-center py-[82px] text-slate-600 rounded-md">
                   <?php
                   $query = "SELECT * FROM users WHERE pid = '$pid'";
@@ -122,7 +123,7 @@ $date_now = date("Y-m-d");
                     </div>
                   <?php } ?>
                 </div>
-                <div class="w-[60%] space-y-6">
+                <div class="w-[60%] space-y-5">
                   <div class="px-5 py-10 rounded-md shadow-xl border border-slate-100">
                     <form id="update-password-mobile-form">
                       <div class="relative z-0 w-full mb-5 group">
@@ -160,7 +161,7 @@ $date_now = date("Y-m-d");
                       </div>
                     </form>
                   </div>
-                  <div class="px-5 py-[50px] rounded-md shadow-xl border border-slate-100">
+                  <div class="px-5 py-[65px] rounded-md shadow-xl border border-slate-100">
                     <canvas id="orders-chart"></canvas>
                   </div>
                 </div>
@@ -301,7 +302,7 @@ $date_now = date("Y-m-d");
                 ?>
                       <input class="finished-order-count" type="hidden" value="<?= $num ?>" />
                       <button class="w-full focus:outline-none mt-4 get-order-data" type="button" value="<?= $rows['id'] ?>">
-                        <div class="flex items-center justify-between w-full rounded border border-slate-100 shadow-lg p-3 cursor-pointer active:scale-95 transition-all">
+                        <div class="flex items-center justify-between w-full rounded-sm border border-slate-100 shadow-lg p-3 cursor-pointer active:scale-95 transition-all">
                           <div class="flex items-center w-full">
                             <div class="h-10 w-10 bg-blue-300 shadow-lg rounded-full flex items-center justify-center">
                               <?php if ($rows['room'] == 'Къща') { ?>
@@ -614,7 +615,7 @@ $date_now = date("Y-m-d");
 
       <!-- Warehouse section -->
       <div v-show="mobWarehouse">
-        <div class="flex items-center justify-end bg-[#f8f8f8] w-full h-14 border-b-2 border-slate-200 px-5">
+        <div class="flex items-center justify-end bg-[#f8f8f8] w-full h-14 border-b-2 border-slate-200 px-5 ">
           <div class="flex space-x-3.5">
             <svg id="make-order-btn" fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor" class="w-7 h-7 text-blue-400 hover:text-blue-300 active:scale-90 transition-all cursor-pointer">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -624,9 +625,106 @@ $date_now = date("Y-m-d");
             </svg>
           </div>
         </div>
+        <div id="mobile-warehouse-section">
+          <div class="ml-28 px-4 space-y-4 my-4">
+            <?php
+            $query = "SELECT * FROM users WHERE pid = '$pid'";
+            $query_run = mysqli_query($con, $query);
+
+            while ($rows = mysqli_fetch_array($query_run)) {
+              $teamID = $rows['team_id'];
+
+              $query = "SELECT * FROM set_product WHERE team_id = '$teamID' GROUP BY product_name";
+              $query_run = mysqli_query($con, $query);
+
+              if (mysqli_num_rows($query_run) > 0) {
+                while ($rows = mysqli_fetch_array($query_run)) {
+                  $productName = $rows['product_name'];
+                  $queryy = "SELECT SUM(quantity) as quantity_sum FROM set_product WHERE team_id = '$teamID' AND product_name = '$productName'";
+                  $query_runn = mysqli_query($con, $queryy);
+
+                  while ($rowss = mysqli_fetch_array($query_runn)) {
+                    $quantity = $rowss['quantity_sum'];
+
+                    if ($quantity != 0) { ?>
+                      <div class="flex items-center justify-between w-full rounded-sm border border-slate-100 shadow-lg px-3 py-3.5 transition-all">
+                        <div class="flex items-center w-full">
+                          <div class="h-10 w-10 bg-blue-300 shadow-lg rounded-full flex items-center justify-center">
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-6 h-6 text-slate-100">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                            </svg>
+                          </div>
+                          <div class="text-slate-700 space-y-[1px] w-2/5 ml-5">
+                            <div class="text-left uppercase font-semibold text-sm">Тип продукт: <span class="font-bold"><?= $rows['product_name'] ?></span></div>
+                            <div class="flex items-center text-sm">
+                              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-4 h-4 mr-1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                              </svg>
+                              <span>Вид на продукт: <span class="font-semibold"><?= $rows['kind'] ?></span></span>
+                            </div>
+                          </div>
+                          <div class="text-slate-700 space-y-[1px] w-2/5">
+                            <div class="text-sm flex items-center justify-center">
+                              <div class="uppercase font-bold">Количество</div>
+                              <div class="w-6 h-6 ml-1.5 bg-blue-300 rounded font-semibold flex items-center justify-center text-white font-semibold">
+                                <?= $rowss['quantity_sum'] ?>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <input id="get-team-id-mobile" type="hidden" value="<?= $rows['team_id'] ?>" />
+                        <div class="flex items-center space-x-2">
+                          <button id="remove-product-btn" value="<?= $rows['product_name'] ?>" class="bg-red-500 h-9 w-9 flex items-center justify-center text-white rounded-sm active:scale-90 transition-all">
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+                            </svg>
+                          </button>
+                          <button id="return-product-btn" value="<?= $rows['product_name'] ?>" class="bg-blue-600 h-9 w-9 flex items-center justify-center text-white rounded-sm active:scale-90 transition-all">
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                <?php }
+                  }
+                }
+              } else { ?>
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg font-semibold text-slate-700">Няма назначени продукти</div>
+            <?php
+              }
+            } ?>
+          </div>
+        </div>
       </div>
   </div>
   </section>
+
+  <!-- Return product modal -->
+  <div id="return-product-modal" class="bg-gray-800 hidden bg-opacity-50 fixed inset-0 z-40">
+    <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+      <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fast">
+        <div class="relative bg-white rounded shadow mb-6">
+          <!-- Modal body -->
+          <div class="text-xl font-bold text-white bg-red-500 py-2 rounded-t text-center">
+            Връщане на продуктите
+          </div>
+          <input type="hidden" id="get-product-name-return" />
+          <div class="w-full text-center font-semibold pb-2 pt-6 text-lg text-slate-700 px-4">
+            Сигурни ли сте, че искате да върнете тези продукти ?
+          </div>
+          <div class="flex items-center p-4">
+            <button type="button" class="flex-1 px-4 py-1.5 bg-red-500 text-white text-sm font-semibold rounded active:scale-90 transition-all close-return-product-modal">
+              Затвори
+            </button>
+            <button type="button" class="flex-1 px-4 py-1.5 bg-blue-500 text-white text-sm font-semibold rounded active:scale-90 transition-all ml-3 return-all-product">
+              Върни
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Sort order modal -->
   <div id="sort-order-modal" class="bg-gray-800 hidden bg-opacity-50 fixed inset-0 z-40">
@@ -845,11 +943,11 @@ $date_now = date("Y-m-d");
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-<script src="../js/main-vue.js"></script>
-<script src="../js/main.js"></script>
-<script src="../js/ajax.js"></script>
-<script src="../js/chart.js"></script>
-<script src="../loader/mobLoader.js"></script>
+<script src="js/main-vue.js"></script>
+<script src="js/main.js"></script>
+<script src="js/ajax.js"></script>
+<script src="js/chart.js"></script>
+<script src="loader/mobLoader.js"></script>
 </body>
 
 </html>

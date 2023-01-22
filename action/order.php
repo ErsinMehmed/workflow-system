@@ -24,7 +24,7 @@ if (isset($_POST['guest_order'])) {
     $m2 = $_POST['m2'];
     $curDT = date('Y-m-d H:i:s');
 
-    if ($building == NULL || $offer == NULL || $time == NULL || $payment == NULL || $city == NULL || $address == NULL || $m2 == NULL || $price == NULL || $email == NULL) {
+    if (!$building || !$offer || !$time || !$payment || !$city || !$address || !$m2 || !$price || !$email) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {

@@ -19,7 +19,7 @@ if (isset($_POST['admin_product_order'])) {
     $date = date('Y-m-d H:i:s');
 
 
-    if ($name == NULL || $quantity == NULL || $supplier == NULL || $manufacturer == NULL || $onePrice == NULL) {
+    if (!$name || !$quantity || !$supplier || $manufacturer || !$onePrice) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
@@ -42,5 +42,45 @@ if (isset($_POST['admin_product_order'])) {
         } else {
             jsonResponse(500, 'Продукт с име ' . $name . ' не съществува');
         }
+    }
+}
+
+// Delete order 
+if (isset($_POST['admin_delete_team'])) {
+
+    $id = $_POST['id'];
+
+    $query = "SELECT * FROM product_order WHERE id = '$id'";
+    $query_run = mysqli_query($con, $query);
+
+    while ($row = mysqli_fetch_array($query_run)) {
+        $quantityProduct = $row["quantity"];
+        $name = $row["name"];
+
+        $queryy = "SELECT * FROM stock WHERE name = '$name'";
+        $query_runn = mysqli_query($con, $queryy);
+
+        while ($rows = mysqli_fetch_array($query_runn)) {
+            $quantity = $rows["quantity"];
+            if ($quantityProduct <= $quantity) {
+                $quantity = $quantity - $quantityProduct;
+
+                $query1 = "UPDATE stock SET quantity = '$quantity' WHERE name = '$name'";
+                mysqli_query($con, $query1);
+
+                $query2 = "DELETE FROM product_order WHERE id = '$id'";
+                $query_runnn = mysqli_query($con, $query2);
+
+                jsonResponseMain($query_runnn, 'Успешно изтриване', 'Неуспешно изтриване');
+            } else {
+                jsonResponse(500, 'Няма достатъчна наличност в склад за да бъде изтрита тази поръчка');
+            }
+        }
+        // 
+
+        // $queryy = "UPDATE teams SET delete_team = 'yes' WHERE id = '$id'";
+        // $query_runn = mysqli_query($con, $queryy);
+
+        // jsonResponseMain($query_run, 'Успешно изтриване', 'Неуспешно изтриване');
     }
 }

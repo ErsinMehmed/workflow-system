@@ -1,11 +1,20 @@
 $(document).ready(function () {
-  function postData(url, data, success) {
+  function postFormData(url, data, success) {
     return $.ajax({
       type: "POST",
       url: url,
       data: data,
       processData: false,
       contentType: false,
+      success: success,
+    });
+  }
+
+  function postData(url, data, success) {
+    return $.ajax({
+      url: url,
+      type: "POST",
+      data: data,
       success: success,
     });
   }
@@ -41,18 +50,13 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("save_customer", true);
 
-    postData("../action/Customer.php", formData, function (response) {
+    postFormData("action/Customer.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         $("#sign-in-form")[0].reset();
-        $("signUp-modal").fadeOut();
         alertify.success(res.message);
       } else if (res.status == 500) {
-        alertify.error(res.message);
-      } else if (res.status == 400) {
-        alertify.error(res.message);
-      } else if (res.status == 430) {
         alertify.error(res.message);
       }
     });
@@ -65,11 +69,11 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("login_info", true);
 
-    postData("../action/Customer.php", formData, function (response) {
+    postFormData("action/Customer.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        window.location.href = "account.php";
+        window.location.href = "account";
         alertify.success(res.message);
         userEmail = res.userEmail;
       } else if (res.status == 500) {
@@ -85,7 +89,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("update_customer", true);
 
-    postData("../action/Customer.php", formData, function (response) {
+    postFormData("action/Customer.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -104,7 +108,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("update_customer_image", true);
 
-    postData("../action/Customer.php", formData, function (response) {
+    postFormData("action/Customer.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
       if (res.status == 200) {
         alertify.success(res.message);
@@ -122,14 +126,13 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("update_customer_password", true);
 
-    postData("../action/Customer.php", formData, function (response) {
+    postFormData("action/Customer.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         alertify.success(res.message);
-      } else if (res.status == 430) {
-        alertify.error(res.message);
-      } else if (res.status == 510) {
+        $("#update-customer-password")[0].reset();
+      } else if (res.status == 500) {
         alertify.error(res.message);
       }
     });
@@ -139,17 +142,12 @@ $(document).ready(function () {
   $("#log-out").on("click", function () {
     var action = "data";
 
-    $.ajax({
-      url: "../action/Customer.php",
-      type: "POST",
-      data: { action: action },
-      success: function (response) {
-        var res = jQuery.parseJSON(response);
+    postData("action/Customer.php", { action: action }, function (response) {
+      var res = jQuery.parseJSON(response);
 
-        if (res.status == 200) {
-          window.location.href = "home.php";
-        }
-      },
+      if (res.status == 200) {
+        window.location.href = "index";
+      }
     });
   });
 
@@ -160,13 +158,11 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("customer_order", true);
 
-    postData("../action/Customer.php", formData, function (response) {
+    postFormData("action/Customer.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#history-section-load").load(
-          "../pages/account.php #history-section-load"
-        );
+        $("#history-section-load").load("pages/account #history-section-load");
         $("#account-toast-price").html("0 лв.");
         $("#customer-order-form")[0].reset();
         alertify.success(res.message);
@@ -183,7 +179,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("customer_rate", true);
 
-    postData("../action/Customer.php", formData, function (response) {
+    postFormData("action/Customer.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -206,7 +202,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("guest_order", true);
 
-    postData("../action/Order.php", formData, function (response) {
+    postFormData("action/Order.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -223,7 +219,7 @@ $(document).ready(function () {
   $(document).on("click", ".history-view", function () {
     var id = $(this).val();
 
-    getData("../action/Customer.php?id=" + id, function (response) {
+    getData("action/Customer.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
@@ -260,17 +256,13 @@ $(document).ready(function () {
     var date = $(this).val();
     var offer = $("#account-offers").val();
 
-    $.ajax({
-      url: "../action/customer/Filter.php",
-      type: "POST",
-      data: {
-        date: date,
-        offer: offer,
-      },
-      success: function (data) {
+    postData(
+      "action/customer/Filter.php",
+      { date: date, offer: offer },
+      function (data) {
         $("#history-section").html(data);
-      },
-    });
+      }
+    );
   });
 
   // Offer filter history section
@@ -278,17 +270,13 @@ $(document).ready(function () {
     var offer = $(this).val();
     var date = $("#date-picker-account").val();
 
-    $.ajax({
-      url: "../action/customer/Filter.php",
-      type: "POST",
-      data: {
-        offer: offer,
-        date: date,
-      },
-      success: function (data) {
+    postData(
+      "action/customer/Filter.php",
+      { date: date, offer: offer },
+      function (data) {
         $("#history-section").html(data);
-      },
-    });
+      }
+    );
   });
 
   // Customer upload room image form
@@ -298,14 +286,12 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("customer_upload_room", true);
 
-    postData("../action/Customer.php", formData, function (response) {
+    postFormData("action/Customer.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         $("#document-section").load(location.href + " #document-section");
         alertify.success(res.message);
-      } else if (res.status == 404) {
-        alertify.error(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
       }
@@ -326,7 +312,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("delete_customer_img", true);
 
-    postData("../action/Customer.php", formData, function (response) {
+    postFormData("action/Customer.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -334,8 +320,6 @@ $(document).ready(function () {
         $("#delete-customer-img-modal").addClass("hidden");
         $("#document-section").load(location.href + " #document-section");
         alertify.success(res.message);
-      } else if (res.status == 404) {
-        alertify.error(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
       }
@@ -351,7 +335,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_order", true);
 
-    postData("../action/AdminOrders.php", formData, function (response) {
+    postFormData("action/AdminOrders.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -376,7 +360,7 @@ $(document).ready(function () {
   $(document).on("click", ".edit-order", function () {
     var id = $(this).val();
 
-    getData("../action/AdminOrders.php?id=" + id, function (response) {
+    getData("action/AdminOrders.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
@@ -433,7 +417,7 @@ $(document).ready(function () {
   $(document).on("click", ".view-customer-opinion", function () {
     var id = $(this).val();
 
-    getData("../action/AdminOrders.php?id=" + id, function (response) {
+    getData("action/AdminOrders.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
@@ -454,7 +438,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_order_update", true);
 
-    postData("../action/AdminOrders.php", formData, function (response) {
+    postFormData("action/AdminOrders.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -474,11 +458,10 @@ $(document).ready(function () {
   $(document).on("click", ".send-invoice", function (e) {
     var orderIdInvoice = $(this).val();
 
-    $.ajax({
-      url: "../action/adminOrders.php",
-      type: "POST",
-      data: { orderIdInvoice: orderIdInvoice },
-      success: function (response) {
+    postData(
+      "action/adminOrders.php",
+      { orderIdInvoice: orderIdInvoice },
+      function (response) {
         var res = jQuery.parseJSON(response);
 
         if (res.status == 200) {
@@ -487,15 +470,15 @@ $(document).ready(function () {
         } else if (res.status == 500) {
           alertify.error(res.message);
         }
-      },
-    });
+      }
+    );
   });
 
   // Show customer information
   $(document).on("click", ".show-customer", function () {
     var email = $(this).val();
 
-    getData("../action/AdminOrders.php?email=" + email, function (response) {
+    getData("action/AdminOrders.php?email=" + email, function (response) {
       var res = jQuery.parseJSON(response);
       if (res.status == 404) {
         alertify.error(res.message);
@@ -522,35 +505,27 @@ $(document).ready(function () {
     var date = $(this).val();
     var text = $("#search-order").val();
 
-    $.ajax({
-      url: "../action/orders/Filter.php",
-      type: "POST",
-      data: {
-        date: date,
-        text: text,
-      },
-      success: function (data) {
+    postData(
+      "action/orders/Filter.php",
+      { date: date, text: text },
+      function (data) {
         $("#order-table").html(data);
-      },
-    });
+      }
+    );
   });
 
-  // Date filter dashboard order section
+  // Text filter dashboard order section
   $("#search-order").on("keyup", function () {
     var text = $(this).val();
     var date = $("#order-filter-date").val();
 
-    $.ajax({
-      url: "../action/orders/Filter.php",
-      type: "POST",
-      data: {
-        date: date,
-        text: text,
-      },
-      success: function (data) {
+    postData(
+      "action/orders/Filter.php",
+      { date: date, text: text },
+      function (data) {
         $("#order-table").html(data);
-      },
-    });
+      }
+    );
   });
 
   closeModal(".customer-order-modal-close", "#customer-order-modal");
@@ -566,7 +541,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_user", true);
 
-    postData("../action/AdminUsers.php", formData, function (response) {
+    postFormData("action/AdminUsers.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -585,7 +560,7 @@ $(document).ready(function () {
   $(document).on("click", ".edit-user", function () {
     var id = $(this).val();
 
-    getData("../action/AdminUsers.php?id=" + id, function (response) {
+    getData("action/AdminUsers.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
@@ -622,7 +597,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_update_user", true);
 
-    postData("../action/AdminUsers.php", formData, function (response) {
+    postFormData("action/AdminUsers.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -642,7 +617,7 @@ $(document).ready(function () {
   $(document).on("click", ".edit-user-password", function () {
     var id = $(this).val();
 
-    getData("../action/AdminUsers.php?id=" + id, function (response) {
+    getData("action/AdminUsers.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
@@ -665,7 +640,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_set_user_password", true);
 
-    postData("../action/AdminUsers.php", formData, function (response) {
+    postFormData("action/AdminUsers.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -685,18 +660,13 @@ $(document).ready(function () {
     var position = $("#select-position").val();
     var status = $("#select-status").val();
 
-    $.ajax({
-      url: "../action/user/Filter.php",
-      type: "POST",
-      data: {
-        text: text,
-        position: position,
-        status: status,
-      },
-      success: function (data) {
+    postData(
+      "action/user/Filter.php",
+      { position: position, text: text, status: status },
+      function (data) {
         $("#user-table").html(data);
-      },
-    });
+      }
+    );
   });
 
   // User position filter
@@ -705,18 +675,13 @@ $(document).ready(function () {
     var position = $(this).val();
     var status = $("#select-status").val();
 
-    $.ajax({
-      url: "../action/user/Filter.php",
-      type: "POST",
-      data: {
-        text: text,
-        position: position,
-        status: status,
-      },
-      success: function (data) {
+    postData(
+      "action/user/Filter.php",
+      { position: position, text: text, status: status },
+      function (data) {
         $("#user-table").html(data);
-      },
-    });
+      }
+    );
   });
 
   // User status filter
@@ -725,18 +690,13 @@ $(document).ready(function () {
     var position = $("#select-position").val();
     var status = $(this).val();
 
-    $.ajax({
-      url: "../action/user/Filter.php",
-      type: "POST",
-      data: {
-        text: text,
-        position: position,
-        status: status,
-      },
-      success: function (data) {
+    postData(
+      "action/user/Filter.php",
+      { position: position, text: text, status: status },
+      function (data) {
         $("#user-table").html(data);
-      },
-    });
+      }
+    );
   });
 
   openModal("#add-team-btn", "#add-team-modal");
@@ -747,11 +707,10 @@ $(document).ready(function () {
   $(document).on("keyup", "#product-order-name", function () {
     var product = $(this).val();
 
-    $.ajax({
-      url: "../action/product/ProductSearch.php",
-      type: "POST",
-      data: { product: product },
-      success: function (data) {
+    postData(
+      "action/product/ProductSearch.php",
+      { product: product },
+      function (data) {
         if (data != "") {
           $("#product-name-dropdown").removeClass("hidden");
           $("#product-name-dropdown").html(data);
@@ -766,19 +725,18 @@ $(document).ready(function () {
         if (product == "") {
           $("#product-name-dropdown").addClass("hidden");
         }
-      },
-    });
+      }
+    );
   });
 
   // Search stock supplier by name
   $(document).on("keyup", "#product-order-supplier", function () {
     var supplier = $(this).val();
 
-    $.ajax({
-      url: "../action/product/SupplierSearch.php",
-      type: "POST",
-      data: { supplier: supplier },
-      success: function (data) {
+    postData(
+      "action/product/SupplierSearch.php",
+      { supplier: supplier },
+      function (data) {
         if (data != "") {
           $("#supplier-name-dropdown").removeClass("hidden");
           $("#supplier-name-dropdown").html(data);
@@ -793,19 +751,18 @@ $(document).ready(function () {
         if (supplier == "") {
           $("#supplier-name-dropdown").addClass("hidden");
         }
-      },
-    });
+      }
+    );
   });
 
   // Product search by name
   $(document).on("keyup", "#set-product-name", function () {
     var product = $(this).val();
 
-    $.ajax({
-      url: "../action/product/ProductSearch1.php",
-      type: "POST",
-      data: { product: product },
-      success: function (data) {
+    postData(
+      "action/product/ProductSearch1.php",
+      { product: product },
+      function (data) {
         $("#set-product-name-dropdown").removeClass("hidden");
         $("#set-product-name-dropdown").html(data);
 
@@ -816,8 +773,8 @@ $(document).ready(function () {
         $(window).click(function () {
           $("#set-product-name-dropdown").addClass("hidden");
         });
-      },
-    });
+      }
+    );
   });
 
   // Get supplier name and insert in input
@@ -845,22 +802,17 @@ $(document).ready(function () {
   $(document).on("keyup", "#team-user1", function () {
     var user = $(this).val();
 
-    $.ajax({
-      url: "../action/team/UserSearch.php",
-      type: "POST",
-      data: { user: user },
-      success: function (data) {
-        $("#user-name1-dropdown").removeClass("hidden");
-        $("#user-name1-dropdown").html(data);
+    postData("action/team/UserSearch.php", { user: user }, function (data) {
+      $("#user-name1-dropdown").removeClass("hidden");
+      $("#user-name1-dropdown").html(data);
 
-        if (user == "") {
-          $("#user-name1-dropdown").addClass("hidden");
-        }
+      if (user == "") {
+        $("#user-name1-dropdown").addClass("hidden");
+      }
 
-        $(window).click(function () {
-          $("#user-name1-dropdown").addClass("hidden");
-        });
-      },
+      $(window).click(function () {
+        $("#user-name1-dropdown").addClass("hidden");
+      });
     });
   });
 
@@ -880,22 +832,17 @@ $(document).ready(function () {
   $(document).on("keyup", "#team-user2", function () {
     var user = $(this).val();
 
-    $.ajax({
-      url: "../action/team/UserSearch2.php",
-      type: "POST",
-      data: { user: user },
-      success: function (data) {
-        $("#user-name2-dropdown").removeClass("hidden");
-        $("#user-name2-dropdown").html(data);
+    postData("action/team/UserSearch2.php", { user: user }, function (data) {
+      $("#user-name2-dropdown").removeClass("hidden");
+      $("#user-name2-dropdown").html(data);
 
-        if (user == "") {
-          $("#user-name2-dropdown").addClass("hidden");
-        }
+      if (user == "") {
+        $("#user-name2-dropdown").addClass("hidden");
+      }
 
-        $(window).click(function () {
-          $("#user-name2-dropdown").addClass("hidden");
-        });
-      },
+      $(window).click(function () {
+        $("#user-name2-dropdown").addClass("hidden");
+      });
     });
   });
 
@@ -918,7 +865,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_team", true);
 
-    postData("../action/AdminTeams.php", formData, function (response) {
+    postFormData("action/AdminTeams.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -942,7 +889,7 @@ $(document).ready(function () {
     $("#select-team").prop("disabled", false);
     $("#hide-set-order-btn").removeClass("hidden");
 
-    getData("../action/AdminOrders.php?id=" + id, function (response) {
+    getData("action/AdminOrders.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 404) {
@@ -957,7 +904,7 @@ $(document).ready(function () {
         } else {
           var id = res.data.team_id;
 
-          getData("../action/AdminTeams.php?id=" + id, function (response) {
+          getData("action/AdminTeams.php?id=" + id, function (response) {
             var res = jQuery.parseJSON(response);
 
             if (res.status == 404) {
@@ -978,32 +925,18 @@ $(document).ready(function () {
 
     var actionOr = "data";
 
-    $.ajax({
-      url: "../action/team/Select.php",
-      type: "POST",
-      data: {
-        actionOr: actionOr,
-      },
-      success: function (data) {
-        $("#select-team").html(data);
-      },
+    postData("action/team/Select.php", { actionOr: actionOr }, function (data) {
+      $("#select-team").html(data);
     });
   });
 
   $(document).on("click", "#set-product", function () {
     var actionOr = "data";
 
-    $.ajax({
-      url: "../action/team/Select.php",
-      type: "POST",
-      data: {
-        actionOr: actionOr,
-      },
-      success: function (data) {
-        $("#set-product-modal").removeClass("hidden");
-        $("#set-product-modal").addClass("block");
-        $("#select-team-product").html(data);
-      },
+    postData("action/team/Select.php", { actionOr: actionOr }, function (data) {
+      $("#set-product-modal").removeClass("hidden");
+      $("#set-product-modal").addClass("block");
+      $("#select-team-product").html(data);
     });
   });
 
@@ -1011,7 +944,7 @@ $(document).ready(function () {
   $("#select-team").on("change", function () {
     var id = $(this).val();
 
-    getData("../action/AdminTeams.php?id=" + id, function (response) {
+    getData("action/AdminTeams.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
       if (res.status == 404) {
         alertify.error(res.message);
@@ -1030,7 +963,7 @@ $(document).ready(function () {
   $(document).on("click", ".edit-product", function () {
     var id = $(this).val();
 
-    getData("../action/AdminWarehouse.php?id=" + id, function (response) {
+    getData("action/AdminWarehouse.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
       if (res.status == 404) {
         alertify.error(res.message);
@@ -1073,17 +1006,15 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_product_order", true);
 
-    postData("../action/AdminProducts.php", formData, function (response) {
+    postFormData("action/AdminProducts.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
-      console.log(response);
+
       if (res.status == 200) {
         $("#add-product-order-form")[0].reset();
         $("#add-order-product-modal").removeClass("block");
         $("#add-order-product-modal").addClass("hidden");
         $("#product-table").load(location.href + " #product-table");
-        $("#product-order-table-table").load(
-          location.href + " #product-order-table-table"
-        );
+        $("#product-order-table").load(location.href + " #product-order-table");
         alertify.success(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
@@ -1098,7 +1029,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_set_order", true);
 
-    postData("../action/adminOrders.php", formData, function (response) {
+    postFormData("action/adminOrders.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1122,15 +1053,8 @@ $(document).ready(function () {
     $("#team-order-modal").addClass("block");
     var teamId = $(this).val();
 
-    $.ajax({
-      url: "../action/team/TeamOrders.php",
-      type: "POST",
-      data: {
-        teamId: teamId,
-      },
-      success: function (data) {
-        $("#team-orders").html(data);
-      },
+    postData("action/team/TeamOrders.php", { teamId: teamId }, function (data) {
+      $("#team-orders").html(data);
     });
   });
 
@@ -1159,17 +1083,13 @@ $(document).ready(function () {
     var text = $(this).val();
     var kind = $("#select-product-kind").val();
 
-    $.ajax({
-      url: "../action/product/Filter.php",
-      type: "POST",
-      data: {
-        text: text,
-        kind: kind,
-      },
-      success: function (data) {
+    postData(
+      "action/product/Filter.php",
+      { text: text, kind: kind },
+      function (data) {
         $("#product-table").html(data);
-      },
-    });
+      }
+    );
   });
 
   // Product filter by kind
@@ -1177,31 +1097,48 @@ $(document).ready(function () {
     var kind = $(this).val();
     var text = $("#search-product").val();
 
-    $.ajax({
-      url: "../action/product/Filter.php",
-      type: "POST",
-      data: {
-        text: text,
-        kind: kind,
-      },
-      success: function (data) {
+    postData(
+      "action/product/Filter.php",
+      { text: text, kind: kind },
+      function (data) {
         $("#product-table").html(data);
-      },
-    });
+      }
+    );
   });
 
+  // Product search by id or name
+  $("#search-order-product").on("keyup", function () {
+    var text = $(this).val();
+    var kind = $("#select-order-product-kind").val();
+
+    postData(
+      "action/product/Filter1.php",
+      { text: text, kind: kind },
+      function (data) {
+        $("#product-order-table").html(data);
+      }
+    );
+  });
+
+  $("#select-order-product-kind").on("change", function () {
+    var kind = $(this).val();
+    var text = $("#search-order-product").val();
+
+    postData(
+      "action/product/Filter1.php",
+      { text: text, kind: kind },
+      function (data) {
+        $("#product-order-table").html(data);
+      }
+    );
+  });
+
+  // Search team by name
   $("#search-team").on("keyup", function () {
     var text = $(this).val();
 
-    $.ajax({
-      url: "../action/team/Filter.php",
-      type: "POST",
-      data: {
-        text: text,
-      },
-      success: function (data) {
-        $("#team-table").html(data);
-      },
+    postData("action/team/Filter.php", { text: text }, function (data) {
+      $("#team-table").html(data);
     });
   });
 
@@ -1212,7 +1149,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_delete_team", true);
 
-    postData("../action/adminTeams.php", formData, function (response) {
+    postFormData("action/adminTeams.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1227,6 +1164,28 @@ $(document).ready(function () {
     });
   });
 
+  // Admin delete product order
+  $(document).on("submit", "#delete-product-order-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_delete_team", true);
+
+    postFormData("action/adminProducts.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#delete-product-order-modal").removeClass("block");
+        $("#delete-product-order-modal").addClass("hidden");
+        $("#product-table").load(location.href + " #product-table");
+        $("#product-order-table").load(location.href + " #product-order-table");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
   // Admin delete product
   $(document).on("submit", "#delete-product-form", function (e) {
     e.preventDefault();
@@ -1234,7 +1193,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_delete_product", true);
 
-    postData("../action/AdminWarehouse.php", formData, function (response) {
+    postFormData("action/AdminWarehouse.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1255,7 +1214,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_product", true);
 
-    postData("../action/AdminWarehouse.php", formData, function (response) {
+    postFormData("action/AdminWarehouse.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1277,7 +1236,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_edit_product", true);
 
-    postData("../action/AdminWarehouse.php", formData, function (response) {
+    postFormData("action/AdminWarehouse.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1298,7 +1257,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_set_product", true);
 
-    postData("../action/AdminWarehouse.php", formData, function (response) {
+    postFormData("action/AdminWarehouse.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1320,7 +1279,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("mobile_login", true);
 
-    postData("../action/Mobile.php", formData, function (response) {
+    postFormData("action/Mobile.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1335,17 +1294,12 @@ $(document).ready(function () {
   $("#mobile-log-out").on("click", function () {
     var action = "data";
 
-    $.ajax({
-      url: "../action/Mobile.php",
-      type: "POST",
-      data: { action: action },
-      success: function (response) {
-        var res = jQuery.parseJSON(response);
+    postData("action/Mobile.php", { action: action }, function (response) {
+      var res = jQuery.parseJSON(response);
 
-        if (res.status == 200) {
-          location.reload();
-        }
-      },
+      if (res.status == 200) {
+        location.reload();
+      }
     });
   });
 
@@ -1356,7 +1310,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("mobile_password_update", true);
 
-    postData("../action/Mobile.php", formData, function (response) {
+    postFormData("action/Mobile.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1390,23 +1344,21 @@ $(document).ready(function () {
     var orderState = $("#active-btn").val();
 
     if (orderState == 1) {
-      $.ajax({
-        url: "../action/mobile/Sort.php",
-        type: "POST",
-        data: { text: text, orderBy: orderBy },
-        success: function (response) {
+      postData(
+        "action/mobile/Sort.php",
+        { text: text, orderBy: orderBy },
+        function (response) {
           $("#active-order-section").html(response);
-        },
-      });
+        }
+      );
     } else {
-      $.ajax({
-        url: "../action/mobile/Sort1.php",
-        type: "POST",
-        data: { text: text, orderBy: orderBy },
-        success: function (response) {
+      postData(
+        "action/mobile/Sort.php",
+        { text: text, orderBy: orderBy },
+        function (response) {
           $("#finished-order-section").html(response);
-        },
-      });
+        }
+      );
     }
   });
 
@@ -1421,13 +1373,14 @@ $(document).ready(function () {
     $(".order-start-loader").removeClass("hidden");
     $(".order-start-loader").addClass("block");
 
-    getData("../action/adminOrders.php?id=" + id, function (response) {
+    getData("action/adminOrders.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         if (res.data.status == "В процес") {
           $(".open-photo-modal").val(res.data.email);
           $("#end-order").val(res.data.id);
+          $("#order-id-cancel").val(res.data.id);
           $("#mobOrder").addClass("hidden");
           $("#order-not-started").removeClass("block");
           $("#order-not-started").addClass("hidden");
@@ -1436,6 +1389,7 @@ $(document).ready(function () {
         } else {
           $(".open-photo-modal").val(res.data.email);
           $("#end-order").val(res.data.id);
+          $("#order-id-cancel").val(res.data.id);
           $("#mobOrder").addClass("hidden");
           $("#order-not-started").removeClass("hidden");
           $("#order-not-started").addClass("block");
@@ -1485,7 +1439,7 @@ $(document).ready(function () {
     $("#order-photo-modal").removeClass("hidden");
     $("#order-photo-modal").addClass("block");
 
-    getData("../action/adminOrders.php?email=" + email, function (response) {
+    getData("action/adminOrders.php?email=" + email, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1495,7 +1449,7 @@ $(document).ready(function () {
           $("#first_img").addClass("block");
           $("#first_img").attr(
             "src",
-            "../uploaded-files/room-images/" + res.data.image_room1
+            "uploaded-files/room-images/" + res.data.image_room1
           );
         } else {
           $("#first_img").removeClass("block");
@@ -1508,7 +1462,7 @@ $(document).ready(function () {
           $("#second_img").addClass("block");
           $("#second_img").attr(
             "src",
-            "../uploaded-files/room-images/" + res.data.image_room2
+            "uploaded-files/room-images/" + res.data.image_room2
           );
         } else {
           $("#second_img").removeClass("block");
@@ -1521,7 +1475,7 @@ $(document).ready(function () {
           $("#third_img").addClass("block");
           $("#third_img").attr(
             "src",
-            "../uploaded-files/room-images/" + res.data.image_room3
+            "uploaded-files/room-images/" + res.data.image_room3
           );
         } else {
           $("#third_img").removeClass("block");
@@ -1536,36 +1490,30 @@ $(document).ready(function () {
     const id = $("#end-order").val();
     const step = $(this).val();
 
-    $.ajax({
-      url: "../action/Mobile.php",
-      type: "POST",
-      data: { step: step, id: id },
-      success: function (response) {},
-    });
+    postData(
+      "action/Mobile.php",
+      { step: step, id: id },
+      function (response) {}
+    );
   });
 
   // Mobile start order
   $(".start-order-btn").on("click", function () {
     var orderId = $(this).val();
 
-    $.ajax({
-      url: "../action/Mobile.php",
-      type: "POST",
-      data: { orderId: orderId },
-      success: function (response) {
-        var res = jQuery.parseJSON(response);
-        if (res.status == 200) {
-          $("#active-order-section").load(
-            location.href + " #active-order-section"
-          );
-          $("#order-not-started").removeClass("block");
-          $("#order-not-started").addClass("hidden");
-          $("#order-is-started").removeClass("hidden");
-          $("#order-is-started").addClass("block");
-        } else if (res.status == 500) {
-          alertify.error(res.message);
-        }
-      },
+    postData("action/Mobile.php", { orderId: orderId }, function (response) {
+      var res = jQuery.parseJSON(response);
+      if (res.status == 200) {
+        $("#active-order-section").load(
+          location.href + " #active-order-section"
+        );
+        $("#order-not-started").removeClass("block");
+        $("#order-not-started").addClass("hidden");
+        $("#order-is-started").removeClass("hidden");
+        $("#order-is-started").addClass("block");
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
     });
   });
 
@@ -1573,18 +1521,58 @@ $(document).ready(function () {
   $("#end-order").on("click", function () {
     var orderEndId = $(this).val();
 
-    $.ajax({
-      url: "../action/Mobile.php",
-      type: "POST",
-      data: { orderEndId: orderEndId },
-      success: function (response) {
+    postData(
+      "action/Mobile.php",
+      { orderEndId: orderEndId },
+      function (response) {
         var res = jQuery.parseJSON(response);
 
         if (res.status == 200) {
           location.reload();
         }
-      },
-    });
+      }
+    );
+  });
+
+  // Mobile remove product
+  $(document).on("click", "#remove-product-btn", function () {
+    const productName = $(this).val();
+    const teamId = $("#get-team-id-mobile").val();
+
+    postData(
+      "action/Mobile.php",
+      { productName: productName, teamId: teamId },
+      function (response) {
+        $("#mobile-warehouse-section").load(
+          location.href + " #mobile-warehouse-section"
+        );
+      }
+    );
+  });
+
+  // Mobile open return modal
+  $(document).on("click", "#return-product-btn", function () {
+    $("#get-product-name-return").val($(this).val());
+    $("#return-product-modal").removeClass("hidden");
+    $("#return-product-modal").addClass("block");
+  });
+
+  // Mobile return all product
+  $(document).on("click", ".return-all-product", function () {
+    const productNameReturn = $("#get-product-name-return").val();
+    const teamId = $("#get-team-id-mobile").val();
+
+    postData(
+      "action/Mobile.php",
+      { productNameReturn: productNameReturn, teamId: teamId },
+      function (response) {
+        $("#return-product-modal").removeClass("block");
+        $("#return-product-modal").addClass("hidden");
+        $("#mobile-warehouse-section").load(
+          location.href + " #mobile-warehouse-section"
+        );
+      }
+    );
   });
 
   // Mobile cancel order
@@ -1594,12 +1582,10 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("mobile_cancel_order", true);
 
-    postData("../action/Mobile.php", formData, function (response) {
+    postFormData("action/Mobile.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#cancel-order-modal").removeClass("block");
-        $("#cancel-order-modal").addClass("hidden");
         location.reload();
       } else if (res.status == 500) {
         alertify.error(res.message);
@@ -1607,13 +1593,19 @@ $(document).ready(function () {
     });
   });
 
+  $(document).on("click", ".delete-product-order", function (e) {
+    $("#delete-product-order-id").val($(this).val());
+    $("#delete-product-order-modal").removeClass("hidden");
+    $("#delete-product-order-modal").addClass("block");
+  });
+
   // Dashboard cancel reason modal
-  $(".show-cancel-dashboard").on("click", function () {
+  $(document).on("click", ".show-cancel-dashboard", function (e) {
     var id = $(this).val();
     $("#cancel-order-reason-modal").removeClass("hidden");
     $("#cancel-order-reason-modal").addClass("block");
 
-    getData("../action/adminOrders.php?id=" + id, function (response) {
+    getData("action/adminOrders.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1629,8 +1621,75 @@ $(document).ready(function () {
     $("#get-team-id").val(id[1]);
   });
 
+  $("#seted-product-history-btn").addClass("bg-gray-200");
+
+  // Search setted product history (text)
+  $("#product-name-search").on("keyup", function () {
+    const productName = $(this).val();
+    const searchKind = $("#kind-search").val();
+    const date = $("#product-history-date").val();
+
+    postData(
+      "action/product/History.php",
+      { productName: productName, searchKind: searchKind, date: date },
+      function (response) {
+        $("#history-search-result").html(response);
+      }
+    );
+  });
+
+  // Search setted product history (date)
+  $("#product-history-date").on("change", function () {
+    const productName = $("#product-name-search").val();
+    const searchKind = $("#kind-search").val();
+    const date = $(this).val();
+
+    postData(
+      "action/product/History.php",
+      { productName: productName, searchKind: searchKind, date: date },
+      function (response) {
+        $("#history-search-result").html(response);
+      }
+    );
+  });
+
+  // Search setted product history (click)
+  $("#seted-product-history-btn").on("click", function () {
+    $("#seted-product-history-btn").addClass("bg-gray-200");
+    $("#returned-product-history-btn").removeClass("bg-gray-200");
+    $("#kind-search").val(0);
+    const productName = $("#product-name-search").val();
+    const searchKind = $("#kind-search").val();
+    const date = $("#product-history-date").val();
+
+    postData(
+      "action/product/History.php",
+      { productName: productName, searchKind: searchKind, date: date },
+      function (response) {
+        $("#history-search-result").html(response);
+      }
+    );
+  });
+
+  $("#returned-product-history-btn").on("click", function () {
+    $("#seted-product-history-btn").removeClass("bg-gray-200");
+    $("#returned-product-history-btn").addClass("bg-gray-200");
+    $("#kind-search").val(1);
+    const productName = $("#product-name-search").val();
+    const searchKind = $("#kind-search").val();
+    const date = $("#product-history-date").val();
+
+    postData(
+      "action/product/History.php",
+      { productName: productName, searchKind: searchKind, date: date },
+      function (response) {
+        $("#history-search-result").html(response);
+      }
+    );
+  });
+
   const getJson = async (id) => {
-    const url = `../action/adminOrders.php?id=${id}`;
+    const url = `action/adminOrders.php?id=${id}`;
     const response = await fetch(url);
     const text = await response.text();
     const data = JSON.parse(text).data;
@@ -1775,6 +1834,17 @@ $(document).ready(function () {
       printeEl.print();
     }, 100);
   }
+
+  closeModal(
+    ".close-delete-product-order-modal",
+    "#delete-product-order-modal"
+  );
+
+  closeModal(".close-return-product-modal", "#return-product-modal");
+
+  openModal("#view-product-history", "#history-set-product-modal");
+
+  closeModal(".close-history-product-modal", "#history-set-product-modal");
 
   openModal("#add-product-btn", "#add-product-modal");
 

@@ -62,7 +62,7 @@ if (isset($_POST['mobile_password_update'])) {
     $newPassword = $_POST['newPassword'];
     $newPasswordRep = $_POST['passwordRep'];
 
-    if ($newPassword == NULL || $newPasswordRep == NULL) {
+    if (!$newPassword || !$newPasswordRep) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         $query = "SELECT * FROM users WHERE pid='$pid'";
@@ -114,7 +114,7 @@ if (isset($_POST['mobile_cancel_order'])) {
     $id = $_POST['id'];
     $text = $_POST['text'];
 
-    if ($text == NULL) {
+    if (!$text) {
         jsonResponse(500, 'Попълнете полето');
     } else {
         $query = "UPDATE orders SET status = 'Отказана', cancel_reason = '$text' WHERE id='$id'";
@@ -142,4 +142,69 @@ if (isset($_POST['orderEndId'])) {
     $query = "UPDATE orders SET status = 'Приключена', end_time = '$time' WHERE id='$id'";
     $query_run = mysqli_query($con, $query);
     jsonResponseMain($query_run, 'Задачата е стартирана', 'Задачата не е стартирана');
+}
+
+// Remove product from warehouse
+if (isset($_POST['productName'])) {
+    $name = ($_POST['productName']);
+    $teamId = ($_POST['teamId']);
+
+    $query = "SELECT * FROM set_product WHERE quantity <> 0 AND product_name = '$name' AND team_id = '$teamId' GROUP BY product_name";
+    $query_run = mysqli_query($con, $query);
+
+    while ($rows = mysqli_fetch_array($query_run)) {
+        $quantity = $rows['quantity'];
+        $id = $rows['id'];
+        $finalQuantity = $quantity - 1;
+
+        $query = "UPDATE set_product SET quantity = '$finalQuantity' WHERE id = '$id'";
+        mysqli_query($con, $query);
+
+        $queryy = "DELETE FROM set_product WHERE quantity = '0'";
+        mysqli_query($con, $queryy);
+    }
+}
+
+// Return all product from warehouse
+if (isset($_POST['productNameReturn'])) {
+    $name = ($_POST['productNameReturn']);
+    $teamId = ($_POST['teamId']);
+    $date = date('Y-m-d');
+
+    $query = "SELECT sum(quantity) as quantity_sum FROM set_product WHERE product_name = '$name' AND team_id = '$teamId'";
+    $query_run = mysqli_query($con, $query);
+
+    while ($rows = mysqli_fetch_array($query_run)) {
+        $quantity = $rows['quantity_sum'];
+
+        $query3 = "SELECT * FROM stock WHERE name = '$name'";
+        $query_fulfill = mysqli_query($con, $query3);
+
+        while ($rowss = mysqli_fetch_array($query_fulfill)) {
+            $quantityStock = $rowss['quantity'];
+            $finalSum = $quantity + $quantityStock;
+
+            $query4 = "UPDATE stock SET quantity = '$finalSum' WHERE name = '$name'";
+            $query_go = mysqli_query($con, $query4);
+
+            $query5 = "DELETE FROM set_product WHERE product_name = '$name' AND team_id = '$teamId'";
+            $query_goo = mysqli_query($con, $query5);
+
+            $query = "SELECT * FROM teams WHERE id = '$teamId' AND delete_team <> 'yes'";
+            $query_run = mysqli_query($con, $query);
+
+            while ($row = mysqli_fetch_array($query_run)) {
+                $teamName = $row['name'];
+
+                $query6 = "INSERT INTO seted_product_history (product_name,quantity,team_id,team_name,date,status) VALUES ('$name','$quantity','$teamId','$teamName','$date','back')";
+                $query_runn = mysqli_query($con, $query6);
+            }
+        }
+
+        // $query = "UPDATE set_product SET quantity = '$finalQuantity' WHERE id = '$id'";
+        // mysqli_query($con, $query);
+
+        // $queryy = "DELETE FROM set_product WHERE quantity = '0'";
+        // mysqli_query($con, $queryy);
+    }
 }

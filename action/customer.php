@@ -19,7 +19,7 @@ if (isset($_POST['save_customer'])) {
     $fullName = $firstName . " " . $familyName;
     $curDT = date('Y-m-d');
 
-    if ($firstName == NULL || $familyName == NULL || $email == NULL || $phone == NULL || $password == NULL || $passwordRep == NULL) {
+    if (!$firstName || !$familyName || !$email || !$phone || !$password || !$passwordRep) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
@@ -82,11 +82,11 @@ if (isset($_POST['update_customer'])) {
     $city = $_POST['city'];
     $address = $_POST['address'];
 
-    if ($username == NULL || $phone == NULL || $address == NULL) {
+    if (!$username || !$phone) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "UPDATE customer SET username='$username', phone='$phone', city='$city', address='$address' WHERE email='$userEmail'";
+        $query = "UPDATE customer SET username='$username', phone='$phone' WHERE email='$userEmail'";
         $query_run = mysqli_query($con, $query);
 
         jsonResponseMain($query_run, 'Данните са обновени', 'Данните не са обновени');
@@ -103,7 +103,7 @@ if (isset($_POST['update_customer_image'])) {
     $filesize = number_format($filesize / 1048576, 2);
 
     if ($filesize < 2) {
-        if ($filename == NULL) {
+        if (!$filename) {
             jsonResponse(500, 'Попълнете всички полета');
         } else {
             $query = "UPDATE customer SET image='$filename' WHERE email='$userEmail'";
@@ -120,10 +120,11 @@ if (isset($_POST['update_customer_image'])) {
 if (isset($_POST['update_customer_password'])) {
 
     $userEmail = $_POST['customerEmail'];
+    $oldPassword = $_POST['oldPassword'];
     $newPassword = $_POST['newPassword'];
     $newPasswordRep = $_POST['newPasswordRep'];
 
-    if ($newPassword == NULL || $newPasswordRep == NULL) {
+    if (!$newPassword || !$newPasswordRep || !$oldPassword) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
@@ -177,7 +178,7 @@ if (isset($_POST['customer_order'])) {
     $eik = $_POST['eik'];
     $curDT = date('Y-m-d H:i:s');
 
-    if ($building == NULL || $offer == NULL || $time == NULL || $payment == NULL || $invoice == NULL || $city == NULL || $address == NULL || $m2 == NULL || $price == NULL) {
+    if (!$building || !$offer || !$time || !$payment || !$invoice || !$city || !$address || !$m2 || !$price) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
@@ -226,7 +227,7 @@ if (isset($_POST['customer_upload_room'])) {
     $filesize = number_format($filesize / 1048576, 2);
 
     if ($filesize < 2) {
-        if ($filename == NULL) {
+        if (!$filename) {
 
             jsonResponse(500, 'Добавете снимка');
         } else {
@@ -247,7 +248,7 @@ if (isset($_POST['customer_upload_room'])) {
                     $query_runn = mysqli_query($con, $queryy);
                     jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
                 } else {
-                    jsonResponse(404, 'Вече сте добавили 3 снимки');
+                    jsonResponse(500, 'Вече сте добавили 3 снимки');
                 }
             }
         }
@@ -284,7 +285,7 @@ if (isset($_POST['customer_rate'])) {
     $teamId = $_POST['team_id'];
     $text = $_POST['text'];
 
-    if ($teamId == NULL || $rating == NULL) {
+    if (!$text || !$rating) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         $query = "INSERT INTO team_rating (team_id,rating) VALUES ('$teamId','$rating')";

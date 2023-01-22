@@ -13,7 +13,7 @@ if (isset($_POST['admin_product'])) {
     $name = $_POST['name'];
     $kind = $_POST['kind'];
 
-    if ($name == NULL) {
+    if (!$name) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
@@ -60,7 +60,7 @@ if (isset($_POST['admin_edit_product'])) {
     $kind = $_POST['kind'];
 
 
-    if ($name == NULL) {
+    if (!$name) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
@@ -98,39 +98,49 @@ if (isset($_POST['admin_set_product'])) {
     $date = date('Y-m-d');
 
 
-    if ($product == NULL || $quantity == NULL) {
+    if (!$product || !$quantity || !$teamId) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "SELECT * FROM stock WHERE name = '$product'";
-        $query_go = mysqli_query($con, $query);
+        if ($quantity != 0 && is_numeric($quantity)) {
+            $query = "SELECT * FROM stock WHERE name = '$product'";
+            $query_go = mysqli_query($con, $query);
 
-        if (mysqli_num_rows($query_go) == 1) {
-            while ($rows = mysqli_fetch_array($query_go)) {
-                $kind = $rows['kind'];
-                $quantityStock = $rows['quantity'];
-                $quantityResult = $quantityStock - $quantity;
+            if (mysqli_num_rows($query_go) == 1) {
+                while ($rows = mysqli_fetch_array($query_go)) {
+                    $kind = $rows['kind'];
+                    $quantityStock = $rows['quantity'];
 
-                $queryq = "SELECT * FROM teams WHERE id = '$teamId'";
-                $query_goo = mysqli_query($con, $queryq);
+                    if ($quantityStock >= $quantity && $quantityStock != 0) {
 
-                while ($rows = mysqli_fetch_array($query_goo)) {
-                    $teamName = $rows['name'];
+                        $quantityResult = $quantityStock - $quantity;
 
-                    $queryy = "UPDATE stock SET quantity = '$quantityResult' WHERE name = '$product'";
-                    $query_run = mysqli_query($con, $queryy);
+                        $queryq = "SELECT * FROM teams WHERE id = '$teamId'";
+                        $query_goo = mysqli_query($con, $queryq);
 
-                    $queryyyy = "INSERT INTO seted_product_history (product_name,quantity,team_id,team_name,date) VALUES ('$product','$quantity','$teamId','$teamName','$date')";
-                    $query_runnn = mysqli_query($con, $queryyyy);
+                        while ($rowss = mysqli_fetch_array($query_goo)) {
+                            $teamName = $rowss['name'];
 
-                    $queryyy = "INSERT INTO set_product (product_name,kind,quantity,team_id,date,view) VALUES ('$product','$kind','$quantity','$teamId','$date','0')";
-                    $query_runn = mysqli_query($con, $queryyy);
+                            $queryy = "UPDATE stock SET quantity = '$quantityResult' WHERE name = '$product'";
+                            $query_run = mysqli_query($con, $queryy);
 
-                    jsonResponseMain($query_runn, 'Продукта успешно е назначен', 'Неуспешно назначаване');
+                            $queryyyy = "INSERT INTO seted_product_history (product_name,quantity,team_id,team_name,date,status) VALUES ('$product','$quantity','$teamId','$teamName','$date','go')";
+                            $query_runnn = mysqli_query($con, $queryyyy);
+
+                            $queryyy = "INSERT INTO set_product (product_name,kind,quantity,team_id,team_name,date,view) VALUES ('$product','$kind','$quantity','$teamId','$teamName','$date','0')";
+                            $query_runn = mysqli_query($con, $queryyy);
+
+                            jsonResponseMain($query_runn, 'Продукта успешно е назначен', 'Неуспешно назначаване');
+                        }
+                    } else {
+                        jsonResponse(500, 'Няма достатъчна наличност');
+                    }
                 }
+            } else {
+                jsonResponse(500, 'Продукт с име ' . $product . ' не съществува');
             }
         } else {
-            jsonResponse(500, 'Продукт с име ' . $product . ' не съществува');
+            jsonResponse(500, 'Въведете по-голямо количество от 0');
         }
     }
 }

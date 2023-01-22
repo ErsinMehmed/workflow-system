@@ -49,20 +49,20 @@ if (mysqli_num_rows($query_run) > 0) {
     while ($rows = mysqli_fetch_array($query_run)) {
 ?>
         <tbody>
-            <tr>
-                <td class="bg-white border-b border-gray-200 px-2 py-5"><img src="../uploaded-files/user-images/<?= $rows["image"] ?>" alt="" class="w-10 h-10 rounded-full object-cover mx-auto" /></td>
-                <td class="pr-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+            <tr class="bg-white hover:bg-slate-50 transition-all">
+                <td class=" border-b border-gray-200 px-2 py-5"><img src="../uploaded-files/user-images/<?= $rows["image"] ?>" alt="" class="w-10 h-10 rounded-full object-cover mx-auto" /></td>
+                <td class="pr-4 py-5 border-b border-gray-200 text-sm text-center">
                     <?= $rows["name"] ?>
                 </td>
-                <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                     <p class="text-gray-900 whitespace-no-wrap">
                         <?= $rows["pid"] ?>
                     </p>
                 </td>
-                <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                     <?= $rows["position"] ?>
                 </td>
-                <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm">
+                <td class="px-4 py-5 border-b border-gray-200 text-sm">
                     <?php if ($rows["status"] == 1) { ?>
                         <span class="w-8 h-8 rounded-full bg-green-200 flex items-center justify-center mx-auto">
                             <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-green-500">
@@ -78,17 +78,17 @@ if (mysqli_num_rows($query_run) > 0) {
                         </span>
                     <?php } ?>
                 </td>
-                <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                     <?php if ($rows["team_name"] != '') {
                         echo $rows["team_name"];
                     } else { ?>
                         Няма
                     <?php } ?>
                 </td>
-                <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                     <?= date("d.m.Y", strtotime($rows['in_date'])) ?>
                 </td>
-                <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center space-x-2">
+                <td class="px-4 py-5 border-b border-gray-200  text-sm text-center space-x-2">
                     <?php if ($rows["status"] != 0) { ?>
                         <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-user">
                             <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">

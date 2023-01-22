@@ -21,7 +21,7 @@ if (isset($_POST['admin_user'])) {
     $filename = $_FILES['userImg']['name'];
     uploadPhoto($filename, "userImg", '../uploaded-files/user-images/');
 
-    if ($name == NULL || $egn == NULL || $pid == NULL || $phone == NULL || $filename == NULL || $address == NULL) {
+    if (!$name || !$egn || !$pid || !$phone || !$filename || !$address) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
@@ -79,7 +79,7 @@ if (isset($_POST['admin_update_user'])) {
     $filename = $_FILES['userImg']['name'];
     $date = date('Y-m-d');
 
-    if ($name == NULL || $egn == NULL || $dob == NULL || $phone == NULL || $position == NULL || $status == NULL || $address == NULL) {
+    if (!$name || !$egn || !$dob || !$phone || !$position || !$status || !$address) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
@@ -99,7 +99,7 @@ if (isset($_POST['admin_update_user'])) {
                 jsonResponse(500, 'Служителя има назначени задачи към текущия момент');
             }
         } else {
-            if ($filename == NULL) {
+            if (!$filename) {
                 $query = "UPDATE users SET name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
             } else {
                 uploadPhoto($filename, "userImg", '../uploaded-files/user-images/');
@@ -120,7 +120,7 @@ if (isset($_POST['admin_set_user_password'])) {
     $password = $_POST['userPassword'];
     $passwordRep = $_POST['userPassowrdRep'];
 
-    if ($password == NULL || $passwordRep == NULL) {
+    if (!$password || !$passwordRep) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {

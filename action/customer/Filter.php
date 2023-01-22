@@ -13,7 +13,7 @@ if (isset($_POST['date'])) {
     if (mysqli_num_rows($query_run) > 0) {
         foreach ($query_run as $rows) {
 ?>
-            <div class="relative bg-white py-3 px-4 rounded-3xl w-full sm:w-56 md:w-80 lg:w-64 shadow-xl border border-slate-50 hover:bg-slate-50 transition-all">
+            <div class="relative bg-white py-3 px-4 rounded-3xl w-full md:w-80 lg:w-64 xl:w-72 shadow-xl border border-slate-50 hover:bg-slate-50 transition-all">
                 <div class="text-white flex items-center absolute rounded-full p-3 shadow-xl bg-blue-50 border border-blue-100 left-4 -top-6">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-7 w-7 text-blue-400">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

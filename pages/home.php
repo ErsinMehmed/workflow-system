@@ -2,7 +2,7 @@
 session_start();
 error_reporting(0);
 
-include '../action/dbconn.php';
+include 'action/dbconn.php';
 
 $email = $_SESSION['email'];
 
@@ -15,9 +15,9 @@ $email = $_SESSION['email'];
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="shortcut icon" href="../images/title.png" />
-  <link rel="stylesheet" href="../css/app.css" />
-  <link rel="stylesheet" href="../css/alert.css" />
+  <link rel="shortcut icon" href="images/title.png" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/alert.css" />
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
@@ -52,14 +52,14 @@ $email = $_SESSION['email'];
     <!--Navbar section start-->
     <nav class="bg-white border-b border-slate-200 shadow-md sm:px-0 pt-3 md:py-3 top-0 sticky z-30">
       <div class="bg-white flex flex-wrap sm:px-5 md:px-6 lg:px-12 pb-3 md:pb-0 items-center justify-between">
-        <a href="home.php" class="flex items-center pl-5 sm:pl-0">
-          <img src="../images/main-logo.png" class="h-7 mr-3 md:h-12" alt="Main logo" />
+        <a href="index" class="flex items-center pl-5 sm:pl-0">
+          <img src="images/main-logo.png" class="h-7 mr-3 md:h-12" alt="Main logo" />
         </a>
         <div class="flex items-center pr-5 sm:pr-0">
           <svg data-modal-toggle="authentication-modal" fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor" class="w-8 h-8 text-slate-700 cursor-pointer hover:opacity-75 transition-all md:hidden">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          <img class="w-[26px] h-[25.5px] object-cover cursor-pointer hover:opacity-75 transition-all rounded-full md:hidden ml-2.5 mr-1" src="../images/britain-flag.png" alt="english" />
+          <img class="w-[26px] h-[25.5px] object-cover cursor-pointer hover:opacity-75 transition-all rounded-full md:hidden ml-2.5 mr-1" src="images/britain-flag.png" alt="english" />
           <button @click="hamburgerIcon = !hamburgerIcon" id="open-nav-bar" data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 pr-0 text-sm text-gray-500 rounded-lg md:hidden focus:outline-none focus:ring-0 transition-all" aria-controls="navbar-default" aria-expanded="false">
             <svg v-show="hamburgerIcon" class="w-8 h-8" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
@@ -72,7 +72,7 @@ $email = $_SESSION['email'];
         <div class="hidden w-full md:block md:w-auto relative" id="navbar-default">
           <ul class="flex flex-col -mb-3 md:-mb-0.5 p-4 mt-4 border border-gray-100 md:rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-semibold md:border-0 md:bg-white">
             <li>
-              <a href="home.php" class="flex items-center py-2 pl-3 pr-4 text-white bg-blue-600 rounded-md md:bg-transparent md:text-blue-700 md:p-0 active:scale-90" aria-current="page">
+              <a href="index" class="flex items-center py-2 pl-3 pr-4 text-white bg-blue-600 rounded-md md:bg-transparent md:text-blue-700 md:p-0 active:scale-90" aria-current="page">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 md:hidden">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                 </svg>
@@ -113,13 +113,13 @@ $email = $_SESSION['email'];
                 if ($rows["image"] != "") {
             ?>
                   <li>
-                    <a href="account.php"><img src="../uploaded-files/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 update-photo"></a>
+                    <a href="account"><img src="uploaded-files/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 update-photo"></a>
                   </li>
                 <?php
                 } else {
                 ?>
                   <li>
-                    <a href="account.php"><img src="../images/user.png" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 update-photo"></a>
+                    <a href="account"><img src="images/user.png" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 update-photo"></a>
                   </li>
               <?php
                 }
@@ -135,7 +135,7 @@ $email = $_SESSION['email'];
             }
             ?>
             <li>
-              <img class="w-8 h-8 object-cover cursor-pointer hover:opacity-75 transition-all rounded-full hidden md:block" src="../images/britain-flag.png" alt="english" />
+              <img class="w-8 h-8 object-cover cursor-pointer hover:opacity-75 transition-all rounded-full hidden md:block" src="images/britain-flag.png" alt="english" />
             </li>
           </ul>
         </div>
@@ -243,7 +243,7 @@ $email = $_SESSION['email'];
 
     <!--Sign up modal-->
     <div id="signUp-modal" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-      <div class="relative w-full h-full max-w-md md:h-auto md:mt-32">
+      <div class="relative w-full h-full max-w-md md:h-auto md:mt-32 2xl:mt-0">
         <!-- Modal content -->
         <div class="relative  rounded-lg shadow bg-gray-100">
           <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all" data-modal-toggle="signUp-modal">
@@ -373,7 +373,7 @@ $email = $_SESSION['email'];
             <div class="relative h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem] flex justify-center items-center z-20 text-slate-100">
               <div>
                 <div class="animate__animated animate__slow animate__fadeInDown">
-                  <img src="../images/stars.png" alt="stars" class="object-cover h-5 w-5 md:h-6 md:w-6 mx-auto mb-1.5" />
+                  <img src="images/stars.png" alt="stars" class="object-cover h-5 w-5 md:h-6 md:w-6 mx-auto mb-1.5" />
                   <div style="font-family: 'Dancing Script'" class="text-3xl md:text-5xl lg:text-6xl font-bold">
                     Carpet Cleaning
                   </div>
@@ -388,7 +388,7 @@ $email = $_SESSION['email'];
                 </div>
               </div>
             </div>
-            <img src="../images/slide1.jpg" class="absolute object-cover brightness-[.8] block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem] opacity-75" alt="slider-photo1" />
+            <img src="images/slide1.jpg" class="absolute object-cover brightness-[.8] block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem] opacity-75" alt="slider-photo1" />
           </div>
           <!-- Item 2 -->
           <div class="hidden duration-700 ease-in-out text-center" data-carousel-item>
@@ -398,14 +398,14 @@ $email = $_SESSION['email'];
                   Добре дошли в нашият сайт
                 </div>
                 <div class="mt-1 text-lg md:text-xl lg:text-2xl italic font-semibold px-10">
-                  Позволете ни да направим домът ви блестящ и лъскъв
+                  Позволете ни да направим домът ви блестящ и лъскав
                 </div>
                 <button class="inline-flex items-center justify-center px-3 md:px-5 py-1.5 md:py-2 mt-2 md:mt-4 bg-blue-500 hover:bg-blue-600 text-sm md:text-base font-semibold rounded-md transition-all active:scale-90">
                   Нашите услуги
                 </button>
               </div>
             </div>
-            <img src="../images/slide2.jpg" class="absolute object-cover brightness-75 block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem]" alt="slider-photo2" />
+            <img src="images/slide2.jpg" class="absolute object-cover brightness-75 block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem]" alt="slider-photo2" />
           </div>
           <!-- Item 3 -->
           <div class="hidden duration-700 ease-in-out text-center" data-carousel-item>
@@ -422,7 +422,7 @@ $email = $_SESSION['email'];
                 </button>
               </div>
             </div>
-            <img src="../images/slide3.jpg" class="absolute object-cover brightness-[.8] block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem]" alt="slider-photo3" />
+            <img src="images/slide3.jpg" class="absolute object-cover brightness-[.8] block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem]" alt="slider-photo3" />
           </div>
         </div>
         <!-- Slider indicators -->
@@ -523,11 +523,11 @@ $email = $_SESSION['email'];
           <img style="
                 box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
                   rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-              " class="w-64 h-64 sm:w-56 sm:h-56 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto sm:mx-0 object-cover rounded-lg lg:group-hover:scale-[1.15] transition-all duration-1000" src="../images/8.jpg" alt="our services" />
+              " class="w-64 h-64 sm:w-56 sm:h-56 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto sm:mx-0 object-cover rounded-lg lg:group-hover:scale-[1.15] transition-all duration-1000" src="images/8.jpg" alt="our services" />
           <img style="
                 box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
                   rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-              " class="w-64 h-64 sm:w-56 sm:h-56 md:w-36 md:h-36 lg:w-44 lg:h-44 mx-auto sm:mx-0 md:border-4 lg:border-8 border-[#5ca1e1] object-cover rounded-lg md:rounded-full md:-ml-20 lg:-ml-24 lg:group-hover:scale-[1.15] transition-all duration-1000" src="../images/2-3.jpg" alt="our services" />
+              " class="w-64 h-64 sm:w-56 sm:h-56 md:w-36 md:h-36 lg:w-44 lg:h-44 mx-auto sm:mx-0 md:border-4 lg:border-8 border-[#5ca1e1] object-cover rounded-lg md:rounded-full md:-ml-20 lg:-ml-24 lg:group-hover:scale-[1.15] transition-all duration-1000" src="images/2-3.jpg" alt="our services" />
         </div>
         <div class="w-full md:w-1/2 text-slate-700 px-10 md:px-0 md:pr-6 lg:pr-24" data-aos="slide-left" data-aos-duration="2000">
           <h1 class="font-extrabold md:text-lg lg:text-2xl xl:text-3xl lg:pr-20 xl:pr-36 mt-5 md:mt-0 text-center md:text-left">
@@ -573,7 +573,7 @@ $email = $_SESSION['email'];
 
             <!-- Modal body -->
             <div class="p-7 sm:space-x-8 pr-9 sm:flex items-center">
-              <img class="object-cover h-48 w-52 md:h-52 md:w-56 mx-auto md:mx-0" src="../images/4-1.png" alt="service" />
+              <img class="object-cover h-48 w-52 md:h-52 md:w-56 mx-auto md:mx-0" src="images/4-1.png" alt="service" />
               <div class="w-full mt-2.5 sm:mt-0">
                 <h1 class="text-center font-bold text-slate-700 text-xl">
                   Оставете вашите данни.
@@ -609,7 +609,7 @@ $email = $_SESSION['email'];
 
     <!--Parallax section-->
     <section>
-      <div style="background-image: url(../images/House-cleaning-service.png)" class="w-full brightness-50 h-[32rem] sm:h-[34rem] md:h-[36rem] lg:h-[40rem] bg-fixed bg-cover bg-center flex justify-center items-center"></div>
+      <div style="background-image: url(images/House-cleaning-service.png)" class="w-full brightness-50 h-[32rem] sm:h-[34rem] md:h-[36rem] lg:h-[40rem] bg-fixed bg-cover bg-center flex justify-center items-center"></div>
 
       <!--Tabs-->
       <div class="-mt-[30rem] sm:-mt-[32rem] md:-mt-[34rem] lg:-mt-[36rem] relative z-10 w-full" data-aos="slide-up" data-aos-duration="2000">
@@ -705,11 +705,11 @@ $email = $_SESSION['email'];
           <div class="w-16 lg:w-20 h-0.5 lg:h-[3px] bg-[#5ca1e1]"></div>
         </div>
         <div>
-          <img class="mx-auto hidden sm:block px-5 xl:px-0 -mb-40 md:-mb-44 lg:-mb-48" src="../images/workprocess.png" alt="line" />
+          <img class="mx-auto hidden sm:block px-5 xl:px-0 -mb-40 md:-mb-44 lg:-mb-48" src="images/workprocess.png" alt="line" />
         </div>
         <div class="sm:flex justify-evenly items-center space-y-6 sm:space-y-0">
           <div class="group">
-            <img class="object-cover h-44 w-44 sm:h-36 sm:w-36 md:h-40 md:w-40 lg:h-48 lg:w-48 rounded-full border-2 border-[#5ca1e1] mx-auto md:group-hover:scale-125 transition-all duration-700" src="../images/12.jpg" alt="step 1" />
+            <img class="object-cover h-44 w-44 sm:h-36 sm:w-36 md:h-40 md:w-40 lg:h-48 lg:w-48 rounded-full border-2 border-[#5ca1e1] mx-auto md:group-hover:scale-125 transition-all duration-700" src="images/12.jpg" alt="step 1" />
             <div style="
                   clip-path: polygon(
                     45% 1.33975%,
@@ -765,7 +765,7 @@ $email = $_SESSION['email'];
             </div>
           </div>
           <div>
-            <img class="object-cover h-52 w-52 sm:h-52 sm:w-52 md:h-56 md:w-56 lg:h-64 lg:w-64 rounded-full border-2 border-[#5ca1e1] mx-auto" src="../images/14.jpg" alt="step 2" />
+            <img class="object-cover h-52 w-52 sm:h-52 sm:w-52 md:h-56 md:w-56 lg:h-64 lg:w-64 rounded-full border-2 border-[#5ca1e1] mx-auto" src="images/14.jpg" alt="step 2" />
             <div style="
                   clip-path: polygon(
                     45% 1.33975%,
@@ -821,7 +821,7 @@ $email = $_SESSION['email'];
             </div>
           </div>
           <div class="group">
-            <img class="object-cover h-44 w-44 sm:h-36 sm:w-36 md:h-40 md:w-40 lg:h-48 lg:w-48 rounded-full border-2 border-[#5ca1e1] mx-auto md:group-hover:scale-125 transition-all duration-700" src="../images/13.jpg" alt="step 3" />
+            <img class="object-cover h-44 w-44 sm:h-36 sm:w-36 md:h-40 md:w-40 lg:h-48 lg:w-48 rounded-full border-2 border-[#5ca1e1] mx-auto md:group-hover:scale-125 transition-all duration-700" src="images/13.jpg" alt="step 3" />
             <div style="
                   clip-path: polygon(
                     45% 1.33975%,
@@ -890,9 +890,9 @@ $email = $_SESSION['email'];
             Имате проблем, свързан с почистването?
           </h1>
           <p class="text-justify text-gray-500 indent-5 my-5 text-sm lg:text-base">
-            Не се притеснявайте да се свържите с нас! Ние предлагаме много
+            Не се притеснявайте да се свържeте с нас! Ние предлагаме много
             голям асортимент от професионални почистващи услуги. Клиентите ни
-            нареждат на първо място по качество и бързина на предоставента
+            нареждат на първо място по качество и бързина на предоставенaта
             услуга! Изберете нас за да можем да направим домът Ви удобен и
             уютен.
           </p>
@@ -906,7 +906,7 @@ $email = $_SESSION['email'];
           </button>
         </div>
         <div class="hidden md:flex w-1/2 justify-center">
-          <img class="object-cover" src="../images/about-2-434x410.png" alt="team photo" />
+          <img class="object-cover" src="images/about-2-434x410.png" alt="team photo" />
         </div>
       </div>
     </section>
@@ -915,7 +915,7 @@ $email = $_SESSION['email'];
     <section>
       <div class="text-slate-700 mt-16">
         <h1 class="text-center font-semibold text-xl md:text-2xl lg:text-3xl">
-          Предлагаме високачествени услуги
+          Предлагаме висококачествени услуги
         </h1>
         <h2 class="text-center font-bold text-xl md:text-2xl lg:text-3xl">
           На достъпни цени
@@ -928,7 +928,7 @@ $email = $_SESSION['email'];
           <div class="w-full lg:w-4/12" data-aos="slide-right" data-aos-duration="2000">
             <div class="shadow-2xl lg:shadow-none p-6 lg:p-0 rounded-lg border lg:border-0 border-slate-100">
               <div class="w-full flex justify-center lg:justify-end">
-                <img src="../images/icon-5.png" alt="vacum machine" />
+                <img src="images/icon-5.png" alt="vacum machine" />
               </div>
               <div class="text-center lg:text-right font-bold text-lg md:text-xl lg:text-2xl mt-1 md:mt-1.5">
                 Почистване на домове
@@ -943,7 +943,7 @@ $email = $_SESSION['email'];
             </div>
             <div class="shadow-2xl lg:shadow-none p-6 lg:p-0 rounded-lg border lg:border-0 border-slate-100 mt-8 md:mt-10">
               <div class="w-full flex justify-center lg:justify-end">
-                <img src="../images/icon-7.png" alt="washing machine" />
+                <img src="images/icon-7.png" alt="washing machine" />
               </div>
               <div class="text-center lg:text-right font-bold text-lg md:text-xl lg:text-2xl mt-1 md:mt-1.5">
                 Цялостно пране
@@ -959,7 +959,7 @@ $email = $_SESSION['email'];
           </div>
           <div class="hidden lg:block w-4/12" data-aos="slide-up" data-aos-duration="2000">
             <div class="rounded-full p-5 border-2 border-gray-200">
-              <img class="object-cover rounded-full w-full" src="../images/image_03-1-600x600.jpg" alt="girl wirh dog" />
+              <img class="object-cover rounded-full w-full" src="images/image_03-1-600x600.jpg" alt="girl wirh dog" />
             </div>
             <div class="w-full flex justify-center">
               <button class="inline-flex mt-8 xl:mt-5 items-center justify-center w-full md:w-auto px-6 py-2.5 bg-blue-400 hover:bg-blue-500 text-sm lg:text-base font-semibold rounded-3xl transition-all text-white active:scale-90">
@@ -970,7 +970,7 @@ $email = $_SESSION['email'];
           <div class="w-full lg:w-4/12" data-aos="slide-left" data-aos-duration="2000">
             <div class="shadow-2xl lg:shadow-none p-6 lg:p-0 rounded-lg border lg:border-0 border-slate-100 mt-8 md:mt-10 lg:mt-0">
               <div class="w-full flex justify-center lg:justify-start">
-                <img src="../images/icon-8.png" alt="ring" />
+                <img src="images/icon-8.png" alt="ring" />
               </div>
               <div class="text-center lg:text-left font-bold text-lg md:text-xl lg:text-2xl mt-1 md:mt-1.5">
                 Почистване на офиси
@@ -985,7 +985,7 @@ $email = $_SESSION['email'];
             </div>
             <div class="shadow-2xl lg:shadow-none p-6 lg:p-0 rounded-lg border lg:border-0 border-slate-100 mt-8 md:mt-10">
               <div class="w-full flex justify-center lg:justify-start">
-                <img src="../images/icon-9.png" alt="window" />
+                <img src="images/icon-9.png" alt="window" />
               </div>
               <div class="text-center lg:text-left font-bold text-lg md:text-xl lg:text-2xl mt-1 md:mt-1.5">
                 Почистване на прозорци
@@ -1068,7 +1068,7 @@ $email = $_SESSION['email'];
                 <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
                   <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
                 </svg>
-                Пофесионални препарати
+                Професионални препарати
               </li>
               <li class="mb-3 flex items-center">
                 <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
@@ -1102,17 +1102,16 @@ $email = $_SESSION['email'];
               </li>
             </ul>
             <?php if ($email) { ?>
-              <button type="button" onclick="location.replace('account.php')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
+              <button type="button" onclick="location.replace('account')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
                 Направете поръчка
               </button>
             <?php } else { ?>
-              <button type="button" onclick="location.replace('order.php')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
+              <button type="button" onclick="location.replace('order')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
                 Направете поръчка
               </button>
             <?php } ?>
           </div>
 
-          <!--Premium offer-->
           <div class="w-full md:w-72 xl:w-80 2xl:w-96 p-4 bg-white shadow-lg rounded-md">
             <p class="mb-4 text-xl font-semibold text-gray-800 text-center md:text-left">
               Премиум оферта
@@ -1132,7 +1131,7 @@ $email = $_SESSION['email'];
                 <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
                   <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
                 </svg>
-                Пофесионални препарати
+                Професионални препарати
               </li>
               <li class="mb-3 flex items-center">
                 <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
@@ -1166,11 +1165,11 @@ $email = $_SESSION['email'];
               </li>
             </ul>
             <?php if ($email) { ?>
-              <button type="button" onclick="location.replace('account.php')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
+              <button type="button" onclick="location.replace('account')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
                 Направете поръчка
               </button>
             <?php } else { ?>
-              <button type="button" onclick="location.replace('order.php')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
+              <button type="button" onclick="location.replace('order')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
                 Направете поръчка
               </button>
             <?php } ?>
@@ -1196,7 +1195,7 @@ $email = $_SESSION['email'];
                 <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
                   <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
                 </svg>
-                Пофесионални препарати
+                Професионални препарати
               </li>
               <li class="mb-3 flex items-center">
                 <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
@@ -1230,11 +1229,11 @@ $email = $_SESSION['email'];
               </li>
             </ul>
             <?php if ($email) { ?>
-              <button type="button" onclick="location.replace('account.php')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
+              <button type="button" onclick="location.replace('account')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
                 Направете поръчка
               </button>
             <?php } else { ?>
-              <button type="button" onclick="location.replace('order.php')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
+              <button type="button" onclick="location.replace('order')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
                 Направете поръчка
               </button>
             <?php } ?>
@@ -1266,7 +1265,7 @@ $email = $_SESSION['email'];
                 качествени услуги и продукти на нашите клиенти"
               </p>
             </div>
-            <img class="object-cover mx-auto mt-6" src="../images/testimonials-1.png" alt="Filip Ivanov" />
+            <img class="object-cover mx-auto mt-6" src="images/testimonials-1.png" alt="Filip Ivanov" />
             <h1 class="text-center font-semibold text-xl lg:text-2xl">
               Филип Иванов
             </h1>
@@ -1281,7 +1280,7 @@ $email = $_SESSION['email'];
                 мотивира да даваме 100% от себе си"
               </p>
             </div>
-            <img class="object-cover mx-auto mt-6" src="../images/testimonials-3.png" alt="Viktoriq Markova" />
+            <img class="object-cover mx-auto mt-6" src="images/testimonials-3.png" alt="Viktoriq Markova" />
             <h1 class="text-center font-semibold text-xl lg:text-2xl">
               Виктория Маркова
             </h1>
@@ -1294,7 +1293,7 @@ $email = $_SESSION['email'];
                 най-вече от доволните клиенти"
               </p>
             </div>
-            <img class="object-cover mx-auto mt-6" src="../images/testimonials-2.png" alt="Konstadin Todorov" />
+            <img class="object-cover mx-auto mt-6" src="images/testimonials-2.png" alt="Konstadin Todorov" />
             <h1 class="text-center font-semibold text-xl lg:text-2xl">
               Костадин Тодоров
             </h1>
@@ -1411,10 +1410,10 @@ $email = $_SESSION['email'];
   </script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-  <script src="../js/main-vue.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/ajax.js"></script>
-  <script src="../loader/siteLoader.js"></script>
+  <script src="js/main-vue.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/ajax.js"></script>
+  <script src="loader/siteLoader.js"></script>
   <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 </body>
 

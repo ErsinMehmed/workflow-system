@@ -18,7 +18,7 @@ if (isset($_POST['admin_team'])) {
     $id1 = $_POST['teamUser1Id'];
     $id2 = $_POST['teamUser2Id'];
 
-    if ($name == NULL || $user1 == NULL || $user2 == NULL) {
+    if (!$name || !$user1 || !$user2) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {

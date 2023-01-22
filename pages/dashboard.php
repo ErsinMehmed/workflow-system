@@ -1,5 +1,5 @@
 <?php
-include '../action/dbconn.php';
+include 'action/dbconn.php';
 
 date_default_timezone_set('Europe/Sofia');
 $date = date("Y-m-d");
@@ -12,9 +12,10 @@ $date = date("Y-m-d");
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="shortcut icon" href="../images/title.png" />
-  <link rel="stylesheet" href="../css/app.css" />
-  <link rel="stylesheet" href="../css/alert.css" />
+  <link rel="shortcut icon" href="images/title.png" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/alert.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -136,7 +137,7 @@ $date = date("Y-m-d");
                     </div>
                   </div>
                   <div>
-                    <img data-dropdown-toggle="profile-dropdown" class="w-8 h-8 rounded-full object-cover ml-5 mr-4 shadow cursor-pointer active:scale-90 hover:opacity-75 transition-all" src="../images/user.png" alt="" />
+                    <img data-dropdown-toggle="profile-dropdown" class="w-8 h-8 rounded-full object-cover ml-5 mr-4 shadow cursor-pointer active:scale-90 hover:opacity-75 transition-all" src="images/user.png" alt="" />
                     <div id="profile-dropdown" class="hidden z-10 w-44 bg-white rounded shadow-xl border border-slate-100">
                       <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefault">
                         <li class="flex items-center py-2 px-4 hover:bg-gray-100 cursor-pointer active:scale-90">
@@ -223,20 +224,20 @@ $date = date("Y-m-d");
               <div class="py-6 px-4">
                 <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
                   <div class="relative w-full sm:w-48">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
                       <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                       </svg>
                     </div>
-                    <input type="text" id="search-order" placeholder="По номер или име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5 " />
+                    <input type="text" id="search-order" placeholder="По номер или име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-9 p-2.5 " />
                   </div>
                   <div class="relative w-full sm:w-48">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
                       <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                       </svg>
                     </div>
-                    <input type="date" id="order-filter-date" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5 " placeholder="Изберете дата" />
+                    <input type="date" id="order-filter-date" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-9 p-2.5 " placeholder="Изберете дата" />
                   </div>
                   <div class="flex items-center space-x-3">
                     <button id="add-order-btn" type="button" class="w-10 h-10 bg-blue-500 hover:bg-blue-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
@@ -296,24 +297,24 @@ $date = date("Y-m-d");
                         if (mysqli_num_rows($query_run) > 0) {
                           while ($rows = mysqli_fetch_array($query_run)) {
                         ?>
-                            <tr>
-                              <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center"><?= $rows["id"] ?></td>
-                              <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <tr class="bg-white hover:bg-slate-50 transition-all">
+                              <td class="px-4 py-5 border-b border-gray-200 text-sm text-center"><?= $rows["id"] ?></td>
+                              <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                                 <button type="button" value="<?= $rows["email"] ?>" class="text-gray-900 whitespace-no-wrap hover:underline cursor-pointer transition-all show-customer">
                                   <?= $rows["customer_name"] ?>
                                 </button>
                               </td>
-                              <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                                 <p class="text-gray-900 whitespace-no-wrap">
                                   <?= $rows["room"] ?>
                                 </p>
                               </td>
-                              <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                                 <p class="text-gray-900 whitespace-no-wrap">
                                   <?= $rows["offer"] ?>
                                 </p>
                               </td>
-                              <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                                 <?php if ($rows["status"] == 'Назначи') {
                                 ?>
                                   <span class="relative inline-block px-3 py-1 font-semibold text-blue-900 leading-tight">
@@ -353,13 +354,13 @@ $date = date("Y-m-d");
                                   </span>
                                 <?php } ?>
                               </td>
-                              <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                                 <?= $rows["m2"] . " m2" ?>
                               </td>
-                              <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                                 <?= $rows["price"] . " лв." ?>
                               </td>
-                              <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                                 <?php if ($rows["invoice"] == "Да") { ?>
                                   <span class="w-8 h-8 rounded-full bg-green-200 flex items-center justify-center mx-auto">
                                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-green-500">
@@ -375,10 +376,10 @@ $date = date("Y-m-d");
                                   </span>
                                 <?php } ?>
                               </td>
-                              <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                              <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                                 <?= date("d.m.Y", strtotime($rows['date'])) ?>
                               </td>
-                              <td class="px-4 py-5 flex items-center justify-center border-b border-gray-200 bg-white text-sm text-center space-x-2">
+                              <td class="px-4 py-5 flex items-center justify-center border-b border-gray-200 text-sm text-center space-x-2">
                                 <?php if ($rows["status"] == "Назначи") { ?>
                                   <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-order">
                                     <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
@@ -715,13 +716,13 @@ $date = date("Y-m-d");
           <main v-show="dashUser">
             <div class="py-6 px-8">
               <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
-                <div class="relative w-full sm:w-auto">
-                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <div class="relative w-full sm:w-48">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                   </div>
-                  <input type="text" id="search-user" placeholder="По име или пид" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5" />
+                  <input type="text" id="search-user" placeholder="По име или пид" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-9 p-2.5" />
                 </div>
                 <div class="relative w-full sm:w-48">
                   <select id="select-position" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 cursor-pointer">
@@ -784,20 +785,20 @@ $date = date("Y-m-d");
                       if (mysqli_num_rows($query_run) > 0) {
                         while ($rows = mysqli_fetch_array($query_run)) {
                       ?>
-                          <tr>
-                            <td class="bg-white border-b border-gray-200 px-2 py-5"><img src="../uploaded-files/user-images/<?= $rows["image"] ?>" alt="" class="w-10 h-10 rounded-full object-cover mx-auto" /></td>
-                            <td class="pr-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                          <tr class="bg-white hover:bg-slate-50 transition-all">
+                            <td class="border-b border-gray-200 px-2 py-5"><img src="uploaded-files/user-images/<?= $rows["image"] ?>" alt="" class="w-10 h-10 rounded-full object-cover mx-auto" /></td>
+                            <td class="pr-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= $rows["name"] ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <p class="text-gray-900 whitespace-no-wrap">
                                 <?= $rows["pid"] ?>
                               </p>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= $rows["position"] ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm">
                               <?php if ($rows["status"] == 1) { ?>
                                 <span class="w-8 h-8 rounded-full bg-green-200 flex items-center justify-center mx-auto">
                                   <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-green-500">
@@ -813,17 +814,17 @@ $date = date("Y-m-d");
                                 </span>
                               <?php } ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?php if ($rows["team_name"] != '') {
                                 echo $rows["team_name"];
                               } else { ?>
                                 Няма
                               <?php } ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= date("d.m.Y", strtotime($rows['in_date'])) ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center space-x-2">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center space-x-2">
                               <?php if ($rows["status"] != 0) { ?>
                                 <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-user">
                                   <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
@@ -1027,13 +1028,13 @@ $date = date("Y-m-d");
           <main v-show="dashTeam">
             <div class="py-6 px-8">
               <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
-                <div class="relative w-full sm:w-auto">
-                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <div class="relative w-full sm:w-48">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                   </div>
-                  <input type="text" id="search-team" placeholder="По номер или име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5" />
+                  <input type="text" id="search-team" placeholder="По номер или име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-9 p-2.5" />
                 </div>
                 <div class="flex items-center space-x-3">
                   <button id="add-team-btn" type="button" class="w-10 h-10 bg-blue-500 hover:bg-blue-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
@@ -1087,16 +1088,16 @@ $date = date("Y-m-d");
                       if (mysqli_num_rows($query_run) > 0) {
                         while ($rows = mysqli_fetch_array($query_run)) {
                       ?>
-                          <tr>
-                            <td class="pr-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                          <tr class="bg-white hover:bg-slate-50 transition-all">
+                            <td class="pr-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= $rows["id"] ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <p class="text-gray-900 whitespace-no-wrap">
                                 <?= $rows["name"] ?>
                               </p>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm">
                               <?php if ($rows["status"] == "Yes") { ?>
                                 <span class="w-8 h-8 rounded-full bg-green-200 flex items-center justify-center mx-auto">
                                   <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-green-500">
@@ -1112,13 +1113,13 @@ $date = date("Y-m-d");
                                 </span>
                               <?php } ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= $rows["user1_name"] ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= $rows["user2_name"] ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?php
                               $id = $rows['id'];
 
@@ -1135,7 +1136,7 @@ $date = date("Y-m-d");
                                 </button>
                               <?php } ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm flex justify-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm flex justify-center">
                               <div class="h-8 w-8 bg-blue-100 text-blue-800 text-xs font-semibold rounded-md flex items-center justify-center">
                                 <?php
                                 $id = $rows['id'];
@@ -1151,7 +1152,7 @@ $date = date("Y-m-d");
                                 } ?>
                               </div>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center space-x-2">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center space-x-2">
                               <button type="button" value="<?= $rows["id"] ?>" class="bg-red-500 hover:bg-red-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 delete-team">
                                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
                                   <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
@@ -1239,8 +1240,7 @@ $date = date("Y-m-d");
                     </div>
                     <!-- Modal body -->
                     <div class="px-5 py-4 space-y-6 text-slate-700">
-                      <div id="team-orders" class="sm:flex items-center w-full gap-y-4 sm:gap-x-4">
-                      </div>
+                      <div id="team-orders" class="sm:flex items-center w-full gap-y-4 sm:gap-x-4"></div>
                     </div>
                   </div>
                 </div>
@@ -1279,12 +1279,12 @@ $date = date("Y-m-d");
             <div class="py-6 px-8">
               <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
                 <div class="relative w-full sm:w-auto">
-                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                   </div>
-                  <input type="text" id="search-product" placeholder="По номер или име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5" />
+                  <input type="text" id="search-product" placeholder="По номер или име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-9 p-2.5 sm:w-48" />
                 </div>
                 <div class="relative w-full sm:w-48">
                   <select id="select-product-kind" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 cursor-pointer">
@@ -1309,6 +1309,11 @@ $date = date("Y-m-d");
                   <button id="set-product" type="button" class="w-10 h-10 bg-yellow-500 hover:bg-yellow-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-7 h-7 text-white">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+                    </svg>
+                  </button>
+                  <button id="view-product-history" type="button" class="w-10 h-10 bg-cyan-500 hover:bg-cyan-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7 text-white">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </button>
                 </div>
@@ -1343,22 +1348,22 @@ $date = date("Y-m-d");
                       if (mysqli_num_rows($query_run) > 0) {
                         while ($rows = mysqli_fetch_array($query_run)) {
                       ?>
-                          <tr>
-                            <td class="pr-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                          <tr class="bg-white hover:bg-slate-50 transition-all">
+                            <td class="pr-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= $rows["id"] ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200  text-sm text-center">
                               <p class="text-gray-900 whitespace-no-wrap">
                                 <?= $rows["name"] ?>
                               </p>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm">
                               <div class="h-8 w-8 mx-auto bg-blue-100 text-blue-800 text-xs font-semibold rounded-md flex items-center justify-center"><?= $rows["quantity"] ?></div>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200  text-sm text-center">
                               <?= $rows["kind"] ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white flex justify-center items-center space-x-2">
+                            <td class="px-4 py-5 border-b border-gray-200 flex justify-center items-center space-x-2">
                               <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-product">
                                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
                                   <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
@@ -1516,6 +1521,35 @@ $date = date("Y-m-d");
               </div>
             </div>
 
+            <!-- History of setted product to team -->
+            <div id="history-set-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+                <div class="relative w-full h-auto max-w-md">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
+                      <div class="text-slate-700 font-bold text-xl">История</div>
+                      <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-history-product-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="px-5 py-4 space-y-4 text-slate-700">
+                      <div class="flex items-center w-full font-semibold text-slate-700 text-sm">
+                        <div id="seted-product-history-btn" class="w-1/2 rounded-l-lg border border-gray-300 border-r-0 py-[9px] flex justify-center cursor-pointer bg-gray-50 hover:bg-gray-200 transition-all">Назначени продукти</div>
+                        <div id="returned-product-history-btn" class="w-1/2 rounded-r-lg border border-gray-300 py-[9px] flex justify-center cursor-pointer bg-gray-50 hover:bg-gray-200 transition-all">Върнати продукти</div>
+                      </div>
+                      <input type="hidden" id="kind-search" value="0" />
+                      <input type="text" id="product-name-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи име на продукт" />
+                      <input type="date" id="product-history-date" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 mb-5" placeholder="Изберете дата" />
+                      <div id="history-search-result" class="flex flex-wrap w-full gap-x-4 gap-y-4"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- Delete product modal -->
             <div id="delete-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
@@ -1543,18 +1577,17 @@ $date = date("Y-m-d");
             </div>
           </main>
 
-
           <!-- Product order section -->
           <main v-show="productOrder">
             <div class="py-6 px-8">
               <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
                 <div class="relative w-full sm:w-auto">
-                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                   </div>
-                  <input type="text" id="search-order-product" placeholder="По номер или име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5" />
+                  <input type="text" id="search-order-product" placeholder="По име или доставчик" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-9 p-2.5 sm:w-48" />
                 </div>
                 <div class="relative w-full sm:w-48">
                   <select id="select-order-product-kind" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 cursor-pointer">
@@ -1575,7 +1608,7 @@ $date = date("Y-m-d");
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
-                  <table id="product-order-table-table" class="min-w-full leading-normal">
+                  <table id="product-order-table" class="min-w-full leading-normal">
                     <thead>
                       <tr>
                         <th class="pr-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
@@ -1618,42 +1651,37 @@ $date = date("Y-m-d");
                       if (mysqli_num_rows($query_run) > 0) {
                         while ($rows = mysqli_fetch_array($query_run)) {
                       ?>
-                          <tr>
-                            <td class="pr-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                          <tr class="bg-white hover:bg-slate-50 transition-all">
+                            <td class="pr-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= $rows["id"] ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <p class="text-gray-900 whitespace-no-wrap">
                                 <?= $rows["name"] ?>
                               </p>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm">
                               <div class="h-8 w-8 mx-auto bg-blue-100 text-blue-800 text-xs font-semibold rounded-md flex items-center justify-center"><?= $rows["quantity"] ?></div>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= $rows["kind"] ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= $rows["supplier"] ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= $rows["manufacturer"] ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= $rows["price_per_one"] . " лв." ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= $rows["total_price"] . " лв." ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
                               <?= date("d.m.Y", strtotime($rows['date'])) ?>
                             </td>
-                            <td class="px-4 py-5 border-b border-gray-200 bg-white flex justify-center items-center space-x-2">
-                              <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-product-order">
-                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
-                                  <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
-                                </svg>
-                              </button>
+                            <td class="px-4 py-5 border-b border-gray-200 flex justify-center">
                               <button type="button" value="<?= $rows["id"] ?>" class="bg-red-500 hover:bg-red-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 delete-product-order">
                                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
                                   <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
@@ -1743,6 +1771,32 @@ $date = date("Y-m-d");
               </div>
             </div>
 
+            <!-- Delete product order modal -->
+            <div id="delete-product-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+                <div class="relative w-full h-auto max-w-md">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <!-- Modal body -->
+                    <div class="p-4 text-center">
+                      <div class="text-xl font-bold mb-3">Изтрий поръчката</div>
+                      <h3 class="mb-5 text-sm text-gray-500">Сигурни ли сте, че искате да изтриете поръчката?</h3>
+                      <form id="delete-product-order-form">
+                        <input id="delete-product-order-id" type="hidden" name="id">
+                        <div class="flex items-center mt-3">
+                          <button type="button" class="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md active:scale-90 transition-all close-delete-product-order-modal">
+                            Откажи
+                          </button>
+                          <button type="submit" class="flex-1 px-4 py-2 ml-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md active:scale-90 transition-all">
+                            Изтрий
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </main>
         </div>
       </Transition>
@@ -1788,10 +1842,10 @@ $date = date("Y-m-d");
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-  <script src="../js/main-vue.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/ajax.js"></script>
-  <script src="../loader/dashLoader.js"></script>
+  <script src="js/main-vue.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/ajax.js"></script>
+  <script src="loader/dashLoader.js"></script>
   <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 </body>
 

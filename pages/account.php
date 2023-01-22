@@ -2,7 +2,7 @@
 session_start();
 error_reporting(0);
 
-include '../action/dbconn.php';
+include 'action/dbconn.php';
 
 $email = $_SESSION['email'];
 
@@ -16,9 +16,9 @@ $email = $_SESSION['email'];
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="shortcut icon" href="../images/title.png" />
-  <link rel="stylesheet" href="../css/app.css" />
-  <link rel="stylesheet" href="../css/alert.css" />
+  <link rel="shortcut icon" href="images/title.png" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/alert.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -28,20 +28,17 @@ $email = $_SESSION['email'];
 </head>
 
 <body>
-  <!-- Page loader -->
   <div id="site-load" class="loader__wrap" role="alertdialog" aria-busy="true" aria-live="polite" aria-label="Loading…">
     <div class="loader" aria-hidden="true">
       <div class="loader__sq"></div>
       <div class="loader__sq"></div>
     </div>
   </div>
+
   <?php if ($email) { ?>
     <section>
       <div id="app">
-        <!--Scroll detector-->
         <div class="w-full h-1 rounded-r-full fixed z-40 top-0 left-0 bg-blue-400" :style="{ width: progress }"></div>
-
-        <!--Scroll to top button-->
         <div class="fixed z-30 right-4 bottom-4 w-10 h-10 hidden bg-blue-500 hover:bg-blue-600 lg:flex rounded-full justify-center items-center cursor-pointer transition-all" style="
             box-shadow: rgb(0 0 0 / 25%) 0px 14px 28px,
               rgb(0 0 0 / 22%) 0px 10px 10px;
@@ -51,7 +48,6 @@ $email = $_SESSION['email'];
           </svg>
         </div>
 
-        <!--Message toast-->
         <div v-show="imagePreview != null && documentSection" id="toast-message" class="hidden md:flex fixed z-40 top-24 right-4 items-center p-4 w-full max-w-sm text-gray-500 bg-white rounded-lg shadow-xl border border-slate-100" role="alert">
           <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-green-500 bg-green-100 rounded-lg">
             <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -68,11 +64,10 @@ $email = $_SESSION['email'];
           </button>
         </div>
 
-        <!--Navbar section start-->
         <nav class="bg-white border-b border-slate-200 shadow-md sm:px-0 pt-3 md:py-3 top-0 sticky z-30">
           <div class="bg-white flex flex-wrap sm:px-5 md:px-6 lg:px-12 pb-3 md:pb-0 items-center justify-between">
-            <a href="home.php" class="flex items-center pl-5 sm:pl-0">
-              <img src="../images/main-logo.png" class="h-7 mr-3 md:h-12" alt="Main logo" />
+            <a href="index" class="flex items-center pl-5 sm:pl-0">
+              <img src="images/main-logo.png" class="h-7 mr-3 md:h-12" alt="Main logo" />
             </a>
             <div class="flex items-center pr-5 sm:pr-0">
               <?php
@@ -81,13 +76,13 @@ $email = $_SESSION['email'];
 
               while ($rows = mysqli_fetch_array($query_run)) {
                 if ($rows["image"] != "") { ?>
-                  <img src="../uploaded-files/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90 update-photo">
+                  <img src="uploaded-files/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90 update-photo">
                 <?php } else { ?>
-                  <img src="../images/user.png" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90" />
+                  <img src="images/user.png" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90" />
               <?php
                 }
               } ?>
-              <img class="w-8 h-8 object-cover cursor-pointer hover:opacity-75 transition-all rounded-full md:hidden ml-2.5 mr-1" src="../images/britain-flag.png" alt="english" />
+              <img class="w-8 h-8 object-cover cursor-pointer hover:opacity-75 transition-all rounded-full md:hidden ml-2.5 mr-1" src="images/britain-flag.png" alt="english" />
               <button @click="hamburgerIcon = !hamburgerIcon" id="open-nav-bar" data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 pr-0 text-sm text-gray-500 rounded-lg md:hidden focus:outline-none focus:ring-0 transition-all" aria-controls="navbar-default" aria-expanded="false">
                 <svg v-show="hamburgerIcon" class="w-8 h-8" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
@@ -97,10 +92,11 @@ $email = $_SESSION['email'];
                 </svg>
               </button>
             </div>
+
             <div class="hidden w-full md:block md:w-auto relative" id="navbar-default">
               <ul class="flex flex-col -mb-3 md:-mb-0.5 p-4 mt-4 border border-gray-100 md:rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-semibold md:border-0 md:bg-white">
                 <li>
-                  <a href="home.php" class="flex items-center py-2 pl-3 pr-4 text-gray-700 rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 transition-all active:scale-90">
+                  <a href="index" class="flex items-center py-2 pl-3 pr-4 text-gray-700 rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 transition-all active:scale-90">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 md:hidden">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                     </svg>
@@ -139,26 +135,24 @@ $email = $_SESSION['email'];
                 while ($rows = mysqli_fetch_array($query_run)) {
                   if ($rows["image"] != "") { ?>
                     <li>
-                      <img src="../uploaded-files/customer-images/<?= $rows["image"] ?>" alt="Profile image" class="w-8 h-8 cursor-pointer hover:opacity-75
+                      <img src="uploaded-files/customer-images/<?= $rows["image"] ?>" alt="Profile image" class="w-8 h-8 cursor-pointer hover:opacity-75
                   transition-all rounded-full object-cover hidden md:block
                   active:scale-90 update-photo">
                     </li>
                   <?php } else { ?>
                     <li>
-                      <img src="../images/user.png" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90" />
+                      <img src="images/user.png" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90" />
                     </li>
-                <?php
-                  }
+                <?php }
                 } ?>
                 <li>
-                  <img class="w-8 h-8 object-cover cursor-pointer hover:opacity-75 transition-all rounded-full hidden md:block active:scale-90" src="../images/britain-flag.png" alt="english" />
+                  <img class="w-8 h-8 object-cover cursor-pointer hover:opacity-75 transition-all rounded-full hidden md:block active:scale-90" src="images/britain-flag.png" alt="english" />
                 </li>
               </ul>
             </div>
           </div>
         </nav>
 
-        <!--Main section-->
         <div class="h-screen md:h-full md:mt-10 w-full md:flex md:justify-center md:items-center md:my-10">
           <div class="w-full md:w-[50rem] lg:w-[55rem] xl:w-[65rem] 2xl:w-[66rem] md:shadow-xl py-6 px-6 md:py-8 md:px-10 md:rounded-xl md:border border-slate-50 md:flex md:space-x-10">
             <div class="w-full md:w-[20%] mx-auto">
@@ -189,31 +183,31 @@ $email = $_SESSION['email'];
                 <?php }
                 } ?>
                 <li @click=" historySection = true; accountSection = false;  passwordSection = false; documentSection = false; orderSection = false; rateSection = false; activeOrders = false" :class=" historySection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-2.5 md:py-1.5 px-2.5 md:pl-3 transition-all rounded-lg md:rounded-xl cursor-pointer active:scale-90">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span class="hidden md:block">История</span>
                 </li>
                 <li @click="documentSection = true; accountSection = false;  passwordSection = false; historySection = false; orderSection = false; rateSection = false; activeOrders = false" :class="documentSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-2.5 md:py-1.5 px-2.5 md:pl-3 transition-all rounded-lg md:rounded-xl cursor-pointer active:scale-90">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
                   </svg>
                   <span class="hidden md:block">Документи</span>
                 </li>
                 <li @click="orderSection = true; documentSection = false; accountSection = false;  passwordSection = false; historySection = false; rateSection = false; activeOrders = false" :class="orderSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-2.5 md:py-1.5 px-2.5 md:pl-3 transition-all rounded-lg md:rounded-xl cursor-pointer active:scale-90">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                   </svg>
                   <span class="hidden md:block">Поръчка</span>
                 </li>
                 <li @click="rateSection = true; orderSection = false; documentSection = false; accountSection = false;  passwordSection = false; historySection = false; activeOrders = false" :class="rateSection ? 'text-slate-700 bg-[#deebfd] hover:bg-[#d1e4ff]' : 'bg-white hover:bg-[#deebfd] hover:text-slate-700'" class="flex items-center justify-center md:justify-start py-2.5 md:py-1.5 px-2.5 md:pl-3 transition-all rounded-lg md:rounded-xl cursor-pointer active:scale-90">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                   </svg>
                   <span class="hidden md:block">Оценки</span>
                 </li>
                 <li id="log-out" class="flex items-center justify-center md:justify-start py-3 md:py-1.5 px-3 md:pl-3 transition-all rounded-xl cursor-pointer active:scale-90 bg-white hover:bg-[#deebfd] hover:text-slate-700">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" class="w-7 h-7 md:w-5 md:h-5 md:mr-1">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                   </svg>
                   <span class="hidden md:block">Изход</span>
@@ -221,7 +215,6 @@ $email = $_SESSION['email'];
               </ul>
             </div>
 
-            <!--Account section-->
             <div v-show="accountSection" class="w-full md:w-[80%] shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700 animate__animated animate__fadeIn">
               <h1 class="font-bold text-2xl mb-6 md:mb-8 text-center sm:text-left">
                 Акаунт
@@ -237,9 +230,9 @@ $email = $_SESSION['email'];
                 <div class="sm:flex items-center sm:space-x-4">
                   <?php if ($rows["image"] != "") { ?>
                     <img class="object-fill w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0 update-photo" :src="profileImgPreview ? profileImgPreview
-                : '../uploaded-files/customer-images/<?= $rows["image"] ?>'" alt="Profile photo" />
+                : 'uploaded-files/customer-images/<?= $rows["image"] ?>'" alt="Profile photo" />
                   <?php } else { ?>
-                    <img class="object-fill w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0" :src="profileImgPreview ? profileImgPreview : '../images/user.png'" alt="Profile photo" />
+                    <img class="object-fill w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0" :src="profileImgPreview ? profileImgPreview : 'images/user.png'" alt="Profile photo" />
                   <?php } ?>
                   <form id="customer-image-form">
                     <div class="sm:inline-flex sm:gap-x-4 space-y-4 sm:space-y-0 mt-3 sm:mt-0">
@@ -254,6 +247,7 @@ $email = $_SESSION['email'];
                     </div>
                   </form>
                 </div>
+
                 <hr class="w-full my-5 sm:my-6" />
                 <form id="user-info-form">
                   <div class="sm:flex items-center sm:space-x-5 space-y-4 sm:space-y-0">
@@ -286,7 +280,7 @@ $email = $_SESSION['email'];
                   </div>
                   <hr class="w-full mt-7 mb-6" />
                   <div class="w-full text-slate-700">
-                    <div class="text-sm font-semibold">Линкове към акунти</div>
+                    <div class="text-sm font-semibold">Линкове към акаунти</div>
                     <div class="text-xs font-semibold text-slate-400">
                       Ние Ви позволяваме да се регистрирате по-лесно без да губите
                       време
@@ -335,7 +329,6 @@ $email = $_SESSION['email'];
                 </form>
             </div>
 
-            <!--Password section-->
             <div v-show="passwordSection" class="md:w-[80%] shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700 animate__animated animate__fadeIn">
               <h1 class="font-bold text-2xl mb-6 md:mb-8 text-center sm:text-left">
                 Парола
@@ -376,13 +369,11 @@ $email = $_SESSION['email'];
               </form>
             </div>
 
-            <!-- Active order section -->
             <div v-show="activeOrders" id="active-order-account" class="w-full">
               <?php
               $query = "SELECT * FROM orders WHERE email = '$email' AND status = 'В процес'";
               $query_run = mysqli_query($con, $query);
-              while ($rows = mysqli_fetch_array($query_run)) {
-              ?>
+              while ($rows = mysqli_fetch_array($query_run)) { ?>
                 <div class="w-full shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700 animate__animated animate__fadeIn">
                   <div class="grid gap-6 row-gap-10 lg:grid-cols-2">
                     <div class="lg:py-5 lg:pr-16">
@@ -496,16 +487,16 @@ $email = $_SESSION['email'];
                     </div>
                     <div class="relative">
                       <?php if ($rows["step"] == 1) { ?>
-                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="../images/overCleaning.jpg" alt="" />
+                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="images/overCleaning.jpg" alt="" />
                       <?php } ?>
                       <?php if ($rows["step"] == 2) { ?>
-                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="../images/windowCleaning.jpg" alt="" />
+                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="images/windowCleaning.jpg" alt="" />
                       <?php } ?>
                       <?php if ($rows["step"] == 3) { ?>
-                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="../images/bathroomCleaning.jpg" alt="" />
+                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="images/bathroomCleaning.jpg" alt="" />
                       <?php } ?>
                       <?php if ($rows["step"] == 4) { ?>
-                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="../images/floorCleaning.png" alt="" />
+                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="images/floorCleaning.png" alt="" />
                       <?php } ?>
                     </div>
                   </div>
@@ -519,7 +510,6 @@ $email = $_SESSION['email'];
               <?php } ?>
             </div>
 
-            <!--History section-->
             <div v-show="historySection" class="md:w-[80%] shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700 animate__animated animate__fadeIn">
               <h1 class="font-bold text-2xl mb-6 md:mb-8 text-center sm:text-left">
                 История на поръчките
@@ -527,15 +517,15 @@ $email = $_SESSION['email'];
               <div class="sm:flex items-center font-semibold mb-1 text-slate-500 text-sm md:text-base text-center sm:text-left">
                 <div class="mb-2.5 sm:mb-0">Тук можете да прегледате всички ваши поръчки към днешна дата.</div>
                 <button @click="showFilter = !showFilter" class="h-9 sm:h-8 w-full sm:w-8 flex items-center justify-center sm:ml-1.5 rounded-md sm:rounded-full bg-blue-500 hover:bg-blue-600 transition-all active:scale-90">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-4 h-4 text-white">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
                   </svg>
                 </button>
               </div>
-              <div :class="showFilter ? 'sm:flex' : 'hidden'" class="items-cneter space-y-4 sm:space-y-0 sm:space-x-5 my-5 bg-slate-50 px-2 py-3.5 rounded-md">
+              <div :class="showFilter ? 'sm:flex' : 'hidden'" class="items-cneter space-y-4 sm:space-y-0 sm:space-x-2.5 my-5 bg-slate-50 px-2 py-3 rounded-lg shadow-md">
                 <div class="relative w-full sm:w-1/2">
                   <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" class="w-5 h-5 text-gray-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                     </svg>
                   </div>
@@ -543,7 +533,7 @@ $email = $_SESSION['email'];
                 </div>
                 <div class="relative w-full sm:w-1/2">
                   <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" class="w-5 h-5 text-gray-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
                     </svg>
                   </div>
@@ -562,8 +552,7 @@ $email = $_SESSION['email'];
                   $query_run = mysqli_query($con, $query);
 
                   while ($rows = mysqli_fetch_array($query_run)) { ?>
-                    <!-- Offer card -->
-                    <div class="relative bg-white py-3 px-4 rounded-3xl w-full sm:w-56 md:w-80 lg:w-64 shadow-xl border border-slate-50 hover:bg-slate-50 transition-all">
+                    <div class="relative bg-white py-3 px-4 rounded-3xl w-full md:w-80 lg:w-64 xl:w-72 shadow-xl border border-slate-50 hover:bg-slate-50 transition-all">
                       <div class="text-white flex items-center absolute rounded-full p-3 shadow-xl bg-blue-50 border border-blue-100 left-4 -top-6">
                         <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-7 w-7 text-blue-400">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -608,14 +597,13 @@ $email = $_SESSION['email'];
               <?php } ?>
             </div>
 
-            <!--Documents section-->
             <div v-show="documentSection" class="md:w-[80%] shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700 animate__animated animate__fadeIn">
-              <h1 class="font-bold text-2xl mb-6 md:mb-8 text-center sm:text-left">
+              <h1 class="font-bold text-2xl ml-1 mb-6 md:mb-8 text-center sm:text-left">
                 Документи
               </h1>
-              <div class="font-semibold mb-1 sm:mb-2 text-slate-500 text-sm md:text-base text-center sm:text-left">
+              <div class="font-semibold mb-1 sm:mb-2 ml-1 text-slate-500 text-sm md:text-base text-center sm:text-left">
                 Можете да добавите снимка или карта на обекта си за Ви
-                предоставим най-добите услиги. В тази секция можете да откриете
+                предоставим най-добите услуги. В тази секция можете да откриете
                 и фактурите си (ако сте заявили).
               </div>
               <?php
@@ -643,7 +631,7 @@ $email = $_SESSION['email'];
                             </span>
                           </p>
                           <p :class="dragFile ? 'text-blue-400' : 'text-gray-500'" class="text-xs group-hover:text-blue-400">
-                            PNG, JPG или JPEG (МАКС. 2MB)
+                            PNG, JPG или JPEG (MAX 2MB)
                           </p>
                         </div>
                         <div v-show="imagePreview != null" class="w-full h-full rounded-lg">
@@ -664,6 +652,7 @@ $email = $_SESSION['email'];
                   </div>
                 </form>
               <?php } ?>
+
               <div id="document-section">
                 <?php
                 $query = "SELECT * FROM customer WHERE email = '$email' AND (image_room1 != '' OR image_room2 != '' OR image_room3 != '')";
@@ -679,7 +668,7 @@ $email = $_SESSION['email'];
                         if ($rows["image_room1"] != '') { ?>
                           <Transition>
                             <div class="w-20 h-20 md:w-[120px] md:h-[120px] rounded-lg border border-slate-100 hover:brightness-90 group cursor-pointer shadow-lg transition-all">
-                              <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/room-images/<?= $rows["image_room1"] ?>" alt="">
+                              <img class="w-full h-full rounded-lg object-cover" src="uploaded-files/room-images/<?= $rows["image_room1"] ?>" alt="<?= $rows["image_room2"] ?>">
                               <div id="1" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-11 md:h-11 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90 room-img">
                                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 md:w-6 md:h-6 text-white ">
                                   <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
@@ -687,12 +676,11 @@ $email = $_SESSION['email'];
                               </div>
                             </div>
                           </Transition>
-                        <?php
-                        }
+                        <?php }
                         if ($rows["image_room2"] != '') { ?>
                           <Transition>
                             <div class="w-20 h-20 md:w-[120px] md:h-[120px] rounded-lg border border-slate-100 hover:brightness-90 group cursor-pointer shadow-lg transition-all">
-                              <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/room-images/<?= $rows["image_room2"] ?>" alt="">
+                              <img class="w-full h-full rounded-lg object-cover" src="uploaded-files/room-images/<?= $rows["image_room2"] ?>" alt="<?= $rows["image_room2"] ?>">
                               <div id="2" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-11 md:h-11 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90 room-img">
                                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 md:w-6 md:h-6 text-white">
                                   <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
@@ -700,12 +688,11 @@ $email = $_SESSION['email'];
                               </div>
                             </div>
                           </Transition>
-                        <?php
-                        }
+                        <?php }
                         if ($rows["image_room3"] != '') { ?>
                           <Transition>
                             <div class="w-20 h-20 md:w-[120px] md:h-[120px] rounded-lg border border-slate-100 hover:brightness-90 group cursor-pointer shadow-lg transition-all">
-                              <img class="w-full h-full rounded-lg object-cover" src="../uploaded-files/room-images/<?= $rows["image_room3"] ?>" alt="">
+                              <img class="w-full h-full rounded-lg object-cover" src="uploaded-files/room-images/<?= $rows["image_room3"] ?>" alt="<?= $rows["image_room2"] ?>">
                               <div id="3" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-11 md:h-11 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90 room-img">
                                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 md:w-6 md:h-6 text-white ">
                                   <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
@@ -716,10 +703,10 @@ $email = $_SESSION['email'];
                         <?php } ?>
                       </div>
                     </div>
-                <?php
-                  }
+                <?php }
                 } ?>
               </div>
+
               <hr class="w-full my-5" />
               <div class="w-full">
                 <div class="ml-1 mb-2.5 -mt-2.5 font-semibold text-sm md:text-base">Фактури</div>
@@ -732,7 +719,7 @@ $email = $_SESSION['email'];
                     while ($rows = mysqli_fetch_array($query_run)) { ?>
                       <button value="<?= $rows["id"] ?>" type="button" class="px-4 py-2 rounded-lg shadow-lg bg-white flex justify-center items-center border border-slate-100 cursor-pointer hover:opacity-80 transition-all active:scale-90 focus:ouline-none print-invoice">
                         <div>
-                          <svg viewBox="0 0 512 512" style="enable-background: new 0 0 512 512" class="w-14 h-14 lg:w-20 lg:h-20 mx-auto mb-1">
+                          <svg viewBox="0 0 512 512" style="enable-background: new 0 0 512 512" class="w-14 h-14 lg:w-20 lg:h-20 mx-auto mb-0.5">
                             <circle style="fill: #a7cefc" cx="256" cy="256" r="256" />
                             <path style="fill: #a7cefc" d="M508.497,298.324L373.226,163.052l-103.291,104.01L145.67,402.101l109.894,109.894
                             c0.147,0,0.291,0.005,0.436,0.005C382.966,512,488.324,419.566,508.497,298.324z" />
@@ -755,22 +742,16 @@ $email = $_SESSION['email'];
                             <rect x="254.845" y="274.101" style="fill: #f4a200" width="84.764" height="6.896" />
                             <rect x="254.845" y="343.488" style="fill: #f4a200" width="39.943" height="6.896" />
                             <path style="fill: #f4a200" d="M340.34,334.932c1.5,0,2.717-1.217,2.717-2.717v-1.857c0-5.627-5.32-10.214-11.936-10.393v-0.71
-                        c0-1.5-1.217-2.717-2.717-2.717c-1.5,0-2.717,1.217-2.717,2.717v0.71c-6.616,0.179-11.936,4.765-11.936,10.393v3.713
-                        c0,5.627,5.32,10.214,11.936,10.392v13.665c-3.562-0.155-6.501-2.36-6.501-4.96v-1.857c0-1.5-1.217-2.717-2.717-2.717
-                        c-1.5,0-2.717,1.217-2.717,2.717v1.857c0,5.627,5.32,10.214,11.936,10.392v0.71c0,1.5,1.217,2.717,2.717,2.717
-                        c1.5,0,2.717-1.217,2.717-2.717v-0.71c6.616-0.179,11.936-4.765,11.936-10.392v-3.713c0-5.627-5.32-10.214-11.936-10.393v-13.665
-                        c3.562,0.155,6.501,2.36,6.501,4.96v1.857C337.624,333.715,338.839,334.932,340.34,334.932z M319.185,334.072v-3.713
-                        c0-2.6,2.939-4.806,6.501-4.96v13.634C322.124,338.877,319.185,336.672,319.185,334.072z M337.624,349.456v3.713
-                        c0,2.6-2.939,4.805-6.501,4.96v-13.634C334.684,344.65,337.624,346.857,337.624,349.456z" />
+                            c0-1.5-1.217-2.717-2.717-2.717c-1.5,0-2.717,1.217-2.717,2.717v0.71c-6.616,0.179-11.936,4.765-11.936,10.393v3.713
+                            c0,5.627,5.32,10.214,11.936,10.392v13.665c-3.562-0.155-6.501-2.36-6.501-4.96v-1.857c0-1.5-1.217-2.717-2.717-2.717
+                            c-1.5,0-2.717,1.217-2.717,2.717v1.857c0,5.627,5.32,10.214,11.936,10.392v0.71c0,1.5,1.217,2.717,2.717,2.717
+                            c1.5,0,2.717-1.217,2.717-2.717v-0.71c6.616-0.179,11.936-4.765,11.936-10.392v-3.713c0-5.627-5.32-10.214-11.936-10.393v-13.665
+                            c3.562,0.155,6.501,2.36,6.501,4.96v1.857C337.624,333.715,338.839,334.932,340.34,334.932z M319.185,334.072v-3.713
+                            c0-2.6,2.939-4.806,6.501-4.96v13.634C322.124,338.877,319.185,336.672,319.185,334.072z M337.624,349.456v3.713
+                            c0,2.6-2.939,4.805-6.501,4.96v-13.634C334.684,344.65,337.624,346.857,337.624,349.456z" />
                           </svg>
                           <div class="text-sm text-slate-700 font-semibold text-center flex items-center justify-center">
-                            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-0.5 text-slate-500">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-                            </svg>
-                            <span><?= $rows['offer'] ?></span>
-                          </div>
-                          <div class="text-sm text-slate-700 font-semibold text-center flex items-center justify-center">
-                            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-0.5 text-slate-500">
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.9" stroke="currentColor" class="w-4 h-4 mr-0.5 text-slate-500">
                               <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                             </svg>
                             <span><?= date("d.m.Y", strtotime($rows['date'])) ?></span>
@@ -785,7 +766,6 @@ $email = $_SESSION['email'];
               </div>
             </div>
 
-            <!--Order section-->
             <div v-show="orderSection" class="md:w-[80%] shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700 animate__animated animate__fadeIn">
               <h1 class="font-bold text-2xl mb-6 md:mb-8 text-center sm:text-left">
                 Направи поръчка
@@ -966,7 +946,7 @@ $email = $_SESSION['email'];
                   <div class="sm:w-1/2">
                     <div class="relative">
                       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" class="w-5 h-5 text-gray-500">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                         </svg>
                       </div>
@@ -1121,7 +1101,6 @@ $email = $_SESSION['email'];
                   {{ informationLength }}
                 </div>
 
-                <!--Price toast-->
                 <div v-show="orderSection" class="fixed md:flex bottom-4 right-4 items-center justify-center p-3 w-24 md:w-32 text-slate-700 bg-white rounded-md shadow-2xl border border-slate-100" :class="{'lg:right-4': scY < 300, 'lg:right-16': scY > 300}">
                   <div id="account-toast-price" class="font-semibold text-sm md:text-base">
                     0 лв.
@@ -1136,7 +1115,6 @@ $email = $_SESSION['email'];
                   <span>Минимума е 10 квадратни метра.</span>
                 </div>
 
-                <!--M2 toast-->
                 <div v-show="orderSection" data-tooltip-target="tooltip-m2" data-tooltip-placement="left" class="hidden fixed md:flex bottom-20 right-4 items-center justify-center py-2 px-3 w-32 text-slate-700 bg-white rounded-md shadow-lg border border-slate-100" :class="{'lg:right-4': scY < 300, 'lg:right-16': scY > 300}">
                   <div class="">
                     <label for="account-m2" class="block mb-1.5 text-sm font-semibold text-slate-700 text-center">
@@ -1154,7 +1132,6 @@ $email = $_SESSION['email'];
                 </form>
             </div>
 
-            <!-- Rating section -->
             <div v-show="rateSection" class="w-full md:w-[80%] shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700 animate__animated animate__fadeIn">
               <h1 class="font-bold text-2xl mb-6 md:mb-8 text-center sm:text-left">
                 Оценки
@@ -1212,15 +1189,16 @@ $email = $_SESSION['email'];
                               $randomNumber = rand(); ?>
                               <div data-popover id="<?= $randomNumber ?>" role="tooltip" class="absolute z-10 invisible inline-block w-48 text-sm font-light text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0">
                                 <div class="px-2.5 py-1.5 font-semibold flex space-x-3">
-                                  <img class='h-11 w-11 rounded object-cover' src="../uploaded-files/user-images/<?= $row["image"] ?>" alt='avatar' />
+                                  <img class='h-11 w-11 rounded object-cover' src="uploaded-files/user-images/<?= $row["image"] ?>" alt='avatar' />
                                   <div>
                                     <p class="text-slate-700 font-bold"><?= $row['name'] ?></p>
                                     <p><?= $row['position'] ?></p>
                                   </div>
                                 </div>
                               </div>
-                              <img data-popover-target="<?= $randomNumber ?>" class='w-8 h-8 rounded-full object-cover ring-2 border border-slate-100 ring-white cursor-pointer hover:opacity-80 transition-all' src="../uploaded-files/user-images/<?= $row["image"] ?>" alt='avatar' />
+                              <img data-popover-target="<?= $randomNumber ?>" class='w-8 h-8 rounded-full object-cover ring-2 border border-slate-100 ring-white cursor-pointer hover:opacity-80 transition-all' src="uploaded-files/user-images/<?= $row["image"] ?>" alt='avatar' />
                             <?php } ?>
+
                             <div class="mr-2.5 text-sm font-semibold text-slate-700 px-3 ">Рейтинг</div>
                             <?php
                             $teamID = $rows['team_id'];
@@ -1260,12 +1238,10 @@ $email = $_SESSION['email'];
           </div>
         </div>
 
-        <!-- Customer opinion modal -->
         <div id="customer-opinion-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
           <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
             <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fasterer">
               <div class="relative bg-white rounded-xl shadow mb-6">
-                <!-- Modal body -->
                 <div class="px-8 md:px-10 xl:px-12 py-5">
                   <h2 class="text-gray-800 text-2xl text-center font-semibold">Оценете нашите услуги</h2>
                 </div>
@@ -1309,7 +1285,6 @@ $email = $_SESSION['email'];
           </div>
         </div>
 
-        <!-- Offer modal -->
         <div id="history-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
           <div class="h-full p-4 overflow-x-hidden overflow-y-auto flex 2xl:items-center justify-center">
             <div class="relative w-full max-w-lg h-auto animate__animated animate__zoomIn animate__faster">
@@ -1319,7 +1294,6 @@ $email = $_SESSION['email'];
                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                   </svg>
                 </button>
-                <!-- Modal body -->
                 <div class="p-6 pt-8 pr-10 space-y-6 text-slate-700">
                   <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
                     <div class="w-full sm:w-1/2">
@@ -1475,12 +1449,10 @@ $email = $_SESSION['email'];
         </div>
       </div>
 
-      <!-- Delete customer room image modal -->
       <div id="delete-customer-img-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
         <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
           <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__faster">
             <div class="relative bg-white rounded-lg shadow mb-6">
-              <!-- Modal body -->
               <div class="p-4 text-center">
                 <div class="text-xl font-bold mb-3">Изтрий снимката</div>
                 <h3 class="mb-5 text-sm text-gray-500">Сигурни ли сте, че искате да изтриете снимката ?</h3>
@@ -1511,7 +1483,7 @@ $email = $_SESSION['email'];
             <p>Върнете се към началната страница с бутона отдолу.</p>
           </div>
           <div class="mb-20 md:mb-0">
-            <button onclick="location.replace('home.php')" class="text-lg font-light outline-none focus:outline-none transform transition-all hover:scale-110 text-blue-700 hover:text-blue-800 bg-blue-200 hover:bg-blue-300 py-1.5 px-2.5 rounded-xl">Към начало</button>
+            <button onclick="location.replace('index')" class="text-lg font-light outline-none focus:outline-none transform transition-all hover:scale-110 text-blue-700 hover:text-blue-800 bg-blue-200 hover:bg-blue-300 py-1.5 px-2.5 rounded-xl">Към начало</button>
           </div>
         </div>
         <div class="w-full md:w-1/2 text-center">
@@ -1611,10 +1583,10 @@ $email = $_SESSION['email'];
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-  <script src="../js/main-vue.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/ajax.js"></script>
-  <script src="../loader/siteLoader.js"></script>
+  <script src="js/main-vue.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/ajax.js"></script>
+  <script src="loader/siteLoader.js"></script>
   <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 </body>
 

@@ -24,7 +24,7 @@ if (isset($_POST['admin_order'])) {
     $price = $_POST['customerPrice'];
     $m2 = $_POST['m2'];
 
-    if ($name == NULL || $phone == NULL || $address == NULL || $m2 == NULL || $email == NULL) {
+    if (!$name || !$phone || !$address || !$m2 || !$email) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
@@ -83,7 +83,7 @@ if (isset($_POST['admin_order_update'])) {
     $price = $_POST['customerPrice'];
     $m2 = $_POST['m2'];
 
-    if ($phone == NULL || $address == NULL || $price == NULL || $m2 == NULL) {
+    if (!$phone || !$address  || !$price || !$m2) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
@@ -120,14 +120,14 @@ if (isset($_GET['email'])) {
 if (isset($_POST['admin_set_order'])) {
 
     $orderDate = $_POST['orderDate'];
-    $teamID =  ($_POST['teamId']);
-    $orderID =  ($_POST['orderId']);
-    $user1 =  ($_POST['userName1']);
-    $user2 =  ($_POST['userName2']);
-    $userID1 =  ($_POST['userID1']);
-    $userID2 =  ($_POST['userID2']);
+    $teamID = ($_POST['teamId']);
+    $orderID = ($_POST['orderId']);
+    $user1 = ($_POST['userName1']);
+    $user2 = ($_POST['userName2']);
+    $userID1 = ($_POST['userID1']);
+    $userID2 = ($_POST['userID2']);
     $teamName = ($_POST['teamName']);
-    if ($user1 == NULL || $user2 == NULL) {
+    if (!$user1  || !$user2) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         $queryy = "UPDATE orders SET team_id = '$teamID', status = 'Назначена' WHERE id='$orderID'";

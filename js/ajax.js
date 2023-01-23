@@ -162,7 +162,9 @@ $(document).ready(function () {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#history-section-load").load("pages/account #history-section-load");
+        $("#history-section-load").load(
+          location.href + " #history-section-load"
+        );
         $("#account-toast-price").html("0 лв.");
         $("#customer-order-form")[0].reset();
         alertify.success(res.message);
@@ -196,7 +198,6 @@ $(document).ready(function () {
 
   // Guest make order
   $(document).on("submit", "#guest-order-form", function (e) {
-    history - view;
     e.preventDefault();
 
     var formData = new FormData(this);
@@ -459,7 +460,7 @@ $(document).ready(function () {
     var orderIdInvoice = $(this).val();
 
     postData(
-      "action/adminOrders.php",
+      "action/AdminOrders.php",
       { orderIdInvoice: orderIdInvoice },
       function (response) {
         var res = jQuery.parseJSON(response);
@@ -892,9 +893,7 @@ $(document).ready(function () {
     getData("action/AdminOrders.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
 
-      if (res.status == 404) {
-        alertify.error(res.message);
-      } else if (res.status == 200) {
+      if (res.status == 200) {
         $("#set-order-modal").removeClass("hidden");
         $("#set-order-modal").addClass("block");
 
@@ -907,9 +906,7 @@ $(document).ready(function () {
           getData("action/AdminTeams.php?id=" + id, function (response) {
             var res = jQuery.parseJSON(response);
 
-            if (res.status == 404) {
-              alertify.error(res.message);
-            } else if (res.status == 200) {
+            if (res.status == 200) {
               $("#user1-set-order").val(res.data.user1_name);
               $("#user2-set-order").val(res.data.user2_name);
               $("#select-team").append(
@@ -1029,7 +1026,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_set_order", true);
 
-    postFormData("action/adminOrders.php", formData, function (response) {
+    postFormData("action/AdminOrders.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1171,7 +1168,7 @@ $(document).ready(function () {
     var formData = new FormData(this);
     formData.append("admin_delete_team", true);
 
-    postFormData("action/adminProducts.php", formData, function (response) {
+    postFormData("action/AdminProducts.php", formData, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1373,7 +1370,7 @@ $(document).ready(function () {
     $(".order-start-loader").removeClass("hidden");
     $(".order-start-loader").addClass("block");
 
-    getData("action/adminOrders.php?id=" + id, function (response) {
+    getData("action/AdminOrders.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1439,7 +1436,7 @@ $(document).ready(function () {
     $("#order-photo-modal").removeClass("hidden");
     $("#order-photo-modal").addClass("block");
 
-    getData("action/adminOrders.php?email=" + email, function (response) {
+    getData("action/AdminOrders.php?email=" + email, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1575,6 +1572,16 @@ $(document).ready(function () {
     );
   });
 
+  // Mobile return all product
+  $(document).on("change", "#get-product-kind", function () {
+    const kind = $(this).val();
+
+    postData("action/product/Kind.php", { kind: kind }, function (response) {
+      $("#all-product").removeClass("hidden");
+      $("#all-product").html(response);
+    });
+  });
+
   // Mobile cancel order
   $(document).on("submit", "#order-cancel-form", function (e) {
     e.preventDefault();
@@ -1593,6 +1600,26 @@ $(document).ready(function () {
     });
   });
 
+  // Mobile product request
+  $(document).on("submit", "#product-request-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("mobile_product_request", true);
+
+    postFormData("action/Mobile.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#product-order-modal").removeClass("block");
+        $("#product-order-modal").addClass("hidden");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
   $(document).on("click", ".delete-product-order", function (e) {
     $("#delete-product-order-id").val($(this).val());
     $("#delete-product-order-modal").removeClass("hidden");
@@ -1605,7 +1632,7 @@ $(document).ready(function () {
     $("#cancel-order-reason-modal").removeClass("hidden");
     $("#cancel-order-reason-modal").addClass("block");
 
-    getData("action/adminOrders.php?id=" + id, function (response) {
+    getData("action/AdminOrders.php?id=" + id, function (response) {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1689,7 +1716,7 @@ $(document).ready(function () {
   });
 
   const getJson = async (id) => {
-    const url = `action/adminOrders.php?id=${id}`;
+    const url = `action/AdminOrders.php?id=${id}`;
     const response = await fetch(url);
     const text = await response.text();
     const data = JSON.parse(text).data;
@@ -1882,6 +1909,10 @@ $(document).ready(function () {
 
   closeModal(".close-order-product-modal", "#add-order-product-modal");
 
+  openModal("#add-supplier-btn", "#add-supplier-modal");
+
+  closeModal(".close-supplier-modal", "#add-supplier-modal");
+
   $("#active-order").html($(".active-order-count").val());
 
   $("#finished-order").html($(".finished-order-count").val());
@@ -1925,5 +1956,19 @@ $(document).ready(function () {
 
   $(document).on("click", "#reload-product-table", function (e) {
     $("#product-table").load(location.href + " #product-table");
+  });
+
+  let productCount = 1;
+
+  $("#remove-one-product").click(function () {
+    productCount++;
+    $("#product-count-mobile").val(productCount);
+  });
+
+  $("#add-one-product").click(function () {
+    if (productCount != 0) {
+      productCount--;
+      $("#product-count-mobile").val(productCount);
+    }
   });
 });

@@ -200,11 +200,25 @@ if (isset($_POST['productNameReturn'])) {
                 $query_runn = mysqli_query($con, $query6);
             }
         }
+    }
+}
 
-        // $query = "UPDATE set_product SET quantity = '$finalQuantity' WHERE id = '$id'";
-        // mysqli_query($con, $query);
+// Product request
+if (isset($_POST['mobile_product_request'])) {
 
-        // $queryy = "DELETE FROM set_product WHERE quantity = '0'";
-        // mysqli_query($con, $queryy);
+    $name = $_POST['product'];
+    $quantity = $_POST['quantity'];
+    $teamId = $_POST['teamId'];
+    $date = date('Y-m-d H:i:s');
+
+
+    if (!$name || !$quantity) {
+        jsonResponse(500, 'Попълнете всички полета');
+    } else {
+
+        $query = "INSERT INTO product_request (product_name,quantity,view,date,team_id) VALUES ('$name','$quantity','0','$date','$teamId')";
+        $query_run = mysqli_query($con, $query);
+
+        jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
     }
 }

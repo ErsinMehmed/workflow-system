@@ -30,7 +30,7 @@ if (isset($_POST['admin_user'])) {
 
         if (is_numeric($egn)) {
             if (mysqli_num_rows($query_run) == 0) {
-                $query = "INSERT INTO users (image,name,pid,address,in_date,status,team_id,position,egn,phone,dob,username,team_name) VALUES ('$filename','$name','$pid','$address','$date','1','0','$position','$egn','$phone','$dob','$pid','')";
+                $query = "INSERT INTO users (image,name,pid,address,in_date,status,team_id,position,egn,phone,dob,username) VALUES ('$filename','$name','$pid','$address','$date','1','0','$position','$egn','$phone','$dob','$pid')";
                 $query_run = mysqli_query($con, $query);
 
                 jsonResponseMain($query_run, 'Успешно добавихте потребителя', 'Неуспешно добавяне на потребителя');

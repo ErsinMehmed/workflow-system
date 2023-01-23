@@ -821,37 +821,46 @@ $date_now = date("Y-m-d");
           <div class="text-xl font-bold text-white bg-blue-500 py-2 rounded-t text-center">
             Заявка за продукт
           </div>
-          <form id="order-product-form">
-            <div class="p-4 text-center">
-              <select class="bg-white mb-5 border border-blue-200 text-slate-700 text-sm rounded-md focus:outline-none block w-full p-2.5 w-[248px] text-center mx-auto">
-                <option>Choose a country</option>
-              </select>
-              <select class="bg-white mb-5 border border-blue-200 text-slate-700 text-sm rounded-md focus:outline-none hidden w-full p-2.5 w-[248px] text-center mx-auto">
-                <option>Choose a country</option>
-              </select>
-              <div class="flex items-center justify-center space-x-5">
-                <div @click="productCount--" class="w-10 h-10 rounded-md border border-blue-200 shadow-xl flex items-center justify-center active:scale-90 transition-all cursor-pointer">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-slate-700">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
-                  </svg>
-                </div>
-                <input :value="productCount" type="text" name="productCount" class="bg-white border border-blue-200 text-slate-700 text-sm rounded-md focus:outline-none block w-32 p-2.5 text-center">
-                <div @click="productCount++" class="w-10 h-10 rounded-md border border-blue-200 shadow-xl flex items-center justify-center active:scale-90 transition-all cursor-pointer">
-                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-slate-700">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                  </svg>
+          <?php
+          $query = "SELECT * FROM users WHERE pid = '$pid'";
+          $query_run = mysqli_query($con, $query);
+
+          while ($rows = mysqli_fetch_array($query_run)) { ?>
+            <form id="product-request-form">
+              <div class="p-4 text-center">
+                <select id="get-product-kind" class="bg-white mb-5 border border-gray-300 text-slate-700 text-sm rounded focus:outline-none block w-full p-2.5 w-[248px] text-center mx-auto">
+                  <option hidden selected>Изберете вид продукт</option>
+                  <option value="Екипировка">Екипировка</option>
+                  <option value="Препарати">Препарати</option>
+                  <option value="Пособия за чистене">Пособия за чистене</option>
+                  <option value="Техника">Техника</option>
+                </select>
+                <select id="all-product" name="product" class="bg-white mb-5 border border-gray-300 text-slate-700 text-sm rounded focus:outline-none hidden w-full p-2.5 w-[248px] text-center mx-auto"></select>
+                <div class="flex items-center justify-center space-x-5">
+                  <div id="add-one-product" class="w-10 h-10 rounded border border-gray-300 shadow-xl flex items-center justify-center active:scale-90 transition-all cursor-pointer">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-slate-700">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+                    </svg>
+                  </div>
+                  <input id="product-count-mobile" type="text" value="1" name="quantity" class="bg-white border border-gray-300 text-slate-700 text-sm rounded focus:outline-none block w-32 p-2.5 text-center">
+                  <input type="hidden" value="<?= $rows["team_id"] ?>" name="teamId">
+                  <div id="remove-one-product" class="w-10 h-10 rounded border border-gray-300 shadow-xl flex items-center justify-center active:scale-90 transition-all cursor-pointer">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-slate-700">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="flex items-center p-4">
-              <button type="button" class="flex-1 px-4 py-1.5 bg-slate-100 border border-slate-200 text-slate-700 text-sm font-semibold rounded active:scale-90 transition-all close-product-order-modal">
-                Откажи
-              </button>
-              <button type="submit" class="flex-1 px-4 py-1.5 bg-blue-500 text-white text-sm font-semibold rounded active:scale-90 transition-all ml-3">
-                Запази
-              </button>
-            </div>
-          </form>
+              <div class="flex items-center p-4">
+                <button type="button" class="flex-1 px-4 py-1.5 bg-slate-100 border border-slate-200 text-slate-700 text-sm font-semibold rounded active:scale-90 transition-all close-product-order-modal">
+                  Откажи
+                </button>
+                <button type="submit" class="flex-1 px-4 py-1.5 bg-blue-500 text-white text-sm font-semibold rounded active:scale-90 transition-all ml-3">
+                  Запази
+                </button>
+              </div>
+            </form>
+          <?php } ?>
         </div>
       </div>
     </div>
@@ -859,17 +868,25 @@ $date_now = date("Y-m-d");
 
   <!-- Product modal -->
   <div id="product-show-modal" class="bg-gray-800 hidden bg-opacity-50 fixed inset-0 z-40">
-    <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-      <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fast">
+    <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center">
+      <div class="relative w-full h-full max-w-xs animate__animated animate__zoomIn animate__fast">
         <div class="relative bg-white rounded shadow mb-6">
           <!-- Modal body -->
           <div class="text-xl font-bold text-white bg-blue-500 py-2 rounded-t text-center">
             Код на продуктите
           </div>
-          <div class="p-4 text-center">
+          <div class="p-5">
+            <?php
+            $query = "SELECT * FROM stock";
+            $query_run = mysqli_query($con, $query);
 
+            while ($rows = mysqli_fetch_array($query_run)) { ?>
+              <ul>
+                <li class="mb-0.5"><?= $rows["id"] ?>. <?= $rows["name"] ?></li>
+              </ul>
+            <?php } ?>
           </div>
-          <div class="flex items-center mt-3 p-4">
+          <div class="flex items-center pt-0 p-4">
             <button type="button" class="flex-1 px-4 py-1.5 bg-slate-100 border border-slate-200 text-slate-700 text-sm font-semibold rounded active:scale-90 transition-all close-show-product-modal">
               Затвори
             </button>

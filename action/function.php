@@ -19,6 +19,25 @@ function jsonResponseMain($query, $successMessage, $errorMessage)
     }
 }
 
+function jsonResponseMain2($query, $query2, $successMessage, $errorMessage)
+{
+    if ($query && $query2) {
+        $res = [
+            'status' => 200,
+            'message' => $successMessage
+        ];
+        echo json_encode($res);
+        return;
+    } else {
+        $res = [
+            'status' => 500,
+            'message' => $errorMessage
+        ];
+        echo json_encode($res);
+        return;
+    }
+}
+
 function jsonResponse($number, $message)
 {
     $res = [

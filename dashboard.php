@@ -24,7 +24,7 @@ $date = date("Y-m-d");
 </head>
 
 <body>
-  <!-- Page loader -->
+
   <div id="load-dashboard" class="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-slate-800 flex flex-col items-center justify-center">
     <div role="status">
       <svg aria-hidden="true" class="w-8 h-8 md:w-10 md:h-10 2xl:w-14 2xl:h-14 mb-2 md:mr-1 text-gray-100 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none">
@@ -34,7 +34,7 @@ $date = date("Y-m-d");
     </div>
     <h2 class="text-center text-gray-100 text-xl xl:text-2xl 2xl:text-3xl font-semibold">Зареждане...</h2>
   </div>
-  <!-- Dashboard -->
+
   <div id="app">
     <div class="flex overflow-hidden">
       <Transition name="slide-fade">
@@ -80,22 +80,16 @@ $date = date("Y-m-d");
                     <span class="ml-2.5 hidden lg:block">Склад</span>
                   </li>
                   <li @click="productOrder = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashClient = false; dashSupplier = false; dashSection = 'Поръчки'" :class=" productOrder ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                     </svg>
                     <span class="ml-2.5 hidden lg:block">Поръчки</span>
                   </li>
                   <li @click="dashSupplier = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashClient = false; productOrder = false; dashSection = 'Доставчици'" :class=" dashSupplier ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
                     </svg>
                     <span class="ml-2.5 hidden lg:block">Доставчици</span>
-                  </li>
-                  <li @click="dashClient = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashSupplier = false; productOrder = false; dashSection = 'Клиенти'" :class=" dashClient ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <span class="ml-2.5 hidden lg:block">Клиенти</span>
                   </li>
                 </ul>
               </div>
@@ -167,7 +161,6 @@ $date = date("Y-m-d");
             </div>
           </nav>
 
-          <!-- Order section -->
           <main v-show="dashOrder">
             <div class="pt-6 px-4">
               <div class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 px-4">
@@ -422,7 +415,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Add order modal -->
             <div id="add-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
                 <div class="relative w-full h-full max-w-lg">
@@ -435,7 +427,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <form id="add-order-form">
                       <div class="px-5 py-4 space-y-6 text-slate-700">
                         <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
@@ -501,7 +492,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Cancel reason modal -->
             <div id="cancel-order-reason-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex items-center justify-center">
                 <div class="relative w-full h-auto max-w-lg">
@@ -514,7 +504,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <div class="px-5 py-4">
                       <textarea id="cancel-reason-textarea" readonly rows="3" class="block p-2.5 w-full text-sm text-slate-700 rounded border border-slate-300 focus:outline-none resize-none"></textarea>
                     </div>
@@ -523,7 +512,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Edit order modal -->
             <div id="order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex 2xl:items-center justify-center">
                 <div class="relative w-full h-full max-w-lg mt-10">
@@ -536,7 +524,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <form id="update-order-form">
                       <div class="px-5 py-4 space-y-6 text-slate-700">
                         <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
@@ -599,7 +586,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Custoemer order information modal -->
             <div id="customer-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full p-4 overflow-x-hidden overflow-y-auto flex items-center justify-center">
                 <div class="relative w-full max-w-lg h-auto">
@@ -612,7 +598,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <div class="px-5 py-4 space-y-6 text-slate-700">
                       <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
                         <div class="w-full">
@@ -642,7 +627,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Set order modal -->
             <div id="set-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
                 <div class="relative w-full h-full max-w-lg">
@@ -655,7 +639,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <form id="set-order-form">
                       <div class="px-5 py-4 space-y-6 text-slate-700">
                         <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
@@ -689,7 +672,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Customer opinion modal -->
             <div id="customer-opinion-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
                 <div class="relative w-full h-full max-w-lg">
@@ -702,7 +684,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <div class="px-5 py-4 space-y-6 text-slate-700">
                       <textarea rows="3" id="customer-opinion-orders" name="text" readonly class="block bg-gray-50 p-3 w-full text-sm text-slate-900 rounded-lg border border-gray-300 focus:outline-none resize-none"></textarea>
                     </div>
@@ -712,7 +693,6 @@ $date = date("Y-m-d");
             </div>
           </main>
 
-          <!-- User section -->
           <main v-show="dashUser">
             <div class="py-6 px-8">
               <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
@@ -851,7 +831,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Add user modal -->
             <div id="add-user-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
                 <div class="relative w-full h-full max-w-lg">
@@ -864,7 +843,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <form id="add-user-form">
                       <div class="px-5 py-4 space-y-6 text-slate-700">
                         <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
@@ -913,7 +891,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Edit user modal -->
             <div id="edit-user-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
                 <div class="relative w-full h-full max-w-lg">
@@ -926,7 +903,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <form id="edit-user-form">
                       <div class="px-5 py-4 space-y-6 text-slate-700">
                         <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
@@ -979,7 +955,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Edit user passowrd modal -->
             <div id="user-password-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
                 <div class="relative w-full h-auto max-w-lg">
@@ -992,7 +967,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <form id="user-password-form">
                       <div class="px-5 py-4 space-y-6 text-slate-700">
                         <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
@@ -1024,7 +998,6 @@ $date = date("Y-m-d");
             </div>
           </main>
 
-          <!-- Team section -->
           <main v-show="dashTeam">
             <div class="py-6 px-8">
               <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
@@ -1172,7 +1145,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Add team modal -->
             <div id="add-team-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
                 <div class="relative w-full h-full max-w-lg">
@@ -1185,7 +1157,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <form id="add-team-form">
                       <div class="px-5 py-4 space-y-6 text-slate-700">
                         <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
@@ -1225,7 +1196,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Team order modal -->
             <div id="team-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
                 <div class="relative w-full h-auto max-w-lg">
@@ -1238,7 +1208,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <div class="px-5 py-4 space-y-6 text-slate-700">
                       <div id="team-orders" class="sm:flex items-center w-full gap-y-4 sm:gap-x-4"></div>
                     </div>
@@ -1247,12 +1216,10 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Delete team modal -->
             <div id="delete-team-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
                 <div class="relative w-full h-auto max-w-md">
                   <div class="relative bg-white rounded-lg shadow mb-6">
-                    <!-- Modal body -->
                     <div class="p-4 text-center">
                       <div class="text-xl font-bold mb-3">Изтрий екипа</div>
                       <h3 class="mb-5 text-sm text-gray-500">Сигурни ли сте, че искате да изтриете екипа? Информацията от приключените задачи на екипа ще се запазят.</h3>
@@ -1274,7 +1241,6 @@ $date = date("Y-m-d");
             </div>
           </main>
 
-          <!-- Warehouse section -->
           <main v-show="dashWarehouse">
             <div class="py-6 px-8">
               <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
@@ -1388,7 +1354,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Add product modal -->
             <div id="add-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
                 <div class="relative w-full h-auto max-w-lg">
@@ -1401,7 +1366,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <form id="add-product-form">
                       <div class="px-5 py-4 space-y-6 text-slate-700">
                         <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
@@ -1432,7 +1396,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Edit product modal -->
             <div id="edit-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
                 <div class="relative w-full h-auto max-w-lg">
@@ -1445,7 +1408,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <form id="edit-product-form">
                       <div class="px-5 py-4 space-y-6 text-slate-700">
                         <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
@@ -1477,7 +1439,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Set product to team -->
             <div id="set-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
                 <div class="relative w-full h-auto max-w-lg">
@@ -1490,7 +1451,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <form id="set-product-form">
                       <div class="px-5 py-4 space-y-4 text-slate-700">
                         <div class="w-full">
@@ -1521,7 +1481,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- History of setted product to team -->
             <div id="history-set-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
                 <div class="relative w-full h-auto max-w-md">
@@ -1534,7 +1493,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <div class="px-5 py-4 space-y-4 text-slate-700">
                       <div class="flex items-center w-full font-semibold text-slate-700 text-sm">
                         <div id="seted-product-history-btn" class="w-1/2 rounded-l-lg border border-gray-300 border-r-0 py-[9px] flex justify-center cursor-pointer bg-gray-50 hover:bg-gray-200 transition-all">Назначени продукти</div>
@@ -1550,12 +1508,10 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Delete product modal -->
             <div id="delete-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
                 <div class="relative w-full h-auto max-w-md">
                   <div class="relative bg-white rounded-lg shadow mb-6">
-                    <!-- Modal body -->
                     <div class="p-4 text-center">
                       <div class="text-xl font-bold mb-3">Изтрий продукта</div>
                       <h3 class="mb-5 text-sm text-gray-500">Сигурни ли сте, че искате да изтриете продукта?</h3>
@@ -1577,7 +1533,6 @@ $date = date("Y-m-d");
             </div>
           </main>
 
-          <!-- Product order section -->
           <main v-show="productOrder">
             <div class="py-6 px-8">
               <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
@@ -1701,7 +1656,6 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Add product modal -->
             <div id="add-order-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
                 <div class="relative w-full h-full max-w-lg">
@@ -1714,7 +1668,6 @@ $date = date("Y-m-d");
                         </svg>
                       </button>
                     </div>
-                    <!-- Modal body -->
                     <form id="add-product-order-form">
                       <div class="px-5 py-4 space-y-6 text-slate-700">
                         <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
@@ -1771,12 +1724,10 @@ $date = date("Y-m-d");
               </div>
             </div>
 
-            <!-- Delete product order modal -->
             <div id="delete-product-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
               <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
                 <div class="relative w-full h-auto max-w-md">
                   <div class="relative bg-white rounded-lg shadow mb-6">
-                    <!-- Modal body -->
                     <div class="p-4 text-center">
                       <div class="text-xl font-bold mb-3">Изтрий поръчката</div>
                       <h3 class="mb-5 text-sm text-gray-500">Сигурни ли сте, че искате да изтриете поръчката?</h3>
@@ -1796,7 +1747,172 @@ $date = date("Y-m-d");
                 </div>
               </div>
             </div>
+          </main>
 
+          <main v-show="dashSupplier">
+            <div class="py-6 px-8">
+              <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
+                <div class="relative w-full sm:w-auto">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                  </div>
+                  <input type="text" id="search-supplier" placeholder="По име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-9 p-2.5 sm:w-48" />
+                </div>
+                <div class="flex items-center space-x-3">
+                  <button id="add-supplier-btn" type="button" class="w-10 h-10 bg-blue-500 hover:bg-blue-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-7 h-7 text-white">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+                  <table id="supplier-table" class="min-w-full leading-normal">
+                    <thead>
+                      <tr>
+                        <th class="pr-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          номер
+                        </th>
+                        <th class="pr-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          име
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          телефон
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          адрес
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          банкова сметка
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          доставки
+                        </th>
+                        <th class="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                          действия
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $query = "SELECT * FROM supplier";
+                      $query_run = mysqli_query($con, $query);
+
+                      if (mysqli_num_rows($query_run) > 0) {
+                        while ($rows = mysqli_fetch_array($query_run)) {
+                      ?>
+                          <tr class="bg-white hover:bg-slate-50 transition-all">
+                            <td class="pr-4 py-5 border-b border-gray-200 text-sm text-center">
+                              <?= $rows["id"] ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
+                              <p class="text-gray-900 whitespace-no-wrap">
+                                <?= $rows["name"] ?>
+                              </p>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm">
+                              <div class="h-8 w-8 mx-auto bg-blue-100 text-blue-800 text-xs font-semibold rounded-md flex items-center justify-center"><?= $rows["phone"] ?></div>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
+                              <?= $rows["address"] ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
+                              <?= $rows["iban"] ?>
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 text-sm text-center">
+
+                            </td>
+                            <td class="px-4 py-5 border-b border-gray-200 flex justify-center">
+                              <button type="button" value="<?= $rows["id"] ?>" class="bg-red-500 hover:bg-red-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 delete-supplier">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                  <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
+                                </svg>
+                              </button>
+                            </td>
+                          </tr>
+                        <?php }
+                      } else { ?>
+                        <tr>
+                          <td colspan="10" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold">Не са намерени данни</td>
+                        </tr>
+                      <?php } ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div id="add-supplier-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
+                <div class="relative w-full h-full max-w-lg">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
+                      <div class="text-slate-700 font-bold text-xl">Добави доставчик</div>
+                      <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-supplier-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <form id="add-product-order-form">
+                      <div class="px-5 py-4 space-y-6 text-slate-700">
+                        <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
+                          <div class="w-full">
+                            <label for="supplier-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Име
+                            </label>
+                            <input type="text" id="supplier-name" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5 price-calculate" placeholder="Въведи име" />
+                            <label for="supplier-phone" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Телефон
+                            </label>
+                            <input type="text" id="supplier-phone" name="phone" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none  focus:border-gray-400 w-full p-2.5" placeholder="Въведи телефон" />
+                            <label for="supplier-address" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Адрес
+                            </label>
+                            <input type="text" id="supplier-address" name="address" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none  focus:border-gray-400 w-full p-2.5 price-calculate" placeholder="Въведи адрес" />
+                            <label for="supplier-iban" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                              Банкова сметка
+                            </label>
+                            <input readonly type="text" id="supplier-iban" name="iban" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none w-full p-2.5" placeholder="Въведи банкова сметка" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w-full border-t border-gray-200 p-3 flex justify-end items-center">
+                        <button type="button" class="text-slate-700 border border-slate-400 bg-transparent hover:bg-gray-100 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90 close-supplier-modal">Откажи</button>
+                        <button type="submit" class="text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90">Запази</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="delete-supplier-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+              <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+                <div class="relative w-full h-auto max-w-md">
+                  <div class="relative bg-white rounded-lg shadow mb-6">
+                    <div class="p-4 text-center">
+                      <div class="text-xl font-bold mb-3">Изтрий доставчика</div>
+                      <h3 class="mb-5 text-sm text-gray-500">Сигурни ли сте, че искате да изтриете доставчика?</h3>
+                      <form id="delete-supplier-form">
+                        <input id="delete-supplier-id" type="hidden" name="id">
+                        <div class="flex items-center mt-3">
+                          <button type="button" class="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md active:scale-90 transition-all close-delete-supplier-modal">
+                            Откажи
+                          </button>
+                          <button type="submit" class="flex-1 px-4 py-2 ml-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md active:scale-90 transition-all">
+                            Изтрий
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </main>
         </div>
       </Transition>

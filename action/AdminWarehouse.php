@@ -31,7 +31,7 @@ if (isset($_POST['admin_product'])) {
     }
 }
 
-// Get product data
+// Get product data by id
 if (isset($_GET['id'])) {
     $id = mysqli_real_escape_string($con, $_GET['id']);
 
@@ -48,9 +48,10 @@ if (isset($_GET['id'])) {
         echo json_encode($res);
         return;
     } else {
-        jsonResponse(404, 'Клиента не е намерен');
+        jsonResponse(404, 'Продукта не е');
     }
 }
+
 
 // Update product information
 if (isset($_POST['admin_edit_product'])) {

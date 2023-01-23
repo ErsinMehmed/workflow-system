@@ -64,7 +64,7 @@ if (isset($_GET['id'])) {
         echo json_encode($res);
         return;
     } else {
-        jsonResponse(404, 'Заявката не е намерена');
+        jsonResponse(404, 'Няма намерена информация');
     }
 }
 

@@ -50,7 +50,6 @@ createApp({
       mobileRepPassword: false,
       mobileLoginPass: false,
       orderStateStep: 0,
-      productCount: 0,
       invoiceState: false,
       settedProduct: true,
       returnedProduct: false,

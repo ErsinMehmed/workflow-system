@@ -229,10 +229,10 @@ $email = $_SESSION['email'];
               while ($rows = mysqli_fetch_array($query_run)) { ?>
                 <div class="sm:flex items-center sm:space-x-4">
                   <?php if ($rows["image"] != "") { ?>
-                    <img class="object-fill w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0 update-photo" :src="profileImgPreview ? profileImgPreview
+                    <img class="object-cover w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0 update-photo" :src="profileImgPreview ? profileImgPreview
                 : 'uploaded-files/customer-images/<?= $rows["image"] ?>'" alt="Profile photo" />
                   <?php } else { ?>
-                    <img class="object-fill w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0" :src="profileImgPreview ? profileImgPreview : 'images/user.png'" alt="Profile photo" />
+                    <img class="object-cover w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0" :src="profileImgPreview ? profileImgPreview : 'images/user.png'" alt="Profile photo" />
                   <?php } ?>
                   <form id="customer-image-form">
                     <div class="sm:inline-flex sm:gap-x-4 space-y-4 sm:space-y-0 mt-3 sm:mt-0">
@@ -1069,7 +1069,7 @@ $email = $_SESSION['email'];
                     <label class="flex justify-center items-center w-[122px] h-11 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" :for="city.name">
                       <div class="text-sm font-semibold text-slate-700 text-center flex">
                         <div>
-                          <img class="object-fill w-5 h-5 rounded-full mr-1" :src="city.image" :alt="city.name" />
+                          <img class="object-cover w-5 h-5 rounded-full mr-1" :src="city.image" :alt="city.name" />
                         </div>
                         <div>{{city.name}}</div>
                       </div>

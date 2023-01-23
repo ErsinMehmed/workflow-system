@@ -25,7 +25,6 @@ if (isset($_POST['guest_order'])) {
     $curDT = date('Y-m-d H:i:s');
 
     if (!$building || !$offer || !$time || !$payment || !$city || !$address || !$m2 || !$price || !$email) {
-
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         $selQuery = "SELECT * FROM customer WHERE email = '$email'";

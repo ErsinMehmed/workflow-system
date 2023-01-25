@@ -146,7 +146,7 @@ $(document).ready(function () {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        window.location.href = "index";
+        window.location.href = "/";
       }
     });
   });
@@ -529,6 +529,15 @@ $(document).ready(function () {
     );
   });
 
+  // text filter dashboard supplier section
+  $("#search-supplier").on("keyup", function () {
+    var text = $(this).val();
+
+    postData("action/supplier/Filter.php", { text: text }, function (data) {
+      $("#supplier-table").html(data);
+    });
+  });
+
   closeModal(".customer-order-modal-close", "#customer-order-modal");
 
   closeModal(".close-add-user-modal", "#add-user-modal");
@@ -587,6 +596,27 @@ $(document).ready(function () {
         $("#user-dob-edit").val(res.data.dob);
         $("#user-phone-edit").val(res.data.phone);
         $("#user-address-edit").val(res.data.address);
+      }
+    });
+  });
+
+  // Get supplier data for edit
+  $(document).on("click", ".edit-supplier", function () {
+    var id = $(this).val();
+
+    getData("action/AdminSuppliers.php?id=" + id, function (response) {
+      var res = jQuery.parseJSON(response);
+      if (res.status == 500) {
+        alertify.error(res.message);
+      } else if (res.status == 200) {
+        $("#supplier-edit-modal").removeClass("hidden");
+        $("#supplier-edit-modal").addClass("block");
+
+        $("#supplier-id").val(res.data.id);
+        $("#supplier-name-edit").val(res.data.name);
+        $("#supplier-phone-edit").val(res.data.phone);
+        $("#supplier-address-edit").val(res.data.address);
+        $("#supplier-iban-edit").val(res.data.iban);
       }
     });
   });
@@ -1012,6 +1042,7 @@ $(document).ready(function () {
         $("#add-order-product-modal").addClass("hidden");
         $("#product-table").load(location.href + " #product-table");
         $("#product-order-table").load(location.href + " #product-order-table");
+        $("#supplier-table").load(location.href + " #supplier-table");
         alertify.success(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
@@ -1048,7 +1079,7 @@ $(document).ready(function () {
   $(document).on("click", ".prevOrd", function () {
     $("#team-order-modal").removeClass("hidden");
     $("#team-order-modal").addClass("block");
-    var teamId = $(this).val();
+    const teamId = $(this).val();
 
     postData("action/team/TeamOrders.php", { teamId: teamId }, function (data) {
       $("#team-orders").html(data);
@@ -1056,6 +1087,23 @@ $(document).ready(function () {
   });
 
   closeModal(".close-team-order-modal", "#team-order-modal");
+
+  // Admin show supplier orders
+  $(document).on("click", ".supplier-order-view", function () {
+    $("#supplier-order-view-modal").removeClass("hidden");
+    $("#supplier-order-view-modal").addClass("block");
+    const supplierName = $(this).val();
+
+    postData(
+      "action/supplier/SupplierOrders.php",
+      { supplierName: supplierName },
+      function (data) {
+        $("#supplier-orders").html(data);
+      }
+    );
+  });
+
+  closeModal(".close-supplier-order-view-modal", "#supplier-order-view-modal");
 
   // Admin delete team modal open
   $(document).on("click", ".delete-team", function () {
@@ -1070,6 +1118,15 @@ $(document).ready(function () {
     $("#delete-product-modal").addClass("block");
     $("#delete-product-id").val($(this).val());
   });
+
+  // Admin delete supplier modal open
+  $(document).on("click", ".delete-supplier", function () {
+    $("#delete-supplier-modal").removeClass("hidden");
+    $("#delete-supplier-modal").addClass("block");
+    $("#delete-supplier-id").val($(this).val());
+  });
+
+  closeModal(".close-delete-supplier-modal", "#delete-supplier-modal");
 
   closeModal(".close-delete-product-modal", "#delete-product-modal");
 
@@ -1183,6 +1240,27 @@ $(document).ready(function () {
     });
   });
 
+  // Admin delete supplier
+  $(document).on("submit", "#delete-supplier-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_delete_supplier", true);
+
+    postFormData("action/AdminSuppliers.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#delete-supplier-modal").removeClass("block");
+        $("#delete-supplier-modal").addClass("hidden");
+        $("#supplier-table").load(location.href + " #supplier-table");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
   // Admin delete product
   $(document).on("submit", "#delete-product-form", function (e) {
     e.preventDefault();
@@ -1247,6 +1325,27 @@ $(document).ready(function () {
     });
   });
 
+  // Admin edit supplier
+  $(document).on("submit", "#supplier-edit-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_edit_supplier", true);
+
+    postFormData("action/AdminSuppliers.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#supplier-edit-modal").removeClass("block");
+        $("#supplier-edit-modal").addClass("hidden");
+        $("#supplier-table").load(location.href + " #supplier-table");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
   // Admin set product to team
   $(document).on("submit", "#set-product-form", function (e) {
     e.preventDefault();
@@ -1265,6 +1364,99 @@ $(document).ready(function () {
         alertify.success(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
+      }
+    });
+  });
+
+  // Admin add supplier
+  $(document).on("submit", "#add-supplier-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_supplier", true);
+
+    postFormData("action/AdminSuppliers.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        $("#add-supplier-modal").removeClass("block");
+        $("#add-supplier-modal").addClass("hidden");
+        $("#supplier-table").load(location.href + " #supplier-table");
+        $("#add-supplier-form")[0].reset();
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // Admin dashboard login
+  $(document).on("submit", "#dashboard-login-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("dashboard_login", true);
+
+    postFormData("action/Admin.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        location.reload();
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // Admin update data
+  $(document).on("submit", "#admin-information-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_update_data", true);
+
+    postFormData("action/Admin.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        alertify.success(res.message);
+        $("#first-pass").val("");
+        $("#second-pass").val("");
+        $("#third-pass").val("");
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // Admin update profile image
+  $(document).on("submit", "#admin-image-form", function (e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("admin_photo", true);
+
+    postFormData("action/Admin.php", formData, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        alertify.success(res.message);
+        $("#admin-photo").load(location.href + " #admin-photo");
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // Admin dashboard logout
+  $("#admin-logout").on("click", function () {
+    var action = "data";
+
+    postData("action/Admin.php", { action: action }, function (response) {
+      var res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        location.reload();
       }
     });
   });
@@ -1900,6 +2092,8 @@ $(document).ready(function () {
   openModal("#make-order-btn", "#product-order-modal");
 
   closeModal(".close-product-order-modal", "#product-order-modal");
+
+  closeModal(".close-supplier-edit-modal", "#supplier-edit-modal");
 
   closeModal(".close-order-photo-modal", "#order-photo-modal");
 

@@ -6,9 +6,7 @@ date_default_timezone_set('Europe/Sofia');
 include 'action/dbconn.php';
 
 $pid = $_SESSION['pid'];
-$date_now = date("Y-m-d");
-?>
-
+$date_now = date("Y-m-d"); ?>
 <!DOCTYPE html>
 <html lang="bg">
 
@@ -42,7 +40,6 @@ $date_now = date("Y-m-d");
   <div id="app">
     <?php if ($pid) { ?>
       <div id="mobile-app">
-        <!-- Sidebar -->
         <aside class="w-28 fixed" aria-label="Sidebar">
           <div class="px-3 py-4 overflow-y-auto bg-[#f8f8f8] h-screen">
             <ul class="flex-col space-y-4 text-slate-600">
@@ -95,10 +92,8 @@ $date_now = date("Y-m-d");
           </div>
         </aside>
 
-        <!-- Main section -->
         <section>
           <div class="ml-28">
-            <!-- Profile section -->
             <div v-show="mobProfile">
               <div class="flex items-center justify-end bg-[#f8f8f8] w-full h-14 border-b-2 border-slate-200"></div>
               <div class="flex p-4 space-x-5">

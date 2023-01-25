@@ -4,10 +4,7 @@ error_reporting(0);
 
 include 'action/dbconn.php';
 
-$email = $_SESSION['email'];
-
-
-?>
+$email = $_SESSION['email']; ?>
 <!DOCTYPE html>
 <html lang="bg" class="overflow-x-hidden">
 
@@ -66,7 +63,7 @@ $email = $_SESSION['email'];
 
         <nav class="bg-white border-b border-slate-200 shadow-md sm:px-0 pt-3 md:py-3 top-0 sticky z-30">
           <div class="bg-white flex flex-wrap sm:px-5 md:px-6 lg:px-12 pb-3 md:pb-0 items-center justify-between">
-            <a href="index" class="flex items-center pl-5 sm:pl-0">
+            <a href="/" class="flex items-center pl-5 sm:pl-0">
               <img src="images/main-logo.png" class="h-7 mr-3 md:h-12" alt="Main logo" />
             </a>
             <div class="flex items-center pr-5 sm:pr-0">
@@ -76,11 +73,10 @@ $email = $_SESSION['email'];
 
               while ($rows = mysqli_fetch_array($query_run)) {
                 if ($rows["image"] != "") { ?>
-                  <img src="uploaded-files/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90 update-photo">
+                  <img src="uploaded-files/customer-images/<?= $rows["image"] ?>" alt="<?= $rows["image"] ?>" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90 update-photo">
                 <?php } else { ?>
-                  <img src="images/user.png" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90" />
-              <?php
-                }
+                  <img src="images/user.png" alt="user" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90" />
+              <?php }
               } ?>
               <img class="w-8 h-8 object-cover cursor-pointer hover:opacity-75 transition-all rounded-full md:hidden ml-2.5 mr-1" src="images/britain-flag.png" alt="english" />
               <button @click="hamburgerIcon = !hamburgerIcon" id="open-nav-bar" data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 pr-0 text-sm text-gray-500 rounded-lg md:hidden focus:outline-none focus:ring-0 transition-all" aria-controls="navbar-default" aria-expanded="false">
@@ -96,7 +92,7 @@ $email = $_SESSION['email'];
             <div class="hidden w-full md:block md:w-auto relative" id="navbar-default">
               <ul class="flex flex-col -mb-3 md:-mb-0.5 p-4 mt-4 border border-gray-100 md:rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-semibold md:border-0 md:bg-white">
                 <li>
-                  <a href="index" class="flex items-center py-2 pl-3 pr-4 text-gray-700 rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 transition-all active:scale-90">
+                  <a href="/" class="flex items-center py-2 pl-3 pr-4 text-gray-700 rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 transition-all active:scale-90">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 md:hidden">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                     </svg>
@@ -255,13 +251,13 @@ $email = $_SESSION['email'];
                       <label for="full-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                         Име
                       </label>
-                      <input type="text" id="full-name" value="<?= $rows['name'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 focus:outline-none cursor-not-allowed" readonly />
+                      <input id="full-name" type="text" minlength="2" value="<?= $rows['name'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 focus:outline-none cursor-not-allowed" readonly />
                     </div>
                     <div class="sm:w-1/2">
                       <label for="username" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                         Потребителско име
                       </label>
-                      <input type="text" name="username" id="username" value="<?= $rows['username'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Потребителско име" />
+                      <input id="username" type="text" minlength="2" name="username" value="<?= $rows['username'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Потребителско име" />
                     </div>
                   </div>
                   <div class="sm:flex items-center sm:space-x-5 space-y-4 sm:space-y-0 mt-6">
@@ -269,13 +265,13 @@ $email = $_SESSION['email'];
                       <label for="userEmail" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                         Имейл
                       </label>
-                      <input id="userEmail" name="userEmail" value="<?= $rows['email'] ?>" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 focus:outline-none cursor-not-allowed" readonly />
+                      <input id="userEmail" type="text" minlength="5" name="userEmail" value="<?= $rows['email'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 focus:outline-none cursor-not-allowed" readonly />
                     </div>
                     <div class="sm:w-1/2">
                       <label for="phone-number" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                         Телефонен номер
                       </label>
-                      <input type="text" id="phone-number" name="phoneAccount" value="<?= $rows['phone'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведете телефон" />
+                      <input id="phone-number" type="text" minlength="9" name="phoneAccount" value="<?= $rows['phone'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="Въведете телефон" />
                     </div>
                   </div>
                   <hr class="w-full mt-7 mb-6" />
@@ -343,7 +339,7 @@ $email = $_SESSION['email'];
                     <label for="old-password" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                       Стара парола
                     </label>
-                    <input type="password" id="old-password" name="oldPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="••••••••••" />
+                    <input id="old-password" type="password" name="oldPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="••••••••••" />
                   </div>
                 </div>
                 <hr class="w-full my-5 sm:my-6" />
@@ -352,13 +348,13 @@ $email = $_SESSION['email'];
                     <label for="newPassword" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                       Нова парола
                     </label>
-                    <input type="password" minlength="8" id="newPassword" name="newPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="••••••••••" />
+                    <input id="newPassword" type="password" minlength="8" name="newPassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="••••••••••" />
                   </div>
                   <div class="sm:w-1/2">
                     <label for="passwordRep" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                       Повторете парола
                     </label>
-                    <input type="password" minlength="8" id="passwordRep" name="newPasswordRep" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="••••••••••" />
+                    <input id="passwordRep" type="password" minlength="8" name="newPasswordRep" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-400 w-full p-2.5" placeholder="••••••••••" />
                   </div>
                 </div>
                 <div class="sm:flex justify-end mt-6">
@@ -529,7 +525,7 @@ $email = $_SESSION['email'];
                       <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                     </svg>
                   </div>
-                  <input type="date" id="date-picker-account" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5 " placeholder="Изберете дата" />
+                  <input id="date-picker-account" type="date" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5 " placeholder="Изберете дата" />
                 </div>
                 <div class="relative w-full sm:w-1/2">
                   <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -810,7 +806,7 @@ $email = $_SESSION['email'];
                   Квадратура на обекта
                 </div>
                 <div class="block md:hidden mb-4">
-                  <input type="text" class="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5 account-m2" placeholder="m2" />
+                  <input type="text" minlength="2" maxlength="4" class="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5 account-m2" placeholder="m2" />
                 </div>
 
                 <div class="block ml-1 mb-1.5 font-semibold text-sm md:text-base text-slate-700">
@@ -818,7 +814,7 @@ $email = $_SESSION['email'];
                 </div>
                 <ul class="flex flex-wrap gap-6 my-3.5">
                   <li>
-                    <input class="sr-only peer building" type="radio" value="Къща" name="building" id="building-house" />
+                    <input id="building-house" class="sr-only peer building" type="radio" value="Къща" name="building" />
                     <label class="flex justify-center items-center w-28 h-28 bg-white border border-gray-200 rounded-md cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" for="building-house">
                       <div>
                         <div class="h-10 w-10 rounded-full flex justify-center items-center bg-blue-100 mx-auto border border-blue-200">
@@ -1080,7 +1076,7 @@ $email = $_SESSION['email'];
                 <label for="customerAddress" class="block ml-1 mb-1.5 mt-4 font-semibold text-sm md:text-base text-slate-700">
                   Вашият адрес
                 </label>
-                <textarea @keyup="charCountAddress" minlength="5" id="customerAddress" name="address" v-model="address" rows="2" :class="{
+                <textarea @keyup="charCountAddress" minlength="6" id="customerAddress" name="address" v-model="address" rows="2" :class="{
                     'focus:border-red-500 border-red-500 bg-red-50': addressCount >= 200,
                   }" class="block p-2.5 w-full text-sm text-gray-900 bg-slate-50 rounded-lg border border-gray-300 focus:ring-0 focus:outline-none focus:border-gray-400 resize-none md:resize-y" placeholder="Напишете адреса си тук..."></textarea>
                 <div :class="{
@@ -1105,7 +1101,7 @@ $email = $_SESSION['email'];
                   <div id="account-toast-price" class="font-semibold text-sm md:text-base">
                     0 лв.
                   </div>
-                  <input type="hidden" id="input-account-price" name="price" />
+                  <input id="input-account-price" type="hidden" name="price" />
                 </div>
 
                 <div id="tooltip-m2" role="tooltip" class="hidden font-medium md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
@@ -1116,11 +1112,11 @@ $email = $_SESSION['email'];
                 </div>
 
                 <div v-show="orderSection" data-tooltip-target="tooltip-m2" data-tooltip-placement="left" class="hidden fixed md:flex bottom-20 right-4 items-center justify-center py-2 px-3 w-32 text-slate-700 bg-white rounded-md shadow-lg border border-slate-100" :class="{'lg:right-4': scY < 300, 'lg:right-16': scY > 300}">
-                  <div class="">
+                  <div>
                     <label for="account-m2" class="block mb-1.5 text-sm font-semibold text-slate-700 text-center">
                       Квадратура
                     </label>
-                    <input minlength="2" type="text" id="account-m2" name="m2" class="bg-slate-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-300 block w-full p-1.5 text-center account-m2" maxlength="4" placeholder="m2" />
+                    <input id="account-m2" type="text" minlength="2" maxlength="4" name="m2" class="bg-slate-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-300 block w-full p-1.5 text-center account-m2" placeholder="m2" />
                   </div>
                 </div>
 

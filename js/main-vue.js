@@ -34,6 +34,7 @@ createApp({
       dashWarehouse: false,
       productOrder: false,
       dashSupplier: false,
+      dashProfile: false,
       dashClient: false,
       dashSection: "Заявки",
       toggleSidebar: true,
@@ -53,6 +54,9 @@ createApp({
       invoiceState: false,
       settedProduct: true,
       returnedProduct: false,
+      ourClientTab: true,
+      processTab: false,
+      communicationTab: false,
       orderState: [
         "Почистване на повърхности",
         "Почистване на стъклени повърхности",

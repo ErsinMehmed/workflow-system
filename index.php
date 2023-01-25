@@ -4,9 +4,7 @@ error_reporting(0);
 
 include 'action/dbconn.php';
 
-$email = $_SESSION['email'];
-
-?>
+$email = $_SESSION['email']; ?>
 <!DOCTYPE html>
 <html lang="bg" class="overflow-x-hidden">
 
@@ -28,31 +26,25 @@ $email = $_SESSION['email'];
 </head>
 
 <body class="scroll-smooth">
-  <!-- Page loader -->
   <div id="site-load" class="loader__wrap" role="alertdialog" aria-busy="true" aria-live="polite" aria-label="Loading…">
     <div class="loader" aria-hidden="true">
       <div class="loader__sq"></div>
       <div class="loader__sq"></div>
     </div>
   </div>
+
   <div id="app">
-    <!--Scroll detector-->
     <div class="w-full h-1 rounded-r-full fixed z-40 top-0 left-0 bg-blue-400" :style="{ width: progress }"></div>
 
-    <!--Scroll to top button-->
-    <div class="fixed z-30 right-4 bottom-4 w-10 h-10 hidden bg-blue-500 hover:bg-blue-600 lg:flex rounded-full justify-center items-center cursor-pointer transition-all" style="
-          box-shadow: rgb(0 0 0 / 25%) 0px 14px 28px,
-            rgb(0 0 0 / 22%) 0px 10px 10px;
-        " v-show="scY > 300" @click="goTop">
+    <div class="fixed z-30 right-4 bottom-4 w-10 h-10 hidden bg-blue-500 hover:bg-blue-600 lg:flex rounded-full justify-center items-center cursor-pointer transition-all shadow-box-2" v-show="scY > 300" @click="goTop">
       <svg fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-7 h-7 rounded-full -mt-0.5 text-white">
         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
       </svg>
     </div>
 
-    <!--Navbar section start-->
     <nav class="bg-white border-b border-slate-200 shadow-md sm:px-0 pt-3 md:py-3 top-0 sticky z-30">
       <div class="bg-white flex flex-wrap sm:px-5 md:px-6 lg:px-12 pb-3 md:pb-0 items-center justify-between">
-        <a href="index" class="flex items-center pl-5 sm:pl-0">
+        <a href="/" class="flex items-center pl-5 sm:pl-0">
           <img src="images/main-logo.png" class="h-7 mr-3 md:h-12" alt="Main logo" />
         </a>
         <div class="flex items-center pr-5 sm:pr-0">
@@ -72,7 +64,7 @@ $email = $_SESSION['email'];
         <div class="hidden w-full md:block md:w-auto relative" id="navbar-default">
           <ul class="flex flex-col -mb-3 md:-mb-0.5 p-4 mt-4 border border-gray-100 md:rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-lg md:font-semibold md:border-0 md:bg-white">
             <li>
-              <a href="index" class="flex items-center py-2 pl-3 pr-4 text-white bg-blue-600 rounded-md md:bg-transparent md:text-blue-700 md:p-0 active:scale-90" aria-current="page">
+              <a href="/" class="flex items-center py-2 pl-3 pr-4 text-white bg-blue-600 rounded-md md:bg-transparent md:text-blue-700 md:p-0 active:scale-90" aria-current="page">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1 md:hidden">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                 </svg>
@@ -110,30 +102,23 @@ $email = $_SESSION['email'];
 
             if ($email) {
               while ($rows = mysqli_fetch_array($query_run)) {
-                if ($rows["image"] != "") {
-            ?>
+                if ($rows["image"] != "") { ?>
                   <li>
-                    <a href="account"><img src="uploaded-files/customer-images/<?= $rows["image"] ?>" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 update-photo"></a>
+                    <a href="account"><img src="uploaded-files/customer-images/<?= $rows["image"] ?>" alt="<?= $rows["image"] ?>" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 update-photo"></a>
                   </li>
-                <?php
-                } else {
-                ?>
+                <?php } else { ?>
                   <li>
-                    <a href="account"><img src="images/user.png" alt="" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 update-photo"></a>
+                    <a href="account"><img src="images/user.png" alt="user" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 update-photo"></a>
                   </li>
-              <?php
-                }
+              <?php }
               }
-            } else {
-              ?>
-              <li data-modal-toggle="authentication-modal" class="">
+            } else { ?>
+              <li data-modal-toggle="authentication-modal">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor" class="w-10 h-10 -mt-1 -mr-3.5 text-slate-700 cursor-pointer hover:opacity-75 transition-all hidden md:block active:scale-90">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </li>
-            <?php
-            }
-            ?>
+            <?php } ?>
             <li>
               <img class="w-8 h-8 object-cover cursor-pointer hover:opacity-75 transition-all rounded-full hidden md:block" src="images/britain-flag.png" alt="english" />
             </li>
@@ -142,10 +127,8 @@ $email = $_SESSION['email'];
       </div>
     </nav>
 
-    <!--Login modal-->
     <div id="authentication-modal" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
       <div class="relative w-full h-full max-w-md md:h-auto">
-        <!-- Modal content -->
         <div class="relative  rounded-lg shadow bg-gray-100">
           <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all" data-modal-toggle="authentication-modal">
             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -193,15 +176,13 @@ $email = $_SESSION['email'];
               <div class="flex justify-between">
                 <div class="flex items-start group">
                   <div class="flex items-center h-5">
-                    <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 cursor-pointer" />
+                    <input id="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 cursor-pointer" />
                   </div>
                   <label for="remember" class="ml-1.5 text-sm font-medium group-hover:text-blue-500 transition-all cursor-pointer">
                     Запомни ме
                   </label>
                 </div>
-                <a href="#" class="text-sm hover:text-blue-500 transition-all font-semibold">
-                  Забравена парола ?
-                </a>
+                <a href="#" class="text-sm hover:text-blue-500 transition-all font-semibold">Забравена парола ?</a>
               </div>
               <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-0 font-semibold rounded-md text-sm px-5 py-2.5 text-center transition-all active:scale-90">
                 Вход
@@ -230,9 +211,7 @@ $email = $_SESSION['email'];
               <div class="text-sm font-medium text-gray-500">
                 Нямате профил ?
                 <a data-modal-toggle="signUp-modal" href="#" class="text-slate-700 hover:hover:text-blue-500 font-semibold transition-all">
-                  <span data-modal-toggle="authentication-modal">
-                    Създаване на профил
-                  </span>
+                  <span data-modal-toggle="authentication-modal">Създаване на профил</span>
                 </a>
               </div>
             </form>
@@ -241,10 +220,8 @@ $email = $_SESSION['email'];
       </div>
     </div>
 
-    <!--Sign up modal-->
     <div id="signUp-modal" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
       <div class="relative w-full h-full max-w-md md:h-auto md:mt-32 2xl:mt-0">
-        <!-- Modal content -->
         <div class="relative  rounded-lg shadow bg-gray-100">
           <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all" data-modal-toggle="signUp-modal">
             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -363,12 +340,9 @@ $email = $_SESSION['email'];
       </div>
     </div>
 
-    <!--Section carousel-->
     <section>
       <div id="indicators-carousel" class="relative z-10 group" data-carousel="static">
-        <!-- Carousel wrapper -->
         <div class="relative h-64 overflow-hidden md:h-[32rem] xl:[40rem] 2xl:h-[46rem] w-full">
-          <!-- Item 1 -->
           <div class="hidden duration-700 ease-in-out text-center" data-carousel-item="active">
             <div class="relative h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem] flex justify-center items-center z-20 text-slate-100">
               <div>
@@ -390,7 +364,6 @@ $email = $_SESSION['email'];
             </div>
             <img src="images/slide1.jpg" class="absolute object-cover brightness-[.8] block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem] opacity-75" alt="slider-photo1" />
           </div>
-          <!-- Item 2 -->
           <div class="hidden duration-700 ease-in-out text-center" data-carousel-item>
             <div class="relative h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem] flex justify-center items-center z-20 text-slate-100">
               <div>
@@ -407,7 +380,6 @@ $email = $_SESSION['email'];
             </div>
             <img src="images/slide2.jpg" class="absolute object-cover brightness-75 block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem]" alt="slider-photo2" />
           </div>
-          <!-- Item 3 -->
           <div class="hidden duration-700 ease-in-out text-center" data-carousel-item>
             <div class="relative h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem] flex justify-center items-center z-20 text-slate-100">
               <div>
@@ -425,17 +397,15 @@ $email = $_SESSION['email'];
             <img src="images/slide3.jpg" class="absolute object-cover brightness-[.8] block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-64 md:h-[32rem] xl:[40rem] 2xl:h-[46rem]" alt="slider-photo3" />
           </div>
         </div>
-        <!-- Slider indicators -->
         <div class="flex lg:hidden lg:group-hover:flex absolute z-30 space-x-3 -translate-x-1/2 bottom-3 md:bottom-8 left-1/2">
           <button type="button" class="w-2 h-2 md:w-3 md:h-3 rounded-full" data-carousel-slide-to="0"></button>
           <button type="button" class="w-2 h-2 md:w-3 md:h-3 rounded-full" data-carousel-slide-to="1"></button>
           <button type="button" class="w-2 h-2 md:w-3 md:h-3 rounded-full" data-carousel-slide-to="2"></button>
         </div>
-        <svg v-show="hideScrollBtn" @click="goTo('art1')" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden lg:block absolute z-30 bottom-1 lg:left-[48.9%] xl:left-[49.2%] 2xl:left-[49.42%] text-slate-100 animate-pulse cursor-pointer">
+        <svg v-show="hideScrollBtn" @click="goTo('second-section')" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden lg:block absolute z-30 bottom-1 lg:left-[48.9%] xl:left-[49.2%] 2xl:left-[49.42%] text-slate-100 animate-pulse cursor-pointer">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
         </svg>
 
-        <!-- Slider controls -->
         <div class="flex lg:hidden lg:group-hover:flex transition-all duration-300">
           <button type="button" class="absolute top-0 left-0 z-30 bg-white rounded-r-md md:rounded-r-none opacity-40 md:opacity-100 md:bg-transparent flex items-center justify-center h-full sm:px-1 md:px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
             <span class="inline-flex items-center justify-center w-10 h-10 rounded-full md:w-12 md:h-12 md:bg-blue-400 md:group-hover:bg-blue-500 group-focus:ring-0 group-focus:ring-white group-focus:outline-none transition-all active:scale-90">
@@ -455,8 +425,7 @@ $email = $_SESSION['email'];
       </div>
     </section>
 
-    <!--Main information-->
-    <section ref="art1">
+    <section ref="second-section">
       <div class="w-full md:-mt-[1px] md:flex items-center bg-[#0082ca] md:-mb-28 lg:-mb-32">
         <div class="flex items-center p-6 md:p-5 lg:p-8 bg-[#0082ca] w-full lg:w-4/12">
           <svg viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 text-[#ffd800] mr-2.5 z-20">
@@ -520,17 +489,11 @@ $email = $_SESSION['email'];
     <section>
       <div class="w-full py-10 md:py-14 lg:py-20 xl:py-24 2xl:py-32 md:flex items-center">
         <div class="w-full md:w-1/2 sm:flex justify-evenly md:justify-center items-end group space-y-5 sm:space-y-0" data-aos="slide-right" data-aos-duration="2000">
-          <img style="
-                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-                  rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-              " class="w-64 h-64 sm:w-56 sm:h-56 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto sm:mx-0 object-cover rounded-lg lg:group-hover:scale-[1.15] transition-all duration-1000" src="images/8.jpg" alt="our services" />
-          <img style="
-                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-                  rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-              " class="w-64 h-64 sm:w-56 sm:h-56 md:w-36 md:h-36 lg:w-44 lg:h-44 mx-auto sm:mx-0 md:border-4 lg:border-8 border-[#5ca1e1] object-cover rounded-lg md:rounded-full md:-ml-20 lg:-ml-24 lg:group-hover:scale-[1.15] transition-all duration-1000" src="images/2-3.jpg" alt="our services" />
+          <img class="w-64 h-64 sm:w-56 sm:h-56 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto sm:mx-0 object-cover rounded-lg lg:group-hover:scale-[1.15] transition-all duration-1000 shadow-box-1" src="images/8.jpg" alt="our services" />
+          <img class="w-64 h-64 sm:w-56 sm:h-56 md:w-36 md:h-36 lg:w-44 lg:h-44 mx-auto sm:mx-0 md:border-4 lg:border-8 border-[#5ca1e1] object-cover rounded-lg md:rounded-full md:-ml-20 lg:-ml-24 lg:group-hover:scale-[1.15] transition-all duration-1000 shadow-box-1" src="images/2-3.jpg" alt="our services" />
         </div>
         <div class="w-full md:w-1/2 text-slate-700 px-10 md:px-0 md:pr-6 lg:pr-24" data-aos="slide-left" data-aos-duration="2000">
-          <h1 class="font-extrabold md:text-lg lg:text-2xl xl:text-3xl lg:pr-20 xl:pr-36 mt-5 md:mt-0 text-center md:text-left">
+          <h1 class="font-bold md:text-lg lg:text-2xl xl:text-3xl lg:pr-20 xl:pr-36 mt-5 md:mt-0 text-center md:text-left">
             Ние сме задължени да даваме само най-добрите услуги
           </h1>
           <div style="box-shadow: 0 0 25px rgb(0 0 0 / 8%)" class="border-l-4 border-blue-400 text-sm lg:text-lg xl:text-xl italic font-semibold p-6 lg:p-8 my-3 sm:my-4 lg:my-5 lg:hover:scale-105 transition-all duration-700 cursor-default sm:mx-6 md:mx-0">
@@ -559,10 +522,8 @@ $email = $_SESSION['email'];
         </div>
       </div>
 
-      <!-- Call us modal -->
       <div id="call-us-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
         <div class="relative w-full h-full max-w-2xl md:h-auto">
-          <!-- Modal content -->
           <div class="relative bg-gray-100 rounded-lg shadow">
             <button type="button" class="absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="call-us-modal">
               <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -570,8 +531,6 @@ $email = $_SESSION['email'];
               </svg>
               <span class="sr-only">Close modal</span>
             </button>
-
-            <!-- Modal body -->
             <div class="p-7 sm:space-x-8 pr-9 sm:flex items-center">
               <img class="object-cover h-48 w-52 md:h-52 md:w-56 mx-auto md:mx-0" src="images/4-1.png" alt="service" />
               <div class="w-full mt-2.5 sm:mt-0">
@@ -607,11 +566,9 @@ $email = $_SESSION['email'];
       </div>
     </section>
 
-    <!--Parallax section-->
     <section>
-      <div style="background-image: url(images/House-cleaning-service.png)" class="w-full brightness-50 h-[32rem] sm:h-[34rem] md:h-[36rem] lg:h-[40rem] bg-fixed bg-cover bg-center flex justify-center items-center"></div>
+      <div style="background-image: url(images/House-cleaning-service.png)" class="w-full brightness-[0.4] h-[32rem] sm:h-[34rem] md:h-[36rem] lg:h-[40rem] bg-fixed bg-cover bg-center flex justify-center items-center"></div>
 
-      <!--Tabs-->
       <div class="-mt-[30rem] sm:-mt-[32rem] md:-mt-[34rem] lg:-mt-[36rem] relative z-10 w-full" data-aos="slide-up" data-aos-duration="2000">
         <div class="text-center text-white font-extrabold text-2xl md:text-3xl xl:text-4xl">
           Всеки детайл е важен
@@ -621,64 +578,58 @@ $email = $_SESSION['email'];
           Приоритизираме следното
         </div>
         <div class="mb-4">
-          <ul class="flex justify-evenly text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
-            <li role="presentation">
-              <svg id="our-client-tab" role="tab" data-tabs-target="#our-client" viewBox="0 0 24 24" fill="currentColor" class="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 cursor-pointer mx-auto">
+          <ul class="flex justify-evenly text-sm font-medium text-center">
+            <li @click="ourClientTab = true; processTab = false; communicationTab = false" :class="ourClientTab ? 'text-blue-500' : 'text-slate-100 hover:text-blue-500'" class="cursor-pointer transition-all">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 cursor-pointer mx-auto">
                 <path fill-rule="evenodd" d="M8.25 6.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM15.75 9.75a3 3 0 116 0 3 3 0 01-6 0zM2.25 9.75a3 3 0 116 0 3 3 0 01-6 0zM6.31 15.117A6.745 6.745 0 0112 12a6.745 6.745 0 016.709 7.498.75.75 0 01-.372.568A12.696 12.696 0 0112 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 01-.372-.568 6.787 6.787 0 011.019-4.38z" clip-rule="evenodd" />
                 <path d="M5.082 14.254a8.287 8.287 0 00-1.308 5.135 9.687 9.687 0 01-1.764-.44l-.115-.04a.563.563 0 01-.373-.487l-.01-.121a3.75 3.75 0 013.57-4.047zM20.226 19.389a8.287 8.287 0 00-1.308-5.135 3.75 3.75 0 013.57 4.047l-.01.121a.563.563 0 01-.373.486l-.115.04c-.567.2-1.156.349-1.764.441z" />
               </svg>
-              <div class="uppercase text-slate-200 font-semibold lg:text-lg">
+              <div class="uppercase font-semibold lg:text-lg">
                 Нашите Клиенти
               </div>
             </li>
-            <li role="presentation">
-              <svg id="process-tab" data-tabs-target="#process" role="tab" viewBox="0 0 24 24" fill="currentColor" class="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 cursor-pointer mx-auto">
+            <li @click="processTab = true; ourClientTab = false; communicationTab = false" :class="processTab ? 'text-blue-500' : 'text-slate-100 hover:text-blue-500'" class="cursor-pointer transition-all">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 cursor-pointer mx-auto">
                 <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
               </svg>
-              <div class="uppercase text-slate-200 font-semibold lg:text-lg">
+              <div class="uppercase font-semibold lg:text-lg">
                 Процес
               </div>
             </li>
-            <li role="presentation" class="group">
-              <svg id="communication-tab" data-tabs-target="#communication" role="tab" viewBox="0 0 24 24" fill="currentColor" class="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 cursor-pointer mx-auto">
+            <li @click="communicationTab = true; processTab = false; ourClientTab = false" :class="communicationTab ? 'text-blue-500' : 'text-slate-100 hover:text-blue-500'" class="cursor-pointer transition-all">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 cursor-pointer mx-auto">
                 <path d="M4.913 2.658c2.075-.27 4.19-.408 6.337-.408 2.147 0 4.262.139 6.337.408 1.922.25 3.291 1.861 3.405 3.727a4.403 4.403 0 00-1.032-.211 50.89 50.89 0 00-8.42 0c-2.358.196-4.04 2.19-4.04 4.434v4.286a4.47 4.47 0 002.433 3.984L7.28 21.53A.75.75 0 016 21v-4.03a48.527 48.527 0 01-1.087-.128C2.905 16.58 1.5 14.833 1.5 12.862V6.638c0-1.97 1.405-3.718 3.413-3.979z" />
                 <path d="M15.75 7.5c-1.376 0-2.739.057-4.086.169C10.124 7.797 9 9.103 9 10.609v4.285c0 1.507 1.128 2.814 2.67 2.94 1.243.102 2.5.157 3.768.165l2.782 2.781a.75.75 0 001.28-.53v-2.39l.33-.026c1.542-.125 2.67-1.433 2.67-2.94v-4.286c0-1.505-1.125-2.811-2.664-2.94A49.392 49.392 0 0015.75 7.5z" />
               </svg>
-              <div class="uppercase text-slate-200 font-semibold lg:text-lg">
+              <div class="uppercase font-semibold lg:text-lg">
                 Комуникация
               </div>
             </li>
           </ul>
         </div>
-        <div id="myTabContent" class="px-5 sm:px-16 lg:px-32 2xl:px-36 text-justify md:text-center text-sm md:text-base">
-          <div class="hidden sm:p-4 bg-transperent rounded-lg text-white" id="our-client" role="tabpanel" aria-labelledby="our-client-tab">
-            <p>
-              Нашите услуги за почистване са достъпни и нашите експерти по
-              почистване са високо обучени. Ако по някаква причина не сте
-              доволни от нашите професионални почистващи услуги, свържете се с
-              нас. Ще се върнем и ще почистим конкретните зони, които не
-              отговарят на вашите очаквания. Нищо не е по-важно за нас от
-              вашето удовлетворение.
-            </p>
-          </div>
-          <div class="hidden sm:p-4 bg-transperent rounded-lg text-white" id="process" role="tabpanel" aria-labelledby="process-tab">
-            <p>
-              Нашият непрекъснат стремеж към съвършенство води до постоянен
-              растеж всяка година. Нашият фокус е да изслушваме нашите
-              клиенти, да разбираме техните нужди и да предоставяме
-              изключително ниво на услуги за почистване на жилищни и търговски
-              сгради. Изберете нас заради нашата отлична репутация.
-            </p>
-          </div>
-          <div class="hidden sm:p-4 bg-transperent rounded-lg text-white" id="communication" role="tabpanel" aria-labelledby="communication-tab">
-            <p>
-              Ако по някаква причина не сте доволни от нашите услуги за
-              почистване, моля свържете се с нас. Ще се върнем и ще почистим
-              конкретните зони, които не отговарят. В случай, че имате нужда
-              от специална почистваща услуга, ние ще се радваме да изпълним
-              всяка заявка, за да надминем вашите очаквания. Доверете ни се !
-            </p>
-          </div>
+        <div class="px-5 sm:px-16 lg:px-32 2xl:px-36 text-justify md:text-center text-sm md:text-base">
+          <p v-show="ourClientTab" class="sm:p-4 bg-transperent rounded-lg text-white">
+            Нашите услуги за почистване са достъпни и нашите експерти по
+            почистване са високо обучени. Ако по някаква причина не сте
+            доволни от нашите професионални почистващи услуги, свържете се с
+            нас. Ще се върнем и ще почистим конкретните зони, които не
+            отговарят на вашите очаквания. Нищо не е по-важно за нас от
+            вашето удовлетворение.
+          </p>
+          <p v-show="processTab" class="sm:p-4 bg-transperent rounded-lg text-white">
+            Нашият непрекъснат стремеж към съвършенство води до постоянен
+            растеж всяка година. Нашият фокус е да изслушваме нашите
+            клиенти, да разбираме техните нужди и да предоставяме
+            изключително ниво на услуги за почистване на жилищни и търговски
+            сгради. Изберете нас заради нашата отлична репутация.
+          </p>
+          <p v-show="communicationTab" class="sm:p-4 bg-transperent rounded-lg text-white">
+            Ако по някаква причина не сте доволни от нашите услуги за
+            почистване, моля свържете се с нас. Ще се върнем и ще почистим
+            конкретните зони, които не отговарят. В случай, че имате нужда
+            от специална почистваща услуга, ние ще се радваме да изпълним
+            всяка заявка, за да надминем вашите очаквания. Доверете ни се !
+          </p>
         </div>
       </div>
     </section>
@@ -710,55 +661,8 @@ $email = $_SESSION['email'];
         <div class="sm:flex justify-evenly items-center space-y-6 sm:space-y-0">
           <div class="group">
             <img class="object-cover h-44 w-44 sm:h-36 sm:w-36 md:h-40 md:w-40 lg:h-48 lg:w-48 rounded-full border-2 border-[#5ca1e1] mx-auto md:group-hover:scale-125 transition-all duration-700" src="images/12.jpg" alt="step 1" />
-            <div style="
-                  clip-path: polygon(
-                    45% 1.33975%,
-                    46.5798% 0.60307%,
-                    48.26352% 0.15192%,
-                    50% 0%,
-                    51.73648% 0.15192%,
-                    53.4202% 0.60307%,
-                    55% 1.33975%,
-                    89.64102% 21.33975%,
-                    91.06889% 22.33956%,
-                    92.30146% 23.57212%,
-                    93.30127% 25%,
-                    94.03794% 26.5798%,
-                    94.48909% 28.26352%,
-                    94.64102% 30%,
-                    94.64102% 70%,
-                    94.48909% 71.73648%,
-                    94.03794% 73.4202%,
-                    93.30127% 75%,
-                    92.30146% 76.42788%,
-                    91.06889% 77.66044%,
-                    89.64102% 78.66025%,
-                    55% 98.66025%,
-                    53.4202% 99.39693%,
-                    51.73648% 99.84808%,
-                    50% 100%,
-                    48.26352% 99.84808%,
-                    46.5798% 99.39693%,
-                    45% 98.66025%,
-                    10.35898% 78.66025%,
-                    8.93111% 77.66044%,
-                    7.69854% 76.42788%,
-                    6.69873% 75%,
-                    5.96206% 73.4202%,
-                    5.51091% 71.73648%,
-                    5.35898% 70%,
-                    5.35898% 30%,
-                    5.51091% 28.26352%,
-                    5.96206% 26.5798%,
-                    6.69873% 25%,
-                    7.69854% 23.57212%,
-                    8.93111% 22.33956%,
-                    10.35898% 21.33975%
-                  );
-                " class="absolute inline-flex sm:flex items-center justify-center text-center w-14 h-14 lg:w-16 lg:h-16 bg-[#5ca1e1] -mt-14 md:group-hover:scale-[1.15] md:group-hover:bg-[#ffb400] transition-all duration-700 ml-10 sm:ml-0">
-              <span style="font-family: 'Poppins', sans-serif" class="text-3xl font-black text-white">
-                01
-              </span>
+            <div class="absolute inline-flex sm:flex items-center justify-center text-center w-14 h-14 lg:w-16 lg:h-16 bg-[#5ca1e1] -mt-14 md:group-hover:scale-[1.15] md:group-hover:bg-[#ffb400] transition-all duration-700 ml-10 sm:ml-0 hexagon">
+              <span style="font-family: 'Poppins', sans-serif" class="text-3xl font-black text-white">01</span>
             </div>
             <div class="text-slate-700 font-semibold text-xl mt-1.5 sm:mt-3 md:group-hover:mt-8 transition-all duration-700">
               Поръчай онлайн
@@ -766,55 +670,8 @@ $email = $_SESSION['email'];
           </div>
           <div>
             <img class="object-cover h-52 w-52 sm:h-52 sm:w-52 md:h-56 md:w-56 lg:h-64 lg:w-64 rounded-full border-2 border-[#5ca1e1] mx-auto" src="images/14.jpg" alt="step 2" />
-            <div style="
-                  clip-path: polygon(
-                    45% 1.33975%,
-                    46.5798% 0.60307%,
-                    48.26352% 0.15192%,
-                    50% 0%,
-                    51.73648% 0.15192%,
-                    53.4202% 0.60307%,
-                    55% 1.33975%,
-                    89.64102% 21.33975%,
-                    91.06889% 22.33956%,
-                    92.30146% 23.57212%,
-                    93.30127% 25%,
-                    94.03794% 26.5798%,
-                    94.48909% 28.26352%,
-                    94.64102% 30%,
-                    94.64102% 70%,
-                    94.48909% 71.73648%,
-                    94.03794% 73.4202%,
-                    93.30127% 75%,
-                    92.30146% 76.42788%,
-                    91.06889% 77.66044%,
-                    89.64102% 78.66025%,
-                    55% 98.66025%,
-                    53.4202% 99.39693%,
-                    51.73648% 99.84808%,
-                    50% 100%,
-                    48.26352% 99.84808%,
-                    46.5798% 99.39693%,
-                    45% 98.66025%,
-                    10.35898% 78.66025%,
-                    8.93111% 77.66044%,
-                    7.69854% 76.42788%,
-                    6.69873% 75%,
-                    5.96206% 73.4202%,
-                    5.51091% 71.73648%,
-                    5.35898% 70%,
-                    5.35898% 30%,
-                    5.51091% 28.26352%,
-                    5.96206% 26.5798%,
-                    6.69873% 25%,
-                    7.69854% 23.57212%,
-                    8.93111% 22.33956%,
-                    10.35898% 21.33975%
-                  );
-                " class="absolute inline-flex items-center justify-center text-center w-14 h-14 lg:w-16 lg:h-16 bg-[#ffb400] -mt-52 md:-mt-56 lg:-mt-64 ml-12">
-              <span style="font-family: 'Poppins', sans-serif" class="text-3xl font-black text-white">
-                02
-              </span>
+            <div class="absolute inline-flex items-center justify-center text-center w-14 h-14 lg:w-16 lg:h-16 bg-[#ffb400] -mt-52 md:-mt-56 lg:-mt-64 ml-12 hexagon">
+              <span style="font-family: 'Poppins', sans-serif" class="text-3xl font-black text-white">02</span>
             </div>
             <div class="text-slate-700 font-semibold text-xl mt-1 sm:mt-2">
               Експертно почистване
@@ -822,55 +679,8 @@ $email = $_SESSION['email'];
           </div>
           <div class="group">
             <img class="object-cover h-44 w-44 sm:h-36 sm:w-36 md:h-40 md:w-40 lg:h-48 lg:w-48 rounded-full border-2 border-[#5ca1e1] mx-auto md:group-hover:scale-125 transition-all duration-700" src="images/13.jpg" alt="step 3" />
-            <div style="
-                  clip-path: polygon(
-                    45% 1.33975%,
-                    46.5798% 0.60307%,
-                    48.26352% 0.15192%,
-                    50% 0%,
-                    51.73648% 0.15192%,
-                    53.4202% 0.60307%,
-                    55% 1.33975%,
-                    89.64102% 21.33975%,
-                    91.06889% 22.33956%,
-                    92.30146% 23.57212%,
-                    93.30127% 25%,
-                    94.03794% 26.5798%,
-                    94.48909% 28.26352%,
-                    94.64102% 30%,
-                    94.64102% 70%,
-                    94.48909% 71.73648%,
-                    94.03794% 73.4202%,
-                    93.30127% 75%,
-                    92.30146% 76.42788%,
-                    91.06889% 77.66044%,
-                    89.64102% 78.66025%,
-                    55% 98.66025%,
-                    53.4202% 99.39693%,
-                    51.73648% 99.84808%,
-                    50% 100%,
-                    48.26352% 99.84808%,
-                    46.5798% 99.39693%,
-                    45% 98.66025%,
-                    10.35898% 78.66025%,
-                    8.93111% 77.66044%,
-                    7.69854% 76.42788%,
-                    6.69873% 75%,
-                    5.96206% 73.4202%,
-                    5.51091% 71.73648%,
-                    5.35898% 70%,
-                    5.35898% 30%,
-                    5.51091% 28.26352%,
-                    5.96206% 26.5798%,
-                    6.69873% 25%,
-                    7.69854% 23.57212%,
-                    8.93111% 22.33956%,
-                    10.35898% 21.33975%
-                  );
-                " class="absolute inline-flex sm:flex items-center justify-center text-center w-14 h-14 lg:w-16 lg:h-16 bg-[#5ca1e1] -mt-14 md:group-hover:scale-[1.15] md:group-hover:bg-[#ffb400] transition-all duration-700 ml-10 sm:ml-0">
-              <span style="font-family: 'Poppins', sans-serif" class="text-3xl font-black text-white">
-                03
-              </span>
+            <div class="absolute inline-flex sm:flex items-center justify-center text-center w-14 h-14 lg:w-16 lg:h-16 bg-[#5ca1e1] -mt-14 md:group-hover:scale-[1.15] md:group-hover:bg-[#ffb400] transition-all duration-700 ml-10 sm:ml-0 hexagon">
+              <span style="font-family: 'Poppins', sans-serif" class="text-3xl font-black text-white">03</span>
             </div>
             <div class="text-slate-700 font-semibold text-xl mt-1.5 sm:mt-3 md:group-hover:mt-8 transition-all duration-700">
               Релакс & наслада
@@ -911,7 +721,6 @@ $email = $_SESSION['email'];
       </div>
     </section>
 
-    <!--Our services-->
     <section>
       <div class="text-slate-700 mt-16">
         <h1 class="text-center font-semibold text-xl md:text-2xl lg:text-3xl">
@@ -1003,7 +812,6 @@ $email = $_SESSION['email'];
       </div>
     </section>
 
-    <!--Calculator-->
     <section>
       <div class="bg-[#f5f5f5] text-slate-700 mt-16 lg:mt-20 py-10 md:py-12 lg:py-14 px-6 sm:px-8 md:px-16 lg:px-28 xl:px-40">
         <div class="text-center font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl sm:px-16 xl:px-20 2xl:px-24">
@@ -1019,10 +827,7 @@ $email = $_SESSION['email'];
           цени. Направете сами преценка коя оферта е подходяща за Вас!
         </div>
         <div class="sm:flex sm:space-x-6 lg:space-x-8 xl:space-x-12 space-y-8 sm:space-y-0 mt-8 md:mt-12 lg:mt-14 mb-8 lg:mb-10">
-          <div style="
-                box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-                  rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-              " class="w-full sm:w-1/2 p-6 md:p-8 border border-slate-100 bg-white rounded">
+          <div class="w-full sm:w-1/2 p-6 md:p-8 border border-slate-100 bg-white rounded shadow-box">
             <div class="italic text-sm md:text-base font-semibold">
               Oбща площ за почистване в квадратни метра
             </div>
@@ -1031,10 +836,7 @@ $email = $_SESSION['email'];
               <input type="text" id="final" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:bg-transparent focus:outline-none focus:ring-0 block py-2 w-16 font-semibold text-center transition-all" value="1000" />
             </div>
           </div>
-          <div style="
-                box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-                  rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-              " class="w-full sm:w-1/2 p-6 md:p-8 border border-slate-100 bg-white rounded">
+          <div class="w-full sm:w-1/2 p-6 md:p-8 border border-slate-100 bg-white rounded shadow-box">
             <div class="italic font-semibold text-sm md:text-base">
               Изберете вид на помещение
             </div>
@@ -1047,59 +849,29 @@ $email = $_SESSION['email'];
         </div>
 
         <div class="md:flex items-center justify-between space-y-10 md:space-y-0 md:space-x-5 lg:space-x-12">
-          <!--Main offer-->
           <div class="w-full md:w-72 xl:w-80 2xl:w-96 p-4 bg-white shadow-lg rounded-md">
-            <p class="mb-4 text-xl font-semibold text-gray-800 text-center md:text-left">
+            <p class="mb-4 text-xl font-bold text-gray-800 text-center md:text-left">
               Основна оферта
             </p>
-            <p class="text-3xl font-bold text-gray-900 text-center md:text-left">
-              <span id="slider_value">150.00 лв.</span>
-              <span class="text-sm text-gray-300"> / еднократно</span>
+            <p class="text-3xl text-gray-900 text-center md:text-left">
+              <span id="slider_value" class="font-bold">150.00 лв.</span>
+              <span class="text-sm text-slate-400 font-semibold"> / еднократно</span>
             </p>
-
             <ul class="w-full mt-6 mb-6 text-sm text-gray-600">
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Основно почистване
-              </li>
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Професионални препарати
-              </li>
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Почистване на прозорци
-              </li>
-              <li class="mb-3 flex items-center opacity-50">
-                <svg width="6" height="6" class="w-6 h-6 mr-2" fill="red" viewBox="0 0 1792 1792">
-                  <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Пръскане за вредители
-              </li>
-              <li class="mb-3 flex items-center opacity-50">
-                <svg width="6" height="6" class="w-6 h-6 mr-2" fill="red" viewBox="0 0 1792 1792">
-                  <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Цялостно почистване
-              </li>
-              <li class="mb-3 flex items-center opacity-50">
-                <svg width="6" height="6" class="w-6 h-6 mr-2" fill="red" viewBox="0 0 1792 1792">
-                  <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Почистване на общи части
-              </li>
-              <li class="mb-3 flex items-center opacity-50">
-                <svg width="6" height="6" class="w-6 h-6 mr-2" fill="red" viewBox="0 0 1792 1792">
-                  <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Ароматизиране
-              </li>
+              <span v-for="(service, index) in services">
+                <li v-show="index < 3" class="mb-3 flex items-center">
+                  <svg class="w-6 h-6 mr-2" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
+                    <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
+                  </svg>
+                  {{ service }}
+                </li>
+                <li v-show="index > 2" class="mb-3 flex items-center opacity-50">
+                  <svg class="w-6 h-6 mr-2" fill="red" viewBox="0 0 1792 1792">
+                    <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
+                  </svg>
+                  {{ service }}
+                </li>
+              </span>
             </ul>
             <?php if ($email) { ?>
               <button type="button" onclick="location.replace('account')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
@@ -1113,56 +885,28 @@ $email = $_SESSION['email'];
           </div>
 
           <div class="w-full md:w-72 xl:w-80 2xl:w-96 p-4 bg-white shadow-lg rounded-md">
-            <p class="mb-4 text-xl font-semibold text-gray-800 text-center md:text-left">
+            <p class="mb-4 text-xl font-bold text-gray-800 text-center md:text-left">
               Премиум оферта
             </p>
             <p class="text-3xl font-bold text-gray-900 text-center md:text-left">
-              <span id="slider_value1">200.00 лв.</span>
-              <span class="text-sm text-gray-300"> / еднократно </span>
+              <span id="slider_value1" class="font-bold">200.00 лв.</span>
+              <span class="text-sm text-slate-400 font-semibold"> / еднократно</span>
             </p>
             <ul class="w-full mt-6 mb-6 text-sm text-gray-600">
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Основно почистване
-              </li>
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Професионални препарати
-              </li>
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Почистване на прозорци
-              </li>
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Пръскане за вредители
-              </li>
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Цялостно почистване
-              </li>
-              <li class="mb-3 flex items-center opacity-50">
-                <svg width="6" height="6" class="w-6 h-6 mr-2" fill="red" viewBox="0 0 1792 1792">
-                  <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Почистване на общи части
-              </li>
-              <li class="mb-3 flex items-center opacity-50">
-                <svg width="6" height="6" class="w-6 h-6 mr-2" fill="red" viewBox="0 0 1792 1792">
-                  <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Ароматизиране
-              </li>
+              <span v-for="(service, index) in services">
+                <li v-show="index < 5" class="mb-3 flex items-center">
+                  <svg class="w-6 h-6 mr-2" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
+                    <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
+                  </svg>
+                  {{ service }}
+                </li>
+                <li v-show="index > 4" class="mb-3 flex items-center opacity-50">
+                  <svg class="w-6 h-6 mr-2" fill="red" viewBox="0 0 1792 1792">
+                    <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
+                  </svg>
+                  {{ service }}
+                </li>
+              </span>
             </ul>
             <?php if ($email) { ?>
               <button type="button" onclick="location.replace('account')" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-0 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none rounded-lg active:scale-90">
@@ -1175,57 +919,20 @@ $email = $_SESSION['email'];
             <?php } ?>
           </div>
 
-          <!--Vip offer-->
           <div class="w-full md:w-72 xl:w-80 2xl:w-96 p-4 bg-white shadow-lg rounded-md">
-            <p class="mb-4 text-xl font-semibold text-gray-800 text-center md:text-left">
+            <p class="mb-4 text-xl font-bold text-gray-800 text-center md:text-left">
               Вип оферта
             </p>
             <p class="text-3xl font-bold text-gray-900 text-center md:text-left">
-              <span id="slider_value2">250.00 лв.</span>
-              <span class="text-sm text-gray-300"> / еднократно </span>
+              <span id="slider_value2" class="font-bold">250.00 лв.</span>
+              <span class="text-sm text-slate-400 font-semibold"> / еднократно</span>
             </p>
             <ul class="w-full mt-6 mb-6 text-sm text-gray-600">
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
+              <li v-for="service in services" class="mb-3 flex items-center">
+                <svg class="w-6 h-6 mr-2" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
                   <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
                 </svg>
-                Основно почистване
-              </li>
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Професионални препарати
-              </li>
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Почистване на прозорци
-              </li>
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Пръскане за вредители
-              </li>
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Цялостно почистване
-              </li>
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Почистване на общи части
-              </li>
-              <li class="mb-3 flex items-center">
-                <svg class="w-6 h-6 mr-2" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                  <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"></path>
-                </svg>
-                Ароматизиране
+                {{ service }}
               </li>
             </ul>
             <?php if ($email) { ?>
@@ -1242,18 +949,17 @@ $email = $_SESSION['email'];
       </div>
     </section>
 
-    <!--Our clients-->
     <section>
       <div class="p-8 md:p-12 lg:p-14 xl:p-16 text-slate-700">
         <div class="uppercase font-bold text-xs lg:text-sm text-gray-400 text-center">
-          нашите клиенти
+          нашите служители
         </div>
         <h1 class="text-center font-semibold text-xl md:text-2xl lg:text-3xl">
           Какво казват нашите професионалисти
         </h1>
         <p class="text-gray-400 text-justify md:text-center text-sm md:text-base lg:text-lg md:px-16 lg:px-32 mt-6">
-          Мнението на клиентите е изграждаща единица в развитието на всяка
-          компания. Ето защо мнението на нашите клиенти е важно за нас за
+          Мнението на служителите е изграждаща единица в развитието на всяка
+          компания. Ето защо мнението на нашите служители е важно за нас за
           поддържаме нашата репутация на високо ниво! Благодарим, че избрахте
           нас!
         </p>
@@ -1269,7 +975,7 @@ $email = $_SESSION['email'];
             <h1 class="text-center font-semibold text-xl lg:text-2xl">
               Филип Иванов
             </h1>
-            <h3 class="font-bold text-center text-gray-400">
+            <h3 class="font-semibold text-center text-gray-400 text-sm lg:text-base">
               SEO специалист
             </h3>
           </div>
@@ -1284,7 +990,9 @@ $email = $_SESSION['email'];
             <h1 class="text-center font-semibold text-xl lg:text-2xl">
               Виктория Маркова
             </h1>
-            <h3 class="font-bold text-center text-gray-400">Директор</h3>
+            <h3 class="font-semibold text-center text-gray-400 text-sm lg:text-base">
+              Директор
+            </h3>
           </div>
           <div class="w-full lg:w-4/12">
             <div class="p-10 lg:p-6 rounded border border-t-[3px] border-t-[#0082ca] bordr-slate-100 text-center shadow-md">
@@ -1297,7 +1005,7 @@ $email = $_SESSION['email'];
             <h1 class="text-center font-semibold text-xl lg:text-2xl">
               Костадин Тодоров
             </h1>
-            <h3 class="font-bold text-center text-gray-400">
+            <h3 class="font-semibold text-center text-gray-400 text-sm lg:text-base">
               Маркетинг специалист
             </h3>
           </div>
@@ -1305,26 +1013,26 @@ $email = $_SESSION['email'];
       </div>
     </section>
 
-    <footer class="bg-slate-800">
+    <footer class="bg-slate-700">
       <div class="md:flex space-y-8 md:space-y-0 md:space-x-10 justify-evenly p-6 pb-0 sm:pb-0 sm:p-6 text-slate-100">
         <div>
-          <h2 class="mb-3.5 font-semibold uppercase">Контакти</h2>
-          <ul>
+          <h2 class="mb-3.5 font-medium md:font-semibold uppercase">Контакти</h2>
+          <ul class="font-semibold">
             <li class="mb-3 flex items-center">
-              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5 mr-1">
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-3.5 h-3.5 mr-1">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
               </svg>
               <span>Варна, ул. "Костадин Петков" 26</span>
             </li>
             <li class="mb-3 flex items-center">
-              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5 mr-1">
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-3.5 h-3.5 mr-1">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
               </svg>
               <span class="hover:underline transition-all"><a href="mailto:carpetserv@gmail.com">carpetserv@gmail.com</a></span>
             </li>
             <li class="mb-3 flex items-center">
-              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5 mr-1">
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-3.5 h-3.5 mr-1">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
               </svg>
               <span class="hover:underline transition-all"><a href="tel:+359-899-845-743">+359 899 845 743</a></span>
@@ -1332,30 +1040,24 @@ $email = $_SESSION['email'];
           </ul>
         </div>
         <div>
-          <h2 class="mb-3.5 font-semibold uppercase">Работно време</h2>
-          <ul class="font-medium w-full">
+          <h2 class="mb-3.5 font-medium md:font-semibold uppercase">Работно време</h2>
+          <ul class="w-full font-medium md:font-semibold">
             <li class="mb-3">
-              <span class="mr-3 text-slate-400 font-semibold">
-                09:00 - 17:00
-              </span>
+              <span class="mr-3 text-slate-400">09:00 - 17:00</span>
               <span>Пон - Сря</span>
             </li>
             <li class="mb-3">
-              <span class="mr-3 text-slate-400 font-semibold">
-                09:00 - 17:00
-              </span>
+              <span class="mr-3 text-slate-400">09:00 - 17:00</span>
               <span>Чет - Пет</span>
             </li>
             <li>
-              <span class="mr-6 text-slate-400 font-semibold">
-                Затворено
-              </span>
+              <span class="mr-6 text-slate-400">Затворено</span>
               <span>Съб - Нед</span>
             </li>
           </ul>
         </div>
         <div>
-          <h2 class="mb-4 font-semibold uppercase">Бюлетин</h2>
+          <h2 class="mb-4 font-medium md:font-semibold uppercase">Бюлетин</h2>
           <div class="relative mb-2">
             <input type="text" class="bg-slate-700 border border-slate-600 text-white text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-slate-600 block w-full pr-8 p-2.5 caret-white" placeholder="Въведете имейл" />
             <button class="absolute inset-y-0 right-0 flex items-center px-2.5 bg-blue-500 hover:bg-blue-600 rounded-r-lg transition-all active:scale-90">
@@ -1364,32 +1066,31 @@ $email = $_SESSION['email'];
               </svg>
             </button>
           </div>
-          <div>Абонирайте се за нашия бюлетин за да сте актуални!</div>
+          <div class="font-medium md:font-semibold">Абонирайте се за нашия бюлетин за да сте актуални!</div>
         </div>
       </div>
 
       <div class="sm:flex sm:items-center sm:justify-between py-3.5 sm:py-6 px-6 sm:px-8 md:px-16 bg-gray-100 mt-5 md:mt-7">
         <span class="text-sm text-gray-500 sm:text-center">
-          © 2022 <span class="font-semibold">Ерсин Мехмед</span> Всички права
-          запазени.
+          © 2022 <span class="font-semibold">Ерсин Хюсеин</span> Всички права запазени.
         </span>
-        <div class="flex gap-x-6 justify-center mt-2.5 sm:mt-0">
-          <a href="#" class="text-gray-500 hover:text-gray-900">
+        <div class="flex gap-x-6 justify-center mt-2.5 sm:mt-0 text-gray-500">
+          <a href="#">
             <svg class="w-5 h-5 hover:text-[#4267B2] transition-all" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
             </svg>
           </a>
-          <a href="#" class="text-gray-500 hover:text-gray-900">
+          <a href="#">
             <svg class="w-5 h-5 hover:text-[#1DA1F2] transition-all" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
             </svg>
           </a>
-          <a href="#" class="text-gray-500 hover:text-gray-900">
+          <a href="#">
             <svg class="w-5 h-5 hover:text-[#8a3ab9] transition-all" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
             </svg>
           </a>
-          <a href="#" class="text-gray-500 hover:text-gray-900">
+          <a href="#">
             <svg class="w-5 h-5 hover:text-[#ea4c89] transition-all" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z" clip-rule="evenodd" />
             </svg>

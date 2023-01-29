@@ -23,7 +23,7 @@ if (isset($_POST['save_customer'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $selQuery = "SELECT * FROM customer WHERE email = '$email'";
+        $selQuery = "SELECT * FROM customers WHERE email = '$email'";
         $query = mysqli_query($con, $selQuery);
 
         if (mysqli_num_rows($query) == 0) {
@@ -31,7 +31,7 @@ if (isset($_POST['save_customer'])) {
             if ($password == $passwordRep) {
                 $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-                $query = "INSERT INTO customer (name,email,password,phone,created_at) VALUES ('$fullName','$email','$password','$phone','$curDT')";
+                $query = "INSERT INTO customers (name,email,password,phone,created_at) VALUES ('$fullName','$email','$password','$phone','$curDT')";
                 $query_run = mysqli_query($con, $query);
 
                 jsonResponseMain($query_run, 'Успешна регистрация', 'Неуспешна регистрация');
@@ -49,7 +49,7 @@ if (isset($_POST['login_info'])) {
 
     $email = ($_POST['email']);
 
-    $query = "SELECT * FROM customer WHERE email='$email'";
+    $query = "SELECT * FROM customers WHERE email='$email'";
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) > 0) {
@@ -86,7 +86,7 @@ if (isset($_POST['update_customer'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "UPDATE customer SET username='$username', phone='$phone' WHERE email='$userEmail'";
+        $query = "UPDATE customers SET username='$username', phone='$phone' WHERE email='$userEmail'";
         $query_run = mysqli_query($con, $query);
 
         jsonResponseMain($query_run, 'Данните са обновени', 'Данните не са обновени');
@@ -106,7 +106,7 @@ if (isset($_POST['update_customer_image'])) {
         if (!$filename) {
             jsonResponse(500, 'Попълнете всички полета');
         } else {
-            $query = "UPDATE customer SET image='$filename' WHERE email='$userEmail'";
+            $query = "UPDATE customers SET image='$filename' WHERE email='$userEmail'";
             $query_run = mysqli_query($con, $query);
 
             jsonResponseMain($query_run, 'Снимката е обновена', 'Снимката не е обновена');
@@ -128,7 +128,7 @@ if (isset($_POST['update_customer_password'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "SELECT * FROM customer WHERE email='$userEmail'";
+        $query = "SELECT * FROM customers WHERE email='$userEmail'";
         $query_run = mysqli_query($con, $query);
 
         while ($rows = mysqli_fetch_array($query_run)) {
@@ -137,7 +137,7 @@ if (isset($_POST['update_customer_password'])) {
                 if ($newPassword == $newPasswordRep) {
                     $newPassword = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
 
-                    $queryy = "UPDATE customer SET password='$newPassword' WHERE email='$userEmail'";
+                    $queryy = "UPDATE customers SET password='$newPassword' WHERE email='$userEmail'";
                     $query_runn = mysqli_query($con, $queryy);
 
                     jsonResponseMain($query_runn, 'Паролата е обновена', 'Паролата не е обновена');
@@ -184,7 +184,7 @@ if (isset($_POST['customer_order'])) {
     } else {
         if (is_numeric($m2)) {
             if ($company && $eik) {
-                $queryy = "UPDATE customer SET company_name='$company', company_eik = '$eik', address = '$address' WHERE email='$customerEmail'";
+                $queryy = "UPDATE customers SET company_name='$company', company_eik = '$eik', address = '$address' WHERE email='$customerEmail'";
                 $query_runn = mysqli_query($con, $queryy);
 
                 $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,email,city,invoice,customer_kind,information,team_id,company_name,company_eik) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city','$invoice','Потребител','$information','0','$company','$eik')";
@@ -238,20 +238,20 @@ if (isset($_POST['customer_upload_room'])) {
 
             jsonResponse(500, 'Добавете снимка');
         } else {
-            $queryq = "SELECT * FROM customer WHERE email='$customerEmail'";
+            $queryq = "SELECT * FROM customers WHERE email='$customerEmail'";
             $query_runq = mysqli_query($con, $queryq);
 
             while ($rows = mysqli_fetch_array($query_runq)) {
                 if ($rows["image_room1"] == NULL) {
-                    $queryy = "UPDATE customer SET image_room1='$filename' WHERE email='$customerEmail'";
+                    $queryy = "UPDATE customers SET image_room1='$filename' WHERE email='$customerEmail'";
                     $query_runn = mysqli_query($con, $queryy);
                     jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
                 } else if ($rows["image_room2"] == NULL) {
-                    $queryy = "UPDATE customer SET image_room2='$filename' WHERE email='$customerEmail'";
+                    $queryy = "UPDATE customers SET image_room2='$filename' WHERE email='$customerEmail'";
                     $query_runn = mysqli_query($con, $queryy);
                     jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
                 } else if ($rows["image_room3"] == NULL) {
-                    $queryy = "UPDATE customer SET image_room3='$filename' WHERE email='$customerEmail'";
+                    $queryy = "UPDATE customers SET image_room3='$filename' WHERE email='$customerEmail'";
                     $query_runn = mysqli_query($con, $queryy);
                     jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
                 } else {
@@ -270,15 +270,15 @@ if (isset($_POST['delete_customer_img'])) {
     $customerEmail = $_SESSION['email'];
 
     if ($imgID == 1) {
-        $query = "UPDATE customer SET image_room1='' WHERE email='$customerEmail'";
+        $query = "UPDATE customers SET image_room1='' WHERE email='$customerEmail'";
         $query_run = mysqli_query($con, $query);
         jsonResponseMain($query_run, 'Снимакта е изтрита', 'Снимката не е изтрита');
     } else if ($imgID == 2) {
-        $query = "UPDATE customer SET image_room2='' WHERE email='$customerEmail'";
+        $query = "UPDATE customers SET image_room2='' WHERE email='$customerEmail'";
         $query_run = mysqli_query($con, $query);
         jsonResponseMain($query_run, 'Снимакта е изтрита', 'Снимката не е изтрита');
     } else if ($imgID == 3) {
-        $query = "UPDATE customer SET image_room3='' WHERE email='$customerEmail'";
+        $query = "UPDATE customers SET image_room3='' WHERE email='$customerEmail'";
         $query_run = mysqli_query($con, $query);
         jsonResponseMain($query_run, 'Снимакта е изтрита', 'Снимката не е изтрита');
     }
@@ -295,7 +295,7 @@ if (isset($_POST['customer_rate'])) {
     if (!$text || !$rating) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "INSERT INTO team_rating (team_id,rating) VALUES ('$teamId','$rating')";
+        $query = "INSERT INTO team_ratings (team_id,rating) VALUES ('$teamId','$rating')";
         $query_run = mysqli_query($con, $query);
 
         $query = "UPDATE orders SET customer_opinion='$text' WHERE id='$orderId'";

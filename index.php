@@ -48,7 +48,7 @@ $email = $_SESSION['email']; ?>
           <img src="images/main-logo.png" class="h-7 mr-3 md:h-12" alt="Main logo" />
         </a>
         <div class="flex items-center pr-5 sm:pr-0">
-          <svg data-modal-toggle="authentication-modal" fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor" class="w-8 h-8 text-slate-700 cursor-pointer hover:opacity-75 transition-all md:hidden">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor" class="w-8 h-8 text-slate-700 cursor-pointer hover:opacity-75 transition-all md:hidden login-btn">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
           <img class="w-[26px] h-[25.5px] object-cover cursor-pointer hover:opacity-75 transition-all rounded-full md:hidden ml-2.5 mr-1" src="images/britain-flag.png" alt="english" />
@@ -97,7 +97,7 @@ $email = $_SESSION['email']; ?>
               </a>
             </li>
             <?php
-            $query = "SELECT * FROM customer WHERE email = '$email'";
+            $query = "SELECT * FROM customers WHERE email = '$email'";
             $query_run = mysqli_query($con, $query);
 
             if ($email) {
@@ -113,7 +113,7 @@ $email = $_SESSION['email']; ?>
               <?php }
               }
             } else { ?>
-              <li data-modal-toggle="authentication-modal">
+              <li class="login-btn">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor" class="w-10 h-10 -mt-1 -mr-3.5 text-slate-700 cursor-pointer hover:opacity-75 transition-all hidden md:block active:scale-90">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
@@ -127,214 +127,216 @@ $email = $_SESSION['email']; ?>
       </div>
     </nav>
 
-    <div id="authentication-modal" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-      <div class="relative w-full h-full max-w-md md:h-auto">
-        <div class="relative  rounded-lg shadow bg-gray-100">
-          <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all" data-modal-toggle="authentication-modal">
-            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-            </svg>
-          </button>
-          <div class="px-6 py-6 lg:px-8 text-slate-700">
-            <h3 class="mb-4 text-xl font-semibold">Вашият профил</h3>
-            <form id="sing-up-form" class="space-y-5">
-              <div>
-                <label for="email" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
-                  Вашият имейл
-                </label>
-                <div class="relative mb-6">
-                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                    </svg>
-                  </div>
-                  <input type="email" name="email" id="email" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full pl-10 p-2.5" placeholder="example@gmail.com" />
-                </div>
-              </div>
-              <div>
-                <label for="password" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
-                  Вашата парола
-                </label>
-                <div class="relative mb-6">
-                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                    </svg>
-                  </div>
-                  <input :type="passwordState ? 'password' : 'text'" name="passowrdLogin" id="password" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full px-10 p-2.5" placeholder="••••••••••" />
-                  <div @click="passwordState = !passwordState" class="absolute inset-y-0 right-0 flex items-center pr-3">
-                    <svg v-show="passwordState" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <svg v-show="!passwordState" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div class="flex justify-between">
-                <div class="flex items-start group">
-                  <div class="flex items-center h-5">
-                    <input id="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 cursor-pointer" />
-                  </div>
-                  <label for="remember" class="ml-1.5 text-sm font-medium group-hover:text-blue-500 transition-all cursor-pointer">
-                    Запомни ме
+    <div id="customer-login-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+      <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+        <div class="relative w-full h-auto max-w-md">
+          <div class="relative bg-gray-100 rounded-lg shadow">
+            <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all customer-close-login-modal">
+              <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+              </svg>
+            </button>
+            <div class="px-6 py-6 lg:px-8 text-slate-700">
+              <h3 class="mb-4 text-xl font-semibold">Вашият профил</h3>
+              <form id="sing-up-form" class="space-y-5">
+                <div>
+                  <label for="email" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
+                    Вашият имейл
                   </label>
+                  <div class="relative mb-6">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                      </svg>
+                    </div>
+                    <input type="email" name="email" id="email" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full pl-10 p-2.5" placeholder="example@gmail.com" />
+                  </div>
                 </div>
-                <a href="#" class="text-sm hover:text-blue-500 transition-all font-semibold">Забравена парола ?</a>
-              </div>
-              <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-0 font-semibold rounded-md text-sm px-5 py-2.5 text-center transition-all active:scale-90">
-                Вход
-              </button>
-              <div class="w-full border border-gray-300"></div>
-              <button type="submit" class="w-full bg-gray-100 hover:bg-slate-200 border border-gray-300 text-slate-700 focus:outline-none focus:ring-0 font-semibold rounded-md text-sm px-5 py-2.5 flex justify-center items-center transition-all active:scale-90">
-                <svg class="w-6 h-6 mr-1.5" viewBox="0 0 24 24">
-                  <path fill="#EA4335" d="M5.26620003,9.76452941 C6.19878754,6.93863203 8.85444915,4.90909091 12,4.90909091 C13.6909091,4.90909091 15.2181818,5.50909091 16.4181818,6.49090909 L19.9090909,3 C17.7818182,1.14545455 15.0545455,0 12,0 C7.27006974,0 3.1977497,2.69829785 1.23999023,6.65002441 L5.26620003,9.76452941 Z" />
-                  <path fill="#34A853" d="M16.0407269,18.0125889 C14.9509167,18.7163016 13.5660892,19.0909091 12,19.0909091 C8.86648613,19.0909091 6.21911939,17.076871 5.27698177,14.2678769 L1.23746264,17.3349879 C3.19279051,21.2936293 7.26500293,24 12,24 C14.9328362,24 17.7353462,22.9573905 19.834192,20.9995801 L16.0407269,18.0125889 Z" />
-                  <path fill="#4A90E2" d="M19.834192,20.9995801 C22.0291676,18.9520994 23.4545455,15.903663 23.4545455,12 C23.4545455,11.2909091 23.3454545,10.5272727 23.1818182,9.81818182 L12,9.81818182 L12,14.4545455 L18.4363636,14.4545455 C18.1187732,16.013626 17.2662994,17.2212117 16.0407269,18.0125889 L19.834192,20.9995801 Z" />
-                  <path fill="#FBBC05" d="M5.27698177,14.2678769 C5.03832634,13.556323 4.90909091,12.7937589 4.90909091,12 C4.90909091,11.2182781 5.03443647,10.4668121 5.26620003,9.76452941 L1.23999023,6.65002441 C0.43658717,8.26043162 0,10.0753848 0,12 C0,13.9195484 0.444780743,15.7301709 1.23746264,17.3349879 L5.27698177,14.2678769 Z" />
-                </svg>
-                <span>Вход с Google</span>
-              </button>
-              <button type="submit" class="w-full bg-gray-100 hover:bg-slate-200 border border-gray-300 text-slate-700 focus:outline-none focus:ring-0 font-semibold rounded-md text-sm px-5 py-2.5 flex justify-center items-center transition-all active:scale-90">
-                <svg class="w-6 h-6 mr-1.5" viewBox="0 0 291.319 291.319">
-                  <path style="fill: #4e71bd" d="M145.659,0c80.45,0,145.66,65.219,145.66,145.66c0,80.45-65.21,145.659-145.66,145.659
+                <div>
+                  <label for="password" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
+                    Вашата парола
+                  </label>
+                  <div class="relative mb-6">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                      </svg>
+                    </div>
+                    <input :type="passwordState ? 'password' : 'text'" name="passowrdLogin" id="password" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full px-10 p-2.5" placeholder="••••••••••" />
+                    <div @click="passwordState = !passwordState" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                      <svg v-show="passwordState" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <svg v-show="!passwordState" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex justify-between">
+                  <div class="flex items-start group">
+                    <div class="flex items-center h-5">
+                      <input id="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 cursor-pointer" />
+                    </div>
+                    <label for="remember" class="ml-1.5 text-sm font-medium group-hover:text-blue-500 transition-all cursor-pointer">
+                      Запомни ме
+                    </label>
+                  </div>
+                  <a href="#" class="text-sm hover:text-blue-500 transition-all font-semibold">Забравена парола ?</a>
+                </div>
+                <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-0 font-semibold rounded-md text-sm px-5 py-2.5 text-center transition-all active:scale-90">
+                  Вход
+                </button>
+                <div class="w-full border border-gray-300"></div>
+                <button type="submit" class="w-full bg-gray-100 hover:bg-slate-200 border border-gray-300 text-slate-700 focus:outline-none focus:ring-0 font-semibold rounded-md text-sm px-5 py-2.5 flex justify-center items-center transition-all active:scale-90">
+                  <svg class="w-6 h-6 mr-1.5" viewBox="0 0 24 24">
+                    <path fill="#EA4335" d="M5.26620003,9.76452941 C6.19878754,6.93863203 8.85444915,4.90909091 12,4.90909091 C13.6909091,4.90909091 15.2181818,5.50909091 16.4181818,6.49090909 L19.9090909,3 C17.7818182,1.14545455 15.0545455,0 12,0 C7.27006974,0 3.1977497,2.69829785 1.23999023,6.65002441 L5.26620003,9.76452941 Z" />
+                    <path fill="#34A853" d="M16.0407269,18.0125889 C14.9509167,18.7163016 13.5660892,19.0909091 12,19.0909091 C8.86648613,19.0909091 6.21911939,17.076871 5.27698177,14.2678769 L1.23746264,17.3349879 C3.19279051,21.2936293 7.26500293,24 12,24 C14.9328362,24 17.7353462,22.9573905 19.834192,20.9995801 L16.0407269,18.0125889 Z" />
+                    <path fill="#4A90E2" d="M19.834192,20.9995801 C22.0291676,18.9520994 23.4545455,15.903663 23.4545455,12 C23.4545455,11.2909091 23.3454545,10.5272727 23.1818182,9.81818182 L12,9.81818182 L12,14.4545455 L18.4363636,14.4545455 C18.1187732,16.013626 17.2662994,17.2212117 16.0407269,18.0125889 L19.834192,20.9995801 Z" />
+                    <path fill="#FBBC05" d="M5.27698177,14.2678769 C5.03832634,13.556323 4.90909091,12.7937589 4.90909091,12 C4.90909091,11.2182781 5.03443647,10.4668121 5.26620003,9.76452941 L1.23999023,6.65002441 C0.43658717,8.26043162 0,10.0753848 0,12 C0,13.9195484 0.444780743,15.7301709 1.23746264,17.3349879 L5.27698177,14.2678769 Z" />
+                  </svg>
+                  <span>Вход с Google</span>
+                </button>
+                <button type="submit" class="w-full bg-gray-100 hover:bg-slate-200 border border-gray-300 text-slate-700 focus:outline-none focus:ring-0 font-semibold rounded-md text-sm px-5 py-2.5 flex justify-center items-center transition-all active:scale-90">
+                  <svg class="w-6 h-6 mr-1.5" viewBox="0 0 291.319 291.319">
+                    <path style="fill: #4e71bd" d="M145.659,0c80.45,0,145.66,65.219,145.66,145.66c0,80.45-65.21,145.659-145.66,145.659
 		                  S0,226.109,0,145.66C0,65.219,65.21,0,145.659,0z" />
-                  <path style="fill: #ffffff" d="M163.394,100.277h18.772v-27.73h-22.067v0.1c-26.738,0.947-32.218,15.977-32.701,31.763h-0.055
+                    <path style="fill: #ffffff" d="M163.394,100.277h18.772v-27.73h-22.067v0.1c-26.738,0.947-32.218,15.977-32.701,31.763h-0.055
                       v13.847h-18.207v27.156h18.207v72.793h27.439v-72.793h22.477l4.342-27.156h-26.81v-8.366
                       C154.791,104.556,158.341,100.277,163.394,100.277z" />
-                </svg>
-                <span>Вход с Facebook</span>
-              </button>
+                  </svg>
+                  <span>Вход с Facebook</span>
+                </button>
 
-              <div class="text-sm font-medium text-gray-500">
-                Нямате профил ?
-                <a data-modal-toggle="signUp-modal" href="#" class="text-slate-700 hover:hover:text-blue-500 font-semibold transition-all">
-                  <span data-modal-toggle="authentication-modal">Създаване на профил</span>
-                </a>
-              </div>
-            </form>
+                <div class="text-sm font-medium text-gray-500">
+                  Нямате профил ?
+                  <span class="text-slate-700 hover:hover:text-blue-500 font-semibold transition-all cursor-pointer register-btn">Създаване на профил</span>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="signUp-modal" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-      <div class="relative w-full h-full max-w-md md:h-auto md:mt-32 2xl:mt-0">
-        <div class="relative  rounded-lg shadow bg-gray-100">
-          <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all" data-modal-toggle="signUp-modal">
-            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-            </svg>
-          </button>
-          <div class="px-6 py-6 lg:px-8 text-slate-700">
-            <h3 class="mb-4 text-xl font-semibold">Създайте профил</h3>
-            <form id="sign-in-form" class="space-y-5">
-              <div class="flex items-center space-x-5 w-full">
-                <div class="w-1/2">
-                  <label for="first_name" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
-                    Име
-                  </label>
-                  <input type="text" id="first_name" name="firstName" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5" placeholder="Въведете име" minlength="2" />
+    <div id="customer-register-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+      <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
+        <div class="relative w-full h-full max-w-md">
+          <div class="relative bg-gray-100 rounded-lg shadow mb-6">
+            <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all close-customer-register-modal">
+              <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+              </svg>
+            </button>
+            <div class="px-6 py-6 lg:px-8 text-slate-700">
+              <h3 class="mb-4 text-xl font-semibold">Създайте профил</h3>
+              <form id="sign-in-form" class="space-y-5">
+                <div class="flex items-center space-x-5 w-full">
+                  <div class="w-1/2">
+                    <label for="first_name" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
+                      Име
+                    </label>
+                    <input type="text" id="first_name" name="firstName" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5" placeholder="Въведете име" minlength="2" />
+                  </div>
+                  <div class="w-1/2">
+                    <label for="family_name" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
+                      Фамилия
+                    </label>
+                    <input type="text" id="family_name" name="familyName" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5" placeholder="Въведете фамилия" minlength="2" />
+                  </div>
                 </div>
-                <div class="w-1/2">
-                  <label for="family_name" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
-                    Фамилия
+                <div>
+                  <label for="email-signUp" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
+                    Имейл
                   </label>
-                  <input type="text" id="family_name" name="familyName" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5" placeholder="Въведете фамилия" minlength="2" />
+                  <input type="email" id="email-signUp" name="email" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5" placeholder="Въведете фамилия" minlength="5" />
                 </div>
-              </div>
-              <div>
-                <label for="email-signUp" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
-                  Имейл
-                </label>
-                <input type="email" id="email-signUp" name="email" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5" placeholder="Въведете фамилия" minlength="5" />
-              </div>
-              <div>
-                <label for="phone" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
-                  Телефонен номер
-                </label>
-                <div class="flex">
-                  <button id="states-button" data-dropdown-toggle="dropdown-states" class="flex-shrink-0 z-10 inline-flex items-center p-2.5 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 border-r-none rounded-l-lg hover:bg-gray-100 focus:ring-0 focus:outline-none transition-all" type="button">
-                    {{phoneCountry}}
-                    <svg aria-hidden="true" class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                  </button>
-                  <div id="dropdown-states" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-md shadow w-44">
-                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="states-button">
-                      <li v-for="country in countries">
-                        <div :class="{ 'bg-gray-100' : phoneCountry == country.countryCode}" @click="phoneCountry = country.countryCode; countryCode = country.code" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
-                          <div class="inline-flex items-center">
-                            <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" :src="country.image" :alt="country.name" />
-                            {{country.name}}
+                <div>
+                  <label for="phone" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
+                    Телефонен номер
+                  </label>
+                  <div class="flex">
+                    <button id="states-button" data-dropdown-toggle="dropdown-states" class="flex-shrink-0 z-10 inline-flex items-center p-2.5 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 border-r-none rounded-l-lg hover:bg-gray-100 focus:ring-0 focus:outline-none transition-all" type="button">
+                      {{phoneCountry}}
+                      <svg aria-hidden="true" class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                      </svg>
+                    </button>
+                    <div id="dropdown-states" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-md shadow w-44">
+                      <ul class="py-1 text-sm text-gray-700" aria-labelledby="states-button">
+                        <li v-for="country in countries">
+                          <div :class="{ 'bg-gray-100' : phoneCountry == country.countryCode}" @click="phoneCountry = country.countryCode; countryCode = country.code" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-all font-semibold">
+                            <div class="inline-flex items-center">
+                              <img class="w-4 h-4 mr-1 object-cover rounded-full border border-slate-100" :src="country.image" :alt="country.name" />
+                              {{country.name}}
+                            </div>
                           </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <input type="text" id="phone" name="phone" v-model="countryCode" class="bg-white border border-gray-200 border-l-0 text-gray-900 text-sm rounded-r-lg focus:ring-0 focus:outline-none block w-full p-2.5" placeholder="Въведете телефонен номер" minlength="6" />
-                </div>
-              </div>
-              <div>
-                <label for="password" class="block mb-1.5 text-sm font-semibold text-slate-500">
-                  Вашата парола
-                </label>
-                <div class="relative">
-                  <input :type="passwordReg ? 'password' : 'text'" name="password" id="password" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full pr-10 p-2.5" placeholder="••••••••" minlength="8" />
-                  <div @click="passwordReg = !passwordReg" class="absolute inset-y-0 right-0 flex items-center pr-3">
-                    <svg v-show="passwordReg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <svg v-show="!passwordReg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                    </svg>
+                        </li>
+                      </ul>
+                    </div>
+                    <input type="text" id="phone" name="phone" v-model="countryCode" class="bg-white border border-gray-200 border-l-0 text-gray-900 text-sm rounded-r-lg focus:ring-0 focus:outline-none block w-full p-2.5" placeholder="Въведете телефонен номер" minlength="6" />
                   </div>
                 </div>
-              </div>
-              <div>
-                <label for="password" class="block mb-1.5 text-sm font-semibold text-slate-500">
-                  Повтори парола
-                </label>
-                <div class="relative">
-                  <input :type="passwordRegRep ? 'password' : 'text'" name="passwordRep" id="password" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full pr-10 p-2.5" placeholder="••••••••" minlength="8" />
-                  <div @click="passwordRegRep = !passwordRegRep" class="absolute inset-y-0 right-0 flex items-center pr-3">
-                    <svg v-show="passwordRegRep" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <svg v-show="!passwordRegRep" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                    </svg>
+                <div>
+                  <label for="password" class="block mb-1.5 text-sm font-semibold text-slate-500">
+                    Вашата парола
+                  </label>
+                  <div class="relative">
+                    <input :type="passwordReg ? 'password' : 'text'" name="password" id="password" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full pr-10 p-2.5" placeholder="••••••••" minlength="8" />
+                    <div @click="passwordReg = !passwordReg" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                      <svg v-show="passwordReg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <svg v-show="!passwordReg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-0 font-semibold rounded-md text-sm px-5 py-2.5 text-center transition-all active:scale-90">
-                Регистрация
-              </button>
-              <div class="w-full border border-gray-300"></div>
-              <button type="submit" class="w-full bg-gray-100 hover:bg-slate-200 border border-gray-300 text-slate-700 focus:outline-none focus:ring-0 font-semibold rounded-md text-sm px-5 py-2.5 flex justify-center items-center transition-all active:scale-90">
-                <svg class="w-6 h-6 mr-1.5" viewBox="0 0 24 24">
-                  <path fill="#EA4335" d="M5.26620003,9.76452941 C6.19878754,6.93863203 8.85444915,4.90909091 12,4.90909091 C13.6909091,4.90909091 15.2181818,5.50909091 16.4181818,6.49090909 L19.9090909,3 C17.7818182,1.14545455 15.0545455,0 12,0 C7.27006974,0 3.1977497,2.69829785 1.23999023,6.65002441 L5.26620003,9.76452941 Z" />
-                  <path fill="#34A853" d="M16.0407269,18.0125889 C14.9509167,18.7163016 13.5660892,19.0909091 12,19.0909091 C8.86648613,19.0909091 6.21911939,17.076871 5.27698177,14.2678769 L1.23746264,17.3349879 C3.19279051,21.2936293 7.26500293,24 12,24 C14.9328362,24 17.7353462,22.9573905 19.834192,20.9995801 L16.0407269,18.0125889 Z" />
-                  <path fill="#4A90E2" d="M19.834192,20.9995801 C22.0291676,18.9520994 23.4545455,15.903663 23.4545455,12 C23.4545455,11.2909091 23.3454545,10.5272727 23.1818182,9.81818182 L12,9.81818182 L12,14.4545455 L18.4363636,14.4545455 C18.1187732,16.013626 17.2662994,17.2212117 16.0407269,18.0125889 L19.834192,20.9995801 Z" />
-                  <path fill="#FBBC05" d="M5.27698177,14.2678769 C5.03832634,13.556323 4.90909091,12.7937589 4.90909091,12 C4.90909091,11.2182781 5.03443647,10.4668121 5.26620003,9.76452941 L1.23999023,6.65002441 C0.43658717,8.26043162 0,10.0753848 0,12 C0,13.9195484 0.444780743,15.7301709 1.23746264,17.3349879 L5.27698177,14.2678769 Z" />
-                </svg>
-                <span>Регистрация с Google</span>
-              </button>
-              <button type="submit" class="w-full bg-gray-100 hover:bg-slate-200 border border-gray-300 text-slate-700 focus:outline-none focus:ring-0 font-semibold rounded-md text-sm px-5 py-2.5 flex justify-center items-center transition-all active:scale-90">
-                <svg class="w-6 h-6 mr-1.5" viewBox="0 0 291.319 291.319">
-                  <path style="fill: #4e71bd" d="M145.659,0c80.45,0,145.66,65.219,145.66,145.66c0,80.45-65.21,145.659-145.66,145.659
+                <div>
+                  <label for="password" class="block mb-1.5 text-sm font-semibold text-slate-500">
+                    Повтори парола
+                  </label>
+                  <div class="relative">
+                    <input :type="passwordRegRep ? 'password' : 'text'" name="passwordRep" id="password" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full pr-10 p-2.5" placeholder="••••••••" minlength="8" />
+                    <div @click="passwordRegRep = !passwordRegRep" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                      <svg v-show="passwordRegRep" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <svg v-show="!passwordRegRep" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-0 font-semibold rounded-md text-sm px-5 py-2.5 text-center transition-all active:scale-90">
+                  Регистрация
+                </button>
+                <div class="w-full border border-gray-300"></div>
+                <button type="submit" class="w-full bg-gray-100 hover:bg-slate-200 border border-gray-300 text-slate-700 focus:outline-none focus:ring-0 font-semibold rounded-md text-sm px-5 py-2.5 flex justify-center items-center transition-all active:scale-90">
+                  <svg class="w-6 h-6 mr-1.5" viewBox="0 0 24 24">
+                    <path fill="#EA4335" d="M5.26620003,9.76452941 C6.19878754,6.93863203 8.85444915,4.90909091 12,4.90909091 C13.6909091,4.90909091 15.2181818,5.50909091 16.4181818,6.49090909 L19.9090909,3 C17.7818182,1.14545455 15.0545455,0 12,0 C7.27006974,0 3.1977497,2.69829785 1.23999023,6.65002441 L5.26620003,9.76452941 Z" />
+                    <path fill="#34A853" d="M16.0407269,18.0125889 C14.9509167,18.7163016 13.5660892,19.0909091 12,19.0909091 C8.86648613,19.0909091 6.21911939,17.076871 5.27698177,14.2678769 L1.23746264,17.3349879 C3.19279051,21.2936293 7.26500293,24 12,24 C14.9328362,24 17.7353462,22.9573905 19.834192,20.9995801 L16.0407269,18.0125889 Z" />
+                    <path fill="#4A90E2" d="M19.834192,20.9995801 C22.0291676,18.9520994 23.4545455,15.903663 23.4545455,12 C23.4545455,11.2909091 23.3454545,10.5272727 23.1818182,9.81818182 L12,9.81818182 L12,14.4545455 L18.4363636,14.4545455 C18.1187732,16.013626 17.2662994,17.2212117 16.0407269,18.0125889 L19.834192,20.9995801 Z" />
+                    <path fill="#FBBC05" d="M5.27698177,14.2678769 C5.03832634,13.556323 4.90909091,12.7937589 4.90909091,12 C4.90909091,11.2182781 5.03443647,10.4668121 5.26620003,9.76452941 L1.23999023,6.65002441 C0.43658717,8.26043162 0,10.0753848 0,12 C0,13.9195484 0.444780743,15.7301709 1.23746264,17.3349879 L5.27698177,14.2678769 Z" />
+                  </svg>
+                  <span>Регистрация с Google</span>
+                </button>
+                <button type="submit" class="w-full bg-gray-100 hover:bg-slate-200 border border-gray-300 text-slate-700 focus:outline-none focus:ring-0 font-semibold rounded-md text-sm px-5 py-2.5 flex justify-center items-center transition-all active:scale-90">
+                  <svg class="w-6 h-6 mr-1.5" viewBox="0 0 291.319 291.319">
+                    <path style="fill: #4e71bd" d="M145.659,0c80.45,0,145.66,65.219,145.66,145.66c0,80.45-65.21,145.659-145.66,145.659
 		                  S0,226.109,0,145.66C0,65.219,65.21,0,145.659,0z" />
-                  <path style="fill: #ffffff" d="M163.394,100.277h18.772v-27.73h-22.067v0.1c-26.738,0.947-32.218,15.977-32.701,31.763h-0.055
+                    <path style="fill: #ffffff" d="M163.394,100.277h18.772v-27.73h-22.067v0.1c-26.738,0.947-32.218,15.977-32.701,31.763h-0.055
                       v13.847h-18.207v27.156h18.207v72.793h27.439v-72.793h22.477l4.342-27.156h-26.81v-8.366
                       C154.791,104.556,158.341,100.277,163.394,100.277z" />
-                </svg>
-                <span>Регистрация с Facebook</span>
-              </button>
-            </form>
+                  </svg>
+                  <span>Регистрация с Facebook</span>
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -854,7 +856,7 @@ $email = $_SESSION['email']; ?>
               Основна оферта
             </p>
             <p class="text-3xl text-gray-900 text-center md:text-left">
-              <span id="slider_value" class="font-bold">150.00 лв.</span>
+              <span id="slider_value0" class="font-bold">150.00 лв.</span>
               <span class="text-sm text-slate-400 font-semibold"> / еднократно</span>
             </p>
             <ul class="w-full mt-6 mb-6 text-sm text-gray-600">

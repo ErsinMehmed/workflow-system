@@ -629,13 +629,13 @@ $date_now = date("Y-m-d"); ?>
             while ($rows = mysqli_fetch_array($query_run)) {
               $teamID = $rows['team_id'];
 
-              $query = "SELECT * FROM set_product WHERE team_id = '$teamID' GROUP BY product_name";
+              $query = "SELECT * FROM set_products WHERE team_id = '$teamID' GROUP BY product_name";
               $query_run = mysqli_query($con, $query);
 
               if (mysqli_num_rows($query_run) > 0) {
                 while ($rows = mysqli_fetch_array($query_run)) {
                   $productName = $rows['product_name'];
-                  $queryy = "SELECT SUM(quantity) as quantity_sum FROM set_product WHERE team_id = '$teamID' AND product_name = '$productName'";
+                  $queryy = "SELECT SUM(quantity) as quantity_sum FROM set_products WHERE team_id = '$teamID' AND product_name = '$productName'";
                   $query_runn = mysqli_query($con, $queryy);
 
                   while ($rowss = mysqli_fetch_array($query_runn)) {
@@ -872,7 +872,7 @@ $date_now = date("Y-m-d"); ?>
           </div>
           <div class="p-5">
             <?php
-            $query = "SELECT * FROM stock";
+            $query = "SELECT * FROM stocks";
             $query_run = mysqli_query($con, $query);
 
             while ($rows = mysqli_fetch_array($query_run)) { ?>

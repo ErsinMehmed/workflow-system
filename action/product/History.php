@@ -10,9 +10,9 @@ $date = $_POST['date'];
 
 if ($productName != "") {
     if ($searchKind == 0) {
-        $query = "SELECT * FROM seted_product_history WHERE product_name LIKE '$productName%' AND date = '$date' AND status = 'go'";
+        $query = "SELECT * FROM seted_product_histories WHERE product_name LIKE '$productName%' AND date = '$date' AND status = 'go'";
     } else {
-        $query = "SELECT * FROM seted_product_history WHERE product_name LIKE '$productName%' AND date = '$date' AND status= 'back'";
+        $query = "SELECT * FROM seted_product_histories WHERE product_name LIKE '$productName%' AND date = '$date' AND status= 'back'";
     }
 
     $query_run = mysqli_query($con, $query);

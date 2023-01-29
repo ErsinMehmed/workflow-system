@@ -8,9 +8,9 @@ $text = $_POST['text'];
 $kind = $_POST['kind'];
 
 if ($kind == 'Всички') {
-    $query = "SELECT * FROM product_order WHERE name LIKE '$text%' OR supplier LIKE '$text%'";
+    $query = "SELECT * FROM product_orders WHERE name LIKE '$text%' OR supplier LIKE '$text%'";
 } else {
-    $query = "SELECT * FROM product_order WHERE (name LIKE '$text%' OR supplier LIKE '$text%') AND kind='$kind'";
+    $query = "SELECT * FROM product_orders WHERE (name LIKE '$text%' OR supplier LIKE '$text%') AND kind='$kind'";
 }
 $query_run = mysqli_query($con, $query);
 ?>
@@ -46,7 +46,7 @@ $query_run = mysqli_query($con, $query);
                 <td class="px-4 py-5 text-center"><?= $rows["total_price"] . " лв." ?></td>
                 <td class="px-4 py-5 text-center"><?= date("d.m.Y", strtotime($rows['date'])) ?></td>
                 <td class="px-4 py-5 flex justify-center">
-                    <?php $query = "SELECT * FROM admin WHERE email = '$adminEmail'";
+                    <?php $query = "SELECT * FROM admins WHERE email = '$adminEmail'";
                     $execute = mysqli_query($con, $query);
 
                     while ($roles = mysqli_fetch_array($execute)) {

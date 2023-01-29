@@ -12,7 +12,7 @@ if (isset($_POST['dashboard_login'])) {
 
     $email = $_POST['email'];
 
-    $query = "SELECT * FROM admin WHERE email='$email'";
+    $query = "SELECT * FROM admins WHERE email='$email'";
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) > 0) {
@@ -52,7 +52,7 @@ if (isset($_POST['admin_update_data'])) {
     if (!$newPassword || !$newPasswordRep || !$phone) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "SELECT * FROM admin WHERE email='$email'";
+        $query = "SELECT * FROM s WHERE email='$email'";
         $query_run = mysqli_query($con, $query);
 
         while ($rows = mysqli_fetch_array($query_run)) {
@@ -61,7 +61,7 @@ if (isset($_POST['admin_update_data'])) {
                 if ($newPassword == $newPasswordRep) {
                     $newPassword = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
 
-                    $queryy = "UPDATE admin SET password='$newPassword', phone = '$phone' WHERE email='$email'";
+                    $queryy = "UPDATE admins SET password='$newPassword', phone = '$phone' WHERE email='$email'";
                     $query_runn = mysqli_query($con, $queryy);
 
                     jsonResponseMain($query_runn, 'Данните са обновени', 'Данните не са обновени');
@@ -85,7 +85,7 @@ if (isset($_POST['admin_photo'])) {
     $filesize = number_format($filesize / 1048576, 2);
 
     if ($filesize < 2) {
-        $query = "UPDATE admin SET image='$filename' WHERE email='$email'";
+        $query = "UPDATE admins SET image='$filename' WHERE email='$email'";
         $query_run = mysqli_query($con, $query);
 
         jsonResponseMain($query_run, 'Снимката е обновена', 'Снимката не е обновена');

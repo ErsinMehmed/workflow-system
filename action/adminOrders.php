@@ -29,7 +29,7 @@ if (isset($_POST['admin_order'])) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         if (is_numeric($m2)) {
-            $selQuery = "SELECT * FROM customer WHERE email = '$email'";
+            $selQuery = "SELECT * FROM customers WHERE email = '$email'";
             $query = mysqli_query($con, $selQuery);
 
             if (mysqli_num_rows($query) == 0) {
@@ -99,7 +99,7 @@ if (isset($_GET['email'])) {
 
     $email = mysqli_real_escape_string($con, $_GET['email']);
 
-    $query = "SELECT * FROM customer WHERE email='$email'";
+    $query = "SELECT * FROM customers WHERE email='$email'";
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) == 1) {
@@ -133,7 +133,7 @@ if (isset($_POST['admin_set_order'])) {
         $queryy = "UPDATE orders SET team_id = '$teamID', status = 'Назначена' WHERE id='$orderID'";
         $query_runn = mysqli_query($con, $queryy);
 
-        $query = "INSERT INTO set_order (team_id,order_id,user1,user2,user1_id,user2_id,team_name,date,view,order_date) VALUES ('$teamID','$orderID','$user1','$user2','$userID1','$userID2','$teamName','$curDT','1','$orderDate')";
+        $query = "INSERT INTO set_orders (team_id,order_id,user1,user2,user1_id,user2_id,team_name,date,view,order_date) VALUES ('$teamID','$orderID','$user1','$user2','$userID1','$userID2','$teamName','$curDT','1','$orderDate')";
         $query_run = mysqli_query($con, $query);
 
         jsonResponseMain($query_run, 'Заявката е добавена на екип ' . $teamName, 'Заявката не е добавена на екип ' . $teamName);

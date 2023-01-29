@@ -68,7 +68,7 @@ $query_run = mysqli_query($con, $query); ?>
                         <?php
                         $id = $rows['id'];
 
-                        $sql_run = "SELECT CAST(AVG(rating) AS DECIMAL(10,1)) AS rating FROM team_rating WHERE team_id = '$id'";
+                        $sql_run = "SELECT CAST(AVG(rating) AS DECIMAL(10,1)) AS rating FROM team_ratings WHERE team_id = '$id'";
                         $result = $con->query($sql_run);
                         while ($row = mysqli_fetch_array($result)) {
                             if ($row['rating'] == "") {
@@ -81,7 +81,7 @@ $query_run = mysqli_query($con, $query); ?>
                 </td>
                 <td class="px-4 py-5 text-center">
                     <?php
-                    $query = "SELECT * FROM admin WHERE email = '$adminEmail'";
+                    $query = "SELECT * FROM admins WHERE email = '$adminEmail'";
                     $execute = mysqli_query($con, $query);
 
                     while ($roles = mysqli_fetch_array($execute)) {

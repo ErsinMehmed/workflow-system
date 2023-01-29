@@ -5,7 +5,7 @@ if (isset($_POST['supplier'])) {
     $name =  ($_POST['supplier']);
 
     if ($name != "") {
-        $query = "SELECT * FROM supplier WHERE name like '$name%'";
+        $query = "SELECT * FROM suppliers WHERE name like '$name%'";
         $query_run = mysqli_query($con, $query);
 
         if (mysqli_num_rows($query_run) > 0) {

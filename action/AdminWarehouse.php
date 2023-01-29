@@ -17,11 +17,11 @@ if (isset($_POST['admin_product'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "SELECT name FROM stock WHERE name = '$name'";
+        $query = "SELECT name FROM stocks WHERE name = '$name'";
         $query_go = mysqli_query($con, $query);
 
         if (mysqli_num_rows($query_go) == 0) {
-            $query = "INSERT INTO stock (name,quantity,kind) VALUES ('$name','0','$kind')";
+            $query = "INSERT INTO stocks (name,quantity,kind) VALUES ('$name','0','$kind')";
             $query_run = mysqli_query($con, $query);
 
             jsonResponseMain($query_run, 'Успешно добавяне на продукта', 'Неуспешно добавяне на продукта');
@@ -35,7 +35,7 @@ if (isset($_POST['admin_product'])) {
 if (isset($_GET['id'])) {
     $id = mysqli_real_escape_string($con, $_GET['id']);
 
-    $query = "SELECT * FROM stock WHERE id='$id'";
+    $query = "SELECT * FROM stocks WHERE id='$id'";
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) == 1) {
@@ -65,11 +65,11 @@ if (isset($_POST['admin_edit_product'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "SELECT name FROM stock WHERE name = '$name'";
+        $query = "SELECT name FROM stocks WHERE name = '$name'";
         $query_go = mysqli_query($con, $query);
 
         if (mysqli_num_rows($query_go) == 0) {
-            $query = "UPDATE stock SET name='$name', kind='$kind' WHERE id='$id'";
+            $query = "UPDATE stocks SET name='$name', kind='$kind' WHERE id='$id'";
             $query_run = mysqli_query($con, $query);
 
             jsonResponseMain($query_run, 'Продукта е обновен', 'Продукта не е обновен');
@@ -84,7 +84,7 @@ if (isset($_POST['admin_delete_product'])) {
 
     $id = $_POST['id'];
 
-    $query = "DELETE FROM stock WHERE id='$id'";
+    $query = "DELETE FROM stocks WHERE id='$id'";
     $query_run = mysqli_query($con, $query);
 
     jsonResponseMain($query_run, 'Продукта е изтрит успешно', 'Продукта не е изтрит');
@@ -104,7 +104,7 @@ if (isset($_POST['admin_set_product'])) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         if ($quantity != 0 && is_numeric($quantity)) {
-            $query = "SELECT * FROM stock WHERE name = '$product'";
+            $query = "SELECT * FROM stocks WHERE name = '$product'";
             $query_go = mysqli_query($con, $query);
 
             if (mysqli_num_rows($query_go) == 1) {
@@ -122,13 +122,13 @@ if (isset($_POST['admin_set_product'])) {
                         while ($rowss = mysqli_fetch_array($query_goo)) {
                             $teamName = $rowss['name'];
 
-                            $queryy = "UPDATE stock SET quantity = '$quantityResult' WHERE name = '$product'";
+                            $queryy = "UPDATE stocks SET quantity = '$quantityResult' WHERE name = '$product'";
                             $query_run = mysqli_query($con, $queryy);
 
-                            $queryyyy = "INSERT INTO seted_product_history (product_name,quantity,team_id,team_name,date,status) VALUES ('$product','$quantity','$teamId','$teamName','$date','go')";
+                            $queryyyy = "INSERT INTO seted_product_histories (product_name,quantity,team_id,team_name,date,status) VALUES ('$product','$quantity','$teamId','$teamName','$date','go')";
                             $query_runnn = mysqli_query($con, $queryyyy);
 
-                            $queryyy = "INSERT INTO set_product (product_name,kind,quantity,team_id,team_name,date,view) VALUES ('$product','$kind','$quantity','$teamId','$teamName','$date','0')";
+                            $queryyy = "INSERT INTO set_products (product_name,kind,quantity,team_id,team_name,date,view) VALUES ('$product','$kind','$quantity','$teamId','$teamName','$date','0')";
                             $query_runn = mysqli_query($con, $queryyy);
 
                             jsonResponseMain($query_runn, 'Продукта успешно е назначен', 'Неуспешно назначаване');

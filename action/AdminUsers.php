@@ -84,7 +84,7 @@ if (isset($_POST['admin_update_user'])) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         if ($status == 0) {
-            $query = "SELECT * FROM set_order WHERE (user1_id = '$id' OR user2_id = '$id') AND order_date >= '$date'";
+            $query = "SELECT * FROM set_orders WHERE (user1_id = '$id' OR user2_id = '$id') AND order_date >= '$date'";
             $query_run = mysqli_query($con, $query);
 
             if (mysqli_num_rows($query_run) == 0) {

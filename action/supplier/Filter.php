@@ -6,7 +6,7 @@ date_default_timezone_set('Europe/Sofia');
 $adminEmail = $_SESSION['adminEmail'];
 $text = $_POST['text'];
 
-$query = "SELECT * FROM supplier WHERE name LIKE '$text%'";
+$query = "SELECT * FROM suppliers WHERE name LIKE '$text%'";
 $query_run = mysqli_query($con, $query); ?>
 <thead>
     <tr class="border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
@@ -33,7 +33,7 @@ if (mysqli_num_rows($query_run) > 0) {
                     <?php
                     $supplier = $rows["name"];
 
-                    $queryy = "SELECT * FROM product_order WHERE supplier = '$supplier'";
+                    $queryy = "SELECT * FROM product_orders WHERE supplier = '$supplier'";
                     $query_runn = mysqli_query($con, $queryy);
                     if (mysqli_num_rows($query_runn) >= 1) { ?>
                         <button value="<?= $rows["name"] ?>" class="h-8 w-8 mx-auto bg-blue-100 text-blue-800 text-xs font-semibold rounded-md flex items-center justify-center focus:outline-none active:scale-90 transition-all supplier-order-view">
@@ -46,7 +46,7 @@ if (mysqli_num_rows($query_run) > 0) {
                     <?php } ?>
                 </td>
                 <td class="px-4 py-5 flex justify-center space-x-2">
-                    <?php $query = "SELECT * FROM admin WHERE email = '$adminEmail'";
+                    <?php $query = "SELECT * FROM admins WHERE email = '$adminEmail'";
                     $execute = mysqli_query($con, $query);
 
                     while ($roles = mysqli_fetch_array($execute)) {

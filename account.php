@@ -68,7 +68,7 @@ $email = $_SESSION['email']; ?>
             </a>
             <div class="flex items-center pr-5 sm:pr-0">
               <?php
-              $query = "SELECT * FROM customer WHERE email = '$email'";
+              $query = "SELECT * FROM customers WHERE email = '$email'";
               $query_run = mysqli_query($con, $query);
 
               while ($rows = mysqli_fetch_array($query_run)) {
@@ -125,7 +125,7 @@ $email = $_SESSION['email']; ?>
                   </a>
                 </li>
                 <?php
-                $query = "SELECT * FROM customer WHERE email = '$email'";
+                $query = "SELECT * FROM customers WHERE email = '$email'";
                 $query_run = mysqli_query($con, $query);
 
                 while ($rows = mysqli_fetch_array($query_run)) {
@@ -219,7 +219,7 @@ $email = $_SESSION['email']; ?>
                 Снимка
               </div>
               <?php
-              $query = "SELECT * FROM customer WHERE email = '$email'";
+              $query = "SELECT * FROM customers WHERE email = '$email'";
               $query_run = mysqli_query($con, $query);
 
               while ($rows = mysqli_fetch_array($query_run)) { ?>
@@ -603,7 +603,7 @@ $email = $_SESSION['email']; ?>
                 и фактурите си (ако сте заявили).
               </div>
               <?php
-              $query = "SELECT * FROM customer WHERE email = '$email' AND image_room1 != '' AND image_room2 != '' AND image_room3 != ''";
+              $query = "SELECT * FROM customers WHERE email = '$email' AND image_room1 != '' AND image_room2 != '' AND image_room3 != ''";
               $query_run = mysqli_query($con, $query);
 
               if (mysqli_num_rows($query_run) == 0) { ?>
@@ -651,7 +651,7 @@ $email = $_SESSION['email']; ?>
 
               <div id="document-section">
                 <?php
-                $query = "SELECT * FROM customer WHERE email = '$email' AND (image_room1 != '' OR image_room2 != '' OR image_room3 != '')";
+                $query = "SELECT * FROM customers WHERE email = '$email' AND (image_room1 != '' OR image_room2 != '' OR image_room3 != '')";
                 $query_run = mysqli_query($con, $query);
 
                 if (mysqli_num_rows($query_run) > 0) {
@@ -771,7 +771,7 @@ $email = $_SESSION['email']; ?>
                 част от вашите данни.
               </div>
               <?php
-              $query = "SELECT * FROM customer WHERE email = '$email'";
+              $query = "SELECT * FROM customers WHERE email = '$email'";
               $query_run = mysqli_query($con, $query);
 
               while ($rows = mysqli_fetch_array($query_run)) { ?>
@@ -1037,7 +1037,7 @@ $email = $_SESSION['email']; ?>
                   </div>
                 </div>
                 <?php
-                $query = "SELECT * FROM customer WHERE email = '$email'";
+                $query = "SELECT * FROM customers WHERE email = '$email'";
                 $query_run = mysqli_query($con, $query);
 
                 while ($rows = mysqli_fetch_array($query_run)) { ?>
@@ -1198,7 +1198,7 @@ $email = $_SESSION['email']; ?>
                             <div class="mr-2.5 text-sm font-semibold text-slate-700 px-3 ">Рейтинг</div>
                             <?php
                             $teamID = $rows['team_id'];
-                            $queryyy = "SELECT CAST(AVG(rating) AS DECIMAL(10,1)) AS rating FROM team_rating WHERE team_id = '$teamID'";
+                            $queryyy = "SELECT CAST(AVG(rating) AS DECIMAL(10,1)) AS rating FROM team_ratings WHERE team_id = '$teamID'";
                             $query_runnn = mysqli_query($con, $queryyy);
 
                             while ($row = mysqli_fetch_array($query_runnn)) {

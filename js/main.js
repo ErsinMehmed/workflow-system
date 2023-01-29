@@ -17,369 +17,207 @@ $("#user-status").change(function () {
   }
 });
 
-$("#select-buil").on("change", function () {
-  var x = document.getElementById("select-buil").selectedIndex;
-  var n = $("#slider").val();
+const slider = $("#slider");
+const selectBuil = $("#select-buil");
+const final = $("#final");
+const boxValue0 = $("#slider_value0");
+const boxValue1 = $("#slider_value1");
+const boxValue2 = $("#slider_value2");
 
-  if (x == 0) {
-    var value = n * 0.12 + 30;
-    var value1 = n * 0.14 + 60;
-    var value2 = n * 0.16 + 90;
+const coefs = [0.12, 0.14, 0.16, 0.18, 0.2, 0.22, 0.24, 0.26, 0.28];
+const addends = [30, 60, 90];
+const formatValues = (val) => parseFloat(val).toFixed(2);
 
-    var result = parseFloat(value).toFixed(2);
-    var result1 = parseFloat(value1).toFixed(2);
-    var result2 = parseFloat(value2).toFixed(2);
+const handleInput = function () {
+  const x = selectBuil.prop("selectedIndex");
+  const n = slider.val();
+  let value, value1, value2;
 
-    $("#slider_value").html(result + " лв.");
-    $("#slider_value1").html(result1 + " лв.");
-    $("#slider_value2").html(result2 + " лв.");
-    $("#final").val(n);
+  switch (x) {
+    case 0:
+      value = n * 0.12 + 30;
+      value1 = n * 0.14 + 60;
+      value2 = n * 0.16 + 90;
+      break;
+    case 1:
+      value = n * 0.18 + 30;
+      value1 = n * 0.2 + 60;
+      value2 = n * 0.22 + 90;
+      break;
+    case 2:
+      value = n * 0.24 + 30;
+      value1 = n * 0.26 + 60;
+      value2 = n * 0.28 + 90;
+      break;
   }
 
-  if (x == 1) {
-    var value = n * 0.18 + 30;
-    var value1 = n * 0.2 + 60;
-    var value2 = n * 0.22 + 90;
+  boxValue0.html(formatValues(value) + " лв.");
+  boxValue1.html(formatValues(value1) + " лв.");
+  boxValue2.html(formatValues(value2) + " лв.");
+  final.val(n);
+};
 
-    var result = parseFloat(value).toFixed(2);
-    var result1 = parseFloat(value1).toFixed(2);
-    var result2 = parseFloat(value2).toFixed(2);
+slider.on("input", handleInput);
+selectBuil.on("input", handleInput);
 
-    $("#slider_value").html(result + " лв.");
-    $("#slider_value1").html(result1 + " лв.");
-    $("#slider_value2").html(result2 + " лв.");
-    $("#final").val(n);
-  }
-
-  if (x == 2) {
-    var value = n * 0.24 + 30;
-    var value1 = n * 0.26 + 60;
-    var value2 = n * 0.28 + 90;
-
-    var result = parseFloat(value).toFixed(2);
-    var result1 = parseFloat(value1).toFixed(2);
-    var result2 = parseFloat(value2).toFixed(2);
-
-    $("#slider_value").html(result + " лв.");
-    $("#slider_value1").html(result1 + " лв.");
-    $("#slider_value2").html(result2 + " лв.");
-    $("#final").val(n);
-  }
+final.on("input", function () {
+  slider.val(final.val());
+  final.val(final.val() > 2000 ? 2000 : final.val());
+  handleInput();
 });
 
-$(document).on("input", "#slider", function () {
-  var x = document.getElementById("select-buil").selectedIndex;
-  var n = $("#slider").val();
+$(".account-m2, .building, .offer").on("change keyup", function () {
+  const accountM2 = $("#account-m2").val();
+  const accountBuilding = $(".building:checked").val();
+  const accountOffer = $(".offer:checked").val();
 
-  if (x == 0) {
-    var value = n * 0.12 + 30;
-    var value1 = n * 0.14 + 60;
-    var value2 = n * 0.16 + 90;
-
-    var result = parseFloat(value).toFixed(2);
-    var result1 = parseFloat(value1).toFixed(2);
-    var result2 = parseFloat(value2).toFixed(2);
-
-    $("#slider_value").html(result + " лв.");
-    $("#slider_value1").html(result1 + " лв.");
-    $("#slider_value2").html(result2 + " лв.");
-    $("#final").val(n);
+  let accountFinalPrice;
+  switch (accountOffer) {
+    case "Основна":
+      switch (accountBuilding) {
+        case "Къща":
+          accountFinalPrice = accountM2 * 0.12 + 30;
+          break;
+        case "Офис":
+          accountFinalPrice = accountM2 * 0.18 + 30;
+          break;
+        case "Салон":
+          accountFinalPrice = accountM2 * 0.24 + 30;
+          break;
+      }
+      break;
+    case "Премиум":
+      switch (accountBuilding) {
+        case "Къща":
+          accountFinalPrice = accountM2 * 0.14 + 60;
+          break;
+        case "Офис":
+          accountFinalPrice = accountM2 * 0.2 + 60;
+          break;
+        case "Салон":
+          accountFinalPrice = accountM2 * 0.26 + 60;
+          break;
+      }
+      break;
+    case "Вип":
+      switch (accountBuilding) {
+        case "Къща":
+          accountFinalPrice = accountM2 * 0.16 + 90;
+          break;
+        case "Офис":
+          accountFinalPrice = accountM2 * 0.22 + 90;
+          break;
+        case "Салон":
+          accountFinalPrice = accountM2 * 0.28 + 90;
+          break;
+      }
+      break;
   }
 
-  if (x == 1) {
-    var value = n * 0.18 + 30;
-    var value1 = n * 0.2 + 60;
-    var value2 = n * 0.22 + 90;
-
-    var result = parseFloat(value).toFixed(2);
-    var result1 = parseFloat(value1).toFixed(2);
-    var result2 = parseFloat(value2).toFixed(2);
-
-    $("#slider_value").html(result + " лв.");
-    $("#slider_value1").html(result1 + " лв.");
-    $("#slider_value2").html(result2 + " лв.");
-    $("#final").val(n);
-  }
-
-  if (x == 2) {
-    var value = n * 0.24 + 30;
-    var value1 = n * 0.26 + 60;
-    var value2 = n * 0.28 + 90;
-
-    var result = parseFloat(value).toFixed(2);
-    var result1 = parseFloat(value1).toFixed(2);
-    var result2 = parseFloat(value2).toFixed(2);
-
-    $("#slider_value").html(result + " лв.");
-    $("#slider_value1").html(result1 + " лв.");
-    $("#slider_value2").html(result2 + " лв.");
-    $("#final").val(n);
-  }
-});
-
-$(document).on("input", "#final", function () {
-  var final = $("#final").val();
-  $("#slider").val(final);
-
-  if (final == "") {
-    $("#slider").val(0);
-  }
-  if (final > 2000) {
-    var final = $("#final").val(2000);
-  }
-
-  var x = document.getElementById("select-buil").selectedIndex;
-  var n = $("#final").val();
-
-  if (x == 0) {
-    var value = n * 0.12 + 30;
-    var value1 = n * 0.14 + 60;
-    var value2 = n * 0.16 + 90;
-
-    var result = parseFloat(value).toFixed(2);
-    var result1 = parseFloat(value1).toFixed(2);
-    var result2 = parseFloat(value2).toFixed(2);
-
-    $("#slider_value").html(result + " лв.");
-    $("#slider_value1").html(result1 + " лв.");
-    $("#slider_value2").html(result2 + " лв.");
-    $("#final").val(n);
-  }
-
-  if (x == 1) {
-    var value = n * 0.18 + 30;
-    var value1 = n * 0.2 + 60;
-    var value2 = n * 0.22 + 90;
-
-    var result = parseFloat(value).toFixed(2);
-    var result1 = parseFloat(value1).toFixed(2);
-    var result2 = parseFloat(value2).toFixed(2);
-
-    $("#slider_value").html(result + " лв.");
-    $("#slider_value1").html(result1 + " лв.");
-    $("#slider_value2").html(result2 + " лв.");
-    $("#final").val(n);
-  }
-
-  if (x == 2) {
-    var value = n * 0.24 + 30;
-    var value1 = n * 0.26 + 60;
-    var value2 = n * 0.28 + 90;
-
-    var result = parseFloat(value).toFixed(2);
-    var result1 = parseFloat(value1).toFixed(2);
-    var result2 = parseFloat(value2).toFixed(2);
-
-    $("#slider_value").html(result + " лв.");
-    $("#slider_value1").html(result1 + " лв.");
-    $("#slider_value2").html(result2 + " лв.");
-    $("#final").val(n);
-  }
-});
-
-var accountBuilding = 0;
-var accountFinalPrice = 0;
-var accountOffer = 0;
-
-var finalPrice = $("#account-toast-price");
-
-$(".account-m2").keyup(function () {
-  var value = $(this).val();
-
-  if (accountOffer == 1 && accountBuilding == 1) {
-    accountFinalPrice = value * 0.12 + 30;
-  } else if (accountOffer == 1 && accountBuilding == 2) {
-    accountFinalPrice = value * 0.18 + 30;
-  } else if (accountOffer == 1 && accountBuilding == 3) {
-    accountFinalPrice = value * 0.24 + 30;
-  }
-
-  if (accountOffer == 2 && accountBuilding == 1) {
-    accountFinalPrice = value * 0.14 + 60;
-  } else if (accountOffer == 2 && accountBuilding == 2) {
-    accountFinalPrice = value * 0.2 + 60;
-  } else if (accountOffer == 2 && accountBuilding == 3) {
-    accountFinalPrice = value * 0.26 + 60;
-  }
-
-  if (accountOffer == 3 && accountBuilding == 1) {
-    accountFinalPrice = value * 0.16 + 90;
-  } else if (accountOffer == 3 && accountBuilding == 2) {
-    accountFinalPrice = value * 0.22 + 90;
-  } else if (accountOffer == 3 && accountBuilding == 3) {
-    accountFinalPrice = value * 0.28 + 90;
-  }
-
-  finalPrice.html(accountFinalPrice.toFixed(2) + " лв.");
+  $("#account-toast-price").html(accountFinalPrice.toFixed(2) + " лв.");
   $("#input-account-price").val(accountFinalPrice.toFixed(2));
 });
 
-$(".building").click(function () {
-  var value = $(this).val();
-  var accountM2 = $("#account-m2").val();
-
-  if (value == "Къща") {
-    accountBuilding = 1;
-  } else if (value == "Офис") {
-    accountBuilding = 2;
-  } else if (value == "Салон") {
-    accountBuilding = 3;
+function updateStars(numStars) {
+  $(".fa-star").addClass("text-gray-300");
+  $(".fa-star").removeClass("text-yellow-400");
+  for (let i = 1; i <= numStars; i++) {
+    $(`#first-star, #second-star, #third-star, #fourth-star, #fifth-star`)
+      .eq(i - 1)
+      .addClass("text-yellow-400");
   }
-
-  if (accountOffer == 1 && accountBuilding == 1) {
-    accountFinalPrice = accountM2 * 0.12 + 30;
-  } else if (accountOffer == 1 && accountBuilding == 2) {
-    accountFinalPrice = accountM2 * 0.18 + 30;
-  } else if (accountOffer == 1 && accountBuilding == 3) {
-    accountFinalPrice = accountM2 * 0.24 + 30;
-  }
-
-  if (accountOffer == 2 && accountBuilding == 1) {
-    accountFinalPrice = accountM2 * 0.14 + 60;
-  } else if (accountOffer == 2 && accountBuilding == 2) {
-    accountFinalPrice = accountM2 * 0.2 + 60;
-  } else if (accountOffer == 2 && accountBuilding == 3) {
-    accountFinalPrice = accountM2 * 0.26 + 60;
-  }
-
-  if (accountOffer == 3 && accountBuilding == 1) {
-    accountFinalPrice = accountM2 * 0.16 + 90;
-  } else if (accountOffer == 3 && accountBuilding == 2) {
-    accountFinalPrice = accountM2 * 0.22 + 90;
-  } else if (accountOffer == 3 && accountBuilding == 3) {
-    accountFinalPrice = accountM2 * 0.28 + 90;
-  }
-
-  finalPrice.html(accountFinalPrice.toFixed(2) + " лв.");
-  $("#input-account-price").val(accountFinalPrice.toFixed(2));
-});
-
-$(".offer").click(function () {
-  var value = $(this).val();
-  var accountM2 = $("#account-m2").val();
-
-  if (value == "Основна") {
-    accountOffer = 1;
-  } else if (value == "Премиум") {
-    accountOffer = 2;
-  } else if (value == "Вип") {
-    accountOffer = 3;
-  }
-
-  if (accountOffer == 1 && accountBuilding == 1) {
-    accountFinalPrice = accountM2 * 0.12 + 30;
-  } else if (accountOffer == 1 && accountBuilding == 2) {
-    accountFinalPrice = accountM2 * 0.18 + 30;
-  } else if (accountOffer == 1 && accountBuilding == 3) {
-    accountFinalPrice = accountM2 * 0.24 + 30;
-  }
-
-  if (accountOffer == 2 && accountBuilding == 1) {
-    accountFinalPrice = accountM2 * 0.14 + 60;
-  } else if (accountOffer == 2 && accountBuilding == 2) {
-    accountFinalPrice = accountM2 * 0.2 + 60;
-  } else if (accountOffer == 2 && accountBuilding == 3) {
-    accountFinalPrice = accountM2 * 0.26 + 60;
-  }
-
-  if (accountOffer == 3 && accountBuilding == 1) {
-    accountFinalPrice = accountM2 * 0.16 + 90;
-  } else if (accountOffer == 3 && accountBuilding == 2) {
-    accountFinalPrice = accountM2 * 0.22 + 90;
-  } else if (accountOffer == 3 && accountBuilding == 3) {
-    accountFinalPrice = accountM2 * 0.28 + 90;
-  }
-
-  finalPrice.html(accountFinalPrice.toFixed(2) + " лв.");
-  $("#input-account-price").val(accountFinalPrice.toFixed(2));
-});
+  $("#stars-count").val(numStars);
+  $("#rate-star-value").html(numStars);
+}
 
 $("#first-star").click(function () {
-  $(".fa-star").removeClass("text-gray-300");
-  $(".fa-star").removeClass("text-yellow-400");
-  $("#first-star").addClass("text-yellow-400");
-  $("#second-star, #third-star, #fourth-star, #fifth-star").addClass(
-    "text-gray-300"
-  );
-  $("#stars-count").val(1);
-  $("#rate-star-value").html(1);
+  updateStars(1);
 });
 
 $("#second-star").click(function () {
-  $(".fa-star").removeClass("text-gray-300");
-  $(".fa-star").removeClass("text-yellow-400");
-  $("#first-star, #second-star").addClass("text-yellow-400");
-  $("#third-star, #fourth-star, #fifth-star").addClass("text-gray-300");
-  $("#stars-count").val(2);
-  $("#rate-star-value").html(2);
+  updateStars(2);
 });
 
 $("#third-star").click(function () {
-  $(".fa-star").removeClass("text-gray-300");
-  $(".fa-star").removeClass("text-yellow-400");
-  $("#first-star, #second-star, #third-star").addClass("text-yellow-400");
-  $("#fourth-star, #fifth-star").addClass("text-gray-300");
-  $("#stars-count").val(3);
-  $("#rate-star-value").html(3);
+  updateStars(3);
 });
 
 $("#fourth-star").click(function () {
-  $(".fa-star").removeClass("text-gray-300");
-  $(".fa-star").removeClass("text-yellow-400");
-  $("#first-star, #second-star, #third-star, #fourth-star").addClass(
-    "text-yellow-400"
-  );
-  $("#fifth-star").addClass("text-gray-300");
-  $("#stars-count").val(4);
-  $("#rate-star-value").html(4);
+  updateStars(4);
 });
 
 $("#fifth-star").click(function () {
-  $(".fa-star").removeClass("text-gray-300");
-  $(".fa-star").removeClass("text-yellow-400");
-  $(
-    "#first-star, #second-star, #third-star, #fourth-star, #fifth-star"
-  ).addClass("text-yellow-400");
-  $("#stars-count").val(5);
-  $("#rate-star-value").html(5);
+  updateStars(5);
 });
 
 $("#first-star").hover(function () {
-  $(".fa-star").removeClass("text-gray-300");
-  $(".fa-star").removeClass("text-yellow-400");
-  $("#first-star").addClass("text-yellow-400");
-  $("#second-star, #third-star, #fourth-star, #fifth-star").addClass(
-    "text-gray-300"
-  );
+  updateStars(1);
 });
 
 $("#second-star").hover(function () {
-  $(".fa-star").removeClass("text-gray-300");
-  $(".fa-star").removeClass("text-yellow-400");
-  $("#first-star, #second-star").addClass("text-yellow-400");
-  $("#third-star, #fourth-star, #fifth-star").addClass("text-gray-300");
+  updateStars(2);
 });
 
 $("#third-star").hover(function () {
-  $(".fa-star").removeClass("text-gray-300");
-  $(".fa-star").removeClass("text-yellow-400");
-  $("#first-star, #second-star, #third-star").addClass("text-yellow-400");
-  $("#fourth-star, #fifth-star").addClass("text-gray-300");
+  updateStars(3);
 });
 
 $("#fourth-star").hover(function () {
-  $(".fa-star").removeClass("text-gray-300");
-  $(".fa-star").removeClass("text-yellow-400");
-  $("#first-star, #second-star, #third-star, #fourth-star").addClass(
-    "text-yellow-400"
-  );
-  $("#fifth-star").addClass("text-gray-300");
+  updateStars(4);
 });
 
 $("#fifth-star").hover(function () {
-  $(".fa-star").removeClass("text-gray-300");
-  $(".fa-star").removeClass("text-yellow-400");
-  $(
-    "#first-star, #second-star, #third-star, #fourth-star, #fifth-star"
-  ).addClass("text-yellow-400");
+  updateStars(5);
+});
+
+$("#room, #offer, #customer-m2").on("change keyup", function () {
+  const m2 = $("#customer-m2").val();
+  const offer = $("#offer").val();
+  const room = $("#room").val();
+
+  let finalPrice;
+  switch (offer) {
+    case "Основна":
+      switch (room) {
+        case "Къща":
+          finalPrice = m2 * 0.12 + 30;
+          break;
+        case "Офис":
+          finalPrice = m2 * 0.18 + 30;
+          break;
+        case "Салон":
+          finalPrice = m2 * 0.24 + 30;
+          break;
+      }
+      break;
+    case "Премиум":
+      switch (room) {
+        case "Къща":
+          finalPrice = m2 * 0.14 + 60;
+          break;
+        case "Офис":
+          finalPrice = m2 * 0.2 + 60;
+          break;
+        case "Салон":
+          finalPrice = m2 * 0.26 + 60;
+          break;
+      }
+      break;
+    case "Вип":
+      switch (room) {
+        case "Къща":
+          finalPrice = m2 * 0.16 + 90;
+          break;
+        case "Офис":
+          finalPrice = m2 * 0.22 + 90;
+          break;
+        case "Салон":
+          finalPrice = m2 * 0.28 + 90;
+          break;
+      }
+      break;
+  }
+
+  $("#customer-price").val(finalPrice.toFixed(2) + " лв.");
+  $("#customer-price-hidden").val(finalPrice.toFixed(2));
 });

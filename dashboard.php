@@ -39,7 +39,7 @@ $date = date("Y-m-d"); ?>
 
   <div id="app">
     <?php if ($adminEmail) {
-      $query = "SELECT * FROM admin WHERE email = '$adminEmail'";
+      $query = "SELECT * FROM admins WHERE email = '$adminEmail'";
       $execute = mysqli_query($con, $query);
 
       while ($roles = mysqli_fetch_array($execute)) {
@@ -143,13 +143,15 @@ $date = date("Y-m-d"); ?>
                         </div>
                       </div>
                       <div>
-                        <span id="admin-photo">
-                          <?php
-                          if ($roles["image"] != "") { ?>
-                            <img data-dropdown-toggle="profile-dropdown" src="uploaded-files/admin-images/<?= $roles["image"] ?>" alt="<?= $roles["image"] ?>" data-dropdown-toggle="profile-dropdown" class="w-8 h-8 rounded-lg object-cover ml-5 mr-4 shadow cursor-pointer active:scale-90 hover:opacity-75 transition-all">
-                          <?php } else { ?>
-                            <img data-dropdown-toggle="profile-dropdown" src="images/user.png" alt="user" data-dropdown-toggle="profile-dropdown" class="w-8 h-8 rounded-full object-cover ml-5 mr-4 shadow cursor-pointer active:scale-90 hover:opacity-75 transition-all" />
-                          <?php } ?>
+                        <span data-dropdown-toggle="profile-dropdown" data-dropdown-toggle="profile-dropdown">
+                          <span id="admin-photo">
+                            <?php
+                            if ($roles["image"] != "") { ?>
+                              <img src="uploaded-files/admin-images/<?= $roles["image"] ?>" alt="<?= $roles["image"] ?>" class="w-8 h-8 rounded-lg object-cover ml-5 mr-4 shadow cursor-pointer active:scale-90 hover:opacity-75 transition-all">
+                            <?php } else { ?>
+                              <img src="images/user.png" alt="user" class="w-8 h-8 rounded-full object-cover ml-5 mr-4 shadow cursor-pointer active:scale-90 hover:opacity-75 transition-all" />
+                            <?php } ?>
+                          </span>
                         </span>
                         <div id="profile-dropdown" class="hidden z-10 w-44 bg-white rounded shadow-xl border border-slate-100">
                           <ul class="text-sm text-gray-700" aria-labelledby="dropdownDefault">
@@ -469,7 +471,7 @@ $date = date("Y-m-d"); ?>
                                 </label>
                                 <input type="text" minlength="2" maxlength="4" id="customer-m2" name="m2" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи квадратура" />
                                 <label for="pick-date" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете дата</label>
-                                <input type="date" id="pick-date" name="pickDate" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 mb-5" placeholder="Изберете дата" />
+                                <input type="date" id="pick-date" name="pickDate" min="<?php echo date("Y-m-d"); ?>" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 mb-5" placeholder="Изберете дата" />
                                 <label for="time" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете час</label>
                                 <select id="time" name="time" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 mb-4">
                                   <option value="Преди 13:00">Преди 13:00</option>
@@ -482,12 +484,13 @@ $date = date("Y-m-d"); ?>
                                 </select>
                                 <label for="address" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Адрес</label>
                                 <textarea id="address" name="address" rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:outline-none focus:border-gray-400 mb-4" placeholder="Пишете тук..."></textarea>
-                                <label for="infomation" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Допълнителна информация</label>
-                                <textarea id="infomation" rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:outline-none focus:border-gray-400 mb-4" placeholder="Пишете тук..."></textarea>
+                                <label for="information" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Допълнителна информация</label>
+                                <textarea id="information" name="information" rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:outline-none focus:border-gray-400 mb-4" placeholder="Пишете тук..."></textarea>
                                 <label class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
                                   Цена
                                 </label>
-                                <input type="text" name="customerPrice" class="bg-gray-50 border border-gray-300 text-gray-900 mb-2 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-300 w-full p-2.5" placeholder="Цена" />
+                                <input readonly id="customer-price" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 mb-2 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-300 w-full p-2.5" />
+                                <input id="customer-price-hidden" type="hidden" name="customerPrice" />
                               </div>
                             </div>
                           </div>
@@ -563,7 +566,7 @@ $date = date("Y-m-d"); ?>
                                 </label>
                                 <input type="text" minlength="2" id="customer-m2-edit" name="m2" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи квадратура" />
                                 <label for="pick-date-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете дата</label>
-                                <input type="date" id="pick-date-edit" name="pickDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 mb-5" placeholder="Изберете дата" />
+                                <input type="date" id="pick-date-edit" min="<?php echo date("Y-m-d"); ?>" name="pickDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 mb-5" placeholder="Изберете дата" />
                                 <label for="time-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Изберете час</label>
                                 <select id="time-edit" name="time" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 mb-4">
                                   <option value="Преди 13:00">Преди 13:00</option>
@@ -1102,7 +1105,7 @@ $date = date("Y-m-d"); ?>
                                     <?php
                                     $id = $rows['id'];
 
-                                    $sql_run = "SELECT CAST(AVG(rating) AS DECIMAL(10,1)) AS rating FROM team_rating WHERE team_id = '$id'";
+                                    $sql_run = "SELECT CAST(AVG(rating) AS DECIMAL(10,1)) AS rating FROM team_ratings WHERE team_id = '$id'";
                                     $result = $con->query($sql_run);
                                     while ($row = mysqli_fetch_array($result)) {
                                       if ($row['rating'] == "") {
@@ -1317,7 +1320,7 @@ $date = date("Y-m-d"); ?>
                         </thead>
                         <tbody>
                           <?php
-                          $query = "SELECT * FROM stock";
+                          $query = "SELECT * FROM stocks";
                           $query_run = mysqli_query($con, $query);
 
                           if (mysqli_num_rows($query_run) > 0) {
@@ -1613,7 +1616,7 @@ $date = date("Y-m-d"); ?>
                         </thead>
                         <tbody>
                           <?php
-                          $query = "SELECT * FROM product_order";
+                          $query = "SELECT * FROM product_orders";
                           $query_run = mysqli_query($con, $query);
 
                           if (mysqli_num_rows($query_run) > 0) {
@@ -1811,7 +1814,7 @@ $date = date("Y-m-d"); ?>
                         </thead>
                         <tbody>
                           <?php
-                          $query = "SELECT * FROM supplier";
+                          $query = "SELECT * FROM suppliers";
                           $query_run = mysqli_query($con, $query);
 
                           if (mysqli_num_rows($query_run) > 0) {
@@ -1825,7 +1828,7 @@ $date = date("Y-m-d"); ?>
                                 <td class="px-4 py-5">
                                   <?php
                                   $supplier = $rows["name"];
-                                  $queryy = "SELECT * FROM product_order WHERE supplier = '$supplier'";
+                                  $queryy = "SELECT * FROM product_orders WHERE supplier = '$supplier'";
                                   $query_runn = mysqli_query($con, $queryy);
 
                                   if (mysqli_num_rows($query_runn) >= 1) { ?>

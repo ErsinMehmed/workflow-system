@@ -9,9 +9,9 @@ $text = $_POST['text'];
 $kind = $_POST['kind'];
 
 if ($kind == 'Всички') {
-    $query = "SELECT * FROM stock WHERE name LIKE '$text%' OR id LIKE '$text%'";
+    $query = "SELECT * FROM stocks WHERE name LIKE '$text%' OR id LIKE '$text%'";
 } else {
-    $query = "SELECT * FROM stock WHERE (name LIKE '$text%' OR id LIKE '$text%') AND kind='$kind'";
+    $query = "SELECT * FROM stocks WHERE (name LIKE '$text%' OR id LIKE '$text%') AND kind='$kind'";
 }
 $query_run = mysqli_query($con, $query);
 ?>
@@ -39,7 +39,7 @@ if (mysqli_num_rows($query_run) > 0) {
                 </td>
                 <td class="px-4 py-5 text-center"><?= $rows["kind"] ?></td>
                 <td class="px-4 py-5 flex justify-center items-center space-x-2">
-                    <?php $query = "SELECT * FROM admin WHERE email = '$adminEmail'";
+                    <?php $query = "SELECT * FROM admins WHERE email = '$adminEmail'";
                     $execute = mysqli_query($con, $query);
 
                     while ($roles = mysqli_fetch_array($execute)) {

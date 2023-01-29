@@ -18,11 +18,11 @@ if (isset($_POST['admin_supplier'])) {
     if (!$name || !$phone || !$address || !$iban) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "SELECT name FROM supplier WHERE name = '$name'";
+        $query = "SELECT name FROM suppliers WHERE name = '$name'";
         $query_go = mysqli_query($con, $query);
 
         if (mysqli_num_rows($query_go) == 0) {
-            $query = "INSERT INTO supplier (name,phone,address,iban) VALUES ('$name','$phone','$address','$iban')";
+            $query = "INSERT INTO suppliers (name,phone,address,iban) VALUES ('$name','$phone','$address','$iban')";
             $query_run = mysqli_query($con, $query);
 
             jsonResponseMain($query_run, 'Успешно добавихте доставчика', 'Неуспешно добавяне доставчика');
@@ -43,7 +43,7 @@ if (isset($_POST['admin_edit_supplier'])) {
     if (!$phone || !$address || !$iban) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "UPDATE supplier SET phone = '$phone', address = '$address', iban = '$iban' WHERE id = '$id'";
+        $query = "UPDATE suppliers SET phone = '$phone', address = '$address', iban = '$iban' WHERE id = '$id'";
         $query_run = mysqli_query($con, $query);
 
         jsonResponseMain($query_run, 'Успешно редактирахте доставчика', 'Неуспешно редактирахте доставчика');
@@ -54,7 +54,7 @@ if (isset($_POST['admin_edit_supplier'])) {
 if (isset($_GET['name'])) {
     $name = mysqli_real_escape_string($con, $_GET['name']);
 
-    $query = "SELECT * FROM supplier WHERE name='$name'";
+    $query = "SELECT * FROM suppliers WHERE name='$name'";
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) == 1) {
@@ -75,7 +75,7 @@ if (isset($_GET['name'])) {
 if (isset($_GET['id'])) {
     $id = mysqli_real_escape_string($con, $_GET['id']);
 
-    $query = "SELECT * FROM supplier WHERE id='$id'";
+    $query = "SELECT * FROM suppliers WHERE id='$id'";
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) == 1) {
@@ -96,7 +96,7 @@ if (isset($_GET['id'])) {
 if (isset($_POST['admin_delete_supplier'])) {
     $id = $_POST['id'];
 
-    $query = "DELETE FROM supplier WHERE id = '$id'";
+    $query = "DELETE FROM suppliers WHERE id = '$id'";
     $query_run = mysqli_query($con, $query);
 
     jsonResponseMain($query_run, 'Успешно изтриване', 'Неуспешно изтриване');

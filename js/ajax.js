@@ -54,6 +54,8 @@ $(document).ready(function () {
       var res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
+        $("#customer-register-modal").removeClass("block");
+        $("#customer-register-modal").addClass("hidden");
         $("#sign-in-form")[0].reset();
         alertify.success(res.message);
       } else if (res.status == 500) {
@@ -2106,6 +2108,14 @@ $(document).ready(function () {
   openModal("#add-supplier-btn", "#add-supplier-modal");
 
   closeModal(".close-supplier-modal", "#add-supplier-modal");
+
+  openModal(".login-btn", "#customer-login-modal");
+
+  closeModal(".customer-close-login-modal", "#customer-login-modal");
+
+  openModal(".register-btn", "#customer-register-modal");
+
+  closeModal(".close-customer-register-modal", "#customer-register-modal");
 
   $("#active-order").html($(".active-order-count").val());
 

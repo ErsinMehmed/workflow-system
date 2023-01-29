@@ -92,7 +92,7 @@ if (mysqli_num_rows($query_run) > 0) {
                 <td class="px-4 py-5 text-center"><?= date("d.m.Y", strtotime($rows['date'])) ?></td>
                 <td class="px-4 py-5 flex items-center justify-center space-x-2">
                     <?php
-                    $query = "SELECT * FROM admin WHERE email = '$adminEmail'";
+                    $query = "SELECT * FROM admins WHERE email = '$adminEmail'";
                     $execute = mysqli_query($con, $query);
 
                     while ($roles = mysqli_fetch_array($execute)) {

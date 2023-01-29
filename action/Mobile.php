@@ -149,7 +149,7 @@ if (isset($_POST['productName'])) {
     $name = ($_POST['productName']);
     $teamId = ($_POST['teamId']);
 
-    $query = "SELECT * FROM set_product WHERE quantity <> 0 AND product_name = '$name' AND team_id = '$teamId' GROUP BY product_name";
+    $query = "SELECT * FROM set_products WHERE quantity <> 0 AND product_name = '$name' AND team_id = '$teamId' GROUP BY product_name";
     $query_run = mysqli_query($con, $query);
 
     while ($rows = mysqli_fetch_array($query_run)) {
@@ -157,10 +157,10 @@ if (isset($_POST['productName'])) {
         $id = $rows['id'];
         $finalQuantity = $quantity - 1;
 
-        $query = "UPDATE set_product SET quantity = '$finalQuantity' WHERE id = '$id'";
+        $query = "UPDATE set_products SET quantity = '$finalQuantity' WHERE id = '$id'";
         mysqli_query($con, $query);
 
-        $queryy = "DELETE FROM set_product WHERE quantity = '0'";
+        $queryy = "DELETE FROM set_products WHERE quantity = '0'";
         mysqli_query($con, $queryy);
     }
 }
@@ -171,23 +171,23 @@ if (isset($_POST['productNameReturn'])) {
     $teamId = ($_POST['teamId']);
     $date = date('Y-m-d');
 
-    $query = "SELECT sum(quantity) as quantity_sum FROM set_product WHERE product_name = '$name' AND team_id = '$teamId'";
+    $query = "SELECT sum(quantity) as quantity_sum FROM set_products WHERE product_name = '$name' AND team_id = '$teamId'";
     $query_run = mysqli_query($con, $query);
 
     while ($rows = mysqli_fetch_array($query_run)) {
         $quantity = $rows['quantity_sum'];
 
-        $query3 = "SELECT * FROM stock WHERE name = '$name'";
+        $query3 = "SELECT * FROM stocks WHERE name = '$name'";
         $query_fulfill = mysqli_query($con, $query3);
 
         while ($rowss = mysqli_fetch_array($query_fulfill)) {
             $quantityStock = $rowss['quantity'];
             $finalSum = $quantity + $quantityStock;
 
-            $query4 = "UPDATE stock SET quantity = '$finalSum' WHERE name = '$name'";
+            $query4 = "UPDATE stocks SET quantity = '$finalSum' WHERE name = '$name'";
             $query_go = mysqli_query($con, $query4);
 
-            $query5 = "DELETE FROM set_product WHERE product_name = '$name' AND team_id = '$teamId'";
+            $query5 = "DELETE FROM set_products WHERE product_name = '$name' AND team_id = '$teamId'";
             $query_goo = mysqli_query($con, $query5);
 
             $query = "SELECT * FROM teams WHERE id = '$teamId' AND delete_team <> 'yes'";
@@ -196,7 +196,7 @@ if (isset($_POST['productNameReturn'])) {
             while ($row = mysqli_fetch_array($query_run)) {
                 $teamName = $row['name'];
 
-                $query6 = "INSERT INTO seted_product_history (product_name,quantity,team_id,team_name,date,status) VALUES ('$name','$quantity','$teamId','$teamName','$date','back')";
+                $query6 = "INSERT INTO seted_product_histories (product_name,quantity,team_id,team_name,date,status) VALUES ('$name','$quantity','$teamId','$teamName','$date','back')";
                 $query_runn = mysqli_query($con, $query6);
             }
         }
@@ -216,7 +216,7 @@ if (isset($_POST['mobile_product_request'])) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
 
-        $query = "INSERT INTO product_request (product_name,quantity,view,date,team_id) VALUES ('$name','$quantity','0','$date','$teamId')";
+        $query = "INSERT INTO product_requests (product_name,quantity,view,date,team_id) VALUES ('$name','$quantity','0','$date','$teamId')";
         $query_run = mysqli_query($con, $query);
 
         jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');

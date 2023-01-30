@@ -940,14 +940,7 @@ $email = $_SESSION['email']; ?>
                 </div>
                 <div class="my-4 sm:flex items-center sm:space-x-5 space-y-4 sm:space-y-0">
                   <div class="sm:w-1/2">
-                    <div class="relative">
-                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" class="w-5 h-5 text-gray-500">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                        </svg>
-                      </div>
-                      <input type="date" name="date" min="<?php echo date("Y-m-d", strtotime('+1 day', time())); ?>" value="<?php echo date("Y-m-d", strtotime('+1 day', time())); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-10 p-2.5 " placeholder="Изберете дата" />
-                    </div>
+                    <input type="date" name="date" min="<?php echo date("Y-m-d", strtotime('+1 day', time())); ?>" value="<?php echo date("Y-m-d", strtotime('+1 day', time())); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 " placeholder="Изберете дата" />
                   </div>
                   <div class="w-1/2 flex space-x-5">
                     <div>
@@ -1253,19 +1246,19 @@ $email = $_SESSION['email']; ?>
                       </label>
                       <div class="flex items-center justify-center">
                         <div class="flex items-center">
-                          <svg id="first-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                          <svg id="first-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-90 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                           </svg>
-                          <svg id="second-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                          <svg id="second-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-90 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                           </svg>
-                          <svg id="third-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                          <svg id="third-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-90 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                           </svg>
-                          <svg id="fourth-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                          <svg id="fourth-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-90 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                           </svg>
-                          <svg id="fifth-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-95 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
+                          <svg id="fifth-star" class="w-8 h-8 md:w-10 md:h-10 text-gray-300 transition-all active:scale-90 cursor-pointer fa-star" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                           </svg>
                         </div>
@@ -1582,6 +1575,7 @@ $email = $_SESSION['email']; ?>
   <script src="js/main-vue.js"></script>
   <script src="js/main.js"></script>
   <script src="js/ajax.js"></script>
+  <script src="js/print.js"></script>
   <script src="loader/siteLoader.js"></script>
   <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 </body>

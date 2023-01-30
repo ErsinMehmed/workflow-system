@@ -88,7 +88,7 @@ if (isset($_POST['admin_photo'])) {
         $query = "UPDATE admins SET image='$filename' WHERE email='$email'";
         $query_run = mysqli_query($con, $query);
 
-        jsonResponseMain($query_run, 'Снимката е обновена', 'Снимката не е обновена');
+        jsonResponseMain($query_run, 'Профилната снимка е обновена', 'Снимката не е обновена');
     } else {
         jsonResponse(500, 'Снимката, която се опитвате да добавите е по-голяма от 2MB');
     }

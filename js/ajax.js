@@ -27,18 +27,14 @@ $(document).ready(function () {
     });
   }
 
-  function openModal(id, modalID) {
-    $(document).on("click", id, function () {
-      $(modalID).removeClass("hidden");
-      $(modalID).addClass("block");
-    });
+  function closeModal(modalID) {
+    $(modalID).removeClass("block");
+    $(modalID).addClass("hidden");
   }
 
-  function closeModal(id, modalID) {
-    $(document).on("click", id, function () {
-      $(modalID).removeClass("block");
-      $(modalID).addClass("hidden");
-    });
+  function openModal(modalID) {
+    $(modalID).removeClass("hidden");
+    $(modalID).addClass("block");
   }
 
   alertify.set("notifier", "position", "top-center");
@@ -47,15 +43,14 @@ $(document).ready(function () {
   $(document).on("submit", "#sign-in-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("save_customer", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#customer-register-modal").removeClass("block");
-        $("#customer-register-modal").addClass("hidden");
+        closeModal("#customer-register-modal");
         $("#sign-in-form")[0].reset();
         alertify.success(res.message);
       } else if (res.status == 500) {
@@ -68,11 +63,11 @@ $(document).ready(function () {
   $(document).on("submit", "#sing-up-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("login_info", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         window.location.href = "account";
@@ -88,11 +83,11 @@ $(document).ready(function () {
   $(document).on("submit", "#user-info-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("update_customer", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         alertify.success(res.message);
@@ -107,16 +102,13 @@ $(document).ready(function () {
   $(document).on("submit", "#customer-image-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("update_customer_image", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
       if (res.status == 200) {
-        alertify.success(res.message);
         location.reload(true);
-      } else if (res.status == 500) {
-        alertify.error(res.message);
       }
     });
   });
@@ -125,11 +117,11 @@ $(document).ready(function () {
   $(document).on("submit", "#update-customer-password", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("update_customer_password", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         alertify.success(res.message);
@@ -142,10 +134,10 @@ $(document).ready(function () {
 
   // Customer profile logout
   $("#log-out").on("click", function () {
-    var action = "data";
+    const action = "data";
 
     postData("action/Customer.php", { action: action }, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         window.location.href = "/";
@@ -157,11 +149,11 @@ $(document).ready(function () {
   $(document).on("submit", "#customer-order-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("customer_order", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         $("#history-section-load").load(
@@ -180,15 +172,14 @@ $(document).ready(function () {
   $(document).on("submit", "#customer-opinion-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("customer_rate", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#customer-opinion-modal").removeClass("block");
-        $("#customer-opinion-modal").addClass("hidden");
+        closeModal("#customer-opinion-modal");
         $("#customer-opinion-form")[0].reset();
         $("#rate-section").load(location.href + " #rate-section");
         alertify.success(res.message);
@@ -202,11 +193,11 @@ $(document).ready(function () {
   $(document).on("submit", "#guest-order-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("guest_order", true);
 
     postFormData("action/Order.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         $("#guest-order-form")[0].reset();
@@ -220,17 +211,16 @@ $(document).ready(function () {
 
   // Get customer history modal data
   $(document).on("click", ".history-view", function () {
-    var id = $(this).val();
+    const id = $(this).val();
 
     getData("action/Customer.php?id=" + id, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
       } else if (res.status == 200) {
-        $("#history-modal").removeClass("hidden");
-        $("#history-modal").addClass("block");
+        openModal("#history-modal");
         var date = res.data.add_date.split(" ");
-        var finalDate = date[0].replaceAll("-", ".").split(".");
+        const finalDate = date[0].split("-");
 
         $("#add_date").html(
           finalDate[2] + "." + finalDate[1] + "." + finalDate[0]
@@ -241,7 +231,7 @@ $(document).ready(function () {
         $("#customer_building").html(res.data.room);
         $("#customer_offer").html(res.data.offer);
 
-        var date = res.data.date.replaceAll("-", ".").split(".");
+        var date = res.data.date.split("-");
         $("#do_date").html(date[2] + "." + date[1] + "." + date[0]);
         $("#do_time").html(res.data.time);
         $("#customer_payment").html(res.data.pay);
@@ -256,8 +246,8 @@ $(document).ready(function () {
 
   // Date filter history section
   $("#date-picker-account").on("change", function () {
-    var date = $(this).val();
-    var offer = $("#account-offers").val();
+    const date = $(this).val();
+    const offer = $("#account-offers").val();
 
     postData(
       "action/customer/Filter.php",
@@ -270,8 +260,8 @@ $(document).ready(function () {
 
   // Offer filter history section
   $("#account-offers").on("change", function () {
-    var offer = $(this).val();
-    var date = $("#date-picker-account").val();
+    const offer = $(this).val();
+    const date = $("#date-picker-account").val();
 
     postData(
       "action/customer/Filter.php",
@@ -286,11 +276,11 @@ $(document).ready(function () {
   $(document).on("submit", "#room-images-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("customer_upload_room", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         $("#document-section").load(location.href + " #document-section");
@@ -304,23 +294,21 @@ $(document).ready(function () {
   // Open delete room image modal
   $(document).on("click", ".room-img", function (e) {
     $("#delete-img-id").val($(this).attr("id"));
-    $("#delete-customer-img-modal").removeClass("hidden");
-    $("#delete-customer-img-modal").addClass("block");
+    openModal("#delete-customer-img-modal");
   });
 
   // Delete room image
   $(document).on("submit", "#delete-customer-img-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("delete_customer_img", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#delete-customer-img-modal").removeClass("block");
-        $("#delete-customer-img-modal").addClass("hidden");
+        closeModal("#delete-customer-img-modal");
         $("#document-section").load(location.href + " #document-section");
         alertify.success(res.message);
       } else if (res.status == 500) {
@@ -329,21 +317,18 @@ $(document).ready(function () {
     });
   });
 
-  closeModal(".close-delete-customer-img-modal", "#delete-customer-img-modal");
-
   // Admin make order
   $(document).on("submit", "#add-order-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_order", true);
 
     postFormData("action/AdminOrders.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#add-order-modal").removeClass("block");
-        $("#add-order-modal").addClass("hidden");
+        closeModal("#add-order-modal");
         $("#order-table").load(location.href + " #order-table");
         $("#add-order-form")[0].reset();
         alertify.success(res.message);
@@ -353,23 +338,16 @@ $(document).ready(function () {
     });
   });
 
-  closeModal("#close-history-modal", "#history-modal");
-
-  openModal("#add-order-btn", "#add-order-modal");
-
-  closeModal(".close-add-order-modal", "#add-order-modal");
-
   // Get order data for edit
   $(document).on("click", ".edit-order", function () {
-    var id = $(this).val();
+    const id = $(this).val();
 
     getData("action/AdminOrders.php?id=" + id, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
       } else if (res.status == 200) {
-        $("#order-modal").removeClass("hidden");
-        $("#order-modal").addClass("block");
+        openModal("#order-modal");
 
         if (res.data.room == "Къща") {
           $('#room-edit option[value="Къща"]').attr("selected", "selected");
@@ -417,36 +395,33 @@ $(document).ready(function () {
     });
   });
 
+  // Customer opinion modal
   $(document).on("click", ".view-customer-opinion", function () {
-    var id = $(this).val();
+    const id = $(this).val();
 
     getData("action/AdminOrders.php?id=" + id, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
       } else if (res.status == 200) {
-        $("#customer-opinion-modal").removeClass("hidden");
-        $("#customer-opinion-modal").addClass("block");
+        openModal("#customer-opinion-modal");
         $("#customer-opinion-orders").val(res.data.customer_opinion);
       }
     });
   });
 
-  closeModal(".close-customer-opinion-modal", "#customer-opinion-modal");
-
   // Update order data
   $(document).on("submit", "#update-order-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_order_update", true);
 
     postFormData("action/AdminOrders.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#order-modal").removeClass("block");
-        $("#order-modal").addClass("hidden");
+        closeModal("#order-modal");
         $("#order-table").load(location.href + " #order-table");
         alertify.success(res.message);
       } else if (res.status == 500) {
@@ -455,17 +430,15 @@ $(document).ready(function () {
     });
   });
 
-  closeModal(".close-order-modal", "#order-modal");
-
   // Send invoice to customer profile
   $(document).on("click", ".send-invoice", function (e) {
-    var orderIdInvoice = $(this).val();
+    const orderIdInvoice = $(this).val();
 
     postData(
       "action/AdminOrders.php",
       { orderIdInvoice: orderIdInvoice },
       function (response) {
-        var res = jQuery.parseJSON(response);
+        const res = jQuery.parseJSON(response);
 
         if (res.status == 200) {
           $("#order-table").load(location.href + " #order-table");
@@ -479,23 +452,22 @@ $(document).ready(function () {
 
   // Show customer information
   $(document).on("click", ".show-customer", function () {
-    var email = $(this).val();
+    const email = $(this).val();
 
     getData("action/AdminOrders.php?email=" + email, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
       if (res.status == 404) {
         alertify.error(res.message);
       } else if (res.status == 200) {
-        $("#customer-order-modal").removeClass("hidden");
-        $("#customer-order-modal").addClass("block");
+        openModal("#customer-order-modal");
 
         $("#customer-name-show").val(res.data.name);
         $("#customer-phone-show").val(res.data.phone);
         $("#customer-email-show").val(res.data.email);
         $("#customer-address-show").val(res.data.address);
 
-        var date = res.data.created_at.split(" ");
-        var finalDate = date[0].replaceAll("-", ".").split(".");
+        const date = res.data.created_at.split(" ");
+        const finalDate = date[0].split("-");
         $("#customer-created").val(
           finalDate[2] + "." + finalDate[1] + "." + finalDate[0]
         );
@@ -505,8 +477,8 @@ $(document).ready(function () {
 
   // Date filter dashboard order section
   $("#order-filter-date").on("change", function () {
-    var date = $(this).val();
-    var text = $("#search-order").val();
+    const date = $(this).val();
+    const text = $("#search-order").val();
 
     postData(
       "action/orders/Filter.php",
@@ -519,8 +491,8 @@ $(document).ready(function () {
 
   // Text filter dashboard order section
   $("#search-order").on("keyup", function () {
-    var text = $(this).val();
-    var date = $("#order-filter-date").val();
+    const text = $(this).val();
+    const date = $("#order-filter-date").val();
 
     postData(
       "action/orders/Filter.php",
@@ -533,33 +505,26 @@ $(document).ready(function () {
 
   // text filter dashboard supplier section
   $("#search-supplier").on("keyup", function () {
-    var text = $(this).val();
+    const text = $(this).val();
 
     postData("action/supplier/Filter.php", { text: text }, function (data) {
       $("#supplier-table").html(data);
     });
   });
 
-  closeModal(".customer-order-modal-close", "#customer-order-modal");
-
-  closeModal(".close-add-user-modal", "#add-user-modal");
-
-  openModal("#add-user-btn", "#add-user-modal");
-
   // Admin create user
   $(document).on("submit", "#add-user-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_user", true);
 
     postFormData("action/AdminUsers.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
+        closeModal("#add-user-modal");
         $("#add-user-form")[0].reset();
-        $("#add-user-modal").removeClass("block");
-        $("#add-user-modal").addClass("hidden");
         $("#user-table").load(location.href + " #user-table");
         alertify.success(res.message);
       } else if (res.status == 500) {
@@ -570,15 +535,14 @@ $(document).ready(function () {
 
   // Get user data for edit
   $(document).on("click", ".edit-user", function () {
-    var id = $(this).val();
+    const id = $(this).val();
 
     getData("action/AdminUsers.php?id=" + id, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
       } else if (res.status == 200) {
-        $("#edit-user-modal").removeClass("hidden");
-        $("#edit-user-modal").addClass("block");
+        openModal("#edit-user-modal");
 
         if (res.data.position == "Хигиенист") {
           $('#user-position-edit option[value="Хигиенист"]').attr(
@@ -604,15 +568,14 @@ $(document).ready(function () {
 
   // Get supplier data for edit
   $(document).on("click", ".edit-supplier", function () {
-    var id = $(this).val();
+    const id = $(this).val();
 
     getData("action/AdminSuppliers.php?id=" + id, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
       } else if (res.status == 200) {
-        $("#supplier-edit-modal").removeClass("hidden");
-        $("#supplier-edit-modal").addClass("block");
+        openModal("#supplier-edit-modal");
 
         $("#supplier-id").val(res.data.id);
         $("#supplier-name-edit").val(res.data.name);
@@ -627,15 +590,14 @@ $(document).ready(function () {
   $(document).on("submit", "#edit-user-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_update_user", true);
 
     postFormData("action/AdminUsers.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#edit-user-modal").removeClass("block");
-        $("#edit-user-modal").addClass("hidden");
+        closeModal("#edit-user-modal");
         $("#user-table").load(location.href + " #user-table");
         alertify.success(res.message);
       } else if (res.status == 500) {
@@ -644,19 +606,16 @@ $(document).ready(function () {
     });
   });
 
-  closeModal(".close-edit-user-modal", "#edit-user-modal");
-
   // Get user data for change password
   $(document).on("click", ".edit-user-password", function () {
-    var id = $(this).val();
+    const id = $(this).val();
 
     getData("action/AdminUsers.php?id=" + id, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
       } else if (res.status == 200) {
-        $("#user-password-modal").removeClass("hidden");
-        $("#user-password-modal").addClass("block");
+        openModal("#user-password-modal");
 
         $("#user-pass-id").val(res.data.id);
         $("#user-username").val(res.data.username);
@@ -664,22 +623,19 @@ $(document).ready(function () {
     });
   });
 
-  closeModal(".close-user-password-modal", "#user-password-modal");
-
   // Admin set new user password
   $(document).on("submit", "#user-password-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_set_user_password", true);
 
     postFormData("action/AdminUsers.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
+        closeModal("#user-password-modal");
         $("#user-password-form")[0].reset();
-        $("#user-password-modal").removeClass("block");
-        $("#user-password-modal").addClass("hidden");
         alertify.success(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
@@ -689,9 +645,9 @@ $(document).ready(function () {
 
   // User search by name and pid
   $("#search-user").on("keyup", function () {
-    var text = $(this).val();
-    var position = $("#select-position").val();
-    var status = $("#select-status").val();
+    const text = $(this).val();
+    const position = $("#select-position").val();
+    const status = $("#select-status").val();
 
     postData(
       "action/user/Filter.php",
@@ -704,9 +660,9 @@ $(document).ready(function () {
 
   // User position filter
   $("#select-position").on("change", function () {
-    var text = $("#search-user").val();
-    var position = $(this).val();
-    var status = $("#select-status").val();
+    const text = $("#search-user").val();
+    const position = $(this).val();
+    const status = $("#select-status").val();
 
     postData(
       "action/user/Filter.php",
@@ -719,9 +675,9 @@ $(document).ready(function () {
 
   // User status filter
   $("#select-status").on("change", function () {
-    var text = $("#search-user").val();
-    var position = $("#select-position").val();
-    var status = $(this).val();
+    const text = $("#search-user").val();
+    const position = $("#select-position").val();
+    const status = $(this).val();
 
     postData(
       "action/user/Filter.php",
@@ -732,31 +688,26 @@ $(document).ready(function () {
     );
   });
 
-  openModal("#add-team-btn", "#add-team-modal");
-
-  closeModal(".close-add-team-modal", "#add-team-modal");
-
   // Stock search by name
   $(document).on("keyup", "#product-order-name", function () {
-    var product = $(this).val();
+    const product = $(this).val();
 
     postData(
       "action/product/ProductSearch.php",
       { product: product },
       function (data) {
-        if (data != "") {
+        $("#product-name-dropdown").toggleClass(
+          "hidden",
+          data === "" || !product
+        );
+
+        if (data !== "") {
           $("#product-name-dropdown").removeClass("hidden");
           $("#product-name-dropdown").html(data);
 
           $(window).click(function () {
             $("#product-name-dropdown").addClass("hidden");
           });
-        } else {
-          $("#product-name-dropdown").addClass("hidden");
-        }
-
-        if (product == "") {
-          $("#product-name-dropdown").addClass("hidden");
         }
       }
     );
@@ -764,25 +715,24 @@ $(document).ready(function () {
 
   // Search stock supplier by name
   $(document).on("keyup", "#product-order-supplier", function () {
-    var supplier = $(this).val();
+    const supplier = $(this).val();
 
     postData(
       "action/product/SupplierSearch.php",
       { supplier: supplier },
       function (data) {
-        if (data != "") {
+        $("#supplier-name-dropdown").toggleClass(
+          "hidden",
+          data === "" || !supplier
+        );
+
+        if (data !== "") {
           $("#supplier-name-dropdown").removeClass("hidden");
           $("#supplier-name-dropdown").html(data);
 
           $(window).click(function () {
             $("#supplier-name-dropdown").addClass("hidden");
           });
-        } else {
-          $("#supplier-name-dropdown").addClass("hidden");
-        }
-
-        if (supplier == "") {
-          $("#supplier-name-dropdown").addClass("hidden");
         }
       }
     );
@@ -790,7 +740,7 @@ $(document).ready(function () {
 
   // Product search by name
   $(document).on("keyup", "#set-product-name", function () {
-    var product = $(this).val();
+    const product = $(this).val();
 
     postData(
       "action/product/ProductSearch1.php",
@@ -799,7 +749,7 @@ $(document).ready(function () {
         $("#set-product-name-dropdown").removeClass("hidden");
         $("#set-product-name-dropdown").html(data);
 
-        if (product == "") {
+        if (!product) {
           $("#set-product-name-dropdown").addClass("hidden");
         }
 
@@ -812,34 +762,34 @@ $(document).ready(function () {
 
   // Get supplier name and insert in input
   $(document).on("click", ".get-order-supplier", function () {
-    var selected = $(this).html();
+    const selected = $(this).html();
     $("#product-order-supplier").val(selected);
     $("#supplier-name-dropdown").addClass("hidden");
   });
 
   // Get stock name and insert in input
   $(document).on("click", ".get-product-name1", function () {
-    var selected = $(this).html();
+    const selected = $(this).html();
     $("#set-product-name").val(selected);
     $("#set-product-name-dropdown").addClass("hidden");
   });
 
   // Get stock name and insert in input
   $(document).on("click", ".get-product-name", function () {
-    var selected = $(this).html();
+    const selected = $(this).html();
     $("#product-order-name").val(selected);
     $("#product-name-dropdown").addClass("hidden");
   });
 
   // User1 search add team
   $(document).on("keyup", "#team-user1", function () {
-    var user = $(this).val();
+    const user = $(this).val();
 
     postData("action/team/UserSearch.php", { user: user }, function (data) {
       $("#user-name1-dropdown").removeClass("hidden");
       $("#user-name1-dropdown").html(data);
 
-      if (user == "") {
+      if (!user) {
         $("#user-name1-dropdown").addClass("hidden");
       }
 
@@ -851,9 +801,10 @@ $(document).ready(function () {
 
   // Get user1 name and insert in input
   $(document).on("click", ".get-name", function () {
-    var selected = $(this).html();
-    var getID = $(".user1").html();
-    var split = selected.split("-");
+    const selected = $(this).html();
+    const getID = $(".user1").html();
+    const split = selected.split("-");
+
     $("#team-user1").val(split[0]);
     $("#team-user1-pid").val(split[1]);
     $("#team-user1-id").val(getID);
@@ -863,13 +814,13 @@ $(document).ready(function () {
 
   // User2 live search add team
   $(document).on("keyup", "#team-user2", function () {
-    var user = $(this).val();
+    const user = $(this).val();
 
     postData("action/team/UserSearch2.php", { user: user }, function (data) {
       $("#user-name2-dropdown").removeClass("hidden");
       $("#user-name2-dropdown").html(data);
 
-      if (user == "") {
+      if (!user) {
         $("#user-name2-dropdown").addClass("hidden");
       }
 
@@ -881,9 +832,10 @@ $(document).ready(function () {
 
   // Get user2 name and insert in input
   $(document).on("click", ".get-namee", function () {
-    var selected = $(this).html();
-    var getID = $(".user2").html();
-    var split = selected.split("-");
+    const selected = $(this).html();
+    const getID = $(".user2").html();
+    const split = selected.split("-");
+
     $("#team-user2").val(split[0]);
     $("#team-user2-pid").val(split[1]);
     $("#team-user2-id").val(getID);
@@ -895,16 +847,15 @@ $(document).ready(function () {
   $(document).on("submit", "#add-team-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_team", true);
 
     postFormData("action/AdminTeams.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
+        closeModal("#add-team-modal");
         $("#add-team-form")[0].reset();
-        $("#add-team-modal").removeClass("block");
-        $("#add-team-modal").addClass("hidden");
         $("#user-table").load(location.href + " #user-table");
         $("#team-table").load(location.href + " #team-table");
         alertify.success(res.message);
@@ -916,27 +867,26 @@ $(document).ready(function () {
 
   // Admin set order
   $(document).on("click", ".set-order", function () {
-    var id = $(this).val();
+    const id = $(this).val();
     $("#user1-set-order").val("");
     $("#user2-set-order").val("");
     $("#select-team").prop("disabled", false);
     $("#hide-set-order-btn").removeClass("hidden");
 
     getData("action/AdminOrders.php?id=" + id, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#set-order-modal").removeClass("hidden");
-        $("#set-order-modal").addClass("block");
+        openModal("#set-order-modal");
 
         if (res.data.team_id == 0) {
           $("#order-id-set").val(res.data.id);
           $("#order-date").val(res.data.date);
         } else {
-          var id = res.data.team_id;
+          const id = res.data.team_id;
 
           getData("action/AdminTeams.php?id=" + id, function (response) {
-            var res = jQuery.parseJSON(response);
+            const res = jQuery.parseJSON(response);
 
             if (res.status == 200) {
               $("#user1-set-order").val(res.data.user1_name);
@@ -952,7 +902,7 @@ $(document).ready(function () {
       }
     });
 
-    var actionOr = "data";
+    const actionOr = "data";
 
     postData("action/team/Select.php", { actionOr: actionOr }, function (data) {
       $("#select-team").html(data);
@@ -960,7 +910,7 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#set-product", function () {
-    var actionOr = "data";
+    const actionOr = "data";
 
     postData("action/team/Select.php", { actionOr: actionOr }, function (data) {
       $("#set-product-modal").removeClass("hidden");
@@ -971,10 +921,10 @@ $(document).ready(function () {
 
   // Admin select team for order
   $("#select-team").on("change", function () {
-    var id = $(this).val();
+    const id = $(this).val();
 
     getData("action/AdminTeams.php?id=" + id, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
       if (res.status == 404) {
         alertify.error(res.message);
       } else if (res.status == 200) {
@@ -990,15 +940,14 @@ $(document).ready(function () {
 
   // Get data for product
   $(document).on("click", ".edit-product", function () {
-    var id = $(this).val();
+    const id = $(this).val();
 
     getData("action/AdminWarehouse.php?id=" + id, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
       if (res.status == 404) {
         alertify.error(res.message);
       } else if (res.status == 200) {
-        $("#edit-product-modal").removeClass("hidden");
-        $("#edit-product-modal").addClass("block");
+        openModal("#edit-product-modal");
 
         $("#product-id-edit").val(res.data.id);
         $("#product-name-edit").val(res.data.name);
@@ -1032,16 +981,15 @@ $(document).ready(function () {
   $(document).on("submit", "#add-product-order-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_product_order", true);
 
     postFormData("action/AdminProducts.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
+        closeModal("#add-order-product-modal");
         $("#add-product-order-form")[0].reset();
-        $("#add-order-product-modal").removeClass("block");
-        $("#add-order-product-modal").addClass("hidden");
         $("#product-table").load(location.href + " #product-table");
         $("#product-order-table").load(location.href + " #product-order-table");
         $("#supplier-table").load(location.href + " #supplier-table");
@@ -1056,16 +1004,15 @@ $(document).ready(function () {
   $(document).on("submit", "#set-order-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_set_order", true);
 
     postFormData("action/AdminOrders.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
+        closeModal("#set-order-modal");
         $("#set-order-form")[0].reset();
-        $("#set-order-modal").removeClass("block");
-        $("#set-order-modal").addClass("hidden");
         $("#order-table").load(location.href + " #order-table");
         $("#team-table").load(location.href + " #team-table");
         alertify.success(res.message);
@@ -1075,12 +1022,9 @@ $(document).ready(function () {
     });
   });
 
-  closeModal(".close-set-order-modal", "#set-order-modal");
-
   // Admin show setted orders
   $(document).on("click", ".prevOrd", function () {
-    $("#team-order-modal").removeClass("hidden");
-    $("#team-order-modal").addClass("block");
+    openModal("#team-order-modal");
     const teamId = $(this).val();
 
     postData("action/team/TeamOrders.php", { teamId: teamId }, function (data) {
@@ -1088,12 +1032,9 @@ $(document).ready(function () {
     });
   });
 
-  closeModal(".close-team-order-modal", "#team-order-modal");
-
   // Admin show supplier orders
   $(document).on("click", ".supplier-order-view", function () {
-    $("#supplier-order-view-modal").removeClass("hidden");
-    $("#supplier-order-view-modal").addClass("block");
+    openModal("#supplier-order-view-modal");
     const supplierName = $(this).val();
 
     postData(
@@ -1105,39 +1046,28 @@ $(document).ready(function () {
     );
   });
 
-  closeModal(".close-supplier-order-view-modal", "#supplier-order-view-modal");
-
   // Admin delete team modal open
   $(document).on("click", ".delete-team", function () {
-    $("#delete-team-modal").removeClass("hidden");
-    $("#delete-team-modal").addClass("block");
+    openModal("#delete-team-modal");
     $("#delete-team-id").val($(this).val());
   });
 
   // Admin delete product modal open
   $(document).on("click", ".delete-product", function () {
-    $("#delete-product-modal").removeClass("hidden");
-    $("#delete-product-modal").addClass("block");
+    openModal("#delete-product-modal");
     $("#delete-product-id").val($(this).val());
   });
 
   // Admin delete supplier modal open
   $(document).on("click", ".delete-supplier", function () {
-    $("#delete-supplier-modal").removeClass("hidden");
-    $("#delete-supplier-modal").addClass("block");
+    openModal("#delete-supplier-modal");
     $("#delete-supplier-id").val($(this).val());
   });
 
-  closeModal(".close-delete-supplier-modal", "#delete-supplier-modal");
-
-  closeModal(".close-delete-product-modal", "#delete-product-modal");
-
-  closeModal(".close-delete-team-modal", "#delete-team-modal");
-
   // Product search by id or name
   $("#search-product").on("keyup", function () {
-    var text = $(this).val();
-    var kind = $("#select-product-kind").val();
+    const text = $(this).val();
+    const kind = $("#select-product-kind").val();
 
     postData(
       "action/product/Filter.php",
@@ -1150,8 +1080,8 @@ $(document).ready(function () {
 
   // Product filter by kind
   $("#select-product-kind").on("change", function () {
-    var kind = $(this).val();
-    var text = $("#search-product").val();
+    const kind = $(this).val();
+    const text = $("#search-product").val();
 
     postData(
       "action/product/Filter.php",
@@ -1164,8 +1094,8 @@ $(document).ready(function () {
 
   // Product search by id or name
   $("#search-order-product").on("keyup", function () {
-    var text = $(this).val();
-    var kind = $("#select-order-product-kind").val();
+    const text = $(this).val();
+    const kind = $("#select-order-product-kind").val();
 
     postData(
       "action/product/Filter1.php",
@@ -1177,8 +1107,8 @@ $(document).ready(function () {
   });
 
   $("#select-order-product-kind").on("change", function () {
-    var kind = $(this).val();
-    var text = $("#search-order-product").val();
+    const kind = $(this).val();
+    const text = $("#search-order-product").val();
 
     postData(
       "action/product/Filter1.php",
@@ -1191,7 +1121,7 @@ $(document).ready(function () {
 
   // Search team by name
   $("#search-team").on("keyup", function () {
-    var text = $(this).val();
+    const text = $(this).val();
 
     postData("action/team/Filter.php", { text: text }, function (data) {
       $("#team-table").html(data);
@@ -1202,15 +1132,14 @@ $(document).ready(function () {
   $(document).on("submit", "#delete-team-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_delete_team", true);
 
     postFormData("action/adminTeams.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#delete-team-modal").removeClass("block");
-        $("#delete-team-modal").addClass("hidden");
+        closeModal("#delete-team-modal");
         $("#user-table").load(location.href + " #user-table");
         $("#team-table").load(location.href + " #team-table");
         alertify.success(res.message);
@@ -1224,15 +1153,14 @@ $(document).ready(function () {
   $(document).on("submit", "#delete-product-order-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_delete_team", true);
 
     postFormData("action/AdminProducts.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#delete-product-order-modal").removeClass("block");
-        $("#delete-product-order-modal").addClass("hidden");
+        closeModal("#delete-product-order-modal");
         $("#product-table").load(location.href + " #product-table");
         $("#product-order-table").load(location.href + " #product-order-table");
         alertify.success(res.message);
@@ -1246,15 +1174,14 @@ $(document).ready(function () {
   $(document).on("submit", "#delete-supplier-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_delete_supplier", true);
 
     postFormData("action/AdminSuppliers.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#delete-supplier-modal").removeClass("block");
-        $("#delete-supplier-modal").addClass("hidden");
+        closeModal("#delete-supplier-modal");
         $("#supplier-table").load(location.href + " #supplier-table");
         alertify.success(res.message);
       } else if (res.status == 500) {
@@ -1267,15 +1194,14 @@ $(document).ready(function () {
   $(document).on("submit", "#delete-product-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_delete_product", true);
 
     postFormData("action/AdminWarehouse.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#delete-product-modal").removeClass("block");
-        $("#delete-product-modal").addClass("hidden");
+        closeModal("#delete-product-modal");
         $("#product-table").load(location.href + " #product-table");
         alertify.success(res.message);
       } else if (res.status == 500) {
@@ -1288,15 +1214,14 @@ $(document).ready(function () {
   $(document).on("submit", "#add-product-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_product", true);
 
     postFormData("action/AdminWarehouse.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#add-product-modal").removeClass("block");
-        $("#add-product-modal").addClass("hidden");
+        closeModal("#add-product-modal");
         $("#product-table").load(location.href + " #product-table");
         $("#add-product-form")[0].reset();
         alertify.success(res.message);
@@ -1310,15 +1235,14 @@ $(document).ready(function () {
   $(document).on("submit", "#edit-product-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_edit_product", true);
 
     postFormData("action/AdminWarehouse.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#edit-product-modal").removeClass("block");
-        $("#edit-product-modal").addClass("hidden");
+        closeModal("#edit-product-modal");
         $("#product-table").load(location.href + " #product-table");
         alertify.success(res.message);
       } else if (res.status == 500) {
@@ -1331,15 +1255,14 @@ $(document).ready(function () {
   $(document).on("submit", "#supplier-edit-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_edit_supplier", true);
 
     postFormData("action/AdminSuppliers.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#supplier-edit-modal").removeClass("block");
-        $("#supplier-edit-modal").addClass("hidden");
+        closeModal("#supplier-edit-modal");
         $("#supplier-table").load(location.href + " #supplier-table");
         alertify.success(res.message);
       } else if (res.status == 500) {
@@ -1352,15 +1275,14 @@ $(document).ready(function () {
   $(document).on("submit", "#set-product-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_set_product", true);
 
     postFormData("action/AdminWarehouse.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#set-product-modal").removeClass("block");
-        $("#set-product-modal").addClass("hidden");
+        closeModal("#set-product-modal");
         $("#product-table").load(location.href + " #product-table");
         $("#set-product-form")[0].reset();
         alertify.success(res.message);
@@ -1374,15 +1296,14 @@ $(document).ready(function () {
   $(document).on("submit", "#add-supplier-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_supplier", true);
 
     postFormData("action/AdminSuppliers.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#add-supplier-modal").removeClass("block");
-        $("#add-supplier-modal").addClass("hidden");
+        closeModal("#add-supplier-modal");
         $("#supplier-table").load(location.href + " #supplier-table");
         $("#add-supplier-form")[0].reset();
         alertify.success(res.message);
@@ -1396,11 +1317,11 @@ $(document).ready(function () {
   $(document).on("submit", "#dashboard-login-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("dashboard_login", true);
 
     postFormData("action/Admin.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         location.reload();
@@ -1414,11 +1335,11 @@ $(document).ready(function () {
   $(document).on("submit", "#admin-information-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_update_data", true);
 
     postFormData("action/Admin.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         alertify.success(res.message);
@@ -1435,11 +1356,11 @@ $(document).ready(function () {
   $(document).on("submit", "#admin-image-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("admin_photo", true);
 
     postFormData("action/Admin.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         alertify.success(res.message);
@@ -1452,10 +1373,10 @@ $(document).ready(function () {
 
   // Admin dashboard logout
   $("#admin-logout").on("click", function () {
-    var action = "data";
+    const action = "data";
 
     postData("action/Admin.php", { action: action }, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         location.reload();
@@ -1467,11 +1388,11 @@ $(document).ready(function () {
   $(document).on("submit", "#mobile-login-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("mobile_login", true);
 
     postFormData("action/Mobile.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         location.reload();
@@ -1483,10 +1404,10 @@ $(document).ready(function () {
 
   // Mobile logout
   $("#mobile-log-out").on("click", function () {
-    var action = "data";
+    const action = "data";
 
     postData("action/Mobile.php", { action: action }, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         location.reload();
@@ -1498,11 +1419,11 @@ $(document).ready(function () {
   $(document).on("submit", "#update-password-mobile-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("mobile_password_update", true);
 
     postFormData("action/Mobile.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         $("#update-password-mobile-form")[0].reset();
@@ -1515,9 +1436,9 @@ $(document).ready(function () {
 
   // Check selected radio input
   function getChecklistItems() {
-    var result = $("input:radio:checked").get();
+    const result = $("input:radio:checked").get();
 
-    var data = $.map(result, function (element) {
+    const data = $.map(result, function (element) {
       return $(element).val();
     });
 
@@ -1530,9 +1451,9 @@ $(document).ready(function () {
 
   // Mobile sort order
   $("#search-mobile-order").on("keyup", function () {
-    var text = $(this).val();
-    var orderBy = getChecklistItems();
-    var orderState = $("#active-btn").val();
+    const text = $(this).val();
+    const orderBy = getChecklistItems();
+    const orderState = $("#active-btn").val();
 
     if (orderState == 1) {
       postData(
@@ -1559,13 +1480,12 @@ $(document).ready(function () {
 
   // Mobile get order data
   $(document).on("click", ".get-order-data", function () {
-    var id = $(this).val();
+    const id = $(this).val();
 
-    $(".order-start-loader").removeClass("hidden");
-    $(".order-start-loader").addClass("block");
+    openModal(".order-start-loader");
 
     getData("action/AdminOrders.php?id=" + id, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         if (res.data.status == "В процес") {
@@ -1591,7 +1511,7 @@ $(document).ready(function () {
           $("#address-mobile").html(res.data.address);
           $("#pay-mobile").html(res.data.pay);
           $("#offer-mobile").html(res.data.offer);
-          var date = res.data.date.split("-");
+          const date = res.data.date.split("-");
           $("#date-time-mobile").html(
             date[2] + "." + date[1] + "." + date[0] + " - " + res.data.time
           );
@@ -1625,53 +1545,38 @@ $(document).ready(function () {
 
   // Mobile show customer images
   $(document).on("click", ".open-photo-modal", function () {
-    var email = $(this).val();
-
-    $("#order-photo-modal").removeClass("hidden");
-    $("#order-photo-modal").addClass("block");
+    const email = $(this).val();
 
     getData("action/AdminOrders.php?email=" + email, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
-      if (res.status == 200) {
-        if (res.data.image_room1 != null) {
-          $(".image-modal").addClass("max-w-sm");
-          $("#first_img").removeClass("hidden");
-          $("#first_img").addClass("block");
-          $("#first_img").attr(
-            "src",
-            "uploaded-files/room-images/" + res.data.image_room1
-          );
-        } else {
-          $("#first_img").removeClass("block");
-          $("#first_img").addClass("hidden");
-        }
+      if (res.status != 404) {
+        const imageProperties = [
+          { id: "first_img", data: "image_room1", class: "max-w-sm" },
+          { id: "second_img", data: "image_room2", class: "max-w-lg" },
+          { id: "third_img", data: "image_room3", class: "max-w-3xl" },
+        ];
 
-        if (res.data.image_room2 != null) {
-          $(".image-modal").addClass("max-w-lg");
-          $("#second_img").removeClass("hidden");
-          $("#second_img").addClass("block");
-          $("#second_img").attr(
-            "src",
-            "uploaded-files/room-images/" + res.data.image_room2
-          );
-        } else {
-          $("#second_img").removeClass("block");
-          $("#second_img").addClass("hidden");
-        }
+        for (const prop of imageProperties) {
+          if (res.data[prop.data] != null && res.status === 200) {
+            openModal("#order-photo-modal");
 
-        if (res.data.image_room3 != null) {
-          $(".image-modal").addClass("max-w-3xl");
-          $("#third_img").removeClass("hidden");
-          $("#third_img").addClass("block");
-          $("#third_img").attr(
-            "src",
-            "uploaded-files/room-images/" + res.data.image_room3
-          );
-        } else {
-          $("#third_img").removeClass("block");
-          $("#third_img").addClass("hidden");
+            if (res.data[prop.data] != null) {
+              $(".image-modal").addClass(prop.class);
+              $(`#${prop.id}`)
+                .attr(
+                  "src",
+                  `uploaded-files/room-images/${res.data[prop.data]}`
+                )
+                .removeClass("hidden")
+                .addClass("block");
+            } else {
+              $(`#${prop.id}`).removeClass("block").addClass("hidden");
+            }
+          }
         }
+      } else {
+        alertify.error("Няма намерени снимки за този клиент");
       }
     });
   });
@@ -1690,10 +1595,10 @@ $(document).ready(function () {
 
   // Mobile start order
   $(".start-order-btn").on("click", function () {
-    var orderId = $(this).val();
+    const orderId = $(this).val();
 
     postData("action/Mobile.php", { orderId: orderId }, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
       if (res.status == 200) {
         $("#active-order-section").load(
           location.href + " #active-order-section"
@@ -1710,13 +1615,13 @@ $(document).ready(function () {
 
   // Mobile end order
   $("#end-order").on("click", function () {
-    var orderEndId = $(this).val();
+    const orderEndId = $(this).val();
 
     postData(
       "action/Mobile.php",
       { orderEndId: orderEndId },
       function (response) {
-        var res = jQuery.parseJSON(response);
+        const res = jQuery.parseJSON(response);
 
         if (res.status == 200) {
           location.reload();
@@ -1744,8 +1649,7 @@ $(document).ready(function () {
   // Mobile open return modal
   $(document).on("click", "#return-product-btn", function () {
     $("#get-product-name-return").val($(this).val());
-    $("#return-product-modal").removeClass("hidden");
-    $("#return-product-modal").addClass("block");
+    openModal("#return-product-modal");
   });
 
   // Mobile return all product
@@ -1757,8 +1661,7 @@ $(document).ready(function () {
       "action/Mobile.php",
       { productNameReturn: productNameReturn, teamId: teamId },
       function (response) {
-        $("#return-product-modal").removeClass("block");
-        $("#return-product-modal").addClass("hidden");
+        closeModal("#return-product-modal");
         $("#mobile-warehouse-section").load(
           location.href + " #mobile-warehouse-section"
         );
@@ -1780,11 +1683,11 @@ $(document).ready(function () {
   $(document).on("submit", "#order-cancel-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("mobile_cancel_order", true);
 
     postFormData("action/Mobile.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         location.reload();
@@ -1798,15 +1701,14 @@ $(document).ready(function () {
   $(document).on("submit", "#product-request-form", function (e) {
     e.preventDefault();
 
-    var formData = new FormData(this);
+    const formData = new FormData(this);
     formData.append("mobile_product_request", true);
 
     postFormData("action/Mobile.php", formData, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
-        $("#product-order-modal").removeClass("block");
-        $("#product-order-modal").addClass("hidden");
+        closeModal("#product-order-modal");
         alertify.success(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
@@ -1816,18 +1718,16 @@ $(document).ready(function () {
 
   $(document).on("click", ".delete-product-order", function (e) {
     $("#delete-product-order-id").val($(this).val());
-    $("#delete-product-order-modal").removeClass("hidden");
-    $("#delete-product-order-modal").addClass("block");
+    openModal("#delete-product-order-modal");
   });
 
   // Dashboard cancel reason modal
   $(document).on("click", ".show-cancel-dashboard", function (e) {
-    var id = $(this).val();
-    $("#cancel-order-reason-modal").removeClass("hidden");
-    $("#cancel-order-reason-modal").addClass("block");
+    const id = $(this).val();
+    openModal("#cancel-order-reason-modal");
 
     getData("action/AdminOrders.php?id=" + id, function (response) {
-      var res = jQuery.parseJSON(response);
+      const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
         $("#cancel-reason-textarea").val(res.data.cancel_reason);
@@ -1892,6 +1792,7 @@ $(document).ready(function () {
     );
   });
 
+  // Search returned product history (click)
   $("#returned-product-history-btn").on("click", function () {
     $("#seted-product-history-btn").removeClass("bg-gray-200");
     $("#returned-product-history-btn").addClass("bg-gray-200");
@@ -1907,272 +1808,5 @@ $(document).ready(function () {
         $("#history-search-result").html(response);
       }
     );
-  });
-
-  const getJson = async (id) => {
-    const url = `action/AdminOrders.php?id=${id}`;
-    const response = await fetch(url);
-    const text = await response.text();
-    const data = JSON.parse(text).data;
-    return data;
-  };
-
-  $(".print-invoice").on("click", async function () {
-    var id = $(this).val();
-    const myData = await getJson(id);
-    const prEl = await print(myData);
-  });
-
-  async function print(jsonData) {
-    const preparePrint = () => {
-      var winPrint = window.open(
-        "",
-        "",
-        "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
-      );
-
-      winPrint.document.write(
-        `<!DOCTYPE html>
-		<html>
-			<head>
-				<script src="https:cdn.tailwindcss.com"></script>
-				<title>Фактура-${jsonData.customer_name}-${jsonData.date}</title>
-
-				<style>
-				@media print {
-					@page {
-						margin-top: 0;
-						margin-bottom: 0;
-					}
-					body {
-						padding-top: 72px;
-						padding-bottom: 72px ;
-					}
-				}
-				</style>
-			</head>
-		<body>
-			<div class="text-blue-700 font-bold text-4xl mt-16">${
-        jsonData.company_name
-      }</div>
-			<div class="text-blue-500 mt-1 text-2xl font-semibold">${jsonData.date
-        .replaceAll("-", ".")
-        .split(".")
-        .reverse()
-        .join(".")}</div>
-      <div class="text-blue-700 text-2xl font-semibold mt-16">ФАКТУРА №${
-        jsonData.id
-      }</div>
-      <div class="w-full flex mt-3 text-slate-700">
-        <div class="w-1/2">
-            <div class="p-2.5 text-center text-xl bg-blue-100 font-semibold border border-blue-600">Клиентски данни</div>
-             <div class="p-2.5 border border-t-0 border-blue-600">
-                <div class="flex items-center">
-                  <span class="font-semibold mr-2">Име:</span><span>${
-                    jsonData.customer_name
-                  }</span>
-                </div>
-                <div class="flex items-center mt-1.5">
-                  <span class="font-semibold mr-2">Телефон:</span><span>${
-                    jsonData.phone
-                  }</span>
-                </div>
-                <div class="flex items-center mt-1.5">
-                  <span class="font-semibold mr-2">Адрес:</span><span>${
-                    jsonData.city + ", " + jsonData.address
-                  }</span>
-                </div>
-            </div>
-        </div>
-        <div class="w-1/2">
-            <div class="p-2.5 text-center text-xl bg-blue-100 font-semibold border border-l-0 border-blue-600">Фирмени данни</div>
-            <div class="p-2.5 border border-t-0 border-l-0 border-blue-600">
-                <div class="flex items-center">
-                  <span class="font-semibold mr-2">Име:</span><span>${
-                    jsonData.company_name
-                  }</span>
-                </div>
-                <div class="flex items-center mt-1.5">
-                  <span class="font-semibold mr-2">ЕИК:</span><span>${
-                    jsonData.company_eik
-                  }</span>
-                </div>
-                <div class="flex items-center mt-1.5">
-                  <span class="font-semibold mr-2">Адрес:</span><span>${
-                    jsonData.city + ", " + jsonData.address
-                  }</span>
-                </div>
-            </div>
-        </div>
-      </div>
-      <div class="mt-5">
-        <div class="flex text-slate-700">
-          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 font-semibold border border-blue-600">
-            Номер
-          </div>
-          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 font-semibold border border-l-0 border-blue-600">
-            Услуга
-          </div>
-          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 font-semibold border border-l-0 border-blue-600">
-            Оферта
-          </div>
-          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 font-semibold border border-l-0 border-blue-600">
-            ДДС
-          </div>
-          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 font-semibold border border-l-0 border-blue-600">
-            Крайна цена
-          </div>
-        </div>
-        <div class="flex text-slate-700">
-          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 border-t-0 border border-blue-600">
-            ${jsonData.id}
-          </div>
-          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 border border-t-0 border-l-0 border-blue-600">
-            Почистване
-          </div>
-          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 border border-t-0 border-l-0 border-blue-600">
-           ${jsonData.offer}
-          </div>
-           <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 border border-t-0 border-l-0 border-blue-600">
-           ${(jsonData.price * 1.2 - jsonData.price).toFixed(2)} лв.
-          </div>
-          <div class="p-2.5 w-[20%] text-center text-xl bg-blue-100 border border-t-0 border-l-0 border-blue-600">
-            ${jsonData.price} лв.
-          </div>
-        </div>
-      </div>
-      <div class="text-blue-700 text-xl font-semibold mt-4">Благодарим Ви, че избрахте нас !</div>
-      <div class="text-slate-700 text-xl font-semibold">Carpet Services</div>
-      <div class="text-slate-700 mt-13">Варна, ул. Васил Гергов 26</div>
-		</body>
-		</html>`
-      );
-
-      return winPrint;
-    };
-    const printeEl = await await preparePrint(jsonData);
-    setTimeout(() => {
-      printeEl.print();
-    }, 100);
-  }
-
-  closeModal(
-    ".close-delete-product-order-modal",
-    "#delete-product-order-modal"
-  );
-
-  closeModal(".close-return-product-modal", "#return-product-modal");
-
-  openModal("#view-product-history", "#history-set-product-modal");
-
-  closeModal(".close-history-product-modal", "#history-set-product-modal");
-
-  openModal("#add-product-btn", "#add-product-modal");
-
-  closeModal(".close-add-product-modal", "#add-product-modal");
-
-  openModal(".open-rating-modal", "#customer-opinion-modal");
-
-  closeModal(".close-customer-opinion-modal", "#customer-opinion-modal");
-
-  closeModal(".cancel-order-reason-modal", "#cancel-order-reason-modal");
-
-  closeModal(".close-set-product-modal", "#set-product-modal");
-
-  openModal(".open-cancel-modal", "#cancel-order-modal");
-
-  closeModal(".close-cancel-order-modal", "#cancel-order-modal");
-
-  openModal("#sort-btn", "#sort-order-modal");
-
-  closeModal(".close-sort-order-modal", "#sort-order-modal");
-
-  openModal("#show-product-btn", "#product-show-modal");
-
-  closeModal(".close-show-product-modal", "#product-show-modal");
-
-  openModal("#make-order-btn", "#product-order-modal");
-
-  closeModal(".close-product-order-modal", "#product-order-modal");
-
-  closeModal(".close-supplier-edit-modal", "#supplier-edit-modal");
-
-  closeModal(".close-order-photo-modal", "#order-photo-modal");
-
-  closeModal(".close-edit-product-modal", "#edit-product-modal");
-
-  openModal("#add-product-order-btn", "#add-order-product-modal");
-
-  closeModal(".close-order-product-modal", "#add-order-product-modal");
-
-  openModal("#add-supplier-btn", "#add-supplier-modal");
-
-  closeModal(".close-supplier-modal", "#add-supplier-modal");
-
-  openModal(".login-btn", "#customer-login-modal");
-
-  closeModal(".customer-close-login-modal", "#customer-login-modal");
-
-  openModal(".register-btn", "#customer-register-modal");
-
-  closeModal(".close-customer-register-modal", "#customer-register-modal");
-
-  $("#active-order").html($(".active-order-count").val());
-
-  $("#finished-order").html($(".finished-order-count").val());
-
-  $("#order-btn").on("click", function () {
-    $("#order-not-started").addClass("hidden");
-    $("#order-is-started").addClass("hidden");
-    $("#mobOrder").removeClass("hidden");
-    $("#mobOrder").addClass("block");
-  });
-
-  $("#profile-btn").on("click", function () {
-    $("#order-not-started").addClass("hidden");
-    $("#order-is-started").addClass("hidden");
-    $("#mobOrder").removeClass("hidden");
-    $("#mobOrder").addClass("block");
-  });
-
-  $("#warehouse-btn").on("click", function () {
-    $("#order-not-started").addClass("hidden");
-    $("#order-is-started").addClass("hidden");
-    $("#mobOrder").removeClass("hidden");
-    $("#mobOrder").addClass("block");
-  });
-
-  $(".price-calculate").keyup(function () {
-    const totalPrice = (
-      $("#product-order-quantity").val() * $("#product-order-one-price").val()
-    ).toFixed(2);
-
-    $("#product-order-price").val(totalPrice);
-  });
-
-  $(document).on("click", "#reload-order-table", function (e) {
-    $("#order-table").load(location.href + " #order-table");
-  });
-
-  $(document).on("click", ".reload-team-table", function (e) {
-    $("#team-table").load(location.href + " #team-table");
-  });
-
-  $(document).on("click", "#reload-product-table", function (e) {
-    $("#product-table").load(location.href + " #product-table");
-  });
-
-  let productCount = 1;
-
-  $("#remove-one-product").click(function () {
-    productCount++;
-    $("#product-count-mobile").val(productCount);
-  });
-
-  $("#add-one-product").click(function () {
-    if (productCount != 0) {
-      productCount--;
-      $("#product-count-mobile").val(productCount);
-    }
   });
 });

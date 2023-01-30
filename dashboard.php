@@ -142,14 +142,19 @@ $date = date("Y-m-d"); ?>
                           </ul>
                         </div>
                       </div>
+                      <div class="pl-4 pr-2 text-right text-xs font-semibold">
+                        <div class="text-slate-700"><?= $roles["name"] ?></div>
+                        <div class="text-slate-500"><?= $roles["position"] ?></div>
+                      </div>
                       <div>
-                        <span data-dropdown-toggle="profile-dropdown" data-dropdown-toggle="profile-dropdown">
+                        <span data-dropdown-toggle="profile-dropdown" data-dropdown-toggle="profile-dropdown" class="inline-flex mt-1.5 relative items-center active:scale-90 hover:opacity-75 transition-all cursor-pointer ">
                           <span id="admin-photo">
                             <?php
                             if ($roles["image"] != "") { ?>
-                              <img src="uploaded-files/admin-images/<?= $roles["image"] ?>" alt="<?= $roles["image"] ?>" class="w-8 h-8 rounded-lg object-cover ml-5 mr-4 shadow cursor-pointer active:scale-90 hover:opacity-75 transition-all">
+                              <img src="uploaded-files/admin-images/<?= $roles["image"] ?>" alt="<?= $roles["image"] ?>" class="w-8 h-8 rounded-lg object-cover mr-4 shadow">
+                              <div class=" absolute -top-0.5 right-3 justify-center p-1 bg-green-500 rounded-full"></div>
                             <?php } else { ?>
-                              <img src="images/user.png" alt="user" class="w-8 h-8 rounded-full object-cover ml-5 mr-4 shadow cursor-pointer active:scale-90 hover:opacity-75 transition-all" />
+                              <img src="images/user.png" alt="user" class="w-8 h-8 rounded-full object-cover mr-4 shadow" />
                             <?php } ?>
                           </span>
                         </span>
@@ -246,12 +251,7 @@ $date = date("Y-m-d"); ?>
                         <input type="text" id="search-order" placeholder="По номер или име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-9 p-2.5 " />
                       </div>
                       <div class="relative w-full sm:w-48">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
-                          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                          </svg>
-                        </div>
-                        <input type="date" id="order-filter-date" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-9 p-2.5 " placeholder="Изберете дата" />
+                        <input type="date" id="order-filter-date" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 " placeholder="Изберете дата" />
                       </div>
                       <div class="flex items-center space-x-3">
                         <?php if ($roles["create_role"] == 1 || $roles["full_role"] == 1) { ?>
@@ -428,7 +428,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="add-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
-                    <div class="relative w-full h-full max-w-lg">
+                    <div class="relative w-full h-full max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class=" text-slate-700 font-bold text-xl">Добави заявка</div>
@@ -506,7 +506,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="cancel-order-reason-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex items-center justify-center">
-                    <div class="relative w-full h-auto max-w-lg">
+                    <div class="relative w-full h-auto max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class=" text-slate-700 font-bold text-xl">Причина за отказа</div>
@@ -526,7 +526,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex 2xl:items-center justify-center">
-                    <div class="relative w-full h-full max-w-lg mt-10">
+                    <div class="relative w-full h-full max-w-lg mt-10 animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class=" text-slate-700 font-bold text-xl">Редактиране заявката</div>
@@ -600,7 +600,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="customer-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full p-4 overflow-x-hidden overflow-y-auto flex items-center justify-center">
-                    <div class="relative w-full max-w-lg h-auto">
+                    <div class="relative w-full max-w-lg h-auto animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class=" text-slate-700 font-bold text-xl">Клиент</div>
@@ -640,8 +640,8 @@ $date = date("Y-m-d"); ?>
                 </div>
 
                 <div id="set-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
-                  <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
-                    <div class="relative w-full h-full max-w-lg">
+                  <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+                    <div class="relative w-full h-auto max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class=" text-slate-700 font-bold text-xl">Назначи заявка</div>
@@ -685,8 +685,8 @@ $date = date("Y-m-d"); ?>
                 </div>
 
                 <div id="customer-opinion-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
-                  <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
-                    <div class="relative w-full h-full max-w-lg">
+                  <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+                    <div class="relative w-full h-auto max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class=" text-slate-700 font-bold text-xl">Мнение</div>
@@ -849,7 +849,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="add-user-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
-                    <div class="relative w-full h-full max-w-lg">
+                    <div class="relative w-full h-full max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class=" text-slate-700 font-bold text-xl">Добави потребител</div>
@@ -909,7 +909,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="edit-user-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
-                    <div class="relative w-full h-full max-w-lg">
+                    <div class="relative w-full h-full max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class=" text-slate-700 font-bold text-xl">Редактиране потребител</div>
@@ -973,7 +973,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="user-password-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-                    <div class="relative w-full h-auto max-w-lg">
+                    <div class="relative w-full h-auto max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class=" text-slate-700 font-bold text-xl">Задаване на парола</div>
@@ -1166,8 +1166,8 @@ $date = date("Y-m-d"); ?>
                 </div>
 
                 <div id="add-team-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
-                  <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
-                    <div class="relative w-full h-full max-w-lg">
+                  <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+                    <div class="relative w-full h-auto max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class="text-slate-700 font-bold text-xl">Добави екип</div>
@@ -1218,7 +1218,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="team-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-                    <div class="relative w-full h-auto max-w-lg">
+                    <div class="relative w-full h-auto max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class="text-slate-700 font-bold text-xl">Заявки</div>
@@ -1229,7 +1229,7 @@ $date = date("Y-m-d"); ?>
                           </button>
                         </div>
                         <div class="px-5 py-4 space-y-6 text-slate-700">
-                          <div id="team-orders" class="sm:flex items-center w-full gap-y-4 sm:gap-x-4"></div>
+                          <div id="team-orders" class="sm:flex flex-wrap items-center w-full gap-y-4 sm:gap-x-4"></div>
                         </div>
                       </div>
                     </div>
@@ -1238,7 +1238,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="delete-team-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-                    <div class="relative w-full h-auto max-w-md">
+                    <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="p-4 text-center">
                           <div class="text-xl font-bold mb-3">Изтрий екипа</div>
@@ -1390,7 +1390,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="add-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-                    <div class="relative w-full h-auto max-w-lg">
+                    <div class="relative w-full h-auto max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class="text-slate-700 font-bold text-xl">Добави продукт</div>
@@ -1432,7 +1432,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="edit-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-                    <div class="relative w-full h-auto max-w-lg">
+                    <div class="relative w-full h-auto max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class="text-slate-700 font-bold text-xl">Редактиране на продукта</div>
@@ -1475,7 +1475,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="set-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-                    <div class="relative w-full h-auto max-w-lg">
+                    <div class="relative w-full h-auto max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class="text-slate-700 font-bold text-xl">Добавяне на продукт към екип</div>
@@ -1517,7 +1517,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="history-set-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-                    <div class="relative w-full h-auto max-w-md">
+                    <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class="text-slate-700 font-bold text-xl">История</div>
@@ -1544,7 +1544,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="delete-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-                    <div class="relative w-full h-auto max-w-md">
+                    <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="p-4 text-center">
                           <div class="text-xl font-bold mb-3">Изтрий продукта</div>
@@ -1686,7 +1686,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="add-order-product-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
-                    <div class="relative w-full h-full max-w-lg">
+                    <div class="relative w-full h-full max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class="text-slate-700 font-bold text-xl">Добави поръка</div>
@@ -1754,7 +1754,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="delete-product-order-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-                    <div class="relative w-full h-auto max-w-md">
+                    <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="p-4 text-center">
                           <div class="text-xl font-bold mb-3">Изтрий поръчката</div>
@@ -1897,7 +1897,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="supplier-order-view-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-                    <div class="relative w-full h-auto max-w-lg">
+                    <div class="relative w-full h-auto max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class="text-slate-700 font-bold text-xl">Поръчки</div>
@@ -1917,7 +1917,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="add-supplier-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
-                    <div class="relative w-full h-full max-w-lg">
+                    <div class="relative w-full h-full max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class="text-slate-700 font-bold text-xl">Добави доставчик</div>
@@ -1962,7 +1962,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="supplier-edit-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
-                    <div class="relative w-full h-full max-w-lg">
+                    <div class="relative w-full h-full max-w-lg animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
                           <div class="text-slate-700 font-bold text-xl">Редактиране на доставчика</div>
@@ -2008,7 +2008,7 @@ $date = date("Y-m-d"); ?>
 
                 <div id="delete-supplier-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
                   <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-                    <div class="relative w-full h-auto max-w-md">
+                    <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fast">
                       <div class="relative bg-white rounded-lg shadow mb-6">
                         <div class="p-4 text-center">
                           <div class="text-xl font-bold mb-3">Изтрий доставчика</div>

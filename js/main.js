@@ -1,22 +1,23 @@
-$("#dropdown-states").click(function () {
-  $("#dropdown-states").removeClass("block");
-  $("#dropdown-states").addClass("hidden");
-});
+function openModal(id, modalID) {
+  $(document).on("click", id, function () {
+    $(modalID).removeClass("hidden");
+    $(modalID).addClass("block");
+  });
+}
 
+function closeModal(id, modalID) {
+  $(document).on("click", id, function () {
+    $(modalID).removeClass("block");
+    $(modalID).addClass("hidden");
+  });
+}
+
+// Show and hide sidebar
 $("#open-nav-bar").click(function () {
   $("#navbar-default").slideToggle("slow");
 });
 
-$("#user-status").change(function () {
-  if ($(this)[0].selectedIndex == 0) {
-    $("#hidden-out-date-input").removeClass("block");
-    $("#hidden-out-date-input").addClass("hidden");
-  } else if ($(this)[0].selectedIndex == 1) {
-    $("#hidden-out-date-input").removeClass("hidden");
-    $("#hidden-out-date-input").addClass("block");
-  }
-});
-
+// Price calculator home page
 const slider = $("#slider");
 const selectBuil = $("#select-buil");
 const final = $("#final");
@@ -66,6 +67,7 @@ final.on("input", function () {
   handleInput();
 });
 
+// Price calculator account
 $(".account-m2, .building, .offer").on("change keyup", function () {
   const accountM2 = $("#account-m2").val();
   const accountBuilding = $(".building:checked").val();
@@ -118,58 +120,7 @@ $(".account-m2, .building, .offer").on("change keyup", function () {
   $("#input-account-price").val(accountFinalPrice.toFixed(2));
 });
 
-function updateStars(numStars) {
-  $(".fa-star").addClass("text-gray-300");
-  $(".fa-star").removeClass("text-yellow-400");
-  for (let i = 1; i <= numStars; i++) {
-    $(`#first-star, #second-star, #third-star, #fourth-star, #fifth-star`)
-      .eq(i - 1)
-      .addClass("text-yellow-400");
-  }
-  $("#stars-count").val(numStars);
-  $("#rate-star-value").html(numStars);
-}
-
-$("#first-star").click(function () {
-  updateStars(1);
-});
-
-$("#second-star").click(function () {
-  updateStars(2);
-});
-
-$("#third-star").click(function () {
-  updateStars(3);
-});
-
-$("#fourth-star").click(function () {
-  updateStars(4);
-});
-
-$("#fifth-star").click(function () {
-  updateStars(5);
-});
-
-$("#first-star").hover(function () {
-  updateStars(1);
-});
-
-$("#second-star").hover(function () {
-  updateStars(2);
-});
-
-$("#third-star").hover(function () {
-  updateStars(3);
-});
-
-$("#fourth-star").hover(function () {
-  updateStars(4);
-});
-
-$("#fifth-star").hover(function () {
-  updateStars(5);
-});
-
+// Price calculator dashboard
 $("#room, #offer, #customer-m2").on("change keyup", function () {
   const m2 = $("#customer-m2").val();
   const offer = $("#offer").val();
@@ -220,4 +171,184 @@ $("#room, #offer, #customer-m2").on("change keyup", function () {
 
   $("#customer-price").val(finalPrice.toFixed(2) + " лв.");
   $("#customer-price-hidden").val(finalPrice.toFixed(2));
+});
+
+// Phone dropdown in register modal
+$("#dropdown-states").click(function () {
+  $("#dropdown-states").removeClass("block");
+  $("#dropdown-states").addClass("hidden");
+});
+
+// Rating stars in account
+function updateStars(numStars) {
+  $(".fa-star").removeClass("text-yellow-400").addClass("text-gray-300");
+  $(`.fa-star`)
+    .slice(0, numStars)
+    .removeClass("text-gray-300")
+    .addClass("text-yellow-400");
+  $("#stars-count").val(numStars);
+  $("#rate-star-value").html(numStars);
+}
+
+$(".fa-star").on("click", function () {
+  updateStars($(".fa-star").index(this) + 1);
+});
+
+// Show and hide out datepicker
+$("#user-status").change(function () {
+  $("#hidden-out-date-input").removeClass("block hidden");
+
+  if ($(this)[0].selectedIndex === 0) {
+    $("#hidden-out-date-input").addClass("hidden");
+  } else if ($(this)[0].selectedIndex === 1) {
+    $("#hidden-out-date-input").addClass("block");
+  }
+});
+
+// Open and close modals
+closeModal(".close-return-product-modal", "#return-product-modal");
+
+openModal("#view-product-history", "#history-set-product-modal");
+
+closeModal(".close-history-product-modal", "#history-set-product-modal");
+
+openModal("#add-product-btn", "#add-product-modal");
+
+closeModal(".close-add-product-modal", "#add-product-modal");
+
+openModal(".open-rating-modal", "#customer-opinion-modal");
+
+closeModal(".close-customer-opinion-modal", "#customer-opinion-modal");
+
+closeModal(".cancel-order-reason-modal", "#cancel-order-reason-modal");
+
+closeModal(".close-set-product-modal", "#set-product-modal");
+
+openModal(".open-cancel-modal", "#cancel-order-modal");
+
+closeModal(".close-cancel-order-modal", "#cancel-order-modal");
+
+openModal("#sort-btn", "#sort-order-modal");
+
+closeModal(".close-sort-order-modal", "#sort-order-modal");
+
+openModal("#show-product-btn", "#product-show-modal");
+
+closeModal(".close-show-product-modal", "#product-show-modal");
+
+openModal("#make-order-btn", "#product-order-modal");
+
+closeModal(".close-product-order-modal", "#product-order-modal");
+
+closeModal(".close-supplier-edit-modal", "#supplier-edit-modal");
+
+closeModal(".close-order-photo-modal", "#order-photo-modal");
+
+closeModal(".close-edit-product-modal", "#edit-product-modal");
+
+openModal("#add-product-order-btn", "#add-order-product-modal");
+
+closeModal(".close-order-product-modal", "#add-order-product-modal");
+
+openModal("#add-supplier-btn", "#add-supplier-modal");
+
+closeModal(".close-supplier-modal", "#add-supplier-modal");
+
+openModal(".login-btn", "#customer-login-modal");
+
+closeModal(".customer-close-login-modal", "#customer-login-modal");
+
+openModal(".register-btn", "#customer-register-modal");
+
+closeModal(".close-customer-register-modal", "#customer-register-modal");
+
+closeModal(".close-delete-customer-img-modal", "#delete-customer-img-modal");
+
+closeModal("#close-history-modal", "#history-modal");
+
+openModal("#add-order-btn", "#add-order-modal");
+
+closeModal(".close-add-order-modal", "#add-order-modal");
+
+closeModal(".close-customer-opinion-modal", "#customer-opinion-modal");
+
+closeModal(".close-order-modal", "#order-modal");
+
+closeModal(".customer-order-modal-close", "#customer-order-modal");
+
+closeModal(".close-add-user-modal", "#add-user-modal");
+
+openModal("#add-user-btn", "#add-user-modal");
+
+closeModal(".close-edit-user-modal", "#edit-user-modal");
+
+closeModal(".close-user-password-modal", "#user-password-modal");
+
+openModal("#add-team-btn", "#add-team-modal");
+
+closeModal(".close-add-team-modal", "#add-team-modal");
+
+closeModal(".close-set-order-modal", "#set-order-modal");
+
+closeModal(".close-team-order-modal", "#team-order-modal");
+
+closeModal(".close-supplier-order-view-modal", "#supplier-order-view-modal");
+
+closeModal(".close-delete-supplier-modal", "#delete-supplier-modal");
+
+closeModal(".close-delete-product-modal", "#delete-product-modal");
+
+closeModal(".close-delete-team-modal", "#delete-team-modal");
+
+closeModal(".close-delete-product-order-modal", "#delete-product-order-modal");
+
+$("#active-order").html($(".active-order-count").val());
+
+$("#finished-order").html($(".finished-order-count").val());
+
+// Show order data
+$(document).on(
+  "click",
+  "#order-btn, #profile-btn, #warehouse-btn",
+  function () {
+    $("#order-not-started").addClass("hidden");
+    $("#order-is-started").addClass("hidden");
+    $("#mobOrder").removeClass("hidden");
+    $("#mobOrder").addClass("block");
+  }
+);
+
+$(".price-calculate").keyup(function () {
+  const totalPrice = (
+    $("#product-order-quantity").val() * $("#product-order-one-price").val()
+  ).toFixed(2);
+
+  $("#product-order-price").val(totalPrice);
+});
+
+// Table update after click
+$(document).on("click", "#reload-order-table", function (e) {
+  $("#order-table").load(location.href + " #order-table");
+});
+
+$(document).on("click", ".reload-team-table", function (e) {
+  $("#team-table").load(location.href + " #team-table");
+});
+
+$(document).on("click", "#reload-product-table", function (e) {
+  $("#product-table").load(location.href + " #product-table");
+});
+
+// Mobile products counter
+let productCount = 1;
+
+$("#remove-one-product, #add-one-product").click(function () {
+  if ($(this).attr("id") === "remove-one-product") {
+    productCount++;
+  } else {
+    if (productCount != 1) {
+      productCount--;
+    }
+  }
+  $("#product-count-mobile").val(productCount);
 });

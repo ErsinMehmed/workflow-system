@@ -129,7 +129,7 @@ $email = $_SESSION['email']; ?>
 
     <div id="customer-login-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
       <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
-        <div class="relative w-full h-auto max-w-md">
+        <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fast">
           <div class="relative bg-gray-100 rounded-lg shadow">
             <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all customer-close-login-modal">
               <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -525,7 +525,7 @@ $email = $_SESSION['email']; ?>
       </div>
 
       <div id="call-us-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-        <div class="relative w-full h-full max-w-2xl md:h-auto">
+        <div class="relative w-full h-full max-w-2xl md:h-auto animate__animated animate__zoomIn animate__fast">
           <div class="relative bg-gray-100 rounded-lg shadow">
             <button type="button" class="absolute top-2 right-2 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="call-us-modal">
               <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

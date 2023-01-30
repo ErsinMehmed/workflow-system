@@ -1,9 +1,7 @@
-var countAll = $("#order-count").val();
-var countActive = $(".active-order-count").val();
-var countFinished = $(".finished-order-count").val();
-
-var active = (countActive * 100) / countAll;
-var finished = (countFinished * 100) / countAll;
+var active = ($(".active-order-count").val() * 100) / $("#order-count").val();
+var finished =
+  (countFinished = $(".finished-order-count").val() * 100) /
+  $("#order-count").val();
 
 const ctx = document.getElementById("orders-chart");
 
@@ -53,4 +51,3 @@ new Chart(ctx, {
     },
   },
 });
-

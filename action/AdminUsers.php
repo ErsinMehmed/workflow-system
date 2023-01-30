@@ -29,13 +29,17 @@ if (isset($_POST['admin_user'])) {
         $query_run = mysqli_query($con, $query);
 
         if (is_numeric($egn)) {
-            if (mysqli_num_rows($query_run) == 0) {
-                $query = "INSERT INTO users (image,name,pid,address,in_date,status,team_id,position,egn,phone,dob,username) VALUES ('$filename','$name','$pid','$address','$date','1','0','$position','$egn','$phone','$dob','$pid')";
-                $query_run = mysqli_query($con, $query);
+            if (preg_match('/^[0-9+\(\)\s-]+$/', $phone)) {
+                if (mysqli_num_rows($query_run) == 0) {
+                    $query = "INSERT INTO users (image,name,pid,address,in_date,status,team_id,position,egn,phone,dob,username) VALUES ('$filename','$name','$pid','$address','$date','1','0','$position','$egn','$phone','$dob','$pid')";
+                    $query_run = mysqli_query($con, $query);
 
-                jsonResponseMain($query_run, 'Успешно добавихте потребителя', 'Неуспешно добавяне на потребителя');
+                    jsonResponseMain($query_run, 'Успешно добавихте потребителя', 'Неуспешно добавяне на потребителя');
+                } else {
+                    jsonResponse(500, 'Въведения ПИД вече съществува');
+                }
             } else {
-                jsonResponse(500, 'Въведения ПИД вече съществува');
+                jsonResponse(500, 'Телефонният номер може да съдържа само цифри, +, - и ()');
             }
         } else {
             jsonResponse(500, 'Полето ЕГН трябва да съдържа само цифри');

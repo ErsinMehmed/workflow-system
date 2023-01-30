@@ -12,7 +12,7 @@ $query_run = mysqli_query($con, $query);
 
 while ($rows = mysqli_fetch_array($query_run)) {
 ?>
-    <div class="w-full sm:w-[230px] h-[132px] rounded-md shadow-lg p-3 border border-slate-100 text-slate-700 space-y-1.5">
+    <div class="w-full sm:w-[228px] h-[132px] rounded-md shadow-lg p-3 border border-slate-100 text-slate-700 space-y-1.5">
         <span class="text-lg font-bold">Заявка номер <?= $rows["id"] ?></span>
         <div class="flex items-center">
             <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 text-slate-500 mr-1.5">

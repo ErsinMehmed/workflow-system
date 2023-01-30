@@ -2,6 +2,22 @@
 session_start();
 date_default_timezone_set('Europe/Sofia');
 
+require "../vendor/autoload.php";
+
+use PHPMailer\PHPMailer\PHPMailer;
+
+$mail = new PHPMailer(true);
+
+$mail->isSMTP();
+$mail->SMTPAuth = true;
+
+$mail->Host = "smtp.gmail.com";
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+$mail->Port = 587;
+
+$mail->Username = "115704@students.ue-varna.bg";
+$mail->Password = "13071999E";
+
 include 'dbconn.php';
 include 'function.php';
 
@@ -23,23 +39,40 @@ if (isset($_POST['save_customer'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $selQuery = "SELECT * FROM customers WHERE email = '$email'";
-        $query = mysqli_query($con, $selQuery);
+        if (preg_match('/^[0-9+\(\)\s-]+$/', $phone)) {
+            $selQuery = "SELECT 1 FROM customers WHERE email = '$email'";
+            $query = mysqli_query($con, $selQuery);
 
-        if (mysqli_num_rows($query) == 0) {
+            if (mysqli_num_rows($query) == 0) {
 
-            if ($password == $passwordRep) {
-                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                if (preg_match('/^(?=.*[a-zа-яА-Я])(?=.*[A-ZА-Я])(?=.*\d)(?=.*[@$!%*?&])[A-Za-zа-яА-Я\d@$!%*?&]{8,}$/u', $password)) {
+                    if ($password == $passwordRep) {
+                        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                        $emailCode = rand();
 
-                $query = "INSERT INTO customers (name,email,password,phone,created_at) VALUES ('$fullName','$email','$password','$phone','$curDT')";
-                $query_run = mysqli_query($con, $query);
+                        $mail->setFrom("carpetserv@gmail.com", "Carpet Services");
+                        $mail->addAddress($email, $fullName);
 
-                jsonResponseMain($query_run, 'Успешна регистрация', 'Неуспешна регистрация');
+                        $mail->Subject = "Carpet Service - email verification code";
+                        $mail->Body = "Your code is " . $emailCode;
+
+                        $mail->send();
+
+                        $query = "INSERT INTO customers (name,email,password,phone,created_at,email_code) VALUES ('$fullName','$email','$password','$phone','$curDT',$emailCode)";
+                        $query_run = mysqli_query($con, $query);
+
+                        jsonResponseMain($query_run, 'Успешна регистрация', 'Неуспешна регистрация');
+                    } else {
+                        jsonResponse(500, 'Въведените пароли не съвпадат');
+                    }
+                } else {
+                    jsonResponse(500, 'Въведената парола трябва да съдържа поне една голяма, малка буква, цифра и специален знак');
+                }
             } else {
-                jsonResponse(500, 'Въведените пароли не съвпадат');
+                jsonResponse(500, 'Въведеният имейл вече съществува');
             }
         } else {
-            jsonResponse(500, 'Въведеният имейл вече съществува');
+            jsonResponse(500, 'Телефонният номер може да съдържа само цифри, +, - и ()');
         }
     }
 }
@@ -109,7 +142,7 @@ if (isset($_POST['update_customer_image'])) {
             $query = "UPDATE customers SET image='$filename' WHERE email='$userEmail'";
             $query_run = mysqli_query($con, $query);
 
-            jsonResponseMain($query_run, 'Снимката е обновена', 'Снимката не е обновена');
+            jsonResponseMain($query_run, 'Профилната снимката е обновена', 'Снимката не е обновена');
         }
     } else {
         jsonResponse(500, 'Снимката, която се опитвате да добавите е по-голяма от 2MB');
@@ -205,23 +238,25 @@ if (isset($_POST['customer_order'])) {
 
 // Get customer history data
 if (isset($_GET['id'])) {
-    $id = mysqli_real_escape_string($con, $_GET['id']);
+    $id = $_GET['id'];
 
-    $query = "SELECT * FROM orders WHERE id='$id'";
-    $query_run = mysqli_query($con, $query);
+    $stmt = $con->prepare("SELECT * FROM orders WHERE id=?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if (mysqli_num_rows($query_run) == 1) {
-        $order = mysqli_fetch_array($query_run);
+    if ($result->num_rows == 1) {
+        $order = $result->fetch_assoc();
 
         $res = [
             'status' => 200,
             'data' => $order
         ];
         echo json_encode($res);
-        return;
     } else {
         jsonResponse(404, 'Клиента не е намерен');
     }
+    $stmt->close();
 }
 
 // Upload customer room image

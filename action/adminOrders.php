@@ -28,20 +28,24 @@ if (isset($_POST['admin_order'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        if (is_numeric($m2)) {
-            $selQuery = "SELECT * FROM customers WHERE email = '$email'";
-            $query = mysqli_query($con, $selQuery);
+        if (preg_match('/^[0-9+\(\)\s-]+$/', $phone)) {
+            if (is_numeric($m2)) {
+                $selQuery = "SELECT * FROM customers WHERE email = '$email'";
+                $query = mysqli_query($con, $selQuery);
 
-            if (mysqli_num_rows($query) == 0) {
-                $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,customer_kind,information,email,team_id) VALUES ('$name','$address','$room','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$phone','1','$time','Админ','$information','$email','0')";
-                $query_run = mysqli_query($con, $query);
+                if (mysqli_num_rows($query) == 0) {
+                    $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,customer_kind,information,email,team_id) VALUES ('$name','$address','$room','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$phone','1','$time','Админ','$information','$email','0')";
+                    $query_run = mysqli_query($con, $query);
 
-                jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
+                    jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
+                } else {
+                    jsonResponse(500, 'Въведеният имейл вече свързан към профил');
+                }
             } else {
-                jsonResponse(500, 'Въведеният имейл вече свързан към профил');
+                jsonResponse(500, 'Полето квадратура приема само числа');
             }
         } else {
-            jsonResponse(500, 'Полето квадратура приема само числа');
+            jsonResponse(500, 'Телефонният номер може да съдържа само цифри, +, - и ()');
         }
     }
 }

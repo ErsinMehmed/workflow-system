@@ -22,10 +22,16 @@ if (isset($_POST['admin_supplier'])) {
         $query_go = mysqli_query($con, $query);
 
         if (mysqli_num_rows($query_go) == 0) {
-            $query = "INSERT INTO suppliers (name,phone,address,iban) VALUES ('$name','$phone','$address','$iban')";
-            $query_run = mysqli_query($con, $query);
+            if (preg_match('/^[0-9+\(\)\s-]+$/', $phone)) {
+                $query = "INSERT INTO suppliers (name,phone,address,iban) VALUES (?,?,?,?)";
+                $stmt = mysqli_prepare($con, $query);
+                mysqli_stmt_bind_param($stmt, "ssss", $name, $phone, $address, $iban);
+                $query_run = mysqli_stmt_execute($stmt);
 
-            jsonResponseMain($query_run, 'Успешно добавихте доставчика', 'Неуспешно добавяне доставчика');
+                jsonResponseMain($query_run, 'Успешно добавихте доставчика', 'Неуспешно добавяне доставчика');
+            } else {
+                jsonResponse(500, 'Телефонният номер може да съдържа само цифри, +, - и ()');
+            }
         } else {
             jsonResponse(500, 'Този доставчик вече съществува');
         }

@@ -413,7 +413,7 @@ $date = date("Y-m-d"); ?>
     <script src="js/ajax.js"></script>
     <script src="js/ownerChart.js"></script>
     <script src="loader/dashLoader.js"></script>
-    <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 </body>
 
 </html>

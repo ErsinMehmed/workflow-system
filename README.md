@@ -23,13 +23,13 @@ The Workflow System provides a graphical user interface for creating and managin
 
 The following libraries and tools have been used in this project:
 
-- [Animate.css](https://animate.style/){:target="_blank"}
-- [Tailwind CSS](https://tailwindcss.com/docs/installation){:target="_blank"}
-- [Flowbite](https://flowbite.com/docs/getting-started/introduction/){:target="_blank"}
-- [AOS](https://github.com/michalsnik/aos){:target="_blank"}
-- [Alertify.js](https://alertifyjs.com/guide.html){:target="_blank"}
-- [Chart.js](https://www.chartjs.org/docs/latest/){:target="_blank"}
-- [PHPmailer](https://github.com/PHPMailer/PHPMailer){:target="_blank"}
+- [Animate.css](https://animate.style/)
+- [Tailwind CSS](https://tailwindcss.com/docs/installation)
+- [Flowbite](https://flowbite.com/docs/getting-started/introduction/)
+- [AOS](https://github.com/michalsnik/aos)
+- [Alertify.js](https://alertifyjs.com/guide.html)
+- [Chart.js](https://www.chartjs.org/docs/latest/)
+- [PHPmailer](https://github.com/PHPMailer/PHPMailer)
 
 ## License
 

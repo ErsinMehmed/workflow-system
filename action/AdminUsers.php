@@ -83,25 +83,25 @@ if (isset($_POST['admin_update_user'])) {
     $filename = $_FILES['userImg']['name'];
     $date = date('Y-m-d');
 
-    if (!$name || !$egn || !$dob || !$phone || !$position || !$status || !$address) {
+    if ($status == 0) {
+        $query = "SELECT * FROM set_orders WHERE (user1_id = '$id' OR user2_id = '$id') AND order_date >= '$date'";
+        $query_run = mysqli_query($con, $query);
 
-        jsonResponse(500, 'Попълнете всички полета');
-    } else {
-        if ($status == 0) {
-            $query = "SELECT * FROM set_orders WHERE (user1_id = '$id' OR user2_id = '$id') AND order_date >= '$date'";
+        if (mysqli_num_rows($query_run) == 0) {
+            $queryy = "UPDATE teams SET delete_team='yes' WHERE user1_id = '$id' OR user2_id = '$id'";
+            $query_runn = mysqli_query($con, $queryy);
+
+            $query = "UPDATE users SET name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
             $query_run = mysqli_query($con, $query);
 
-            if (mysqli_num_rows($query_run) == 0) {
-                $queryy = "UPDATE teams SET delete_team='yes' WHERE user1_id = '$id' OR user2_id = '$id'";
-                $query_runn = mysqli_query($con, $queryy);
+            jsonResponseMain($query_run, 'Данните на ' . $name . ' са обновени', 'Данните не са обновени');
+        } else {
+            jsonResponse(500, 'Служителя има назначени задачи към текущия момент');
+        }
+    } else {
+        if (!$name || !$egn || !$dob || !$phone || !$position || $status != NULL || !$address) {
 
-                $query = "UPDATE users SET name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
-                $query_run = mysqli_query($con, $query);
-
-                jsonResponseMain($query_run, 'Данните на ' . $name . ' са обновени', 'Данните не са обновени');
-            } else {
-                jsonResponse(500, 'Служителя има назначени задачи към текущия момент');
-            }
+            jsonResponse(500, 'Попълнете всички полета');
         } else {
             if (!$filename) {
                 $query = "UPDATE users SET name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";

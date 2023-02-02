@@ -7,14 +7,12 @@ require "../vendor/autoload.php";
 use PHPMailer\PHPMailer\PHPMailer;
 
 $mail = new PHPMailer(true);
-
+$mail->CharSet = 'UTF-8';
 $mail->isSMTP();
 $mail->SMTPAuth = true;
-
 $mail->Host = "smtp.gmail.com";
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 587;
-
 $mail->Username = "115704@students.ue-varna.bg";
 $mail->Password = "13071999E";
 
@@ -48,13 +46,13 @@ if (isset($_POST['save_customer'])) {
                 if (preg_match('/^(?=.*[a-zа-яА-Я])(?=.*[A-ZА-Я])(?=.*\d)(?=.*[@$!%*?&])[A-Za-zа-яА-Я\d@$!%*?&]{8,}$/u', $password)) {
                     if ($password == $passwordRep) {
                         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                        $emailCode = rand();
+                        $emailCode = rand(100000, 999999);
 
                         $mail->setFrom("carpetserv@gmail.com", "Carpet Services");
                         $mail->addAddress($email, $fullName);
 
-                        $mail->Subject = "Carpet Service - email verification code";
-                        $mail->Body = "Your code is " . $emailCode;
+                        $mail->Subject = "Carpet Services - Вашият код за потвърждение";
+                        $mail->Body = "Вашият код е " . $emailCode;
 
                         $mail->send();
 
@@ -236,12 +234,35 @@ if (isset($_POST['customer_order'])) {
     }
 }
 
-// Get customer history data
+// Get customer data by id
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     $stmt = $con->prepare("SELECT * FROM orders WHERE id=?");
     $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 1) {
+        $order = $result->fetch_assoc();
+
+        $res = [
+            'status' => 200,
+            'data' => $order
+        ];
+        echo json_encode($res);
+    } else {
+        jsonResponse(404, 'Клиента не е намерен');
+    }
+    $stmt->close();
+}
+
+// Get customer data by email
+if (isset($_GET['email'])) {
+    $email = $_GET['email'];
+
+    $stmt = $con->prepare("SELECT * FROM customers WHERE email=?");
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -338,4 +359,15 @@ if (isset($_POST['customer_rate'])) {
 
         jsonResponseMain($query_run, 'Благодарим за вашато мнение', '');
     }
+}
+
+// Email verify
+if (isset($_POST['verify'])) {
+
+    $email = $_POST['verify'];
+
+    $query = "UPDATE customers SET email_verify='yes' WHERE email='$email'";
+    $query_run = mysqli_query($con, $query);
+
+    jsonResponseMain($query_run, 'Успешно потвърдихте имейла си', '');
 }

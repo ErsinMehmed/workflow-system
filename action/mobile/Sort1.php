@@ -81,11 +81,7 @@ if (isset($_POST['text'])) {
                                 <div class="text-sm text-center"><b><?= $rows['pay'] ?></b></div>
                             </div>
                             <div class="w-3/12 flex justify-center mr-5">
-                                <?php if ($rows['status'] == "Приключена") { ?>
-                                    <div class="text-green-400 border border-green-400 py-1.5 px-3.5 text-sm font-semibold rounded-full ml-20 w-fit"><?= $rows['status'] ?></div>
-                                <?php } else { ?>
-                                    <div class="text-red-400 border border-red-400 py-1.5 px-3.5 text-sm font-semibold rounded-full ml-20 w-fit"><?= $rows['status'] ?></div>
-                                <?php } ?>
+                                <div class="text-<?= $rows['status'] == "Приключена" ? "green-400" : "red-400" ?> border border-<?= $rows['status'] == "Приключена" ? "green-400" : "red-400" ?> py-1.5 px-3.5 text-sm font-semibold rounded-full ml-20 w-fit"><?= $rows['status'] ?></div>
                             </div>
                         </div>
                         <div>

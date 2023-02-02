@@ -28,55 +28,25 @@ $query_run = mysqli_query($con, $query); ?>
             <tr class="bg-white hover:bg-slate-50 transition-all border-b border-gray-200 text-sm">
                 <td class="pr-4 py-5 text-center"><?= $rows["id"] ?></td>
                 <td class="px-4 py-5 text-center"><?= $rows["name"] ?></td>
-                <td class="px-4 py-5 text-sm">
-                    <?php if ($rows["status"] == "Yes") { ?>
-                        <span class="w-8 h-8 rounded-full bg-green-200 flex items-center justify-center mx-auto">
-                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-green-500">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                            </svg>
-                        </span>
-                    <?php
-                    } else { ?>
-                        <span class="w-8 h-8 rounded-full bg-red-200 flex items-center justify-center mx-auto">
-                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-500">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </span>
-                    <?php } ?>
+                <td class="px-4 py-5">
+                    <span class="w-8 h-8 rounded-full bg-<?= $rows['status'] === 'Yes' ? 'green' : 'red' ?>-200 flex items-center justify-center mx-auto">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-<?= $rows['status'] === 'Yes' ? 'green' : 'red' ?>-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="<?= $rows['status'] === 'Yes' ? 'M4.5 12.75l6 6 9-13.5' : 'M6 18L18 6M6 6l12 12' ?>" />
+                        </svg>
+                    </span>
                 </td>
                 <td class="px-4 py-5 text-center"><?= $rows["user1_name"] ?></td>
                 <td class="px-4 py-5 text-center"><?= $rows["user2_name"] ?></td>
                 <td class="px-4 py-5 text-center">
-                    <?php
-                    $id = $rows['id'];
-
-                    $queryy = "SELECT * FROM orders WHERE team_id = '$id' AND date >= '$date'";
-                    $query_runn = mysqli_query($con, $queryy);
-
-                    if (mysqli_num_rows($query_runn) > 0) { ?>
-                        <button type="button" value="<?= $rows['id']; ?>" class="h-8 w-8 bg-blue-100 hover:bg-blue-200 text-blue-800 focus:outline-none text-xs font-semibold rounded-md active:scale-90 transition-all prevOrd">
-                            <?php echo mysqli_num_rows($query_runn); ?>
-                        </button>
-                    <?php } else { ?>
-                        <button type="button" class="h-8 w-8 bg-blue-100 text-blue-800 focus:outline-none text-xs font-semibold rounded-md cursor-default">
-                            0
-                        </button>
-                    <?php } ?>
+                    <button type="button" value="<?= $rows['id']; ?>" class="h-8 w-8 bg-blue-100 text-blue-800 focus:outline-none text-xs font-semibold rounded-md <?= mysqli_num_rows(mysqli_query($con, "SELECT * FROM orders WHERE team_id = '{$rows['id']}' AND date >= '$date'")) > 0 ? 'hover:bg-blue-200 active:scale-90 prevOrd' : 'cursor-default'; ?> transition-all">
+                        <?= mysqli_num_rows(mysqli_query($con, "SELECT * FROM orders WHERE team_id = '{$rows['id']}' AND date >= '$date'")) ?: 0; ?>
+                    </button>
                 </td>
                 <td class="px-4 py-5 flex justify-center">
                     <div class="h-8 w-8 bg-blue-100 text-blue-800 text-xs font-semibold rounded-md flex items-center justify-center">
-                        <?php
-                        $id = $rows['id'];
-
-                        $sql_run = "SELECT CAST(AVG(rating) AS DECIMAL(10,1)) AS rating FROM team_ratings WHERE team_id = '$id'";
-                        $result = $con->query($sql_run);
-                        while ($row = mysqli_fetch_array($result)) {
-                            if ($row['rating'] == "") {
-                                echo "0.0";
-                            } else {
-                                echo $row['rating'];
-                            }
-                        } ?>
+                        <?php $id = $rows['id'];
+                        $row = mysqli_fetch_array($con->query("SELECT CAST(AVG(rating) AS DECIMAL(10,1)) AS rating FROM team_ratings WHERE team_id = '$id'"));
+                        echo $row['rating'] ?: "0.0"; ?>
                     </div>
                 </td>
                 <td class="px-4 py-5 text-center">

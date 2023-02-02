@@ -209,6 +209,42 @@ $(document).ready(function () {
     });
   });
 
+  // Customer email verify
+  $(".email-code").keyup(function () {
+    const email = $("#get-customer-email").val();
+    const inputs = $(
+      "#first-num, #second-num, #third-num, #fourth-num, #fifth-num, #sixth-num"
+    );
+    const code = inputs
+      .map((i, el) => $(el).val())
+      .get()
+      .join("");
+
+    getData("action/Customer.php?email=" + email, function (response) {
+      const res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        if (res.data.email_code == code) {
+          const verify = $("#get-customer-email").val();
+
+          postData(
+            "action/Customer.php",
+            { verify: verify },
+            function (response) {
+              const res = jQuery.parseJSON(response);
+
+              if (res.status == 200) {
+                closeModal("#email-verify-modal");
+                $("#alert-additional-content").addClass("hidden");
+                alertify.success(res.message);
+              }
+            }
+          );
+        }
+      }
+    });
+  });
+
   // Get customer history modal data
   $(document).on("click", ".history-view", function () {
     const id = $(this).val();
@@ -641,6 +677,23 @@ $(document).ready(function () {
         alertify.error(res.message);
       }
     });
+  });
+
+  $("#filter-date-from").on("change", function () {
+    const dateFrom = $(this).val();
+    const dateTo = $("#filter-date-to").val();
+
+    if (dateFrom < dateTo) {
+      postData(
+        "action/owner/DateFilter.php",
+        { dateFrom: dateFrom, dateTo: dateTo },
+        function (data) {
+          $("#income-section").html(data);
+        }
+      );
+    } else {
+      alertify.error("Едната дата трябва да бъде по-малка от другата");
+    }
   });
 
   // User search by name and pid
@@ -1331,6 +1384,24 @@ $(document).ready(function () {
     });
   });
 
+  // Owner login
+  $(document).on("submit", "#owner-login-form", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    formData.append("owner_login", true);
+
+    postFormData("action/Owner.php", formData, function (response) {
+      const res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        location.reload();
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
   // Admin update data
   $(document).on("submit", "#admin-information-form", function (e) {
     e.preventDefault();
@@ -1376,6 +1447,19 @@ $(document).ready(function () {
     const action = "data";
 
     postData("action/Admin.php", { action: action }, function (response) {
+      const res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        location.reload();
+      }
+    });
+  });
+
+  // Owner dashboard logout
+  $("#owner-logout").on("click", function () {
+    const action = "data";
+
+    postData("action/Owner.php", { action: action }, function (response) {
       const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1465,9 +1549,10 @@ $(document).ready(function () {
       );
     } else {
       postData(
-        "action/mobile/Sort.php",
+        "action/mobile/Sort1.php",
         { text: text, orderBy: orderBy },
         function (response) {
+          console.log(response);
           $("#finished-order-section").html(response);
         }
       );

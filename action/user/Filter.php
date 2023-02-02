@@ -35,31 +35,19 @@ $query_run = mysqli_query($con, $query);
     while ($rows = mysqli_fetch_array($query_run)) { ?>
         <tbody class="animate__animated animate__slideInUp animate__faster">
             <tr class="bg-white hover:bg-slate-50 transition-all border-b border-gray-200 text-sm">
-                <td class="px-2 py-5"><img src="../uploaded-files/user-images/<?= $rows["image"] ?>" alt="<?= $rows["image"] ?>" class="w-10 h-10 rounded-full object-cover mx-auto" /></td>
+                <td class="px-2 py-5"><img src="uploaded-files/user-images/<?= $rows["image"] ?>" alt="<?= $rows["image"] ?>" class="w-10 h-10 rounded-full object-cover mx-auto" /></td>
                 <td class="pr-4 py-5 text-center"><?= $rows["name"] ?></td>
                 <td class="px-4 py-5 text-center"><?= $rows["pid"] ?></td>
                 <td class="px-4 py-5 text-center"><?= $rows["position"] ?></td>
                 <td class="px-4 py-5">
-                    <?php if ($rows["status"] == 1) { ?>
-                        <span class="w-8 h-8 rounded-full bg-green-200 flex items-center justify-center mx-auto">
-                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-green-500">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                            </svg>
-                        </span>
-                    <?php } else { ?>
-                        <span class="w-8 h-8 rounded-full bg-red-200 flex items-center justify-center mx-auto">
-                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-500">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </span>
-                    <?php } ?>
+                    <span class="w-8 h-8 rounded-full bg-<?= ($rows["status"] == 1) ? 'green-200' : 'red-200' ?> flex items-center justify-center mx-auto">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-<?= ($rows["status"] == 1) ? 'green-500' : 'red-500' ?>">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="<?= ($rows["status"] == 1) ? 'M4.5 12.75l6 6 9-13.5' : 'M6 18L18 6M6 6l12 12' ?>" />
+                        </svg>
+                    </span>
                 </td>
-                <td class="px-4 py-5">
-                    <?php if ($rows["team_name"] != '') {
-                        echo $rows["team_name"];
-                    } else { ?>
-                        Няма
-                    <?php } ?>
+                <td class="px-4 py-5 text-center">
+                    <?= ($rows["team_name"] != '') ? $rows["team_name"] : 'Няма' ?>
                 </td>
                 <td class="px-4 py-5 text-center"><?= date("d.m.Y", strtotime($rows['in_date'])) ?></td>
                 <td class="px-4 py-5 text-center space-x-2">

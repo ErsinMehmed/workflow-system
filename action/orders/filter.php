@@ -39,37 +39,32 @@ if (mysqli_num_rows($query_run) > 0) {
                 <td class="px-4 py-5 text-center"><?= $rows["room"] ?></td>
                 <td class="px-4 py-5 text-center"><?= $rows["offer"] ?></td>
                 <td class="px-4 py-5 text-center">
-                    <?php if ($rows["status"] == 'Назначи') { ?>
-                        <span class="relative inline-block px-3 py-1 font-semibold text-blue-900 leading-tight">
-                            <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
-                            <span class="relative"><?= $rows["status"] ?></span>
-                        </span>
-                    <?php } else if ($rows["status"] == 'Назначена') { ?>
-                        <span class="relative inline-block px-3 py-1 font-semibold text-indigo-900 leading-tight">
-                            <span aria-hidden class="absolute inset-0 bg-indigo-200 opacity-50 rounded-full"></span>
-                            <span class="relative"><?= $rows["status"] ?></span>
-                        </span>
-                    <?php } else if ($rows["status"] == 'В процес') { ?>
-                        <span class="relative inline-block px-3 py-1 font-semibold text-orange-900 leading-tight">
-                            <span aria-hidden class="absolute inset-0 bg-orange-200 opacity-50 rounded-full"></span>
-                            <span class="relative"><?= $rows["status"] ?></span>
-                        </span>
-                    <?php } else if ($rows["status"] == 'Приключена') { ?>
-                        <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                            <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                            <span class="relative"><?= $rows["status"] ?></span>
-                        </span>
-                    <?php } else if ($rows["status"] == 'Отказана') { ?>
-                        <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                            <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                            <span class="relative"><?= $rows["status"] ?></span>
-                        </span>
-                    <?php } else if ($rows["status"] == 'Изтекла') { ?>
-                        <span class="relative inline-block px-3 py-1 font-semibold text-gray-900 leading-tight">
-                            <span aria-hidden class="absolute inset-0 bg-gray-200 opacity-50 rounded-full"></span>
-                            <span class="relative"><?= $rows["status"] ?></span>
-                        </span>
-                    <?php } ?>
+                    <?php $statusColors = array(
+                        "Назначи" => array("color" => "blue", "class" => "text-blue-900"),
+                        "Назначена" => array("color" => "indigo", "class" => "text-indigo-900"),
+                        "В процес" => array("color" => "orange", "class" => "text-orange-900"),
+                        "Приключена" => array("color" => "green", "class" => "text-green-900"),
+                        "Отказана" => array("color" => "red", "class" => "text-red-900"),
+                        "Изтекла" => array("color" => "gray", "class" => "text-gray-900")
+                    );
+
+                    $status = $rows["status"];
+                    if (array_key_exists($status, $statusColors)) {
+                        $color = $statusColors[$status]["color"];
+                        $class = $statusColors[$status]["class"];
+
+                        if ($status == "Отказана") { ?>
+                            <button value="<?= $rows["id"] ?>" class="relative inline-block px-3 py-1 group font-semibold <?= $class ?> leading-tight focus:outline-none show-cancel-dashboard">
+                                <span aria-hidden class="absolute inset-0 bg-<?= $color ?>-200 group-hover:bg-<?= $color ?>-300 transition-all opacity-50 rounded-full"></span>
+                                <span class="group-hover:underline transition-all relative"><?= $status ?></span>
+                            </button>
+                        <?php } else { ?>
+                            <span class="relative inline-block px-3 py-1 font-semibold <?= $class ?> leading-tight">
+                                <span aria-hidden class="absolute inset-0 bg-<?= $color ?>-200 opacity-50 rounded-full"></span>
+                                <span class="relative"><?= $status ?></span>
+                            </span>
+                    <?php }
+                    } ?>
                 </td>
                 <td class="px-4 py-5 text-center"><?= $rows["m2"] . " m2" ?></td>
                 <td class="px-4 py-5 text-center"><?= $rows["price"] . " лв." ?></td>

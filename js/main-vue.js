@@ -57,6 +57,9 @@ createApp({
       ourClientTab: true,
       processTab: false,
       communicationTab: false,
+      dashSectionOwner: "Статистика",
+      dashOwnerStatistic: true,
+      dashOwnerAdmin: false,
       orderState: [
         "Почистване на повърхности",
         "Почистване на стъклени повърхности",

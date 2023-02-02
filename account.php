@@ -212,6 +212,36 @@ $email = $_SESSION['email']; ?>
             </div>
 
             <div v-show="accountSection" class="w-full md:w-[80%] shadow-lg rounded-xl border border-slate-50 p-6 md:p-8 text-slate-700 animate__animated animate__fadeIn">
+              <?php
+              $query = "SELECT * FROM customers WHERE email = '$email'";
+              $query_run = mysqli_query($con, $query);
+              while ($rows = mysqli_fetch_array($query_run)) {
+                if ($rows["email_verify"] == "") { ?>
+                  <div id="alert-additional-content" class="p-3.5 border border-gray-300 rounded-lg bg-gray-50 mb-2.5">
+                    <div class="flex items-center">
+                      <svg aria-hidden="true" class="w-5 h-5 mr-1.5 text-slate-700" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                      </svg>
+                      <h3 class="text-lg font-semibold text-slate-700">Не сте потвърдили имейла си</h3>
+                    </div>
+                    <div class="mt-1.5 mb-3 text-sm text-slate-700">
+                      За да можете да направите поръчка трябва да потвърдите имейла си с изпратения от нас код на имейлът Ви.
+                    </div>
+                    <div class="flex">
+                      <button id="email-verify-btn" type="button" class="text-white bg-gray-500 hover:bg-gray-600 focus:outline-none font-semibold rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center transition-all active:scale-90">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="mr-1 h-3.5 w-3.5">
+                          <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
+                          <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
+                        </svg>
+                        Потвърждаване
+                      </button>
+                      <button type="button" class="text-slate-700 bg-transparent border border-gray-700 hover:bg-slate-700 hover:text-white focus:outline-none font-semibold rounded-lg text-xs px-3 py-1.5 text-center transition-all active:scale-90" data-dismiss-target="#alert-additional-content-5" aria-label="Close">
+                        По-късно
+                      </button>
+                    </div>
+                  </div>
+              <?php }
+              } ?>
               <h1 class="font-bold text-2xl mb-6 md:mb-8 text-center sm:text-left">
                 Акаунт
               </h1>
@@ -978,7 +1008,7 @@ $email = $_SESSION['email']; ?>
                       </div>
                     </label>
                   </div>
-                  <div id="tooltip-card-payment" role="tooltip" class="hidden text-center font-medium md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+                  <div id="tooltip-card-payment" role="tooltip" class="hidden text-center font-semibold md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm bg-white text-slate-700 rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                     Не се притеснявайте ! Нашият екип ще носи POS терминал при посещението на имота Ви.
                   </div>
                   <div>
@@ -999,7 +1029,7 @@ $email = $_SESSION['email']; ?>
                   Желаете ли фактура
                 </div>
                 <div class="flex flex-wrap items-center gap-3.5">
-                  <div id="tooltip-invoice" role="tooltip" class="hidden text-center font-medium text-slate-700 md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm bg-white rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
+                  <div id="tooltip-invoice" role="tooltip" class="hidden text-center font-semibold text-slate-700 md:inline-block max-w-sm absolute invisible z-10 py-2 px-3 text-sm bg-white rounded-lg opacity-0 transition-opacity duration-300 tooltip shadow-xl border border-slate-100">
                     Можете да намерите Вашите фактури в раздел документи след като бъде извършено почистването.
                   </div>
                   <div>
@@ -1269,6 +1299,51 @@ $email = $_SESSION['email']; ?>
                   </div>
                   <div class="text-gray-600 hover:text-gray-400 transition-all font-semibold py-6 text-center cursor-pointer close-customer-opinion-modal">Може би по-късно</div>
                 </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="email-verify-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+          <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center items-center">
+            <div class="relative bg-white px-8 pt-9 pb-8 shadow-xl mx-auto h-auto w-full max-w-lg rounded-2xl animate__animated animate__zoomIn animate__faster">
+              <div class="mx-auto flex w-full max-w-md flex-col space-y-8">
+                <div class="flex flex-col items-center justify-center text-center space-y-2">
+                  <div class="font-semibold text-3xl text-slate-700">
+                    <p>Потвърдете имейла си</p>
+                  </div>
+                  <div class="flex flex-row text-sm font-medium text-gray-400">
+                    <p>Изпратихме имейл до <?= $email ?></p>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex flex-col space-y-8">
+                    <div class="flex flex-row items-center justify-between mx-auto w-full px-4">
+                      <div class="w-14 h-14">
+                        <input class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 transition-all email-code" maxlength="1" type="text" id="first-num">
+                      </div>
+                      <div class="w-14 h-14">
+                        <input class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 transition-all email-code" maxlength="1" type="text" id="second-num">
+                      </div>
+                      <div class="w-14 h-14">
+                        <input class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 transition-all email-code" maxlength="1" type="text" id="third-num">
+                      </div>
+                      <div class="w-14 h-14">
+                        <input class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 transition-all email-code" maxlength="1" type="text" id="fourth-num">
+                      </div>
+                      <div class="w-14 h-14">
+                        <input class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 transition-all email-code" maxlength="1" type="text" id="fifth-num">
+                      </div>
+                      <div class="w-14 h-14">
+                        <input class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 transition-all email-code" maxlength="1" type="text" id="sixth-num">
+                      </div>
+                    </div>
+                    <input id="get-customer-email" type="hidden" value="<?= $email ?>">
+                    <button id="close-email-verify-modal" class="flex flex-row items-center justify-center text-center font-semibold w-full border rounded-xl outline-none py-2.5 bg-blue-600 hover:bg-blue-700 border-none text-white shadow transition-all active:scale-90">
+                      Затвори
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

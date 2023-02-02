@@ -18,18 +18,16 @@
 
 <body>
   <section>
-    <!-- Page loader -->
     <div id="site-load" class="loader__wrap" role="alertdialog" aria-busy="true" aria-live="polite" aria-label="Loading…">
       <div class="loader" aria-hidden="true">
         <div class="loader__sq"></div>
         <div class="loader__sq"></div>
       </div>
     </div>
+
     <div id="app">
-      <!--Scroll detector-->
       <div class="w-full h-1 rounded-r-full fixed z-40 top-0 left-0 bg-blue-400" :style="{ width: progress }"></div>
 
-      <!--Scroll to top button-->
       <div class="fixed z-30 right-4 bottom-4 w-10 h-10 hidden bg-blue-500 hover:bg-blue-600 lg:flex rounded-full justify-center items-center cursor-pointer transition-all" style="
             box-shadow: rgb(0 0 0 / 25%) 0px 14px 28px,
               rgb(0 0 0 / 22%) 0px 10px 10px;
@@ -39,7 +37,6 @@
         </svg>
       </div>
 
-      <!--Navbar section start-->
       <nav class="bg-white border-b border-slate-200 shadow-md sm:px-0 pt-3 md:py-3 top-0 sticky z-30">
         <div class="bg-white flex flex-wrap sm:px-5 md:px-6 lg:px-12 pb-3 md:pb-0 items-center justify-between">
           <a href="/" class="flex items-center pl-5 sm:pl-0">
@@ -107,10 +104,8 @@
         </div>
       </nav>
 
-      <!--Login modal-->
       <div id="authentication-modal" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
         <div class="relative w-full h-full max-w-md md:h-auto">
-          <!-- Modal content -->
           <div class="relative rounded-lg shadow bg-gray-100">
             <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all" data-modal-toggle="authentication-modal">
               <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -206,10 +201,8 @@
         </div>
       </div>
 
-      <!--Sign up modal-->
       <div id="signUp-modal" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
         <div class="relative w-full h-full max-w-md md:h-auto md:mt-32">
-          <!-- Modal content -->
           <div class="relative rounded-lg shadow bg-gray-100">
             <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all" data-modal-toggle="signUp-modal">
               <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -328,7 +321,6 @@
         </div>
       </div>
 
-      <!--Form section-->
       <div class="h-auto w-full lg:w-[40rem] xl:w-[46rem] 2xl:w-[50rem] lg:rounded-lg shadow-xl lg:border border-slate-100 mx-auto lg:my-10">
         <form id="guest-order-form">
           <div class="w-full p-6 md:p-8 text-slate-700">
@@ -593,7 +585,6 @@
               {{ informationLength }}
             </div>
 
-            <!--Price toast-->
             <div class="fixed md:flex bottom-4 right-4 items-center justify-center p-3 w-24 md:w-32 text-slate-700 bg-white rounded-md shadow-2xl border border-slate-100" :class="{'lg:right-4': scY < 300, 'lg:right-16': scY > 300}">
               <div id="account-toast-price" class="font-semibold text-sm md:text-base">
                 0 лв.
@@ -607,7 +598,6 @@
               </svg>
               <span>Минимума е 10 квадратни метра.</span>
             </div>
-            <!--М2 toast-->
             <div data-tooltip-target="tooltip-m2" data-tooltip-placement="left" class="hidden fixed md:flex bottom-20 right-4 items-center justify-center py-2 px-3 w-32 text-slate-700 bg-white rounded-md shadow-lg border border-slate-100" :class="{'lg:right-4': scY < 300, 'lg:right-16': scY > 300}">
               <div class="">
                 <label for="account-m2" class="block mb-1.5 text-sm font-semibold text-slate-700 text-center">

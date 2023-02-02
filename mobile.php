@@ -7,6 +7,7 @@ include 'action/dbconn.php';
 
 $pid = $_SESSION['pid'];
 $date_now = date("Y-m-d"); ?>
+
 <!DOCTYPE html>
 <html lang="bg">
 
@@ -27,7 +28,6 @@ $date_now = date("Y-m-d"); ?>
 </head>
 
 <body>
-  <!-- Page loader -->
   <div id="load-mobile" class="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-slate-800 flex flex-col items-center justify-center">
     <div role="status">
       <svg aria-hidden="true" class="w-8 h-8 md:w-10 md:h-10 2xl:w-14 2xl:h-14 mb-2 md:mr-1 text-gray-100 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none">
@@ -37,6 +37,7 @@ $date_now = date("Y-m-d"); ?>
     </div>
     <h2 class="text-center text-gray-100 text-xl xl:text-2xl 2xl:text-3xl font-semibold">Зареждане...</h2>
   </div>
+
   <div id="app">
     <?php if ($pid) { ?>
       <div id="mobile-app">
@@ -102,8 +103,7 @@ $date_now = date("Y-m-d"); ?>
                   $query = "SELECT * FROM users WHERE pid = '$pid'";
                   $query_run = mysqli_query($con, $query);
 
-                  while ($rows = mysqli_fetch_array($query_run)) {
-                  ?>
+                  while ($rows = mysqli_fetch_array($query_run)) { ?>
                     <div>
                       <svg viewBox="0 0 24 24" fill="currentColor" class="w-36 h-36 mx-auto text-[#407cb2]">
                         <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
@@ -163,7 +163,6 @@ $date_now = date("Y-m-d"); ?>
               </div>
             </div>
 
-            <!-- Order section -->
             <div v-show="mobOrder" id="mobOrder">
               <div class="flex items-center justify-end bg-[#f8f8f8] w-full h-14 border-b-2 border-slate-200 px-5">
                 <div class="flex space-x-3.5">
@@ -192,7 +191,6 @@ $date_now = date("Y-m-d"); ?>
                 $query = "SELECT * FROM users WHERE pid = '$pid'";
                 $query_run = mysqli_query($con, $query);
 
-
                 while ($rows = mysqli_fetch_array($query_run)) {
                   $teamID = $rows['team_id'];
 
@@ -201,8 +199,7 @@ $date_now = date("Y-m-d"); ?>
                   $num = mysqli_num_rows($query_run);
 
                   if ($num > 0) {
-                    while ($rows = mysqli_fetch_array($query_run)) {
-                ?>
+                    while ($rows = mysqli_fetch_array($query_run)) { ?>
                       <input class="active-order-count" type="hidden" value="<?= $num ?>" />
                       <button class="w-full focus:outline-none get-order-data" type="button" value="<?= $rows['id'] ?>">
                         <div class="flex items-center justify-between w-full rounded border border-slate-100 shadow-lg p-3 cursor-pointer active:scale-95 transition-all">
@@ -256,11 +253,7 @@ $date_now = date("Y-m-d"); ?>
                               <div class="text-sm text-center"><b><?= $rows['pay'] ?></b></div>
                             </div>
                             <div class="w-3/12 flex justify-center mr-5">
-                              <?php if ($rows['status'] == "Назначена") { ?>
-                                <div class="text-blue-400 border border-blue-400 py-1.5 px-3.5 text-sm font-semibold rounded-full ml-20 w-fit status-section"><?= $rows['status'] ?></div>
-                              <?php } else { ?>
-                                <div class="text-yellow-500 border border-yellow-500 py-1.5 px-3.5 text-sm font-semibold rounded-full ml-20 w-fit status-section"><?= $rows['status'] ?></div>
-                              <?php } ?>
+                              <div class="text-<?= $rows['status'] == "Назначена" ? "blue-400" : "yellow-500" ?> border border-<?= $rows['status'] == "Назначена" ? "blue-400" : "yellow-500" ?> py-1.5 px-3.5 text-sm font-semibold rounded-full ml-20 w-fit"><?= $rows['status'] ?></div>
                             </div>
                           </div>
                           <div>
@@ -274,8 +267,7 @@ $date_now = date("Y-m-d"); ?>
                   } else { ?>
                     <input class="active-order-count" type="hidden" value="<?= $num ?>" />
                     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg font-semibold text-slate-700">Няма назначени задачи</div>
-                <?php
-                  }
+                <?php }
                 } ?>
               </div>
 
@@ -283,7 +275,6 @@ $date_now = date("Y-m-d"); ?>
                 <?php
                 $query = "SELECT * FROM users WHERE pid = '$pid'";
                 $query_run = mysqli_query($con, $query);
-
 
                 while ($rows = mysqli_fetch_array($query_run)) {
                   $teamID = $rows['team_id'];
@@ -293,8 +284,7 @@ $date_now = date("Y-m-d"); ?>
                   $num = mysqli_num_rows($query_run);
 
                   if ($num > 0) {
-                    while ($rows = mysqli_fetch_array($query_run)) {
-                ?>
+                    while ($rows = mysqli_fetch_array($query_run)) { ?>
                       <input class="finished-order-count" type="hidden" value="<?= $num ?>" />
                       <button class="w-full focus:outline-none mt-4 get-order-data" type="button" value="<?= $rows['id'] ?>">
                         <div class="flex items-center justify-between w-full rounded-sm border border-slate-100 shadow-lg p-3 cursor-pointer active:scale-95 transition-all">
@@ -348,11 +338,7 @@ $date_now = date("Y-m-d"); ?>
                               <div class="text-sm text-center"><b><?= $rows['pay'] ?></b></div>
                             </div>
                             <div class="w-3/12 flex justify-center mr-5">
-                              <?php if ($rows['status'] == "Приключена") { ?>
-                                <div class="text-green-400 border border-green-400 py-1.5 px-3.5 text-sm font-semibold rounded-full ml-20 w-fit"><?= $rows['status'] ?></div>
-                              <?php } else { ?>
-                                <div class="text-red-400 border border-red-400 py-1.5 px-3.5 text-sm font-semibold rounded-full ml-20 w-fit"><?= $rows['status'] ?></div>
-                              <?php } ?>
+                              <div class="text-<?= $rows['status'] == "Приключена" ? "green-400" : "red-400" ?> border border-<?= $rows['status'] == "Приключена" ? "green-400" : "red-400" ?> py-1.5 px-3.5 text-sm font-semibold rounded-full ml-20 w-fit"><?= $rows['status'] ?></div>
                             </div>
                           </div>
                           <div>
@@ -366,13 +352,11 @@ $date_now = date("Y-m-d"); ?>
                   } else { ?>
                     <input class="finished-order-count" type="hidden" value="<?= $num ?>" />
                     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg font-semibold text-slate-700">Няма приключени задачи</div>
-                <?php
-                  }
+                <?php }
                 } ?>
               </div>
             </div>
 
-            <!-- Order start section -->
             <div id="order-not-started" class="hidden">
               <div class="flex items-center justify-end bg-[#f8f8f8] w-full h-14 border-b-2 border-slate-200"></div>
               <div class="p-4">
@@ -604,11 +588,9 @@ $date_now = date("Y-m-d"); ?>
       <?php
       $query = "SELECT * FROM orders WHERE team_id = '$teamID' AND date = '$date_now'";
       $query_run = mysqli_query($con, $query);
-      $num = mysqli_num_rows($query_run);
-      ?>
+      $num = mysqli_num_rows($query_run); ?>
       <input type="hidden" value="<?= $num ?>" id="order-count">
 
-      <!-- Warehouse section -->
       <div v-show="mobWarehouse">
         <div class="flex items-center justify-end bg-[#f8f8f8] w-full h-14 border-b-2 border-slate-200 px-5 ">
           <div class="flex space-x-3.5">
@@ -623,71 +605,60 @@ $date_now = date("Y-m-d"); ?>
         <div id="mobile-warehouse-section">
           <div class="ml-28 px-4 space-y-4 my-4">
             <?php
-            $query = "SELECT * FROM users WHERE pid = '$pid'";
-            $query_run = mysqli_query($con, $query);
+            $query = "SELECT *, SUM(set_products.quantity) as quantity_sum FROM users LEFT JOIN set_products ON users.team_id = set_products.team_id
+            WHERE users.pid = ? GROUP BY set_products.product_name, users.team_id";
 
-            while ($rows = mysqli_fetch_array($query_run)) {
-              $teamID = $rows['team_id'];
+            $stmt = mysqli_prepare($con, $query);
+            mysqli_stmt_bind_param($stmt, "s", $pid);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
 
-              $query = "SELECT * FROM set_products WHERE team_id = '$teamID' GROUP BY product_name";
-              $query_run = mysqli_query($con, $query);
+            while ($rows = mysqli_fetch_array($result)) {
+              $quantity = $rows['quantity_sum'];
 
-              if (mysqli_num_rows($query_run) > 0) {
-                while ($rows = mysqli_fetch_array($query_run)) {
-                  $productName = $rows['product_name'];
-                  $queryy = "SELECT SUM(quantity) as quantity_sum FROM set_products WHERE team_id = '$teamID' AND product_name = '$productName'";
-                  $query_runn = mysqli_query($con, $queryy);
-
-                  while ($rowss = mysqli_fetch_array($query_runn)) {
-                    $quantity = $rowss['quantity_sum'];
-
-                    if ($quantity != 0) { ?>
-                      <div class="flex items-center justify-between w-full rounded-sm border border-slate-100 shadow-lg px-3 py-3.5 transition-all">
-                        <div class="flex items-center w-full">
-                          <div class="h-10 w-10 bg-blue-300 shadow-lg rounded-full flex items-center justify-center">
-                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-6 h-6 text-slate-100">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                            </svg>
-                          </div>
-                          <div class="text-slate-700 space-y-[1px] w-2/5 ml-5">
-                            <div class="text-left uppercase font-semibold text-sm">Тип продукт: <span class="font-bold"><?= $rows['product_name'] ?></span></div>
-                            <div class="flex items-center text-sm">
-                              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-4 h-4 mr-1">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-                              </svg>
-                              <span>Вид на продукт: <span class="font-semibold"><?= $rows['kind'] ?></span></span>
-                            </div>
-                          </div>
-                          <div class="text-slate-700 space-y-[1px] w-2/5">
-                            <div class="text-sm flex items-center justify-center">
-                              <div class="uppercase font-bold">Количество</div>
-                              <div class="w-6 h-6 ml-1.5 bg-blue-300 rounded font-semibold flex items-center justify-center text-white font-semibold">
-                                <?= $rowss['quantity_sum'] ?>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <input id="get-team-id-mobile" type="hidden" value="<?= $rows['team_id'] ?>" />
-                        <div class="flex items-center space-x-2">
-                          <button id="remove-product-btn" value="<?= $rows['product_name'] ?>" class="bg-red-500 h-9 w-9 flex items-center justify-center text-white rounded-sm active:scale-90 transition-all">
-                            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
-                            </svg>
-                          </button>
-                          <button id="return-product-btn" value="<?= $rows['product_name'] ?>" class="bg-blue-600 h-9 w-9 flex items-center justify-center text-white rounded-sm active:scale-90 transition-all">
-                            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
-                            </svg>
-                          </button>
+              if ($quantity != 0) { ?>
+                <div class="flex items-center justify-between w-full rounded-sm border border-slate-100 shadow-lg px-3 py-3.5 transition-all">
+                  <div class="flex items-center w-full">
+                    <div class="h-10 w-10 bg-blue-300 shadow-lg rounded-full flex items-center justify-center">
+                      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-6 h-6 text-slate-100">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                      </svg>
+                    </div>
+                    <div class="text-slate-700 space-y-[1px] w-2/5 ml-5">
+                      <div class="text-left uppercase font-semibold text-sm">Тип продукт: <span class="font-bold"><?= $rows['product_name'] ?></span></div>
+                      <div class="flex items-center text-sm">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-4 h-4 mr-1">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                        </svg>
+                        <span>Вид на продукт: <span class="font-semibold"><?= $rows['kind'] ?></span></span>
+                      </div>
+                    </div>
+                    <div class="text-slate-700 space-y-[1px] w-2/5">
+                      <div class="text-sm flex items-center justify-center">
+                        <div class="uppercase font-bold">Количество</div>
+                        <div class="w-6 h-6 ml-1.5 bg-blue-300 rounded font-semibold flex items-center justify-center text-white font-semibold">
+                          <?= $quantity ?>
                         </div>
                       </div>
-                <?php }
-                  }
-                }
-              } else { ?>
+                    </div>
+                  </div>
+                  <input id="get-team-id-mobile" type="hidden" value="<?= $rows['team_id'] ?>" />
+                  <div class="flex items-center space-x-2">
+                    <button id="remove-product-btn" value="<?= $rows['product_name'] ?>" class="bg-red-500 h-9 w-9 flex items-center justify-center text-white rounded-sm active:scale-90 transition-all">
+                      <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+                      </svg>
+                    </button>
+                    <button id="return-product-btn" value="<?= $rows['product_name'] ?>" class="bg-blue-600 h-9 w-9 flex items-center justify-center text-white rounded-sm active:scale-90 transition-all">
+                      <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              <?php } else { ?>
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg font-semibold text-slate-700">Няма назначени продукти</div>
-            <?php
-              }
+            <?php }
             } ?>
           </div>
         </div>
@@ -695,12 +666,10 @@ $date_now = date("Y-m-d"); ?>
   </div>
   </section>
 
-  <!-- Return product modal -->
   <div id="return-product-modal" class="bg-gray-800 hidden bg-opacity-50 fixed inset-0 z-40">
     <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
       <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fast">
         <div class="relative bg-white rounded shadow mb-6">
-          <!-- Modal body -->
           <div class="text-xl font-bold text-white bg-red-500 py-2 rounded-t text-center">
             Връщане на продуктите
           </div>
@@ -721,12 +690,10 @@ $date_now = date("Y-m-d"); ?>
     </div>
   </div>
 
-  <!-- Sort order modal -->
   <div id="sort-order-modal" class="bg-gray-800 hidden bg-opacity-50 fixed inset-0 z-40">
     <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
       <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fast">
         <div class="relative bg-white rounded shadow mb-6">
-          <!-- Modal body -->
           <div class="text-xl font-bold text-white bg-blue-500 py-2 rounded-t text-center">
             Сортиране
           </div>
@@ -783,12 +750,10 @@ $date_now = date("Y-m-d"); ?>
   </div>
   </div>
 
-  <!-- Images modal -->
   <div id="order-photo-modal" class="bg-gray-800 hidden bg-opacity-50 fixed inset-0 z-40">
     <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
       <div class="relative w-full h-auto animate__animated animate__zoomIn animate__fast image-modal">
         <div class="relative bg-white rounded shadow mb-6">
-          <!-- Modal body -->
           <div class="text-xl font-bold text-white bg-blue-500 py-2 rounded-t text-center">
             Снимки на обекта
           </div>
@@ -807,12 +772,10 @@ $date_now = date("Y-m-d"); ?>
     </div>
   </div>
 
-  <!-- Product order modal -->
   <div id="product-order-modal" class="bg-gray-800 hidden bg-opacity-50 fixed inset-0 z-40">
     <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
       <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fast">
         <div class="relative bg-white rounded shadow mb-6">
-          <!-- Modal body -->
           <div class="text-xl font-bold text-white bg-blue-500 py-2 rounded-t text-center">
             Заявка за продукт
           </div>
@@ -820,7 +783,7 @@ $date_now = date("Y-m-d"); ?>
           $query = "SELECT * FROM users WHERE pid = '$pid'";
           $query_run = mysqli_query($con, $query);
 
-          while ($rows = mysqli_fetch_array($query_run)) { ?>
+          while ($rows = mysqli_fetch_assoc($query_run)) { ?>
             <form id="product-request-form">
               <div class="p-4 text-center">
                 <select id="get-product-kind" class="bg-white mb-5 border border-gray-300 text-slate-700 text-sm rounded focus:outline-none block w-full p-2.5 w-[248px] text-center mx-auto">
@@ -861,12 +824,10 @@ $date_now = date("Y-m-d"); ?>
     </div>
   </div>
 
-  <!-- Product modal -->
   <div id="product-show-modal" class="bg-gray-800 hidden bg-opacity-50 fixed inset-0 z-40">
     <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center">
       <div class="relative w-full h-full max-w-xs animate__animated animate__zoomIn animate__fast">
         <div class="relative bg-white rounded shadow mb-6">
-          <!-- Modal body -->
           <div class="text-xl font-bold text-white bg-blue-500 py-2 rounded-t text-center">
             Код на продуктите
           </div>
@@ -875,7 +836,7 @@ $date_now = date("Y-m-d"); ?>
             $query = "SELECT * FROM stocks";
             $query_run = mysqli_query($con, $query);
 
-            while ($rows = mysqli_fetch_array($query_run)) { ?>
+            while ($rows = mysqli_fetch_assoc($query_run)) { ?>
               <ul>
                 <li class="mb-0.5"><?= $rows["id"] ?>. <?= $rows["name"] ?></li>
               </ul>
@@ -891,12 +852,10 @@ $date_now = date("Y-m-d"); ?>
     </div>
   </div>
 
-  <!-- Cancel order modal -->
   <div id="cancel-order-modal" class="bg-gray-800 hidden bg-opacity-50 fixed inset-0 z-40">
     <div class="h-full w-full p-5 overflow-x-hidden overflow-y-auto flex justify-center items-center">
       <div class="relative w-full h-auto max-w-md animate__animated animate__zoomIn animate__fast">
         <div class="relative bg-white rounded shadow mb-6">
-          <!-- Modal body -->
           <div class="text-xl font-bold text-white bg-red-500 py-2 rounded-t text-center">
             Приключавне на заявката
           </div>
@@ -958,7 +917,7 @@ $date_now = date("Y-m-d"); ?>
 <script src="js/main-vue.js"></script>
 <script src="js/main.js"></script>
 <script src="js/ajax.js"></script>
-<script src="js/chart.js"></script>
+<script src="js/mobileChart.js"></script>
 <script src="loader/mobLoader.js"></script>
 </body>
 

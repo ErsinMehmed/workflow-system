@@ -27,8 +27,7 @@ if (isset($_POST['text'])) {
         $query_run = mysqli_query($con, $query);
 
         if (mysqli_num_rows($query_run) > 0) {
-            while ($rows = mysqli_fetch_array($query_run)) {
-?>
+            while ($rows = mysqli_fetch_array($query_run)) { ?>
                 <button class="w-full focus:outline-none mt-4 get-order-data" type="button" value="<?= $rows['id'] ?>">
                     <div class="flex items-center justify-between w-full rounded border border-slate-100 shadow-lg p-3 cursor-pointer active:scale-95 transition-all">
                         <div class="flex items-center w-full">
@@ -81,11 +80,7 @@ if (isset($_POST['text'])) {
                                 <div class="text-sm text-center"><b><?= $rows['pay'] ?></b></div>
                             </div>
                             <div class="w-3/12 flex justify-center mr-5">
-                                <?php if ($rows['status'] == "Назначена") { ?>
-                                    <div class="text-blue-400 border border-blue-400 py-1.5 px-3.5 text-sm font-semibold rounded-full ml-20 w-fit"><?= $rows['status'] ?></div>
-                                <?php } else { ?>
-                                    <div class="text-yellow-500 border border-yellow-500 py-1.5 px-3.5 text-sm font-semibold rounded-full ml-20 w-fit"><?= $rows['status'] ?></div>
-                                <?php } ?>
+                                <div class="text-<?= $rows['status'] == "Назначена" ? "blue-400" : "yellow-500" ?> border border-<?= $rows['status'] == "Назначена" ? "blue-400" : "yellow-500" ?> py-1.5 px-3.5 text-sm font-semibold rounded-full ml-20 w-fit"><?= $rows['status'] ?></div>
                             </div>
                         </div>
                         <div>
@@ -95,10 +90,8 @@ if (isset($_POST['text'])) {
                         </div>
                     </div>
                 </button>
-            <?php
-            }
-        } else {
-            ?>
+            <?php }
+        } else { ?>
             <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg font-semibold text-slate-700">Няма приключени задачи</div>
 <?php
         }

@@ -52,7 +52,7 @@ if (isset($_POST['admin_update_data'])) {
     if (!$newPassword || !$newPasswordRep || !$phone) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "SELECT * FROM s WHERE email='$email'";
+        $query = "SELECT * FROM admins WHERE email='$email'";
         $query_run = mysqli_query($con, $query);
 
         while ($rows = mysqli_fetch_array($query_run)) {

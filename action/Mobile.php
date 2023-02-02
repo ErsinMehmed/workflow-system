@@ -2,6 +2,20 @@
 session_start();
 date_default_timezone_set('Europe/Sofia');
 
+require "../vendor/autoload.php";
+
+use PHPMailer\PHPMailer\PHPMailer;
+
+$mail = new PHPMailer(true);
+$mail->CharSet = 'UTF-8';
+$mail->isSMTP();
+$mail->SMTPAuth = true;
+$mail->Host = "smtp.gmail.com";
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+$mail->Port = 587;
+$mail->Username = "115704@students.ue-varna.bg";
+$mail->Password = "13071999E";
+
 include 'dbconn.php';
 include 'function.php';
 
@@ -138,6 +152,24 @@ if (isset($_POST['step'])) {
 if (isset($_POST['orderEndId'])) {
 
     $id = $_POST['orderEndId'];
+
+    $queryy = "SELECT * FROM orders WHERE id = '$id'";
+    $query_runn = mysqli_query($con, $queryy);
+
+    while ($rows = mysqli_fetch_array($query_runn)) {
+        $fullName = $rows["customer_name"];
+        $email = $rows["email"];
+        $room = $rows["room"];
+        $price = $rows["price"];
+
+        $mail->setFrom("carpetserv@gmail.com", "Carpet Services");
+        $mail->addAddress($email, $fullName);
+
+        $mail->Subject = "Carpet Services - Услуги";
+        $mail->Body = "Вашата заявка за почистване на " . $room . " на стойност " . $price . "лв. е приключена успешно !";
+
+        $mail->send();
+    }
 
     $query = "UPDATE orders SET status = 'Приключена', end_time = '$time' WHERE id='$id'";
     $query_run = mysqli_query($con, $query);

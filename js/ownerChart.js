@@ -1,36 +1,42 @@
 // Number pie chart of offer types
 const ctx = document.getElementById("offer-chart");
 
-var pieChart = new Chart(ctx, {
-  type: "pie",
+const firstOffer = parseInt($("#first-offer").val());
+const secondOffer = parseInt($("#second-offer").val());
+const thirdOffer = parseInt($("#third-offer").val());
 
-  data: {
-    labels: ["Основна", "Премиум", "Вип"],
-    datasets: [
-      {
-        data: [
-          $("#first-offer").val(),
-          $("#second-offer").val(),
-          $("#third-offer").val(),
-        ],
-        backgroundColor: [
-          "rgb(25, 136, 255)",
-          "rgb(127, 189, 255)",
-          "rgb(178, 215, 255)",
-        ],
-      },
-    ],
-  },
-  options: {
-    maintainAspectRatio: false,
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "bottom",
+const sum = firstOffer + secondOffer + thirdOffer;
+
+if (sum === 0) {
+  $("#offer-chart-no-data").html("Няма намерени данни");
+} else {
+  var pieChart = new Chart(ctx, {
+    type: "pie",
+
+    data: {
+      labels: ["Основна", "Премиум", "Вип"],
+      datasets: [
+        {
+          data: [firstOffer, secondOffer, thirdOffer],
+          backgroundColor: [
+            "rgb(25, 136, 255)",
+            "rgb(127, 189, 255)",
+            "rgb(178, 215, 255)",
+          ],
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "bottom",
+        },
       },
     },
-  },
-});
+  });
+}
 
 $(document).on("change", "#select-period", function (e) {
   const period = $(this).val();
@@ -41,9 +47,17 @@ $(document).on("change", "#select-period", function (e) {
     data: { period: period },
     success: function (response) {
       const res = jQuery.parseJSON(response);
+      const sum = res.first + res.second + res.third;
+
+      if (sum === 0) {
+        $("#offer-chart-no-data").html("Няма намерени данни");
+        $("#offer-chart").css("display", "none");
+      } else {
+        $("#offer-chart-no-data").html("");
+        $("#offer-chart").css("display", "block");
+      }
 
       pieChart.data.datasets[0].data = [res.first, res.second, res.third];
-
       pieChart.update();
     },
   });

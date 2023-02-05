@@ -76,11 +76,5 @@ if (isset($_POST['admin_delete_team'])) {
                 jsonResponse(500, 'Няма достатъчна наличност в склад за да бъде изтрита тази поръчка');
             }
         }
-        // 
-
-        // $queryy = "UPDATE teams SET delete_team = 'yes' WHERE id = '$id'";
-        // $query_runn = mysqli_query($con, $queryy);
-
-        // jsonResponseMain($query_run, 'Успешно изтриване', 'Неуспешно изтриване');
     }
 }

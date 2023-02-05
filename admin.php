@@ -53,7 +53,7 @@ $date = date("Y-m-d"); ?>
                                     </div>
                                     <ul class="pb-2 text-gray-400">
                                         <div class="hidden lg:block mb-1.5 ml-5 text-xs text-gray-100">
-                                            Действия
+                                            Изгледи
                                         </div>
                                         <li @click="dashOwnerStatistic = true; dashOwnerAdmin = false; dashSectionOwner = 'Статистика'" :class="dashOwnerStatistic ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b] bg-opacity-50' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
                                             <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
@@ -126,13 +126,37 @@ $date = date("Y-m-d"); ?>
                             </div>
                         </nav>
 
-                        <section v-show="dashOwnerStatistic">
+                        <section class="animate__animated animate__fadeIn animate__faster" v-show="dashOwnerStatistic">
                             <div class="py-5 px-4 space-y-5">
                                 <div class="bg-white py-4 rounded-md shadow-lg border border-slate-100">
                                     <div class="w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3 px-4 mb-3.5">
                                         <div class="flex space-x-4">
-                                            <input type="date" id="filter-date-from" value="<?php echo date("Y-m-d", strtotime("-30 days")); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 w-48" />
-                                            <input type="date" id="filter-date-to" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 w-48" />
+                                            <div class="relative w-full sm:w-48">
+                                                <div id="date-prev-incomes" class="absolute inset-y-0 left-0 flex items-center px-0.5 cursor-pointer hover:bg-slate-200 transition-all text-gray-500 hover:text-slate-800 bg-slate-100 rounded-l-lg border border-r-0 border-gray-300">
+                                                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2.4" stroke="currentColor" class="w-5 h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                                    </svg>
+                                                </div>
+                                                <input id="filter-date-from" value="<?php echo date("Y-m-d", strtotime("-30 days")); ?>" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full px-7 p-2.5" placeholder="Изберете дата" />
+                                                <div id="date-next-incomes" class="absolute inset-y-0 right-0 flex items-center px-0.5 cursor-pointer hover:bg-slate-200 transition-all text-gray-500 hover:text-slate-800 bg-slate-100 rounded-r-lg border border-l-0 border-gray-300">
+                                                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2.4" stroke="currentColor" class="w-5 h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="relative w-full sm:w-48">
+                                                <div id="date-prev-expenses" class="absolute inset-y-0 left-0 flex items-center px-0.5 cursor-pointer hover:bg-slate-200 transition-all text-gray-500 hover:text-slate-800 bg-slate-100 rounded-l-lg border border-r-0 border-gray-300">
+                                                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2.4" stroke="currentColor" class="w-5 h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                                    </svg>
+                                                </div>
+                                                <input id="filter-date-to" value="<?php echo date("Y-m-d"); ?>" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full px-7 p-2.5" placeholder="Изберете дата" />
+                                                <div id="date-next-expenses" class="absolute inset-y-0 right-0 flex items-center px-0.5 cursor-pointer hover:bg-slate-200 transition-all text-gray-500 hover:text-slate-800 bg-slate-100 rounded-r-lg border border-l-0 border-gray-300">
+                                                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2.4" stroke="currentColor" class="w-5 h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                                    </svg>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div id="income-section" class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 px-4">
@@ -223,7 +247,7 @@ $date = date("Y-m-d"); ?>
                                 </div>
 
                                 <?php
-                                $query = "SELECT offer, COUNT(*) as count FROM orders WHERE date = CURDATE() AND status NOT IN ('Отказана', 'Изтекла') GROUP BY offer";
+                                $query = "SELECT offer, COUNT(*) as count FROM orders WHERE date >= CURDATE() - INTERVAL 7 DAY AND status NOT IN ('Отказана', 'Изтекла') GROUP BY offer";
                                 $execute = mysqli_query($con, $query);
                                 while ($row = mysqli_fetch_array($execute)) {
                                     if ($row["offer"] === 'Основна') {
@@ -242,12 +266,13 @@ $date = date("Y-m-d"); ?>
                                         </div>
                                         <div class="w-[340px] h-64 py-7">
                                             <canvas id="offer-chart"></canvas>
+                                            <div id="offer-chart-no-data" class="w-full h-full flex items-center justify-center text-slate-700 font-semibold"></div>
                                         </div>
                                         <div class="p-4 border-t border-slate-200 text-slate-500 flex items-center justify-between">
                                             <div class="flex items-center text-slate-700 text-sm">
                                                 <select id="select-period" class="bg-white border border-[#e1e5eb] text-[#495057] text-xs rounded focus:border-gray-300 block w-full p-1.5 px-2 w-36 cursor-pointer">
                                                     <option value="CURDATE()">Днес</option>
-                                                    <option value="CURDATE() - INTERVAL 7 DAY">Последната седмица</option>
+                                                    <option value="CURDATE() - INTERVAL 7 DAY" selected>Последната седмица</option>
                                                     <option value="CURDATE() - INTERVAL 30 DAY">Последният месец</option>
                                                     <option value="CURDATE() - INTERVAL 365 DAY">Последната година</option>
                                                 </select>
@@ -322,6 +347,284 @@ $date = date("Y-m-d"); ?>
                                             </div>
                                         </div>
 
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="animate__animated animate__fadeIn animate__faster" v-show="dashOwnerAdmin">
+                            <div class="p-5">
+                                <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
+                                    <div class="relative w-full sm:w-48">
+                                        <div class="absolute inset-y-0 left-0 flex items-center pl-2.5 pointer-events-none">
+                                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                            </svg>
+                                        </div>
+                                        <input type="text" id="search-admin" placeholder="По име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-9 p-2.5" />
+                                    </div>
+                                    <div class="relative w-full sm:w-48">
+                                        <select id="select-admin-status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 cursor-pointer">
+                                            <option value="2">Всички</option>
+                                            <option value="1">Активен</option>
+                                            <option value="0">Напуснал</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <button id="add-admin-btn" type="button" class="w-10 h-10 bg-blue-500 hover:bg-blue-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
+                                            <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-7 h-7 text-white">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                                    <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+                                        <table id="admin-table" class="min-w-full leading-normal bg-white">
+                                            <thead>
+                                                <tr class="border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
+                                                    <th class="pr-4 py-3">снимка</th>
+                                                    <th class="pr-4 py-3">име</th>
+                                                    <th class="pr-4 py-3">права</th>
+                                                    <th class="pr-4 py-3">изгледи</th>
+                                                    <th class="px-4 py-3">статус</th>
+                                                    <th class="px-4 py-3">действия</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $query = "SELECT * FROM admins WHERE status = '1'";
+                                                $query_run = mysqli_query($con, $query);
+
+                                                if (mysqli_num_rows($query_run) > 0) {
+                                                    while ($rows = mysqli_fetch_array($query_run)) { ?>
+                                                        <tr class="bg-white hover:bg-slate-50 transition-all border-b border-gray-200 text-sm">
+                                                            <td class="px-2 py-5"><img src="uploaded-files/admin-images/<?= $rows["image"] ?>" alt="<?= $rows["image"] ?>" class="w-10 h-10 rounded-full object-cover mx-auto" /></td>
+                                                            <td class="pr-4 py-5 text-center"><?= $rows["name"] ?></td>
+                                                            <td class="px-4 py-5 text-center">
+                                                                <?php if ($rows["create_role"] == 0 && $rows["edit_role"] == 0 && $rows["full_role"] == 0) { ?>
+                                                                    <span class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Четене</span>
+                                                                <?php }
+                                                                if ($rows["create_role"] == 1 && $rows["full_role"] == 0) { ?>
+                                                                    <span class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Добавяне</span>
+                                                                <?php }
+                                                                if ($rows["edit_role"] == 1 && $rows["full_role"] == 0) { ?>
+                                                                    <span class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Редактиране</span>
+                                                                <?php }
+                                                                if ($rows["full_role"] == 1) { ?>
+                                                                    <span class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Всички</span>
+                                                                <?php } ?>
+                                                            </td>
+                                                            <td class="px-4 py-5 text-center">
+                                                                <?php if ($rows["personal_view"] == 0 && $rows["nomenclature_view"] == 0) { ?>
+                                                                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Заявки</span>
+                                                                <?php }
+                                                                if ($rows["personal_view"] == 1 && $rows["nomenclature_view"] == 0) { ?>
+                                                                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Персонал</span>
+                                                                <?php }
+                                                                if ($rows["nomenclature_view"] == 1 && $rows["personal_view"] == 0) { ?>
+                                                                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Номанклатури</span>
+                                                                <?php }
+                                                                if ($rows["personal_view"] == 1 && $rows["nomenclature_view"] == 1) { ?>
+                                                                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">Всички</span>
+                                                                <?php } ?>
+                                                            </td>
+                                                            <td class="px-4 py-5">
+                                                                <span class="w-8 h-8 rounded-full bg-<?= ($rows["status"] == 1) ? 'green-200' : 'red-200' ?> flex items-center justify-center mx-auto">
+                                                                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-<?= ($rows["status"] == 1) ? 'green-500' : 'red-500' ?>">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="<?= ($rows["status"] == 1) ? 'M4.5 12.75l6 6 9-13.5' : 'M6 18L18 6M6 6l12 12' ?>" />
+                                                                    </svg>
+                                                                </span>
+                                                            </td>
+                                                            <td class="px-4 py-5 flex justify-center items-center space-x-2">
+                                                                <?php if ($rows["status"] != 0) { ?>
+                                                                    <button value="<?= $rows["id"] ?>" type="button" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md transition-all focus:outline-none active:scale-90 edit-admin">
+                                                                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-white">
+                                                                            <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                <?php } ?>
+                                                            </td>
+                                                        </tr>
+                                                    <?php }
+                                                } else { ?>
+                                                    <tr>
+                                                        <td colspan="6" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold">Не са намерени данни</td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="9">
+                                                        <div class="flex justify-end py-2.5 px-4 w-full">
+                                                            <ul class="inline-flex items-center -space-x-px">
+                                                                <li>
+                                                                    <a href="#" class="block px-2 pt-[9px] pb-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 transition-all">
+                                                                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                                                        </svg>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 transition-all">1</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" class="block px-2 pt-[9px] pb-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 transition-all">
+                                                                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                                                        </svg>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="add-admin-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+                                <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
+                                    <div class="relative w-full h-full max-w-lg animate__animated animate__zoomIn animate__fast">
+                                        <div class="relative bg-white rounded-lg shadow mb-6">
+                                            <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
+                                                <div class=" text-slate-700 font-bold text-xl">Добави администратор</div>
+                                                <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-add-admin-modal">
+                                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <form id="add-admin-form">
+                                                <div class="px-5 py-4 space-y-6 text-slate-700">
+                                                    <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
+                                                        <div class="w-full">
+                                                            <label for="admin-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                                                Име и фамилия
+                                                            </label>
+                                                            <input type="text" minlength="2" id="admin-name" name="adminName" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
+                                                            <label for="admin-email" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                                                Имейл
+                                                            </label>
+                                                            <input type="email" minlength="4" id="admin-email" name="adminEmail" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи имейл" />
+                                                            <label for="admin-phone" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                                                Телефон
+                                                            </label>
+                                                            <input type="text" minlength="6" id="admin-phone" name="adminPhone" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи телефон" />
+                                                            <label for="admin-password" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                                                Парола
+                                                            </label>
+                                                            <input type="password" minlength="6" id="admin-password" name="adminPassword" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи парола" />
+                                                            <label for="admin-img" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                                                Снимка
+                                                            </label>
+                                                            <input id="admin-img" name="adminImg" accept="image/png, image/jpg, image/jpeg" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer py-2 bg-gray-50 focus:outline-none mb-4" type="file">
+                                                            <label for="admin-permission" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                                                Права
+                                                            </label>
+                                                            <div class="flex flex-wrap items-center gap-2.5 mb-4">
+                                                                <div v-for="permission in permissions">
+                                                                    <input class="sr-only peer" type="checkbox" value="1" :name="permission" :id="permission" />
+                                                                    <label class="flex justify-center items-center text-[13px] font-semibold text-slate-700 w-[106px] h-9 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" :for="permission">
+                                                                        {{permission}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <label for="admin-view" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                                                Изгледи
+                                                            </label>
+                                                            <div class="flex flex-wrap items-center gap-2.5 mb-2.5">
+                                                                <div v-for="view in views">
+                                                                    <input class="sr-only peer" type="checkbox" value="1" :name="view" :id="view" />
+                                                                    <label class="flex justify-center items-center text-[13px] font-semibold text-slate-700 w-[106px] h-9 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" :for="view">
+                                                                        {{view}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="w-full border-t border-gray-200 p-3 flex justify-end items-center">
+                                                    <button type="button" class="text-slate-700 border border-slate-400 bg-transparent hover:bg-gray-100 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90 close-add-admin-modal">Откажи</button>
+                                                    <button type="submit" class="text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90">Запази</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="edit-admin-modal" class="bg-gray-900 hidden bg-opacity-50 fixed inset-0 z-40">
+                                <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
+                                    <div class="relative w-full h-full max-w-lg animate__animated animate__zoomIn animate__fast">
+                                        <div class="relative bg-white rounded-lg shadow mb-6">
+                                            <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-200">
+                                                <div class=" text-slate-700 font-bold text-xl">Редактирай администратор</div>
+                                                <button type="button" class=" absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center close-edit-admin-modal">
+                                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <form id="edit-admin-form">
+                                                <div class="px-5 py-4 space-y-6 text-slate-700">
+                                                    <div class="sm:flex items-center w-full space-y-4 sm:space-y-0 sm:space-x-5 xl:space-x-6">
+                                                        <div class="w-full">
+                                                            <input type="hidden" id="admin-id" name="adminId">
+                                                            <label for="admin-name" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                                                Име и фамилия
+                                                            </label>
+                                                            <input type="text" minlength="2" id="admin-name-edit" name="adminName" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи име" />
+                                                            <label for="admin-email" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                                                Имейл
+                                                            </label>
+                                                            <input type="email" readonly id="admin-email-edit" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none w-full p-2.5" />
+                                                            <label for="admin-phone-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                                                Телефон
+                                                            </label>
+                                                            <input type="text" minlength="6" id="admin-phone-edit" name="adminPhone" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи телефон" />
+                                                            <label for="admin-password-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                                                Парола
+                                                            </label>
+                                                            <input type="password" minlength="6" id="admin-password-edit" name="adminPassword" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи парола" />
+                                                            <label for="admin-status" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Статус</label>
+                                                            <select id="admin-status" name="adminStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 mb-4">
+                                                                <option value="1" selected>Активен</option>
+                                                                <option value="0">Напуснал</option>
+                                                            </select>
+                                                            <label for="admin-permission" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                                                Права
+                                                            </label>
+                                                            <div class="flex flex-wrap items-center gap-2.5 mb-4">
+                                                                <div v-for="permission in permissions">
+                                                                    <input class="sr-only peer" type="checkbox" value="1" :name="permission" :id="permission + '-edit'" />
+                                                                    <label class="flex justify-center items-center text-[13px] font-semibold text-slate-700 w-[106px] h-9 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" :for="permission + '-edit'">
+                                                                        {{permission}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <label for="admin-view" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
+                                                                Изгледи
+                                                            </label>
+                                                            <div class="flex flex-wrap items-center gap-2.5 mb-2.5">
+                                                                <div v-for="view in views">
+                                                                    <input class="sr-only peer" type="checkbox" value="1" :name="view" :id="view + '-edit'" />
+                                                                    <label class="flex justify-center items-center text-[13px] font-semibold text-slate-700 w-[106px] h-9 bg-white border border-gray-200 rounded-lg cursor-pointer focus:outline-none hover:bg-blue-50 hover:border-blue-200 peer-checked:border-blue-200 peer-checked:bg-blue-50" :for="view + '-edit'">
+                                                                        {{view}}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="w-full border-t border-gray-200 p-3 flex justify-end items-center">
+                                                    <button type="button" class="text-slate-700 border border-slate-400 bg-transparent hover:bg-gray-100 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90 close-edit-admin-modal">Откажи</button>
+                                                    <button type="submit" class="text-white bg-blue-700 border border-blue-700 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-1.5 ml-2 focus:outline-none transition-all active:scale-90">Запази</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

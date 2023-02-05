@@ -236,6 +236,7 @@ if (isset($_POST['customer_order'])) {
 
 // Get customer data by id
 if (isset($_GET['id'])) {
+
     $id = $_GET['id'];
 
     $stmt = $con->prepare("SELECT * FROM orders WHERE id=?");
@@ -259,6 +260,7 @@ if (isset($_GET['id'])) {
 
 // Get customer data by email
 if (isset($_GET['email'])) {
+
     $email = $_GET['email'];
 
     $stmt = $con->prepare("SELECT * FROM customers WHERE email=?");
@@ -322,6 +324,7 @@ if (isset($_POST['customer_upload_room'])) {
 
 // Delete customer photo
 if (isset($_POST['delete_customer_img'])) {
+
     $imgID = $_POST['imgId'];
     $customerEmail = $_SESSION['email'];
 

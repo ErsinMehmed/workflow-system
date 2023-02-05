@@ -7,7 +7,7 @@ include 'function.php';
 
 error_reporting(E_ERROR | E_PARSE);
 
-//Create user
+// Create user
 if (isset($_POST['admin_user'])) {
 
     $name = $_POST['userName'];
@@ -47,7 +47,7 @@ if (isset($_POST['admin_user'])) {
     }
 }
 
-//Get user data
+// Get user data
 if (isset($_GET['id'])) {
     $id = mysqli_real_escape_string($con, $_GET['id']);
 
@@ -68,7 +68,7 @@ if (isset($_GET['id'])) {
     }
 }
 
-//Update user information
+// Update user information
 if (isset($_POST['admin_update_user'])) {
 
     $id = $_POST['id'];
@@ -82,27 +82,27 @@ if (isset($_POST['admin_update_user'])) {
     $address = $_POST['userAddress'];
     $filename = $_FILES['userImg']['name'];
     $date = date('Y-m-d');
+    if (!$name || !$egn || !$phone || !$address) {
 
-    if ($status == 0) {
-        $query = "SELECT * FROM set_orders WHERE (user1_id = '$id' OR user2_id = '$id') AND order_date >= '$date'";
-        $query_run = mysqli_query($con, $query);
-
-        if (mysqli_num_rows($query_run) == 0) {
-            $queryy = "UPDATE teams SET delete_team='yes' WHERE user1_id = '$id' OR user2_id = '$id'";
-            $query_runn = mysqli_query($con, $queryy);
-
-            $query = "UPDATE users SET name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
+        jsonResponse(500, 'Попълнете всички полета');
+    } else {
+        if ($status == 0) {
+            $query = "SELECT * FROM set_orders WHERE (user1_id = '$id' OR user2_id = '$id') AND order_date >= '$date'";
             $query_run = mysqli_query($con, $query);
 
-            jsonResponseMain($query_run, 'Данните на ' . $name . ' са обновени', 'Данните не са обновени');
-        } else {
-            jsonResponse(500, 'Служителя има назначени задачи към текущия момент');
-        }
-    } else {
-        if (!$name || !$egn || !$dob || !$phone || !$position || $status != NULL || !$address) {
+            if (mysqli_num_rows($query_run) == 0) {
+                $queryy = "UPDATE teams SET delete_team='yes' WHERE user1_id = '$id' OR user2_id = '$id'";
+                $query_runn = mysqli_query($con, $queryy);
 
-            jsonResponse(500, 'Попълнете всички полета');
+                $query = "UPDATE users SET name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
+                $query_run = mysqli_query($con, $query);
+
+                jsonResponseMain($query_run, 'Данните на ' . $name . ' са обновени', 'Данните не са обновени');
+            } else {
+                jsonResponse(500, 'Служителя има назначени задачи към текущия момент');
+            }
         } else {
+
             if (!$filename) {
                 $query = "UPDATE users SET name='$name', egn='$egn', phone='$phone', address='$address', position='$position', status='$status', dob='$dob', out_date='$outDate' WHERE id='$id'";
             } else {
@@ -117,7 +117,7 @@ if (isset($_POST['admin_update_user'])) {
     }
 }
 
-//Update password
+// Update password
 if (isset($_POST['admin_set_user_password'])) {
 
     $id = $_POST['userID'];

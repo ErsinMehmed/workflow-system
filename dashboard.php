@@ -66,7 +66,7 @@ $date = date("Y-m-d"); ?>
                         </svg>
                         <span class="ml-2.5 hidden lg:block">Заявки</span>
                       </li>
-                      <?php if ($roles["personal_view"] == 0) { ?>
+                      <?php if ($roles["personal_view"] == 1) { ?>
                         <div class="hidden lg:block mb-1.5 mt-2 ml-5 text-xs text-gray-100">
                           Персонал
                         </div>
@@ -83,7 +83,7 @@ $date = date("Y-m-d"); ?>
                           <span class="ml-2.5 hidden lg:block">Екипи</span>
                         </li>
                       <?php }
-                      if ($roles["nomenclature_view"] == 0) { ?>
+                      if ($roles["nomenclature_view"] == 1) { ?>
                         <div class="hidden lg:block mb-1.5 mt-2 ml-5 text-xs text-gray-100">
                           Номенклатури
                         </div>
@@ -190,7 +190,7 @@ $date = date("Y-m-d"); ?>
                 </div>
               </nav>
 
-              <section v-show="dashOrder">
+              <section class="animate__animated animate__fadeIn animate__faster" v-show="dashOrder">
                 <div class="py-6 px-8">
                   <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
                     <div class="relative w-full sm:w-48">
@@ -199,10 +199,20 @@ $date = date("Y-m-d"); ?>
                           <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                         </svg>
                       </div>
-                      <input type="text" id="search-order" placeholder="По номер или име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full pl-9 p-2.5 " />
+                      <input type="text" id="search-order" placeholder="По номер или име" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 focus:outline-none block w-full pl-9 p-2.5" />
                     </div>
                     <div class="relative w-full sm:w-48">
-                      <input type="date" id="order-filter-date" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-gray-400 focus:outline-none block w-full p-2.5 " placeholder="Изберете дата" />
+                      <div id="date-prev" class="absolute inset-y-0 left-0 flex items-center px-0.5 cursor-pointer hover:bg-slate-200 transition-all text-gray-500 hover:text-slate-800 bg-slate-100 rounded-l-lg border border-r-0 border-gray-300">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="2.4" stroke="currentColor" class="w-5 h-5">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
+                      </div>
+                      <input id="order-filter-date" type="date" value="<?php echo date("Y-m-d"); ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full px-7 p-2.5" placeholder="Изберете дата" />
+                      <div id="date-next" class="absolute inset-y-0 right-0 flex items-center px-0.5 cursor-pointer hover:bg-slate-200 transition-all text-gray-500 hover:text-slate-800 bg-slate-100 rounded-r-lg border border-l-0 border-gray-300">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="2.4" stroke="currentColor" class="w-5 h-5">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                      </div>
                     </div>
                     <div class="flex items-center space-x-3">
                       <?php if ($roles["create_role"] == 1 || $roles["full_role"] == 1) { ?>
@@ -572,8 +582,6 @@ $date = date("Y-m-d"); ?>
                                 Регистриран на
                               </label>
                               <input type="text" readonly id="customer-created" class="bg-gray-50 border border-gray-300 text-gray-900 mb-2 text-sm rounded-lg focus:outline-none focus:ring-0 focus:border-gray-300 w-full p-2.5" />
-                              <label for="customer-address-show" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Адрес</label>
-                              <textarea id="customer-address-show" readonly rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:outline-none focus:border-gray-300 mb-1"></textarea>
                             </div>
                           </div>
                         </div>
@@ -648,7 +656,7 @@ $date = date("Y-m-d"); ?>
                 </div>
               </section>
 
-              <section v-show="dashUser">
+              <section class="animate__animated animate__fadeIn animate__faster" v-show="dashUser">
                 <div class="py-6 px-8">
                   <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
                     <div class="relative w-full sm:w-48">
@@ -945,7 +953,7 @@ $date = date("Y-m-d"); ?>
                 </div>
               </section>
 
-              <section v-show="dashTeam">
+              <section class="animate__animated animate__fadeIn animate__faster" v-show="dashTeam">
                 <div class="py-6 px-8">
                   <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
                     <div class="relative w-full sm:w-48">
@@ -1162,7 +1170,7 @@ $date = date("Y-m-d"); ?>
                 </div>
               </section>
 
-              <section v-show="dashWarehouse">
+              <section class="animate__animated animate__fadeIn animate__faster" v-show="dashWarehouse">
                 <div class="py-6 px-8">
                   <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
                     <div class="relative w-full sm:w-auto">
@@ -1468,7 +1476,7 @@ $date = date("Y-m-d"); ?>
                 </div>
               </section>
 
-              <section v-show="productOrder">
+              <section class="animate__animated animate__fadeIn animate__faster" v-show="productOrder">
                 <div class="py-6 px-8">
                   <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
                     <div class="relative w-full sm:w-auto">
@@ -1678,7 +1686,7 @@ $date = date("Y-m-d"); ?>
                 </div>
               </section>
 
-              <section v-show="dashSupplier">
+              <section class="animate__animated animate__fadeIn animate__faster" v-show="dashSupplier">
                 <div class="py-6 px-8">
                   <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
                     <div class="relative w-full sm:w-auto">
@@ -1809,7 +1817,7 @@ $date = date("Y-m-d"); ?>
                           </button>
                         </div>
                         <div class="px-5 py-4 space-y-6 text-slate-700">
-                          <div id="supplier-orders" class="sm:flex items-center w-full gap-y-4 sm:gap-x-4"></div>
+                          <div id="supplier-orders" class="sm:flex flex-wrap items-center w-full gap-y-4 sm:gap-x-4"></div>
                         </div>
                       </div>
                     </div>
@@ -1932,9 +1940,9 @@ $date = date("Y-m-d"); ?>
                 </div>
               </section>
 
-              <section v-show="dashProfile">
+              <section class="animate__animated animate__fadeIn animate__faster" v-show="dashProfile">
                 <div class="py-6 px-8 w-full">
-                  <div class="md:flex w-full h-[28rem] gap-x-5 space-y-4 md:space-y-0">
+                  <div class="md:flex w-full h-[27.5rem] gap-x-5 space-y-4 md:space-y-0">
                     <div class="w-full h-full md:w-1/2 rounded-md shadow-xl border border-slate-100 bg-white p-4">
                       <label class="block ml-1 mb-1 text-lg font-semibold text-slate-700">
                         Снимка
@@ -1977,13 +1985,13 @@ $date = date("Y-m-d"); ?>
                         <?php $permissions = [];
 
                         if ($roles["full_role"] == 1) {
-                          $permissions = ['Четене', 'Добавяне', 'Редактиране', 'Изтриване', 'Назначаване'];
-                        } else if ($roles["edit_role"] == 1) {
-                          $permissions = ['Четене', 'Редактиране', 'Изтриване', 'Назначаване'];
-                        } else if ($roles["create_role"] == 1) {
+                          $permissions = ['Четене', 'Добавяне', 'Редактиране', 'Изтриване',];
+                        }
+                        if ($roles["edit_role"] == 1) {
+                          $permissions = ['Четене', 'Редактиране', 'Изтриване',];
+                        }
+                        if ($roles["create_role"] == 1) {
                           $permissions = ['Четене', 'Добавяне'];
-                        } else {
-                          $permissions = ['Четене'];
                         }
 
                         foreach ($permissions as $permission) {
@@ -1996,18 +2004,18 @@ $date = date("Y-m-d"); ?>
                       </label>
                       <div class="flex flex-wrap items-center gap-x-3.5 gap-y-3 mt-1.5">
                         <div class="shadow-lg bg-white py-1 px-2 rounded-xl border border-slate-100 text-slate-700 font-semibold">
-                          <?php $labels = ['Заявки'];
+                          <?php $views = ['Заявки'];
 
-                          if ($roles["nomenclature_view"] == 0) {
-                            $labels[] = 'Номенклатури';
+                          if ($roles["nomenclature_view"] == 1) {
+                            $views[] = 'Номенклатури';
                           }
-                          if ($roles["personal_view"] == 0) {
-                            $labels[] = 'Персонал';
+                          if ($roles["personal_view"] == 1) {
+                            $views[] = 'Персонал';
                           }
-                          if (count($labels) == 3) {
+                          if (count($views) == 3) {
                             echo 'Всички';
                           } else {
-                            echo implode('</div><div class="shadow-lg bg-white py-1 px-2 rounded-xl border border-slate-100 text-slate-700 font-semibold">', $labels);
+                            echo implode('</div><div class="shadow-lg bg-white py-1 px-2 rounded-xl border border-slate-100 text-slate-700 font-semibold">', $views);
                           } ?>
                         </div>
                       </div>

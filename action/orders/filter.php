@@ -1,13 +1,13 @@
 <?php
-include '../dbconn.php';
-
 session_start();
 date_default_timezone_set('Europe/Sofia');
 
+include '../dbconn.php';
+
 $adminEmail = $_SESSION['adminEmail'];
 $curDate = date("Y-m-d");
-$date = $_POST['date'];
-$text = $_POST['text'];
+$date = mysqli_real_escape_string($con, $_POST['date']);
+$text = mysqli_real_escape_string($con, $_POST['text']);
 
 $query = "SELECT * FROM orders WHERE date = '$date' AND (customer_name LIKE '$text%' OR id LIKE '$text%')";
 $query_run = mysqli_query($con, $query); ?>
@@ -28,7 +28,7 @@ $query_run = mysqli_query($con, $query); ?>
 <?php
 if (mysqli_num_rows($query_run) > 0) {
     while ($rows = mysqli_fetch_array($query_run)) { ?>
-        <tbody class="animate__animated animate__slideInUp animate__faster">
+        <tbody>
             <tr class="bg-white hover:bg-slate-50 transition-all border-b border-gray-200 text-sm">
                 <td class="px-4 py-5 text-center"><?= $rows["id"] ?></td>
                 <td class="px-4 py-5 text-center">
@@ -126,7 +126,7 @@ if (mysqli_num_rows($query_run) > 0) {
         <?php }
 } else { ?>
         <tr>
-            <td colspan="10" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold animate__animated animate__slideInUp animate__faster">Не са намерени данни</td>
+            <td colspan="10" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold">Не са намерени данни</td>
         </tr>
     <?php } ?>
         </tbody>

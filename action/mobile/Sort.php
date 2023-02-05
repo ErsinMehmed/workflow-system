@@ -1,19 +1,18 @@
 <?php
 session_start();
 date_default_timezone_set('Europe/Sofia');
+error_reporting(E_ERROR | E_PARSE);
 
 include '../dbconn.php';
 include '../function.php';
-
-error_reporting(E_ERROR | E_PARSE);
 
 $pid = $_SESSION['pid'];
 
 // Sort orders
 if (isset($_POST['text'])) {
 
-    $text = ($_POST['text']);
-    $sort = ($_POST['orderBy']);
+    $text = mysqli_real_escape_string($con, $_POST['text']);
+    $sort = mysqli_real_escape_string($con, $_POST['orderBy']);
     $date_now = date("Y-m-d");
 
     $query = "SELECT * FROM users WHERE pid = '$pid'";

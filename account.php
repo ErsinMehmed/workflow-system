@@ -70,14 +70,10 @@ $email = $_SESSION['email']; ?>
               <?php
               $query = "SELECT * FROM customers WHERE email = '$email'";
               $query_run = mysqli_query($con, $query);
+              $rows = mysqli_fetch_array($query_run);
 
-              while ($rows = mysqli_fetch_array($query_run)) {
-                if ($rows["image"] != "") { ?>
-                  <img src="uploaded-files/customer-images/<?= $rows["image"] ?>" alt="<?= $rows["image"] ?>" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90 update-photo">
-                <?php } else { ?>
-                  <img src="images/user.png" alt="user" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90" />
-              <?php }
-              } ?>
+              $src = ($rows["image"] != "") ? "uploaded-files/customer-images/{$rows["image"]}" : "images/user.png"; ?>
+              <img src="<?= $src ?>" alt="profile-image" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover md:hidden active:scale-90 update-photo">
               <img class="w-8 h-8 object-cover cursor-pointer hover:opacity-75 transition-all rounded-full md:hidden ml-2.5 mr-1" src="images/britain-flag.png" alt="english" />
               <button @click="hamburgerIcon = !hamburgerIcon" id="open-nav-bar" data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 pr-0 text-sm text-gray-500 rounded-lg md:hidden focus:outline-none focus:ring-0 transition-all" aria-controls="navbar-default" aria-expanded="false">
                 <svg v-show="hamburgerIcon" class="w-8 h-8" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -235,7 +231,7 @@ $email = $_SESSION['email']; ?>
                         </svg>
                         Потвърждаване
                       </button>
-                      <button type="button" class="text-slate-700 bg-transparent border border-gray-700 hover:bg-slate-700 hover:text-white focus:outline-none font-semibold rounded-lg text-xs px-3 py-1.5 text-center transition-all active:scale-90" data-dismiss-target="#alert-additional-content-5" aria-label="Close">
+                      <button type="button" class="text-slate-700 bg-transparent border border-gray-700 hover:bg-slate-700 hover:text-white focus:outline-none font-semibold rounded-lg text-xs px-3 py-1.5 text-center transition-all active:scale-90" data-dismiss-target="#alert-additional-content" aria-label="Close">
                         По-късно
                       </button>
                     </div>
@@ -254,12 +250,7 @@ $email = $_SESSION['email']; ?>
 
               while ($rows = mysqli_fetch_array($query_run)) { ?>
                 <div class="sm:flex items-center sm:space-x-4">
-                  <?php if ($rows["image"] != "") { ?>
-                    <img class="object-cover w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0 update-photo" :src="profileImgPreview ? profileImgPreview
-                : 'uploaded-files/customer-images/<?= $rows["image"] ?>'" alt="Profile photo" />
-                  <?php } else { ?>
-                    <img class="object-cover w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0" :src="profileImgPreview ? profileImgPreview : 'images/user.png'" alt="Profile photo" />
-                  <?php } ?>
+                  <img class="object-cover w-24 h-24 rounded-full shadow-lg mx-auto sm:mx-0 update-photo" :src="profileImgPreview ? profileImgPreview : ('<?= $rows["image"] ?>' ? 'uploaded-files/customer-images/<?= $rows["image"] ?>' : 'images/user.png')" alt="Profile photo" />
                   <form id="customer-image-form">
                     <div class="sm:inline-flex sm:gap-x-4 space-y-4 sm:space-y-0 mt-3 sm:mt-0">
                       <button v-show="profileImgPreview != null" @click="profileImgPreview = null" type="submit" class="w-full block py-2 px-6 text-sm font-bold text-white focus:outline-none bg-blue-500 rounded-lg shadow-md border border-blue-500 hover:bg-blue-600 transition-all active:scale-90">
@@ -406,20 +397,18 @@ $email = $_SESSION['email']; ?>
                       <div class="flex">
                         <div class="flex flex-col items-center mr-4">
                           <div>
-                            <?php if ($rows["step"] >= 1) { ?>
-                              <div class="flex items-center bg-green-100 justify-center w-10 h-10 border border-green-200 rounded-full">
+                            <div class="flex items-center justify-center w-10 h-10 border rounded-full <?php echo ($rows["step"] >= 1) ? 'bg-green-100 border-green-200' : ''; ?>">
+                              <?php if ($rows["step"] >= 1) { ?>
                                 <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 text-green-400">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                 </svg>
-                              </div>
-                            <?php } else { ?>
-                              <div class="flex items-center justify-center w-10 h-10 border rounded-full">
+                              <?php } else { ?>
                                 <svg class="w-4 text-gray-600" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                                   <line fill="none" stroke-miterlimit="10" x1="12" y1="2" x2="12" y2="22"></line>
                                   <polyline fill="none" stroke-miterlimit="10" points="19,15 12,22 5,15"></polyline>
                                 </svg>
-                              </div>
-                            <?php } ?>
+                              <?php } ?>
+                            </div>
                           </div>
                           <div class="w-px h-full bg-gray-300"></div>
                         </div>
@@ -433,20 +422,18 @@ $email = $_SESSION['email']; ?>
                       <div class="flex">
                         <div class="flex flex-col items-center mr-4">
                           <div>
-                            <?php if ($rows["step"] >= 2) { ?>
-                              <div class="flex items-center bg-green-100 justify-center w-10 h-10 border border-green-200 rounded-full">
+                            <div class="flex items-center justify-center w-10 h-10 border rounded-full <?php echo ($rows["step"] >= 2) ? 'bg-green-100 border-green-200' : ''; ?>">
+                              <?php if ($rows["step"] >= 2) { ?>
                                 <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 text-green-400">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                 </svg>
-                              </div>
-                            <?php } else { ?>
-                              <div class="flex items-center justify-center w-10 h-10 border rounded-full">
+                              <?php } else { ?>
                                 <svg class="w-4 text-gray-600" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                                   <line fill="none" stroke-miterlimit="10" x1="12" y1="2" x2="12" y2="22"></line>
                                   <polyline fill="none" stroke-miterlimit="10" points="19,15 12,22 5,15"></polyline>
                                 </svg>
-                              </div>
-                            <?php } ?>
+                              <?php } ?>
+                            </div>
                           </div>
                           <div class="w-px h-full bg-gray-300"></div>
                         </div>
@@ -460,20 +447,18 @@ $email = $_SESSION['email']; ?>
                       <div class="flex">
                         <div class="flex flex-col items-center mr-4">
                           <div>
-                            <?php if ($rows["step"] >= 3) { ?>
-                              <div class="flex items-center bg-green-100 justify-center w-10 h-10 border border-green-200 rounded-full">
+                            <div class="flex items-center justify-center w-10 h-10 border rounded-full <?php echo ($rows["step"] >= 3) ? 'bg-green-100 border-green-200' : ''; ?>">
+                              <?php if ($rows["step"] >= 3) { ?>
                                 <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 text-green-400">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                 </svg>
-                              </div>
-                            <?php } else { ?>
-                              <div class="flex items-center justify-center w-10 h-10 border rounded-full">
+                              <?php } else { ?>
                                 <svg class="w-4 text-gray-600" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                                   <line fill="none" stroke-miterlimit="10" x1="12" y1="2" x2="12" y2="22"></line>
                                   <polyline fill="none" stroke-miterlimit="10" points="19,15 12,22 5,15"></polyline>
                                 </svg>
-                              </div>
-                            <?php } ?>
+                              <?php } ?>
+                            </div>
                           </div>
                           <div class="w-px h-full bg-gray-300"></div>
                         </div>
@@ -487,20 +472,18 @@ $email = $_SESSION['email']; ?>
                       <div class="flex">
                         <div class="flex flex-col items-center mr-4">
                           <div>
-                            <?php if ($rows["step"] >= 4) { ?>
-                              <div class="flex items-center bg-green-100 justify-center w-10 h-10 border border-green-200 rounded-full">
+                            <div class="flex items-center justify-center w-10 h-10 border rounded-full <?php echo ($rows["step"] >= 4) ? 'bg-green-100 border-green-200' : ''; ?>">
+                              <?php if ($rows["step"] >= 4) { ?>
                                 <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 text-green-400">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                 </svg>
-                              </div>
-                            <?php } else { ?>
-                              <div class="flex items-center justify-center w-10 h-10 border rounded-full">
+                              <?php } else { ?>
                                 <svg class="w-4 text-gray-600" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                                   <line fill="none" stroke-miterlimit="10" x1="12" y1="2" x2="12" y2="22"></line>
                                   <polyline fill="none" stroke-miterlimit="10" points="19,15 12,22 5,15"></polyline>
                                 </svg>
-                              </div>
-                            <?php } ?>
+                              <?php } ?>
+                            </div>
                           </div>
                         </div>
                         <div class="pt-1 pb-8">
@@ -512,17 +495,16 @@ $email = $_SESSION['email']; ?>
                       </div>
                     </div>
                     <div class="relative">
-                      <?php if ($rows["step"] == 1) { ?>
-                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="images/overCleaning.jpg" alt="" />
-                      <?php } ?>
-                      <?php if ($rows["step"] == 2) { ?>
-                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="images/windowCleaning.jpg" alt="" />
-                      <?php } ?>
-                      <?php if ($rows["step"] == 3) { ?>
-                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="images/bathroomCleaning.jpg" alt="" />
-                      <?php } ?>
-                      <?php if ($rows["step"] == 4) { ?>
-                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="images/floorCleaning.png" alt="" />
+                      <?php
+                      $imageFiles = array(
+                        1 => "images/overCleaning.jpg",
+                        2 => "images/windowCleaning.jpg",
+                        3 => "images/bathroomCleaning.jpg",
+                        4 => "images/floorCleaning.png"
+                      );
+
+                      if (isset($imageFiles[$rows["step"]])) { ?>
+                        <img class="inset-0 object-cover object-bottom w-full rounded-md md:rounded shadow-lg lg:absolute lg:h-full" src="<?php echo $imageFiles[$rows["step"]]; ?>" alt="steps-photo" />
                       <?php } ?>
                     </div>
                   </div>
@@ -606,8 +588,8 @@ $email = $_SESSION['email']; ?>
                           <p><?= $rows['price'] ?> лв.</p>
                         </div>
                         <div class="flex space-x-2 text-gray-400 text-sm my-3">
-                          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
                           </svg>
                           <p><?= date("d.m.Y", strtotime($rows['date'])) ?></p>
                         </div>
@@ -691,42 +673,20 @@ $email = $_SESSION['email']; ?>
                       <div class="ml-1 mb-3 text-xs md:text-sm font-semibold text-slate-500">(Натиснете върху снимката за да я премахнете)</div>
                       <div class="flex flex-wrap items-center gap-5">
                         <?php
-                        if ($rows["image_room1"] != '') { ?>
-                          <Transition>
+                        for ($i = 1; $i <= 3; $i++) {
+                          $image_room = 'image_room' . $i;
+
+                          if ($rows[$image_room] != '') { ?>
                             <div class="w-20 h-20 md:w-[120px] md:h-[120px] rounded-lg border border-slate-100 hover:brightness-90 group cursor-pointer shadow-lg transition-all">
-                              <img class="w-full h-full rounded-lg object-cover" src="uploaded-files/room-images/<?= $rows["image_room1"] ?>" alt="<?= $rows["image_room2"] ?>">
-                              <div id="1" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-11 md:h-11 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90 room-img">
+                              <img class="w-full h-full rounded-lg object-cover" src="uploaded-files/room-images/<?= $rows[$image_room] ?>" alt="<?= $rows["image_room2"] ?>">
+                              <div id="<?= $i ?>" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-11 md:h-11 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90 room-img">
                                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 md:w-6 md:h-6 text-white ">
                                   <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
                                 </svg>
                               </div>
                             </div>
-                          </Transition>
                         <?php }
-                        if ($rows["image_room2"] != '') { ?>
-                          <Transition>
-                            <div class="w-20 h-20 md:w-[120px] md:h-[120px] rounded-lg border border-slate-100 hover:brightness-90 group cursor-pointer shadow-lg transition-all">
-                              <img class="w-full h-full rounded-lg object-cover" src="uploaded-files/room-images/<?= $rows["image_room2"] ?>" alt="<?= $rows["image_room2"] ?>">
-                              <div id="2" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-11 md:h-11 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90 room-img">
-                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 md:w-6 md:h-6 text-white">
-                                  <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
-                                </svg>
-                              </div>
-                            </div>
-                          </Transition>
-                        <?php }
-                        if ($rows["image_room3"] != '') { ?>
-                          <Transition>
-                            <div class="w-20 h-20 md:w-[120px] md:h-[120px] rounded-lg border border-slate-100 hover:brightness-90 group cursor-pointer shadow-lg transition-all">
-                              <img class="w-full h-full rounded-lg object-cover" src="uploaded-files/room-images/<?= $rows["image_room3"] ?>" alt="<?= $rows["image_room2"] ?>">
-                              <div id="3" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-11 md:h-11 hidden group-hover:flex items-center justify-center bg-blue-300 border border-blue-400 rounded-full transition-all active:scale-90 room-img">
-                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 md:w-6 md:h-6 text-white ">
-                                  <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
-                                </svg>
-                              </div>
-                            </div>
-                          </Transition>
-                        <?php } ?>
+                        } ?>
                       </div>
                     </div>
                 <?php }

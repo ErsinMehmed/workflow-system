@@ -98,28 +98,6 @@ if (isset($_POST['admin_order_update'])) {
     }
 }
 
-// Get customer information
-if (isset($_GET['email'])) {
-
-    $email = mysqli_real_escape_string($con, $_GET['email']);
-
-    $query = "SELECT * FROM customers WHERE email='$email'";
-    $query_run = mysqli_query($con, $query);
-
-    if (mysqli_num_rows($query_run) == 1) {
-        $order = mysqli_fetch_array($query_run);
-
-        $res = [
-            'status' => 200,
-            'data' => $order
-        ];
-        echo json_encode($res);
-        return;
-    } else {
-        jsonResponse(404, 'Клиента не е намерен');
-    }
-}
-
 // Set order of team
 if (isset($_POST['admin_set_order'])) {
 

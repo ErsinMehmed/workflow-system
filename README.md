@@ -6,7 +6,7 @@ A workflow system is a software application that helps automate the flow of task
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-1. Clone the repository to your local machine using `git clone https://github.com/[username]/WorkflowSystem.git`.
+1. Clone the repository to your local machine using `git clone https://github.com/ErsinMehmed/WorkflowSystem.git`.
 2. Navigate to the project directory using `cd WorkflowSystem`.
 
 ## Usage
@@ -33,4 +33,4 @@ The following libraries and tools have been used in this project:
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the [MIT](https://opensource.org/licenses/MIT) License.

@@ -4,14 +4,13 @@ date_default_timezone_set('Europe/Sofia');
 
 include '../dbconn.php';
 
-$teamId = $_POST['teamId'];
+$teamId = mysqli_real_escape_string($con, $_POST['teamId']);
 $date = date('Y-m-d');
 
 $query = "SELECT * FROM orders WHERE team_id = '$teamId' AND date >= '$date'";
 $query_run = mysqli_query($con, $query);
 
-while ($rows = mysqli_fetch_array($query_run)) {
-?>
+while ($rows = mysqli_fetch_array($query_run)) { ?>
     <div class="w-full sm:w-[228px] h-[132px] rounded-md shadow-lg p-3 border border-slate-100 text-slate-700 space-y-1.5">
         <span class="text-lg font-bold">Заявка номер <?= $rows["id"] ?></span>
         <div class="flex items-center">
@@ -33,5 +32,4 @@ while ($rows = mysqli_fetch_array($query_run)) {
             <span class="text-sm text-slate-500"><?= $rows["customer_name"] ?></span>
         </div>
     </div>
-<?php
-}
+<?php }

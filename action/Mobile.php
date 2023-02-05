@@ -199,6 +199,7 @@ if (isset($_POST['productName'])) {
 
 // Return all product from warehouse
 if (isset($_POST['productNameReturn'])) {
+
     $name = ($_POST['productNameReturn']);
     $teamId = ($_POST['teamId']);
     $date = date('Y-m-d');

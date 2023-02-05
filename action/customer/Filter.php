@@ -4,15 +4,14 @@ include '../dbconn.php';
 //Select orders by date and offer
 if (isset($_POST['date'])) {
 
-    $date = $_POST['date'];
-    $offer = $_POST['offer'];
+    $date = mysqli_real_escape_string($con, $_POST['date']);
+    $offer = mysqli_real_escape_string($con, $_POST['offer']);
 
     $query = "SELECT * FROM orders WHERE date = '$date' AND offer = '$offer'";
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) > 0) {
-        foreach ($query_run as $rows) {
-?>
+        foreach ($query_run as $rows) { ?>
             <div class="relative bg-white py-3 px-4 rounded-3xl w-full md:w-80 lg:w-64 xl:w-72 shadow-xl border border-slate-50 hover:bg-slate-50 transition-all">
                 <div class="text-white flex items-center absolute rounded-full p-3 shadow-xl bg-blue-50 border border-blue-100 left-4 -top-6">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-7 w-7 text-blue-400">
@@ -51,10 +50,7 @@ if (isset($_POST['date'])) {
                 </div>
             </div>
         <?php }
-    } else {
-        ?>
+    } else { ?>
         <div class="font-semibold">Няма намерени резултати</div>
-<?php
-    }
-}
-?>
+<?php }
+} ?>

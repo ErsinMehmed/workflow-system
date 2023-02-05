@@ -1,19 +1,18 @@
 <?php
 session_start();
 date_default_timezone_set('Europe/Sofia');
+error_reporting(E_ERROR | E_PARSE);
 
 include '../dbconn.php';
 include '../function.php';
-
-error_reporting(E_ERROR | E_PARSE);
 
 $pid = $_SESSION['pid'];
 
 // Sort orders
 if (isset($_POST['text'])) {
 
-    $text = ($_POST['text']);
-    $sort = ($_POST['orderBy']);
+    $text = mysqli_real_escape_string($con, $_POST['text']);
+    $sort = mysqli_real_escape_string($con, $_POST['orderBy']);
     $date_now = date("Y-m-d");
 
     $query = "SELECT * FROM users WHERE pid = '$pid'";
@@ -27,8 +26,7 @@ if (isset($_POST['text'])) {
         $query_run = mysqli_query($con, $query);
 
         if (mysqli_num_rows($query_run) > 0) {
-            while ($rows = mysqli_fetch_array($query_run)) {
-?>
+            while ($rows = mysqli_fetch_array($query_run)) { ?>
                 <button class="w-full focus:outline-none mt-4 get-order-data" type="button" value="<?= $rows['id'] ?>">
                     <div class="flex items-center justify-between w-full rounded border border-slate-100 shadow-lg p-3 cursor-pointer active:scale-95 transition-all">
                         <div class="flex items-center w-full">
@@ -91,11 +89,8 @@ if (isset($_POST['text'])) {
                         </div>
                     </div>
                 </button>
-
-            <?php
-            }
-        } else {
-            ?>
+            <?php }
+        } else { ?>
             <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg font-semibold text-slate-700">Няма приключени задачи</div>
 <?php
         }

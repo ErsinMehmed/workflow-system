@@ -60,7 +60,6 @@ if (isset($_POST['admin_edit_product'])) {
     $name = $_POST['name'];
     $kind = $_POST['kind'];
 
-
     if (!$name) {
 
         jsonResponse(500, 'Попълнете всички полета');
@@ -97,7 +96,6 @@ if (isset($_POST['admin_set_product'])) {
     $product = $_POST['name'];
     $quantity = $_POST['quantity'];
     $date = date('Y-m-d');
-
 
     if (!$product || !$quantity || !$teamId) {
 

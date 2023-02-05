@@ -4,16 +4,16 @@ include '../dbconn.php';
 session_start();
 
 $adminEmail = $_SESSION['adminEmail'];
-$text = $_POST['text'];
-$kind = $_POST['kind'];
+$text = mysqli_real_escape_string($con, $_POST['text']);
+$kind = mysqli_real_escape_string($con, $_POST['kind']);
 
 if ($kind == 'Всички') {
     $query = "SELECT * FROM product_orders WHERE name LIKE '$text%' OR supplier LIKE '$text%'";
 } else {
     $query = "SELECT * FROM product_orders WHERE (name LIKE '$text%' OR supplier LIKE '$text%') AND kind='$kind'";
 }
-$query_run = mysqli_query($con, $query);
-?>
+
+$query_run = mysqli_query($con, $query); ?>
 <thead>
     <tr class="border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
         <th class="pr-4 py-3">номер</th>
@@ -30,7 +30,7 @@ $query_run = mysqli_query($con, $query);
 </thead>
 <?php if (mysqli_num_rows($query_run) > 0) {
     while ($rows = mysqli_fetch_array($query_run)) { ?>
-        <tbody class="animate__animated animate__slideInUp animate__faster">
+        <tbody>
             <tr class="bg-white hover:bg-slate-50 transition-all border-b border-gray-200 text-sm">
                 <td class="pr-4 py-5 text-center"><?= $rows["id"] ?></td>
                 <td class="px-4 py-5 text-center"><?= $rows["name"] ?></td>
@@ -63,7 +63,7 @@ $query_run = mysqli_query($con, $query);
         <?php }
 } else { ?>
         <tr>
-            <td colspan="10" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold animate__animated animate__slideInUp animate__faster">Не са намерени данни</td>
+            <td colspan="10" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold">Не са намерени данни</td>
         </tr>
     <?php } ?>
         </tbody>

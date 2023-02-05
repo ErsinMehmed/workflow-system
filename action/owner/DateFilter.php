@@ -1,10 +1,10 @@
 <?php
-include '../dbconn.php';
-
 date_default_timezone_set('Europe/Sofia');
 
-$dateFrom = $_POST['dateFrom'];
-$dateTo = $_POST['dateTo']; ?>
+include '../dbconn.php';
+
+$dateFrom = mysqli_real_escape_string($con, $_POST['dateFrom']);
+$dateTo = mysqli_real_escape_string($con, $_POST['dateTo']); ?>
 <div class="bg-white shadow-md border border-slate-100 rounded-lg p-3 sm:p-4 xl:p-5">
     <?php
     $query = "SELECT SUM(price) as price_sum FROM orders WHERE date BETWEEN '$dateFrom' AND '$dateTo' AND status NOT IN ('Отказана', 'Изтекла')";

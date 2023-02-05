@@ -97,22 +97,19 @@ $email = $_SESSION['email']; ?>
               </a>
             </li>
             <?php
-            $query = "SELECT * FROM customers WHERE email = '$email'";
+            $query = "SELECT image FROM customers WHERE email = '$email'";
             $query_run = mysqli_query($con, $query);
+            $row = mysqli_fetch_assoc($query_run);
 
-            if ($email) {
-              while ($rows = mysqli_fetch_array($query_run)) {
-                if ($rows["image"] != "") { ?>
-                  <li>
-                    <a href="account"><img src="uploaded-files/customer-images/<?= $rows["image"] ?>" alt="<?= $rows["image"] ?>" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 update-photo"></a>
-                  </li>
-                <?php } else { ?>
-                  <li>
-                    <a href="account"><img src="images/user.png" alt="user" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 update-photo"></a>
-                  </li>
-              <?php }
-              }
-            } else { ?>
+            $image = $row['image'] ? "uploaded-files/customer-images/" . $row['image'] : "images/user.png";
+
+            if ($row) { ?>
+              <li>
+                <a href="account">
+                  <img src="<?= $image ?>" alt="profile-image" class="w-8 h-8 cursor-pointer hover:opacity-75 transition-all rounded-full object-cover hidden md:block active:scale-90 update-photo">
+                </a>
+              </li>
+            <?php } else { ?>
               <li class="login-btn">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.4" stroke="currentColor" class="w-10 h-10 -mt-1 -mr-3.5 text-slate-700 cursor-pointer hover:opacity-75 transition-all hidden md:block active:scale-90">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />

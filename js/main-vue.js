@@ -74,6 +74,8 @@ createApp({
         "images/floorCleaning.png",
         "images/doneCleaning.png",
       ],
+      permissions: ["Добавяне", "Редактиране", "Всички"],
+      views: ["Персонал", "Номенклатури"],
       countries: [
         {
           name: "Австрия",

@@ -12,7 +12,7 @@ if (isset($_POST['dashboard_login'])) {
 
     $email = $_POST['email'];
 
-    $query = "SELECT * FROM admins WHERE email='$email'";
+    $query = "SELECT * FROM admins WHERE email='$email' AND status <> 0";
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) > 0) {

@@ -56,7 +56,7 @@ if (isset($_POST['admin_edit_supplier'])) {
     }
 }
 
-// Get supplier data by id
+// Get supplier data by name
 if (isset($_GET['name'])) {
     $name = mysqli_real_escape_string($con, $_GET['name']);
 

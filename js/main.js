@@ -26,8 +26,6 @@ $(document).ready(function () {
   const boxValue1 = $("#slider_value1");
   const boxValue2 = $("#slider_value2");
 
-  const coefs = [0.12, 0.14, 0.16, 0.18, 0.2, 0.22, 0.24, 0.26, 0.28];
-  const addends = [30, 60, 90];
   const formatValues = (val) => parseFloat(val).toFixed(2);
 
   const handleInput = function () {
@@ -305,6 +303,12 @@ $(document).ready(function () {
 
   closeModal(".close-delete-team-modal", "#delete-team-modal");
 
+  openModal("#add-admin-btn", "#add-admin-modal");
+
+  closeModal(".close-add-admin-modal", "#add-admin-modal");
+
+  closeModal(".close-edit-admin-modal", "#edit-admin-modal");
+
   closeModal(
     ".close-delete-product-order-modal",
     "#delete-product-order-modal"
@@ -372,6 +376,12 @@ $(document).ready(function () {
     $("#product-count-mobile").val(productCount);
   });
 
+  $("#ersin").click(function () {
+    const currentDate = new Date($("#order-filter-date").val());
+    currentDate.setDate(currentDate.getDate() + 1);
+    $("#order-filter-date").val(currentDate.toISOString().substr(0, 10));
+  });
+
   // Percentage profit from each offer
   let offerCounts = [
     parseInt($("#first-offer1").val()),
@@ -394,4 +404,13 @@ $(document).ready(function () {
   $("#vip-offer-percentage").html(
     calculatePercentage(offerCount, offerCounts[2])
   );
+
+  // Permissions button check and uncheck
+  $("#Всички, #Всички-edit").click(function () {
+    const checkboxes = $(
+      "#Добавяне, #Редактиране, #Добавяне-edit, #Редактиране-edit"
+    );
+    checkboxes.prop("disabled", $(this).is(":checked"));
+    checkboxes.prop("checked", false);
+  });
 });

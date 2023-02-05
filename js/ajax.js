@@ -37,6 +37,171 @@ $(document).ready(function () {
     $(modalID).addClass("block");
   }
 
+  function updateOrdersDateFilter(offset) {
+    let date = new Date($("#order-filter-date").val());
+    date.setDate(date.getDate() + offset);
+    $("#order-filter-date").val(date.toISOString().substr(0, 10));
+    date = $("#order-filter-date").val();
+    const text = $("#search-order").val();
+
+    postData(
+      "action/orders/Filter.php",
+      { date: date, text: text },
+      function (data) {
+        $("#order-table").html(data);
+      }
+    );
+  }
+
+  function updateCustomerHistory() {
+    const date = $("#date-picker-account").val();
+    const offer = $("#account-offers").val();
+
+    postData(
+      "action/customer/Filter.php",
+      { date: date, offer: offer },
+      function (data) {
+        $("#history-section").html(data);
+      }
+    );
+  }
+
+  function orderFilters() {
+    const date = $("#order-filter-date").val();
+    const text = $("#search-order").val();
+
+    postData(
+      "action/orders/Filter.php",
+      { date: date, text: text },
+      function (data) {
+        $("#order-table").html(data);
+      }
+    );
+  }
+
+  function adminFilters() {
+    const text = $("#search-admin").val();
+    const status = $("#select-admin-status").val();
+
+    postData(
+      "action/owner/Filter.php",
+      { text: text, status: status },
+      function (data) {
+        console.log(data);
+        $("#admin-table").html(data);
+      }
+    );
+  }
+
+  function ownerFilterIncomes() {
+    const dateFrom = $("#filter-date-from").val();
+    const dateTo = $("#filter-date-to").val();
+
+    if (dateFrom < dateTo) {
+      postData(
+        "action/owner/DateFilter.php",
+        { dateFrom: dateFrom, dateTo: dateTo },
+        function (data) {
+          $("#income-section").html(data);
+        }
+      );
+    } else {
+      alertify.error("Едната дата трябва да бъде по-малка от другата");
+    }
+  }
+
+  function sendHistorySearchRequest() {
+    const productName = $("#product-name-search").val();
+    const date = $("#product-history-date").val();
+    const searchKind = $("#kind-search").val();
+
+    postData(
+      "action/product/History.php",
+      { productName, searchKind, date },
+      function (response) {
+        $("#history-search-result").html(response);
+      }
+    );
+  }
+
+  function productFilter(textInput, kindInput, postUrl, resultDiv) {
+    const text = $(textInput).val();
+    const kind = $(kindInput).val();
+
+    postData(postUrl, { text: text, kind: kind }, function (data) {
+      $(resultDiv).html(data);
+    });
+  }
+
+  function ownerFilterDate(elementId, direction) {
+    let date = new Date($(elementId).val());
+    date.setDate(date.getDate() + direction);
+    $(elementId).val(date.toISOString().substr(0, 10));
+    const dateFrom = $("#filter-date-from").val();
+    const dateTo = $("#filter-date-to").val();
+
+    if (dateFrom < dateTo) {
+      postData(
+        "action/owner/DateFilter.php",
+        { dateFrom: dateFrom, dateTo: dateTo },
+        function (data) {
+          $("#income-section").html(data);
+        }
+      );
+    } else {
+      alertify.error("Едната дата трябва да бъде по-малка от другата");
+    }
+  }
+
+  function filterUsers(text, position, status) {
+    postData(
+      "action/user/Filter.php",
+      { position: position, text: text, status: status },
+      function (data) {
+        $("#user-table").html(data);
+      }
+    );
+  }
+
+  function searchDropdown(inputId, dropdownId, postDataUrl, postDataKey) {
+    const $input = $(inputId);
+    const $dropdown = $(dropdownId);
+
+    $input.on("keyup", function () {
+      const searchTerm = $(this).val();
+
+      postData(postDataUrl, { [postDataKey]: searchTerm }, function (data) {
+        $dropdown.toggleClass("hidden", data === "" || !searchTerm);
+
+        if (data !== "") {
+          $dropdown.removeClass("hidden");
+          $dropdown.html(data);
+        }
+      });
+    });
+
+    $(document).on("click", function (e) {
+      if (!$dropdown.is(e.target) && $dropdown.has(e.target).length === 0) {
+        $dropdown.addClass("hidden");
+      }
+    });
+  }
+
+  function insertInputValue(selector, inputElement, dropdownId) {
+    $(document).on("click", selector, function () {
+      const selected = $(this).html();
+      $(inputElement).val(selected);
+      $(dropdownId).addClass("hidden");
+    });
+  }
+
+  function setSelectedOption(selector, value) {
+    $(selector)
+      .val(value)
+      .find(`option[value="${value}"]`)
+      .attr("selected", "selected");
+  }
+
   alertify.set("notifier", "position", "top-center");
 
   // Customer register
@@ -220,7 +385,7 @@ $(document).ready(function () {
       .get()
       .join("");
 
-    getData("action/Customer.php?email=" + email, function (response) {
+    getData(`action/Customer.php?email=${email}`, function (response) {
       const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -249,26 +414,26 @@ $(document).ready(function () {
   $(document).on("click", ".history-view", function () {
     const id = $(this).val();
 
-    getData("action/Customer.php?id=" + id, function (response) {
+    getData(`action/Customer.php?id=${id}`, function (response) {
       const res = jQuery.parseJSON(response);
-      if (res.status == 500) {
-        alertify.error(res.message);
-      } else if (res.status == 200) {
-        openModal("#history-modal");
-        var date = res.data.add_date.split(" ");
-        const finalDate = date[0].split("-");
 
-        $("#add_date").html(
-          finalDate[2] + "." + finalDate[1] + "." + finalDate[0]
-        );
+      if (res.status == 200) {
+        openModal("#history-modal");
+
+        const date = res.data.add_date.split(" ");
+        const [yyyy, mm, dd] = date[0].split("-");
+
+        $("#add_date").html(`${dd}.${mm}.${yyyy}`);
         $("#add_time").html(date[1].slice(0, -3));
         $("#customer_name").html(res.data.customer_name);
         $("#customer_phone").html(res.data.phone);
         $("#customer_building").html(res.data.room);
         $("#customer_offer").html(res.data.offer);
 
-        var date = res.data.date.split("-");
-        $("#do_date").html(date[2] + "." + date[1] + "." + date[0]);
+        const [year, month, day] = res.data.date.split(" ")[0].split("-");
+        const created = `${day}.${month}.${year}`;
+
+        $("#do_date").html(created);
         $("#do_time").html(res.data.time);
         $("#customer_payment").html(res.data.pay);
         $("#customer_invoice").html(res.data.invoice);
@@ -281,32 +446,10 @@ $(document).ready(function () {
   });
 
   // Date filter history section
-  $("#date-picker-account").on("change", function () {
-    const date = $(this).val();
-    const offer = $("#account-offers").val();
-
-    postData(
-      "action/customer/Filter.php",
-      { date: date, offer: offer },
-      function (data) {
-        $("#history-section").html(data);
-      }
-    );
-  });
+  $("#date-picker-account").on("change", updateCustomerHistory);
 
   // Offer filter history section
-  $("#account-offers").on("change", function () {
-    const offer = $(this).val();
-    const date = $("#date-picker-account").val();
-
-    postData(
-      "action/customer/Filter.php",
-      { date: date, offer: offer },
-      function (data) {
-        $("#history-section").html(data);
-      }
-    );
-  });
+  $("#account-offers").on("change", updateCustomerHistory);
 
   // Customer upload room image form
   $(document).on("submit", "#room-images-form", function (e) {
@@ -374,50 +517,56 @@ $(document).ready(function () {
     });
   });
 
+  // Owner make admin
+  $(document).on("submit", "#add-admin-form", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    formData.append("owner_admin", true);
+
+    console.log(formData);
+
+    postFormData("action/Owner.php", formData, function (response) {
+      const res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        closeModal("#add-admin-modal");
+        $("#admin-table").load(location.href + " #admin-table");
+        $("#add-admin-form")[0].reset();
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
   // Get order data for edit
   $(document).on("click", ".edit-order", function () {
     const id = $(this).val();
 
-    getData("action/AdminOrders.php?id=" + id, function (response) {
+    getData(`action/AdminOrders.php?id=${id}`, function (response) {
       const res = jQuery.parseJSON(response);
-      if (res.status == 500) {
-        alertify.error(res.message);
-      } else if (res.status == 200) {
+
+      if (res.status == 200) {
         openModal("#order-modal");
 
-        if (res.data.room == "Къща") {
-          $('#room-edit option[value="Къща"]').attr("selected", "selected");
-        } else if (res.data.room == "Офис") {
-          $('#room-edit option[value="Офис"]').attr("selected", "selected");
-        } else {
-          $('#room-edit option[value="Салон"]').attr("selected", "selected");
-        }
+        const map = {
+          Къща: "Къща",
+          Офис: "Офис",
+          Салон: "Салон",
+          Основна: "Основна",
+          Премиум: "Премиум",
+          Вип: "Вип",
+          "Преди 13:00": "Преди 13:00",
+          "След 13:00": "След 13:00",
+          "В брой": "В брой",
+          "С карта": "С карта",
+        };
 
-        if (res.data.offer == "Основна") {
-          $('#offer-edit option[value="Основна"]').attr("selected", "selected");
-        } else if (res.data.offer == "Премиум") {
-          $('#offer-edit option[value="Премиум"]').attr("selected", "selected");
-        } else {
-          $('#offer-edit option[value="Вип"]').attr("selected", "selected");
-        }
-
-        if (res.data.time == "Преди 13:00") {
-          $('#time-edit option[value="Преди 13:00"]').attr(
-            "selected",
-            "selected"
-          );
-        } else if (res.data.time == "След 13:00") {
-          $('#time-edit option[value="След 13:00"]').attr(
-            "selected",
-            "selected"
-          );
-        }
-
-        if (res.data.pay == "В брой") {
-          $('#pay-edit option[value="В брой"]').attr("selected", "selected");
-        } else if (res.data.pay == "С карта") {
-          $('#pay-edit option[value="С карта"]').attr("selected", "selected");
-        }
+        setSelectedOption("#room-edit", map[res.data.room]);
+        setSelectedOption("#offer-edit", map[res.data.offer]);
+        setSelectedOption("#time-edit", map[res.data.time]);
+        setSelectedOption("#pay-edit", map[res.data.pay]);
 
         $("#order-id").val(res.data.id);
         $("#customer-name-edit").val(res.data.customer_name);
@@ -435,7 +584,7 @@ $(document).ready(function () {
   $(document).on("click", ".view-customer-opinion", function () {
     const id = $(this).val();
 
-    getData("action/AdminOrders.php?id=" + id, function (response) {
+    getData(`action/AdminOrders.php?id=${id}`, function (response) {
       const res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
@@ -490,53 +639,44 @@ $(document).ready(function () {
   $(document).on("click", ".show-customer", function () {
     const email = $(this).val();
 
-    getData("action/AdminOrders.php?email=" + email, function (response) {
+    getData(`action/Customer.php?email=${email}`, function (response) {
       const res = jQuery.parseJSON(response);
       if (res.status == 404) {
         alertify.error(res.message);
       } else if (res.status == 200) {
         openModal("#customer-order-modal");
 
+        const [year, month, day] = res.data.created_at.split(" ")[0].split("-");
+        const created = `${day}.${month}.${year}`;
+
         $("#customer-name-show").val(res.data.name);
         $("#customer-phone-show").val(res.data.phone);
         $("#customer-email-show").val(res.data.email);
-        $("#customer-address-show").val(res.data.address);
-
-        const date = res.data.created_at.split(" ");
-        const finalDate = date[0].split("-");
-        $("#customer-created").val(
-          finalDate[2] + "." + finalDate[1] + "." + finalDate[0]
-        );
+        $("#customer-created").val(created);
       }
     });
   });
 
-  // Date filter dashboard order section
-  $("#order-filter-date").on("change", function () {
-    const date = $(this).val();
-    const text = $("#search-order").val();
+  // Owner filter by admin name
+  $("#search-admin").on("keyup", adminFilters);
 
-    postData(
-      "action/orders/Filter.php",
-      { date: date, text: text },
-      function (data) {
-        $("#order-table").html(data);
-      }
-    );
-  });
+  // Owner filter by admin status
+  $("#select-admin-status").on("change", adminFilters);
+
+  // Date filter dashboard order section
+  $("#order-filter-date").on("change", orderFilters);
 
   // Text filter dashboard order section
-  $("#search-order").on("keyup", function () {
-    const text = $(this).val();
-    const date = $("#order-filter-date").val();
+  $("#search-order").on("keyup", orderFilters);
 
-    postData(
-      "action/orders/Filter.php",
-      { date: date, text: text },
-      function (data) {
-        $("#order-table").html(data);
-      }
-    );
+  // Date filter dashboard order section next button
+  $("#date-next").on("click", function () {
+    updateOrdersDateFilter(1);
+  });
+
+  // Date filter dashboard order section prev button
+  $("#date-prev").on("click", function () {
+    updateOrdersDateFilter(-1);
   });
 
   // text filter dashboard supplier section
@@ -573,25 +713,16 @@ $(document).ready(function () {
   $(document).on("click", ".edit-user", function () {
     const id = $(this).val();
 
-    getData("action/AdminUsers.php?id=" + id, function (response) {
+    getData(`action/AdminUsers.php?id=${id}`, function (response) {
       const res = jQuery.parseJSON(response);
-      if (res.status == 500) {
-        alertify.error(res.message);
-      } else if (res.status == 200) {
+      if (res.status == 200) {
         openModal("#edit-user-modal");
 
-        if (res.data.position == "Хигиенист") {
-          $('#user-position-edit option[value="Хигиенист"]').attr(
-            "selected",
-            "selected"
-          );
-        } else if (res.data.position == "Шофьор") {
-          $('#user-position-edit option[value="Шофьор"]').attr(
-            "selected",
-            "selected"
-          );
-        }
-
+        const position = res.data.position;
+        $("#user-position-edit")
+          .val(position)
+          .find(`option[value="${position}"]`)
+          .attr("selected", "selected");
         $("#user-id").val(res.data.id);
         $("#user-name-edit").val(res.data.name);
         $("#user-egn-edit").val(res.data.egn);
@@ -602,11 +733,69 @@ $(document).ready(function () {
     });
   });
 
+  // Admin create user
+  $(document).on("submit", "#edit-admin-form", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    formData.append("owner_update_admin", true);
+
+    postFormData("action/Owner.php", formData, function (response) {
+      const res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        closeModal("#edit-admin-modal");
+        $("#admin-table").load(location.href + " #admin-table");
+        alertify.success(res.message);
+      } else if (res.status == 500) {
+        alertify.error(res.message);
+      }
+    });
+  });
+
+  // Get admin data for edit
+  $(document).on("click", ".edit-admin", function () {
+    const id = $(this).val();
+
+    getData(`action/Owner.php?id=${id}`, function (response) {
+      const res = jQuery.parseJSON(response);
+
+      if (res.status == 200) {
+        openModal("#edit-admin-modal");
+
+        $("#admin-id").val(res.data.id);
+        $("#admin-name-edit").val(res.data.name);
+        $("#admin-email-edit").val(res.data.email);
+        $("#admin-phone-edit").val(res.data.phone);
+
+        $(
+          "#Добавяне-edit, #Редактиране-edit, #Всички-edit, #Персонал-edit, #Номенклатури-edit"
+        ).prop("checked", false);
+
+        if (res.data.create_role == 1) {
+          $("#Добавяне-edit").prop("checked", true);
+        }
+        if (res.data.edit_role == 1) {
+          $("#Редактиране-edit").prop("checked", true);
+        }
+        if (res.data.full_role == 1) {
+          $("#Всички-edit").prop("checked", true);
+        }
+        if (res.data.personal_view == 1) {
+          $("#Персонал-edit").prop("checked", true);
+        }
+        if (res.data.nomenclature_view == 1) {
+          $("#Номенклатури-edit").prop("checked", true);
+        }
+      }
+    });
+  });
+
   // Get supplier data for edit
   $(document).on("click", ".edit-supplier", function () {
     const id = $(this).val();
 
-    getData("action/AdminSuppliers.php?id=" + id, function (response) {
+    getData(`action/AdminSuppliers.php?id=${id}`, function (response) {
       const res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
@@ -646,7 +835,7 @@ $(document).ready(function () {
   $(document).on("click", ".edit-user-password", function () {
     const id = $(this).val();
 
-    getData("action/AdminUsers.php?id=" + id, function (response) {
+    getData(`action/AdminUsers.php?id=${id}`, function (response) {
       const res = jQuery.parseJSON(response);
       if (res.status == 500) {
         alertify.error(res.message);
@@ -679,175 +868,97 @@ $(document).ready(function () {
     });
   });
 
-  $("#filter-date-from").on("change", function () {
-    const dateFrom = $(this).val();
-    const dateTo = $("#filter-date-to").val();
+  // Owner dashboard date filter for incomes
+  $("#filter-date-from").on("change", ownerFilterIncomes);
+  $("#filter-date-to").on("change", ownerFilterIncomes);
 
-    if (dateFrom < dateTo) {
-      postData(
-        "action/owner/DateFilter.php",
-        { dateFrom: dateFrom, dateTo: dateTo },
-        function (data) {
-          $("#income-section").html(data);
-        }
-      );
-    } else {
-      alertify.error("Едната дата трябва да бъде по-малка от другата");
-    }
-  });
+  // Owner date filter buttons
+  $("#date-prev-incomes").on("click", () =>
+    ownerFilterDate("#filter-date-from", -1)
+  );
+
+  $("#date-next-incomes").on("click", () =>
+    ownerFilterDate("#filter-date-from", 1)
+  );
+
+  $("#date-prev-expenses").on("click", () =>
+    ownerFilterDate("#filter-date-to", -1)
+  );
+
+  $("#date-next-expenses").on("click", () =>
+    ownerFilterDate("#filter-date-to", 1)
+  );
 
   // User search by name and pid
   $("#search-user").on("keyup", function () {
-    const text = $(this).val();
-    const position = $("#select-position").val();
-    const status = $("#select-status").val();
-
-    postData(
-      "action/user/Filter.php",
-      { position: position, text: text, status: status },
-      function (data) {
-        $("#user-table").html(data);
-      }
+    filterUsers(
+      $(this).val(),
+      $("#select-position").val(),
+      $("#select-status").val()
     );
   });
 
   // User position filter
   $("#select-position").on("change", function () {
-    const text = $("#search-user").val();
-    const position = $(this).val();
-    const status = $("#select-status").val();
-
-    postData(
-      "action/user/Filter.php",
-      { position: position, text: text, status: status },
-      function (data) {
-        $("#user-table").html(data);
-      }
+    filterUsers(
+      $("#search-user").val(),
+      $(this).val(),
+      $("#select-status").val()
     );
   });
 
   // User status filter
   $("#select-status").on("change", function () {
-    const text = $("#search-user").val();
-    const position = $("#select-position").val();
-    const status = $(this).val();
-
-    postData(
-      "action/user/Filter.php",
-      { position: position, text: text, status: status },
-      function (data) {
-        $("#user-table").html(data);
-      }
+    filterUsers(
+      $("#search-user").val(),
+      $("#select-position").val(),
+      $(this).val()
     );
   });
 
   // Stock search by name
-  $(document).on("keyup", "#product-order-name", function () {
-    const product = $(this).val();
-
-    postData(
-      "action/product/ProductSearch.php",
-      { product: product },
-      function (data) {
-        $("#product-name-dropdown").toggleClass(
-          "hidden",
-          data === "" || !product
-        );
-
-        if (data !== "") {
-          $("#product-name-dropdown").removeClass("hidden");
-          $("#product-name-dropdown").html(data);
-
-          $(window).click(function () {
-            $("#product-name-dropdown").addClass("hidden");
-          });
-        }
-      }
-    );
-  });
+  searchDropdown(
+    "#product-order-name",
+    "#product-name-dropdown",
+    "action/product/ProductSearch.php",
+    "product"
+  );
 
   // Search stock supplier by name
-  $(document).on("keyup", "#product-order-supplier", function () {
-    const supplier = $(this).val();
-
-    postData(
-      "action/product/SupplierSearch.php",
-      { supplier: supplier },
-      function (data) {
-        $("#supplier-name-dropdown").toggleClass(
-          "hidden",
-          data === "" || !supplier
-        );
-
-        if (data !== "") {
-          $("#supplier-name-dropdown").removeClass("hidden");
-          $("#supplier-name-dropdown").html(data);
-
-          $(window).click(function () {
-            $("#supplier-name-dropdown").addClass("hidden");
-          });
-        }
-      }
-    );
-  });
+  searchDropdown(
+    "#product-order-supplier",
+    "#supplier-name-dropdown",
+    "action/product/SupplierSearch.php",
+    "supplier"
+  );
 
   // Product search by name
-  $(document).on("keyup", "#set-product-name", function () {
-    const product = $(this).val();
+  searchDropdown(
+    "#set-product-name",
+    "#set-product-name-dropdown",
+    "action/product/ProductSearch1.php",
+    "product"
+  );
 
-    postData(
-      "action/product/ProductSearch1.php",
-      { product: product },
-      function (data) {
-        $("#set-product-name-dropdown").removeClass("hidden");
-        $("#set-product-name-dropdown").html(data);
-
-        if (!product) {
-          $("#set-product-name-dropdown").addClass("hidden");
-        }
-
-        $(window).click(function () {
-          $("#set-product-name-dropdown").addClass("hidden");
-        });
-      }
-    );
-  });
-
-  // Get supplier name and insert in input
-  $(document).on("click", ".get-order-supplier", function () {
-    const selected = $(this).html();
-    $("#product-order-supplier").val(selected);
-    $("#supplier-name-dropdown").addClass("hidden");
-  });
-
-  // Get stock name and insert in input
-  $(document).on("click", ".get-product-name1", function () {
-    const selected = $(this).html();
-    $("#set-product-name").val(selected);
-    $("#set-product-name-dropdown").addClass("hidden");
-  });
-
-  // Get stock name and insert in input
-  $(document).on("click", ".get-product-name", function () {
-    const selected = $(this).html();
-    $("#product-order-name").val(selected);
-    $("#product-name-dropdown").addClass("hidden");
-  });
-
-  // User1 search add team
-  $(document).on("keyup", "#team-user1", function () {
+  // User and user2 live search add team
+  $(document).on("keyup", "#team-user1, #team-user2", function () {
     const user = $(this).val();
+    const userId = $(this).attr("id");
+    const dropdownId =
+      userId === "team-user1" ? "#user-name1-dropdown" : "#user-name2-dropdown";
+    const phpScript =
+      userId === "team-user1" ? "UserSearch.php" : "UserSearch2.php";
 
-    postData("action/team/UserSearch.php", { user: user }, function (data) {
-      $("#user-name1-dropdown").removeClass("hidden");
-      $("#user-name1-dropdown").html(data);
+    postData("action/team/" + phpScript, { user: user }, function (data) {
+      $(dropdownId).removeClass("hidden");
+      $(dropdownId).html(data);
 
       if (!user) {
-        $("#user-name1-dropdown").addClass("hidden");
+        $(dropdownId).addClass("hidden");
       }
 
       $(window).click(function () {
-        $("#user-name1-dropdown").addClass("hidden");
+        $(dropdownId).addClass("hidden");
       });
     });
   });
@@ -865,24 +976,6 @@ $(document).ready(function () {
     $("#user-name1-dropdown").addClass("hidden");
   });
 
-  // User2 live search add team
-  $(document).on("keyup", "#team-user2", function () {
-    const user = $(this).val();
-
-    postData("action/team/UserSearch2.php", { user: user }, function (data) {
-      $("#user-name2-dropdown").removeClass("hidden");
-      $("#user-name2-dropdown").html(data);
-
-      if (!user) {
-        $("#user-name2-dropdown").addClass("hidden");
-      }
-
-      $(window).click(function () {
-        $("#user-name2-dropdown").addClass("hidden");
-      });
-    });
-  });
-
   // Get user2 name and insert in input
   $(document).on("click", ".get-namee", function () {
     const selected = $(this).html();
@@ -895,6 +988,27 @@ $(document).ready(function () {
 
     $("#user-name2-dropdown").addClass("hidden");
   });
+
+  // Get supplier name and insert in input
+  insertInputValue(
+    ".get-order-supplier",
+    "#product-order-supplier",
+    "#supplier-name-dropdown"
+  );
+
+  // Get stock name and insert in input
+  insertInputValue(
+    ".get-product-name1",
+    "#set-product-name",
+    "#set-product-name-dropdown"
+  );
+
+  // Get stock name and insert in input
+  insertInputValue(
+    ".get-product-name",
+    "#product-order-name",
+    "#product-name-dropdown"
+  );
 
   // Admin create team
   $(document).on("submit", "#add-team-form", function (e) {
@@ -938,7 +1052,7 @@ $(document).ready(function () {
         } else {
           const id = res.data.team_id;
 
-          getData("action/AdminTeams.php?id=" + id, function (response) {
+          getData(`action/AdminTeams.php?id=${id}`, function (response) {
             const res = jQuery.parseJSON(response);
 
             if (res.status == 200) {
@@ -976,7 +1090,7 @@ $(document).ready(function () {
   $("#select-team").on("change", function () {
     const id = $(this).val();
 
-    getData("action/AdminTeams.php?id=" + id, function (response) {
+    getData(`action/AdminTeams.php?id=${id}`, function (response) {
       const res = jQuery.parseJSON(response);
       if (res.status == 404) {
         alertify.error(res.message);
@@ -995,7 +1109,7 @@ $(document).ready(function () {
   $(document).on("click", ".edit-product", function () {
     const id = $(this).val();
 
-    getData("action/AdminWarehouse.php?id=" + id, function (response) {
+    getData(`action/AdminWarehouse.php?id=${id}`, function (response) {
       const res = jQuery.parseJSON(response);
       if (res.status == 404) {
         alertify.error(res.message);
@@ -1111,64 +1225,55 @@ $(document).ready(function () {
     $("#delete-product-id").val($(this).val());
   });
 
+  // Admin delete product order modal open
+  $(document).on("click", ".delete-product-order", function () {
+    openModal("#delete-product-order-modal");
+    $("#delete-product-order-id").val($(this).val());
+  });
+
   // Admin delete supplier modal open
   $(document).on("click", ".delete-supplier", function () {
     openModal("#delete-supplier-modal");
     $("#delete-supplier-id").val($(this).val());
   });
 
-  // Product search by id or name
+  // Product search and filter
   $("#search-product").on("keyup", function () {
-    const text = $(this).val();
-    const kind = $("#select-product-kind").val();
-
-    postData(
+    productFilter(
+      "#search-product",
+      "#select-product-kind",
       "action/product/Filter.php",
-      { text: text, kind: kind },
-      function (data) {
-        $("#product-table").html(data);
-      }
+      "#product-table"
     );
   });
 
   // Product filter by kind
   $("#select-product-kind").on("change", function () {
-    const kind = $(this).val();
-    const text = $("#search-product").val();
-
-    postData(
+    productFilter(
+      "#search-product",
+      "#select-product-kind",
       "action/product/Filter.php",
-      { text: text, kind: kind },
-      function (data) {
-        $("#product-table").html(data);
-      }
+      "#product-table"
     );
   });
 
   // Product search by id or name
   $("#search-order-product").on("keyup", function () {
-    const text = $(this).val();
-    const kind = $("#select-order-product-kind").val();
-
-    postData(
+    productFilter(
+      "#search-order-product",
+      "#select-order-product-kind",
       "action/product/Filter1.php",
-      { text: text, kind: kind },
-      function (data) {
-        $("#product-order-table").html(data);
-      }
+      "#product-order-table"
     );
   });
 
+  // Product filter by kind
   $("#select-order-product-kind").on("change", function () {
-    const kind = $(this).val();
-    const text = $("#search-order-product").val();
-
-    postData(
+    productFilter(
+      "#search-order-product",
+      "#select-order-product-kind",
       "action/product/Filter1.php",
-      { text: text, kind: kind },
-      function (data) {
-        $("#product-order-table").html(data);
-      }
+      "#product-order-table"
     );
   });
 
@@ -1414,9 +1519,7 @@ $(document).ready(function () {
 
       if (res.status == 200) {
         alertify.success(res.message);
-        $("#first-pass").val("");
-        $("#second-pass").val("");
-        $("#third-pass").val("");
+        $("#first-pass, #second-pass, #third-pass").val("");
       } else if (res.status == 500) {
         alertify.error(res.message);
       }
@@ -1538,25 +1641,13 @@ $(document).ready(function () {
     const text = $(this).val();
     const orderBy = getChecklistItems();
     const orderState = $("#active-btn").val();
+    const state = orderState == 1 ? "Sort.php" : "Sort1.php";
+    const container =
+      orderState == 1 ? "#active-order-section" : "#finished-order-section";
 
-    if (orderState == 1) {
-      postData(
-        "action/mobile/Sort.php",
-        { text: text, orderBy: orderBy },
-        function (response) {
-          $("#active-order-section").html(response);
-        }
-      );
-    } else {
-      postData(
-        "action/mobile/Sort1.php",
-        { text: text, orderBy: orderBy },
-        function (response) {
-          console.log(response);
-          $("#finished-order-section").html(response);
-        }
-      );
-    }
+    postData("action/mobile/" + state, { text, orderBy }, function (response) {
+      $(container).html(response);
+    });
   });
 
   $(document).on("click", ".update-order-steps", function () {
@@ -1569,57 +1660,42 @@ $(document).ready(function () {
 
     openModal(".order-start-loader");
 
-    getData("action/AdminOrders.php?id=" + id, function (response) {
+    getData(`action/AdminOrders.php?id=${id}`, function (response) {
       const res = jQuery.parseJSON(response);
 
-      if (res.status == 200) {
-        if (res.data.status == "В процес") {
-          $(".open-photo-modal").val(res.data.email);
-          $("#end-order").val(res.data.id);
-          $("#order-id-cancel").val(res.data.id);
-          $("#mobOrder").addClass("hidden");
-          $("#order-not-started").removeClass("block");
-          $("#order-not-started").addClass("hidden");
-          $("#order-is-started").removeClass("hidden");
-          $("#order-is-started").addClass("block");
-        } else {
-          $(".open-photo-modal").val(res.data.email);
-          $("#end-order").val(res.data.id);
-          $("#order-id-cancel").val(res.data.id);
-          $("#mobOrder").addClass("hidden");
-          $("#order-not-started").removeClass("hidden");
-          $("#order-not-started").addClass("block");
-          $("#order-is-started").removeClass("block");
-          $("#order-is-started").addClass("hidden");
-          $(".start-order-btn").val(res.data.id + " " + res.data.team_id);
+      if (res.status === 200) {
+        const isStarted = res.data.status === "В процес";
+        $(".open-photo-modal").val(res.data.email);
+        $("#end-order").val(res.data.id);
+        $("#order-id-cancel").val(res.data.id);
+        $("#mobOrder").addClass("hidden");
+        $("#order-not-started").toggleClass("block", !isStarted);
+        $("#order-not-started").toggleClass("hidden", isStarted);
+        $("#order-is-started").toggleClass("block", isStarted);
+        $("#order-is-started").toggleClass("hidden", !isStarted);
+
+        if (!isStarted) {
+          $(".start-order-btn").val(`${res.data.id} ${res.data.team_id}`);
           $("#customer-name-mobile").html(res.data.customer_name);
           $("#address-mobile").html(res.data.address);
           $("#pay-mobile").html(res.data.pay);
           $("#offer-mobile").html(res.data.offer);
           const date = res.data.date.split("-");
           $("#date-time-mobile").html(
-            date[2] + "." + date[1] + "." + date[0] + " - " + res.data.time
+            `${date[2]}.${date[1]}.${date[0]} - ${res.data.time}`
           );
-          $("#m2-mobile").html(res.data.m2 + " m2");
-          $("#price-mobile").html(res.data.price + " лв.");
+          $("#m2-mobile").html(`${res.data.m2} m2`);
+          $("#price-mobile").html(`${res.data.price} лв.`);
           $("#phone-mobile").html(res.data.phone);
 
-          if (res.data.information != "") {
-            $("#information-mobile").html(res.data.information);
-          } else {
-            $("#information-mobile").html("Няма допънителна информация");
-          }
+          const information =
+            res.data.information || "Няма допънителна информация";
+          $("#information-mobile").html(information);
 
-          if (
-            res.data.status == "Отказана" ||
-            res.data.status == "Приключена"
-          ) {
-            $("#order-start-btn").removeClass("flex");
-            $("#order-start-btn").addClass("hidden");
-          } else {
-            $("#order-start-btn").removeClass("hidden");
-            $("#order-start-btn").addClass("flex");
-          }
+          const isCancelledOrFinished =
+            res.data.status === "Отказана" || res.data.status === "Приключена";
+          $("#order-start-btn").toggleClass("flex", !isCancelledOrFinished);
+          $("#order-start-btn").toggleClass("hidden", isCancelledOrFinished);
         }
 
         $(".order-start-loader").removeClass("block");
@@ -1801,17 +1877,12 @@ $(document).ready(function () {
     });
   });
 
-  $(document).on("click", ".delete-product-order", function (e) {
-    $("#delete-product-order-id").val($(this).val());
-    openModal("#delete-product-order-modal");
-  });
-
   // Dashboard cancel reason modal
-  $(document).on("click", ".show-cancel-dashboard", function (e) {
+  $(document).on("click", ".show-cancel-dashboard", function () {
     const id = $(this).val();
     openModal("#cancel-order-reason-modal");
 
-    getData("action/AdminOrders.php?id=" + id, function (response) {
+    getData(`action/AdminOrders.php?id=${id}`, function (response) {
       const res = jQuery.parseJSON(response);
 
       if (res.status == 200) {
@@ -1829,69 +1900,28 @@ $(document).ready(function () {
 
   $("#seted-product-history-btn").addClass("bg-gray-200");
 
-  // Search setted product history (text)
-  $("#product-name-search").on("keyup", function () {
-    const productName = $(this).val();
-    const searchKind = $("#kind-search").val();
-    const date = $("#product-history-date").val();
+  // Search setted and returned product history (click)
+  $("#seted-product-history-btn, #returned-product-history-btn").on(
+    "click",
+    function () {
+      const buttonId = $(this).attr("id");
+      const searchKind = buttonId === "seted-product-history-btn" ? 0 : 1;
 
-    postData(
-      "action/product/History.php",
-      { productName: productName, searchKind: searchKind, date: date },
-      function (response) {
-        $("#history-search-result").html(response);
-      }
-    );
-  });
+      $(
+        "#seted-product-history-btn, #returned-product-history-btn"
+      ).removeClass("bg-gray-200");
+      $(this).addClass("bg-gray-200");
+      $("#kind-search").val(searchKind);
 
-  // Search setted product history (date)
-  $("#product-history-date").on("change", function () {
-    const productName = $("#product-name-search").val();
-    const searchKind = $("#kind-search").val();
-    const date = $(this).val();
+      sendHistorySearchRequest();
+    }
+  );
 
-    postData(
-      "action/product/History.php",
-      { productName: productName, searchKind: searchKind, date: date },
-      function (response) {
-        $("#history-search-result").html(response);
-      }
-    );
-  });
-
-  // Search setted product history (click)
-  $("#seted-product-history-btn").on("click", function () {
-    $("#seted-product-history-btn").addClass("bg-gray-200");
-    $("#returned-product-history-btn").removeClass("bg-gray-200");
-    $("#kind-search").val(0);
-    const productName = $("#product-name-search").val();
-    const searchKind = $("#kind-search").val();
-    const date = $("#product-history-date").val();
-
-    postData(
-      "action/product/History.php",
-      { productName: productName, searchKind: searchKind, date: date },
-      function (response) {
-        $("#history-search-result").html(response);
-      }
-    );
-  });
-
-  // Search returned product history (click)
-  $("#returned-product-history-btn").on("click", function () {
-    $("#seted-product-history-btn").removeClass("bg-gray-200");
-    $("#returned-product-history-btn").addClass("bg-gray-200");
-    $("#kind-search").val(1);
-    const productName = $("#product-name-search").val();
-    const searchKind = $("#kind-search").val();
-    const date = $("#product-history-date").val();
-
-    postData(
-      "action/product/History.php",
-      { productName: productName, searchKind: searchKind, date: date },
-      function (response) {
-        $("#history-search-result").html(response);
-      }
-    );
-  });
+  // Search setted product history by date and name
+  $("#product-name-search, #product-history-date").on(
+    "keyup change",
+    function () {
+      sendHistorySearchRequest();
+    }
+  );
 });

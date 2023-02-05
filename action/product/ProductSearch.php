@@ -2,7 +2,7 @@
 require '../dbconn.php';
 
 if (isset($_POST['product'])) {
-    $name =  ($_POST['product']);
+    $name =  mysqli_real_escape_string($con, $_POST['product']);
 
     if ($name != "") {
         $query = "SELECT * FROM stocks WHERE name like '$name%'";

@@ -5,7 +5,7 @@ session_start();
 date_default_timezone_set('Europe/Sofia');
 
 $adminEmail = $_SESSION['adminEmail'];
-$text = $_POST['text'];
+$text = mysqli_real_escape_string($con, $_POST['text']);
 $date = date("Y-m-d");
 
 $query = "SELECT * FROM teams WHERE (id LIKE '$text%' OR name LIKE '$text%') AND delete_team != 'yes'";
@@ -24,7 +24,7 @@ $query_run = mysqli_query($con, $query); ?>
 </thead>
 <?php if (mysqli_num_rows($query_run) > 0) {
     while ($rows = mysqli_fetch_array($query_run)) { ?>
-        <tbody class="animate__animated animate__slideInUp animate__faster">
+        <tbody>
             <tr class="bg-white hover:bg-slate-50 transition-all border-b border-gray-200 text-sm">
                 <td class="pr-4 py-5 text-center"><?= $rows["id"] ?></td>
                 <td class="px-4 py-5 text-center"><?= $rows["name"] ?></td>
@@ -68,7 +68,7 @@ $query_run = mysqli_query($con, $query); ?>
         <?php }
 } else { ?>
         <tr>
-            <td colspan="8" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold animate__animated animate__slideInUp animate__faster">Не са намерени данни</td>
+            <td colspan="8" class="px-4 py-6 border-b border-gray-200 bg-white text-sm text-center font-semibold">Не са намерени данни</td>
         </tr>
     <?php } ?>
         </tbody>

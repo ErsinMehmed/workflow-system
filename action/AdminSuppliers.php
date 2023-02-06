@@ -22,6 +22,7 @@ if (isset($_POST['admin_supplier'])) {
         $query_go = mysqli_query($con, $query);
 
         if (mysqli_num_rows($query_go) == 0) {
+
             if (preg_match('/^[0-9+\(\)\s-]+$/', $phone)) {
                 $query = "INSERT INTO suppliers (name,phone,address,iban) VALUES (?,?,?,?)";
                 $stmt = mysqli_prepare($con, $query);
@@ -58,6 +59,7 @@ if (isset($_POST['admin_edit_supplier'])) {
 
 // Get supplier data by name
 if (isset($_GET['name'])) {
+
     $name = mysqli_real_escape_string($con, $_GET['name']);
 
     $query = "SELECT * FROM suppliers WHERE name='$name'";
@@ -65,13 +67,7 @@ if (isset($_GET['name'])) {
 
     if (mysqli_num_rows($query_run) == 1) {
         $order = mysqli_fetch_array($query_run);
-
-        $res = [
-            'status' => 200,
-            'data' => $order
-        ];
-        echo json_encode($res);
-        return;
+        echo json_encode(['status' => 200, 'data' => $order]);
     } else {
         jsonResponse(404, 'Доставчикът не е намерен');
     }
@@ -79,6 +75,7 @@ if (isset($_GET['name'])) {
 
 // Get supplier data by name
 if (isset($_GET['id'])) {
+
     $id = mysqli_real_escape_string($con, $_GET['id']);
 
     $query = "SELECT * FROM suppliers WHERE id='$id'";
@@ -86,13 +83,7 @@ if (isset($_GET['id'])) {
 
     if (mysqli_num_rows($query_run) == 1) {
         $order = mysqli_fetch_array($query_run);
-
-        $res = [
-            'status' => 200,
-            'data' => $order
-        ];
-        echo json_encode($res);
-        return;
+        echo json_encode(['status' => 200, 'data' => $order]);
     } else {
         jsonResponse(404, 'Доставчикът не е намерен');
     }
@@ -100,6 +91,7 @@ if (isset($_GET['id'])) {
 
 // Delete supplier 
 if (isset($_POST['admin_delete_supplier'])) {
+
     $id = $_POST['id'];
 
     $query = "DELETE FROM suppliers WHERE id = '$id'";

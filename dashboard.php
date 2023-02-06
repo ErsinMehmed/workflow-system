@@ -696,8 +696,8 @@ $date = date("Y-m-d"); ?>
                       <table id="user-table" class="min-w-full leading-normal bg-white">
                         <thead>
                           <tr class="border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
-                            <th class="pr-4 py-3">снимка</th>
-                            <th class="pr-4 py-3">име</th>
+                            <th class="px-4 py-3">снимка</th>
+                            <th class="px-4 py-3">име</th>
                             <th class="px-4 py-3">пид</th>
                             <th class="px-4 py-3">длъжност</th>
                             <th class="px-4 py-3">статус</th>
@@ -984,8 +984,8 @@ $date = date("Y-m-d"); ?>
                       <table id="team-table" class="min-w-full leading-normal bg-white">
                         <thead>
                           <tr class="border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
-                            <th class="pr-4 py-3">номер</th>
-                            <th class="pr-4 py-3">име на екип</th>
+                            <th class="px-4 py-3">номер</th>
+                            <th class="px-4 py-3">име на екип</th>
                             <th class="px-4 py-3">статус</th>
                             <th class="px-4 py-3">служител 1</th>
                             <th class="px-4 py-3">служител 2</th>
@@ -1220,8 +1220,8 @@ $date = date("Y-m-d"); ?>
                       <table id="product-table" class="min-w-full leading-normal bg-white">
                         <thead>
                           <tr class="border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
-                            <th class="pr-4 py-3">номер</th>
-                            <th class="pr-4 py-3">продукт</th>
+                            <th class="px-4 py-3">номер</th>
+                            <th class="px-4 py-3">продукт</th>
                             <th class="px-4 py-3">наличност</th>
                             <th class="px-4 py-3">вид</th>
                             <th class="px-4 py-3">действия</th>
@@ -1511,8 +1511,8 @@ $date = date("Y-m-d"); ?>
                       <table id="product-order-table" class="min-w-full leading-normal bg-white">
                         <thead>
                           <tr class="border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
-                            <th class="pr-4 py-3">номер</th>
-                            <th class="pr-4 py-3">продукт</th>
+                            <th class="px-4 py-3">номер</th>
+                            <th class="px-4 py-3">продукт</th>
                             <th class="px-4 py-3">количество</th>
                             <th class="px-4 py-3">вид</th>
                             <th class="px-4 py-3">доставчик</th>
@@ -1712,8 +1712,8 @@ $date = date("Y-m-d"); ?>
                       <table id="supplier-table" class="min-w-full leading-normal bg-white">
                         <thead>
                           <tr class="border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
-                            <th class="pr-4 py-3">номер</th>
-                            <th class="pr-4 py-3">име</th>
+                            <th class="px-4 py-3">номер</th>
+                            <th class="px-4 py-3">име</th>
                             <th class="px-4 py-3">телефон</th>
                             <th class="px-4 py-3">адрес</th>
                             <th class="px-4 py-3">банкова сметка</th>

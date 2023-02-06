@@ -13,8 +13,8 @@ $mail->SMTPAuth = true;
 $mail->Host = "smtp.gmail.com";
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 587;
-$mail->Username = "115704@students.ue-varna.bg";
-$mail->Password = "13071999E";
+$mail->Username = "carpetserv63@gmail.com";
+$mail->Password = "hgkawpbrxuoceduc";
 
 include 'dbconn.php';
 include 'function.php';
@@ -26,7 +26,7 @@ if (isset($_POST['mobile_login'])) {
 
     $pid = $_POST['pid'];
 
-    $query = "SELECT * FROM users WHERE pid='$pid'";
+    $query = "SELECT id, pid FROM users WHERE pid='$pid'";
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) > 0) {
@@ -39,10 +39,7 @@ if (isset($_POST['mobile_login'])) {
                 $queryy = "UPDATE teams SET status='Yes' WHERE (user1_id='$userId' OR user2_id='$userId') AND delete_team <> 'yes'";
                 $query_runn = mysqli_query($con, $queryy);
 
-                $res = [
-                    'status' => 200,
-                ];
-                echo json_encode($res);
+                echo json_encode(['status' => 200]);
                 return;
             } else {
                 jsonResponse(500, 'Грешена парола');
@@ -55,8 +52,10 @@ if (isset($_POST['mobile_login'])) {
 
 // Logout
 if (isset($_POST['action'])) {
+
     $pid = $_SESSION['pid'];
-    $query = "SELECT * FROM users WHERE pid='$pid'";
+
+    $query = "SELECT id, pid FROM users WHERE pid='$pid'";
     $query_run = mysqli_query($con, $query);
 
     while ($rows = mysqli_fetch_array($query_run)) {
@@ -79,12 +78,13 @@ if (isset($_POST['mobile_password_update'])) {
     if (!$newPassword || !$newPasswordRep) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "SELECT * FROM users WHERE pid='$pid'";
+        $query = "SELECT pid, password FROM users WHERE pid='$pid'";
         $query_run = mysqli_query($con, $query);
 
         while ($rows = mysqli_fetch_array($query_run)) {
 
             if (password_verify($_POST['oldPassword'], $rows['password'])) {
+
                 if ($newPassword == $newPasswordRep) {
                     $newPassword = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
 
@@ -110,7 +110,7 @@ if (isset($_POST['orderId'])) {
     $id = $_POST['orderId'];
     $ids = explode(" ", $id);
 
-    $query = "SELECT * FROM orders WHERE team_id='$ids[1]' AND status = 'В процес'";
+    $query = "SELECT team_id, status FROM orders WHERE team_id='$ids[1]' AND status = 'В процес'";
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) < 1) {
@@ -178,6 +178,7 @@ if (isset($_POST['orderEndId'])) {
 
 // Remove product from warehouse
 if (isset($_POST['productName'])) {
+
     $name = ($_POST['productName']);
     $teamId = ($_POST['teamId']);
 

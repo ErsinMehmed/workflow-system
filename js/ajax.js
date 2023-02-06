@@ -211,15 +211,22 @@ $(document).ready(function () {
     const formData = new FormData(this);
     formData.append("save_customer", true);
 
+    $("#customer-registration-spinner").removeClass("hidden");
+    $("#sign-in-form").addClass("animate-pulse opacity-20");
+
     postFormData("action/Customer.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
+        $("#customer-registration-spinner").addClass("hidden");
+        $("#sign-in-form").removeClass("animate-pulse opacity-20");
         closeModal("#customer-register-modal");
         $("#sign-in-form")[0].reset();
         alertify.success(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
+        $("#customer-registration-spinner").addClass("hidden");
+        $("#sign-in-form").removeClass("animate-pulse opacity-20");
       }
     });
   });
@@ -232,7 +239,7 @@ $(document).ready(function () {
     formData.append("login_info", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         window.location.href = "account";
@@ -252,7 +259,7 @@ $(document).ready(function () {
     formData.append("update_customer", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         alertify.success(res.message);
@@ -271,7 +278,7 @@ $(document).ready(function () {
     formData.append("update_customer_image", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
       if (res.status == 200) {
         location.reload(true);
       }
@@ -286,7 +293,7 @@ $(document).ready(function () {
     formData.append("update_customer_password", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         alertify.success(res.message);
@@ -302,7 +309,7 @@ $(document).ready(function () {
     const action = "data";
 
     postData("action/Customer.php", { action: action }, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         window.location.href = "/";
@@ -318,7 +325,7 @@ $(document).ready(function () {
     formData.append("customer_order", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         $("#history-section-load").load(
@@ -341,7 +348,7 @@ $(document).ready(function () {
     formData.append("customer_rate", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#customer-opinion-modal");
@@ -362,7 +369,7 @@ $(document).ready(function () {
     formData.append("guest_order", true);
 
     postFormData("action/Order.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         $("#guest-order-form")[0].reset();
@@ -386,7 +393,7 @@ $(document).ready(function () {
       .join("");
 
     getData(`action/Customer.php?email=${email}`, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         if (res.data.email_code == code) {
@@ -396,7 +403,7 @@ $(document).ready(function () {
             "action/Customer.php",
             { verify: verify },
             function (response) {
-              const res = jQuery.parseJSON(response);
+              const res = JSON.parse(response);
 
               if (res.status == 200) {
                 closeModal("#email-verify-modal");
@@ -415,7 +422,7 @@ $(document).ready(function () {
     const id = $(this).val();
 
     getData(`action/Customer.php?id=${id}`, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         openModal("#history-modal");
@@ -459,7 +466,7 @@ $(document).ready(function () {
     formData.append("customer_upload_room", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         $("#document-section").load(location.href + " #document-section");
@@ -484,7 +491,7 @@ $(document).ready(function () {
     formData.append("delete_customer_img", true);
 
     postFormData("action/Customer.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#delete-customer-img-modal");
@@ -504,7 +511,7 @@ $(document).ready(function () {
     formData.append("admin_order", true);
 
     postFormData("action/AdminOrders.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#add-order-modal");
@@ -527,7 +534,7 @@ $(document).ready(function () {
     console.log(formData);
 
     postFormData("action/Owner.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#add-admin-modal");
@@ -545,7 +552,7 @@ $(document).ready(function () {
     const id = $(this).val();
 
     getData(`action/AdminOrders.php?id=${id}`, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         openModal("#order-modal");
@@ -585,7 +592,7 @@ $(document).ready(function () {
     const id = $(this).val();
 
     getData(`action/AdminOrders.php?id=${id}`, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
       if (res.status == 500) {
         alertify.error(res.message);
       } else if (res.status == 200) {
@@ -603,7 +610,7 @@ $(document).ready(function () {
     formData.append("admin_order_update", true);
 
     postFormData("action/AdminOrders.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#order-modal");
@@ -623,7 +630,7 @@ $(document).ready(function () {
       "action/AdminOrders.php",
       { orderIdInvoice: orderIdInvoice },
       function (response) {
-        const res = jQuery.parseJSON(response);
+        const res = JSON.parse(response);
 
         if (res.status == 200) {
           $("#order-table").load(location.href + " #order-table");
@@ -640,7 +647,7 @@ $(document).ready(function () {
     const email = $(this).val();
 
     getData(`action/Customer.php?email=${email}`, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
       if (res.status == 404) {
         alertify.error(res.message);
       } else if (res.status == 200) {
@@ -696,7 +703,7 @@ $(document).ready(function () {
     formData.append("admin_user", true);
 
     postFormData("action/AdminUsers.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#add-user-modal");
@@ -714,7 +721,7 @@ $(document).ready(function () {
     const id = $(this).val();
 
     getData(`action/AdminUsers.php?id=${id}`, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
       if (res.status == 200) {
         openModal("#edit-user-modal");
 
@@ -741,7 +748,7 @@ $(document).ready(function () {
     formData.append("owner_update_admin", true);
 
     postFormData("action/Owner.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#edit-admin-modal");
@@ -758,7 +765,7 @@ $(document).ready(function () {
     const id = $(this).val();
 
     getData(`action/Owner.php?id=${id}`, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         openModal("#edit-admin-modal");
@@ -796,7 +803,7 @@ $(document).ready(function () {
     const id = $(this).val();
 
     getData(`action/AdminSuppliers.php?id=${id}`, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
       if (res.status == 500) {
         alertify.error(res.message);
       } else if (res.status == 200) {
@@ -819,7 +826,7 @@ $(document).ready(function () {
     formData.append("admin_update_user", true);
 
     postFormData("action/AdminUsers.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#edit-user-modal");
@@ -836,7 +843,7 @@ $(document).ready(function () {
     const id = $(this).val();
 
     getData(`action/AdminUsers.php?id=${id}`, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
       if (res.status == 500) {
         alertify.error(res.message);
       } else if (res.status == 200) {
@@ -856,7 +863,7 @@ $(document).ready(function () {
     formData.append("admin_set_user_password", true);
 
     postFormData("action/AdminUsers.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#user-password-modal");
@@ -1018,7 +1025,7 @@ $(document).ready(function () {
     formData.append("admin_team", true);
 
     postFormData("action/AdminTeams.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#add-team-modal");
@@ -1041,7 +1048,7 @@ $(document).ready(function () {
     $("#hide-set-order-btn").removeClass("hidden");
 
     getData("action/AdminOrders.php?id=" + id, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         openModal("#set-order-modal");
@@ -1053,7 +1060,7 @@ $(document).ready(function () {
           const id = res.data.team_id;
 
           getData(`action/AdminTeams.php?id=${id}`, function (response) {
-            const res = jQuery.parseJSON(response);
+            const res = JSON.parse(response);
 
             if (res.status == 200) {
               $("#user1-set-order").val(res.data.user1_name);
@@ -1091,7 +1098,7 @@ $(document).ready(function () {
     const id = $(this).val();
 
     getData(`action/AdminTeams.php?id=${id}`, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
       if (res.status == 404) {
         alertify.error(res.message);
       } else if (res.status == 200) {
@@ -1110,7 +1117,7 @@ $(document).ready(function () {
     const id = $(this).val();
 
     getData(`action/AdminWarehouse.php?id=${id}`, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
       if (res.status == 404) {
         alertify.error(res.message);
       } else if (res.status == 200) {
@@ -1152,7 +1159,7 @@ $(document).ready(function () {
     formData.append("admin_product_order", true);
 
     postFormData("action/AdminProducts.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#add-order-product-modal");
@@ -1175,7 +1182,7 @@ $(document).ready(function () {
     formData.append("admin_set_order", true);
 
     postFormData("action/AdminOrders.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#set-order-modal");
@@ -1294,7 +1301,7 @@ $(document).ready(function () {
     formData.append("admin_delete_team", true);
 
     postFormData("action/adminTeams.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#delete-team-modal");
@@ -1315,7 +1322,7 @@ $(document).ready(function () {
     formData.append("admin_delete_team", true);
 
     postFormData("action/AdminProducts.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#delete-product-order-modal");
@@ -1336,7 +1343,7 @@ $(document).ready(function () {
     formData.append("admin_delete_supplier", true);
 
     postFormData("action/AdminSuppliers.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#delete-supplier-modal");
@@ -1356,7 +1363,7 @@ $(document).ready(function () {
     formData.append("admin_delete_product", true);
 
     postFormData("action/AdminWarehouse.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#delete-product-modal");
@@ -1376,7 +1383,7 @@ $(document).ready(function () {
     formData.append("admin_product", true);
 
     postFormData("action/AdminWarehouse.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#add-product-modal");
@@ -1397,7 +1404,7 @@ $(document).ready(function () {
     formData.append("admin_edit_product", true);
 
     postFormData("action/AdminWarehouse.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#edit-product-modal");
@@ -1417,7 +1424,7 @@ $(document).ready(function () {
     formData.append("admin_edit_supplier", true);
 
     postFormData("action/AdminSuppliers.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#supplier-edit-modal");
@@ -1437,7 +1444,7 @@ $(document).ready(function () {
     formData.append("admin_set_product", true);
 
     postFormData("action/AdminWarehouse.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#set-product-modal");
@@ -1458,7 +1465,7 @@ $(document).ready(function () {
     formData.append("admin_supplier", true);
 
     postFormData("action/AdminSuppliers.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#add-supplier-modal");
@@ -1479,7 +1486,7 @@ $(document).ready(function () {
     formData.append("dashboard_login", true);
 
     postFormData("action/Admin.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         location.reload();
@@ -1497,7 +1504,7 @@ $(document).ready(function () {
     formData.append("owner_login", true);
 
     postFormData("action/Owner.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         location.reload();
@@ -1515,7 +1522,7 @@ $(document).ready(function () {
     formData.append("admin_update_data", true);
 
     postFormData("action/Admin.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         alertify.success(res.message);
@@ -1534,7 +1541,7 @@ $(document).ready(function () {
     formData.append("admin_photo", true);
 
     postFormData("action/Admin.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         alertify.success(res.message);
@@ -1550,7 +1557,7 @@ $(document).ready(function () {
     const action = "data";
 
     postData("action/Admin.php", { action: action }, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         location.reload();
@@ -1563,7 +1570,7 @@ $(document).ready(function () {
     const action = "data";
 
     postData("action/Owner.php", { action: action }, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         location.reload();
@@ -1579,7 +1586,7 @@ $(document).ready(function () {
     formData.append("mobile_login", true);
 
     postFormData("action/Mobile.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         location.reload();
@@ -1594,7 +1601,7 @@ $(document).ready(function () {
     const action = "data";
 
     postData("action/Mobile.php", { action: action }, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         location.reload();
@@ -1610,7 +1617,7 @@ $(document).ready(function () {
     formData.append("mobile_password_update", true);
 
     postFormData("action/Mobile.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         $("#update-password-mobile-form")[0].reset();
@@ -1661,7 +1668,7 @@ $(document).ready(function () {
     openModal(".order-start-loader");
 
     getData(`action/AdminOrders.php?id=${id}`, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status === 200) {
         const isStarted = res.data.status === "В процес";
@@ -1709,7 +1716,7 @@ $(document).ready(function () {
     const email = $(this).val();
 
     getData("action/AdminOrders.php?email=" + email, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status != 404) {
         const imageProperties = [
@@ -1759,7 +1766,7 @@ $(document).ready(function () {
     const orderId = $(this).val();
 
     postData("action/Mobile.php", { orderId: orderId }, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
       if (res.status == 200) {
         $("#active-order-section").load(
           location.href + " #active-order-section"
@@ -1782,7 +1789,7 @@ $(document).ready(function () {
       "action/Mobile.php",
       { orderEndId: orderEndId },
       function (response) {
-        const res = jQuery.parseJSON(response);
+        const res = JSON.parse(response);
 
         if (res.status == 200) {
           location.reload();
@@ -1848,7 +1855,7 @@ $(document).ready(function () {
     formData.append("mobile_cancel_order", true);
 
     postFormData("action/Mobile.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         location.reload();
@@ -1866,7 +1873,7 @@ $(document).ready(function () {
     formData.append("mobile_product_request", true);
 
     postFormData("action/Mobile.php", formData, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         closeModal("#product-order-modal");
@@ -1883,7 +1890,7 @@ $(document).ready(function () {
     openModal("#cancel-order-reason-modal");
 
     getData(`action/AdminOrders.php?id=${id}`, function (response) {
-      const res = jQuery.parseJSON(response);
+      const res = JSON.parse(response);
 
       if (res.status == 200) {
         $("#cancel-reason-textarea").val(res.data.cancel_reason);

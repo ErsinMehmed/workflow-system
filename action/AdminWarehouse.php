@@ -40,13 +40,7 @@ if (isset($_GET['id'])) {
 
     if (mysqli_num_rows($query_run) == 1) {
         $order = mysqli_fetch_array($query_run);
-
-        $res = [
-            'status' => 200,
-            'data' => $order
-        ];
-        echo json_encode($res);
-        return;
+        echo json_encode(['status' => 200, 'data' => $order]);
     } else {
         jsonResponse(404, 'Продукта не е');
     }
@@ -101,6 +95,7 @@ if (isset($_POST['admin_set_product'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
+
         if ($quantity != 0 && is_numeric($quantity)) {
             $query = "SELECT * FROM stocks WHERE name = '$product'";
             $query_go = mysqli_query($con, $query);

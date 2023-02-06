@@ -13,8 +13,8 @@ $mail->SMTPAuth = true;
 $mail->Host = "smtp.gmail.com";
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port = 587;
-$mail->Username = "115704@students.ue-varna.bg";
-$mail->Password = "13071999E";
+$mail->Username = "carpetserv63@gmail.com";
+$mail->Password = "hgkawpbrxuoceduc";
 
 include 'dbconn.php';
 include 'function.php';
@@ -48,16 +48,12 @@ if (isset($_POST['save_customer'])) {
                         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
                         $emailCode = rand(100000, 999999);
 
-                        $mail->setFrom("carpetserv@gmail.com", "Carpet Services");
-                        $mail->addAddress($email, $fullName);
+                        sendVerificationEmail($mail, $email, $fullName, $emailCode);
 
-                        $mail->Subject = "Carpet Services - Вашият код за потвърждение";
-                        $mail->Body = "Вашият код е " . $emailCode;
-
-                        $mail->send();
-
-                        $query = "INSERT INTO customers (name,email,password,phone,created_at,email_code) VALUES ('$fullName','$email','$password','$phone','$curDT',$emailCode)";
-                        $query_run = mysqli_query($con, $query);
+                        $query = "INSERT INTO customers (name,email,password,phone,created_at,email_code) VALUES (?,?,?,?,?,?)";
+                        $stmt = mysqli_prepare($con, $query);
+                        mysqli_stmt_bind_param($stmt, "sssssi", $fullName, $email, $password, $phone, $curDT, $emailCode);
+                        $query_run = mysqli_stmt_execute($stmt);
 
                         jsonResponseMain($query_run, 'Успешна регистрация', 'Неуспешна регистрация');
                     } else {
@@ -79,28 +75,20 @@ if (isset($_POST['save_customer'])) {
 if (isset($_POST['login_info'])) {
 
     $email = ($_POST['email']);
+    $password = $_POST['passowrdLogin'];
 
-    $query = "SELECT * FROM customers WHERE email='$email'";
-    $query_run = mysqli_query($con, $query);
+    $query = "SELECT email, password FROM customers WHERE email=?";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_array($result);
 
-    if (mysqli_num_rows($query_run) > 0) {
-        while ($rows = mysqli_fetch_array($query_run)) {
-
-            if (password_verify($_POST['passowrdLogin'], $rows['password'])) {
-                $_SESSION['email'] = $email;
-
-                $res = [
-                    'status' => 200,
-                    'userEmail' => $email,
-                ];
-                echo json_encode($res);
-                return;
-            } else {
-                jsonResponse(500, 'Грешена парола');
-            }
-        }
+    if (!empty($row) && password_verify($password, $row['password'])) {
+        $_SESSION['email'] = $email;
+        echo json_encode(['status' => 200]);
     } else {
-        jsonResponse(500, 'Грешен имейл');
+        jsonResponse(500, 'Грешен имейл или парола');
     }
 }
 
@@ -110,11 +98,8 @@ if (isset($_POST['update_customer'])) {
     $userEmail = $_POST['userEmail'];
     $username = $_POST['username'];
     $phone = $_POST['phoneAccount'];
-    $city = $_POST['city'];
-    $address = $_POST['address'];
 
     if (!$username || !$phone) {
-
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         $query = "UPDATE customers SET username='$username', phone='$phone' WHERE email='$userEmail'";
@@ -159,7 +144,7 @@ if (isset($_POST['update_customer_password'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "SELECT * FROM customers WHERE email='$userEmail'";
+        $query = "SELECT email, password FROM customers WHERE email='$userEmail'";
         $query_run = mysqli_query($con, $query);
 
         while ($rows = mysqli_fetch_array($query_run)) {
@@ -213,21 +198,16 @@ if (isset($_POST['customer_order'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
+
         if (is_numeric($m2)) {
-            if ($company && $eik) {
-                $queryy = "UPDATE customers SET company_name='$company', company_eik = '$eik', address = '$address' WHERE email='$customerEmail'";
-                $query_runn = mysqli_query($con, $queryy);
 
-                $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,email,city,invoice,customer_kind,information,team_id,company_name,company_eik) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city','$invoice','Потребител','$information','0','$company','$eik')";
-                $query_run = mysqli_query($con, $query);
+            $queryy = "UPDATE customers SET company_name='$company', company_eik = '$eik' WHERE email='$customerEmail'";
+            $query_runn = mysqli_query($con, $queryy);
 
-                jsonResponseMain2($query_run, $query_runn, 'Успешно направена заявка', 'Неуспешно направена заявка');
-            } else {
-                $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,email,city,invoice,customer_kind,information,team_id) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city','$invoice','Потребител','$information','0')";
-                $query_run = mysqli_query($con, $query);
+            $query = "INSERT INTO orders (customer_name,address,room,m2,status,pay,price,date,offer,add_date,phone,view,time,email,city,invoice,customer_kind,information,team_id,company_name,company_eik) VALUES ('$customerName','$address','$building','$m2','Назначи','$payment','$price','$date','$offer','$curDT','$customerPhone','1','$time','$customerEmail','$city','$invoice','Потребител','$information','0','$company','$eik')";
+            $query_run = mysqli_query($con, $query);
 
-                jsonResponseMain($query_run, 'Успешно направена заявка', 'Неуспешно направена заявка');
-            }
+            jsonResponseMain2($query_run, $query_runn, 'Успешно направена заявка', 'Неуспешно направена заявка');
         } else {
             jsonResponse(500, 'Полето квадратура приема само числа');
         }
@@ -246,12 +226,7 @@ if (isset($_GET['id'])) {
 
     if ($result->num_rows == 1) {
         $order = $result->fetch_assoc();
-
-        $res = [
-            'status' => 200,
-            'data' => $order
-        ];
-        echo json_encode($res);
+        echo json_encode(['status' => 200, 'data' => $order]);
     } else {
         jsonResponse(404, 'Клиента не е намерен');
     }
@@ -270,12 +245,7 @@ if (isset($_GET['email'])) {
 
     if ($result->num_rows == 1) {
         $order = $result->fetch_assoc();
-
-        $res = [
-            'status' => 200,
-            'data' => $order
-        ];
-        echo json_encode($res);
+        echo json_encode(['status' => 200, 'data' => $order]);
     } else {
         jsonResponse(404, 'Клиента не е намерен');
     }
@@ -292,14 +262,15 @@ if (isset($_POST['customer_upload_room'])) {
     $filesize = number_format($filesize / 1048576, 2);
 
     if ($filesize < 2) {
-        if (!$filename) {
 
+        if (!$filename) {
             jsonResponse(500, 'Добавете снимка');
         } else {
-            $queryq = "SELECT * FROM customers WHERE email='$customerEmail'";
+            $queryq = "SELECT email, image_room1, image_room2, image_room3 FROM customers WHERE email='$customerEmail'";
             $query_runq = mysqli_query($con, $queryq);
 
             while ($rows = mysqli_fetch_array($query_runq)) {
+
                 if ($rows["image_room1"] == NULL) {
                     $queryy = "UPDATE customers SET image_room1='$filename' WHERE email='$customerEmail'";
                     $query_runn = mysqli_query($con, $queryy);

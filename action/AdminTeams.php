@@ -22,8 +22,9 @@ if (isset($_POST['admin_team'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
+
         if ($pid1 != $pid2) {
-            $selQuery = "SELECT * FROM teams WHERE name = '$name' AND delete_team <> 'yes'";
+            $selQuery = "SELECT name, delete_team FROM teams WHERE name = '$name' AND delete_team <> 'yes'";
             $query = mysqli_query($con, $selQuery);
 
             if (mysqli_num_rows($query) == 0) {
@@ -62,13 +63,7 @@ if (isset($_GET['id'])) {
 
     if (mysqli_num_rows($query_run) == 1) {
         $order = mysqli_fetch_array($query_run);
-
-        $res = [
-            'status' => 200,
-            'data' => $order
-        ];
-        echo json_encode($res);
-        return;
+        echo json_encode(['status' => 200, 'data' => $order]);
     } else {
         jsonResponse(404, 'Заявката не е намерена');
     }
@@ -80,7 +75,7 @@ if (isset($_POST['admin_delete_team'])) {
     $id = $_POST['teamId'];
     $date = date('Y-m-d');
 
-    $query = "SELECT * FROM orders WHERE team_id = '$id' AND date >= '$date'";
+    $query = "SELECT team_id, date FROM orders WHERE team_id = '$id' AND date >= '$date'";
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) == 0) {
@@ -90,7 +85,7 @@ if (isset($_POST['admin_delete_team'])) {
         $queryy = "UPDATE teams SET delete_team = 'yes' WHERE id = '$id'";
         $query_runn = mysqli_query($con, $queryy);
 
-        jsonResponseMain($query_run, 'Успешно изтриване', 'Неуспешно изтриване');
+        jsonResponseMain2($query_run, $query_runn, 'Успешно изтриване', 'Неуспешно изтриване');
     } else {
         jsonResponse(500, 'Има настоящи назначени задачи на този екип');
     }

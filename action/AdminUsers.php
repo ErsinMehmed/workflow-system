@@ -25,11 +25,13 @@ if (isset($_POST['admin_user'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "SELECT * FROM users WHERE pid = '$pid'";
+        $query = "SELECT pid FROM users WHERE pid = '$pid'";
         $query_run = mysqli_query($con, $query);
 
         if (is_numeric($egn)) {
+
             if (preg_match('/^[0-9+\(\)\s-]+$/', $phone)) {
+
                 if (mysqli_num_rows($query_run) == 0) {
                     $query = "INSERT INTO users (image,name,pid,address,in_date,status,team_id,position,egn,phone,dob,username) VALUES ('$filename','$name','$pid','$address','$date','1','0','$position','$egn','$phone','$dob','$pid')";
                     $query_run = mysqli_query($con, $query);
@@ -56,13 +58,7 @@ if (isset($_GET['id'])) {
 
     if (mysqli_num_rows($query_run) == 1) {
         $order = mysqli_fetch_array($query_run);
-
-        $res = [
-            'status' => 200,
-            'data' => $order
-        ];
-        echo json_encode($res);
-        return;
+        echo json_encode(['status' => 200, 'data' => $order]);
     } else {
         jsonResponse(404, 'Заявката не е намерена');
     }
@@ -86,8 +82,9 @@ if (isset($_POST['admin_update_user'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
+
         if ($status == 0) {
-            $query = "SELECT * FROM set_orders WHERE (user1_id = '$id' OR user2_id = '$id') AND order_date >= '$date'";
+            $query = "SELECT user1_id, user2_id, order_date FROM set_orders WHERE (user1_id = '$id' OR user2_id = '$id') AND order_date >= '$date'";
             $query_run = mysqli_query($con, $query);
 
             if (mysqli_num_rows($query_run) == 0) {
@@ -128,6 +125,7 @@ if (isset($_POST['admin_set_user_password'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
+
         if ($password == $passwordRep) {
             $password = password_hash($_POST['userPassword'], PASSWORD_DEFAULT);
 

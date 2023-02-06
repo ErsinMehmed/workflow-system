@@ -21,8 +21,8 @@ if ($position == 'Всички' && $status != 3) {
 $query_run = mysqli_query($con, $query); ?>
 <thead>
     <tr class="border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
-        <th class="pr-4 py-3">снимка</th>
-        <th class="pr-4 py-3">име</th>
+        <th class="px-4 py-3">снимка</th>
+        <th class="px-4 py-3">име</th>
         <th class="px-4 py-3">пид</th>
         <th class="px-4 py-3">длъжност</th>
         <th class="px-4 py-3">статус</th>

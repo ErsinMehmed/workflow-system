@@ -12,8 +12,8 @@ $query = "SELECT * FROM teams WHERE (id LIKE '$text%' OR name LIKE '$text%') AND
 $query_run = mysqli_query($con, $query); ?>
 <thead>
     <tr class="border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
-        <th class="pr-4 py-3">номер</th>
-        <th class="pr-4 py-3">име на екип</th>
+        <th class="px-4 py-3">номер</th>
+        <th class="px-4 py-3">име на екип</th>
         <th class="px-4 py-3">статус</th>
         <th class="px-4 py-3">служител 1</th>
         <th class="px-4 py-3">служител 2</th>

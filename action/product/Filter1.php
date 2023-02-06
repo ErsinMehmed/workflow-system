@@ -16,8 +16,8 @@ if ($kind == 'Всички') {
 $query_run = mysqli_query($con, $query); ?>
 <thead>
     <tr class="border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
-        <th class="pr-4 py-3">номер</th>
-        <th class="pr-4 py-3">продукт</th>
+        <th class="px-4 py-3">номер</th>
+        <th class="px-4 py-3">продукт</th>
         <th class="px-4 py-3">количество</th>
         <th class="px-4 py-3">вид</th>
         <th class="px-4 py-3">доставчик</th>

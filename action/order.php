@@ -27,7 +27,7 @@ if (isset($_POST['guest_order'])) {
     if (!$building || !$offer || !$time || !$payment || !$city || !$address || !$m2 || !$price || !$email) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $selQuery = "SELECT * FROM customers WHERE email = '$email'";
+        $selQuery = "SELECT email FROM customers WHERE email = '$email'";
         $query = mysqli_query($con, $selQuery);
 
         if (mysqli_num_rows($query) == 0) {

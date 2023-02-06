@@ -11,27 +11,20 @@ error_reporting(E_ERROR | E_PARSE);
 if (isset($_POST['owner_login'])) {
 
     $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    $query = "SELECT * FROM owners WHERE email='$email'";
-    $query_run = mysqli_query($con, $query);
+    $query = "SELECT * FROM owners WHERE email=?";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_array($result);
 
-    if (mysqli_num_rows($query_run) > 0) {
-        while ($rows = mysqli_fetch_array($query_run)) {
-
-            if (password_verify($_POST['password'], $rows['password'])) {
-                $_SESSION['admin'] = $email;
-
-                $res = [
-                    'status' => 200,
-                ];
-                echo json_encode($res);
-                return;
-            } else {
-                jsonResponse(500, 'Грешена парола');
-            }
-        }
+    if (!empty($row) && password_verify($password, $row['password'])) {
+        $_SESSION['admin'] = $email;
+        echo json_encode(['status' => 200]);
     } else {
-        jsonResponse(500, 'Грешен имейл');
+        jsonResponse(500, 'Грешен имейл или парола');
     }
 }
 
@@ -60,11 +53,10 @@ if (isset($_POST['owner_admin'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "SELECT * FROM admins WHERE email = '$email'";
+        $query = "SELECT email FROM admins WHERE email = '$email'";
         $query_run = mysqli_query($con, $query);
 
         if (mysqli_num_rows($query_run) == 0) {
-
             $query = "INSERT INTO admins (name,email,password,phone,image,create_role,edit_role,full_role,personal_view,nomenclature_view,position,status) VALUES ('$name','$email','$password','$phone','$filename','$createPermission','$editPermission','$allPermission','$userView','$nomenclatureView','Админ','1')";
             $query_run = mysqli_query($con, $query);
 
@@ -77,12 +69,10 @@ if (isset($_POST['owner_admin'])) {
 
 // Update admin information
 if (isset($_POST['owner_update_admin'])) {
-
     $id = $_POST['adminId'];
     $name = $_POST['adminName'];
     $phone = $_POST['adminPhone'];
     $status = $_POST['adminStatus'];
-    $password = password_hash($_POST['adminPassword'], PASSWORD_DEFAULT);
     $createPermission = $_POST['Добавяне'] ?: 0;
     $editPermission = $_POST['Редактиране'] ?: 0;
     $allPermission = $_POST['Всички'] ?: 0;
@@ -90,19 +80,19 @@ if (isset($_POST['owner_update_admin'])) {
     $nomenclatureView = $_POST['Номенклатури'] ?: 0;
 
     if (!$name) {
-
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        if (!$password) {
-            $query = "UPDATE admins SET name='$name', phone='$phone', create_role='$createPermission', edit_role='$editPermission', full_role='$allPermission', personal_view='$userView', status='$status', nomenclature_view='$nomenclatureView' WHERE id='$id'";
-            $query_run = mysqli_query($con, $query);
+        $updateAdminQuery = "UPDATE admins SET name=?, phone=?, create_role=?, edit_role=?, full_role=?, personal_view=?, status=?, nomenclature_view=? WHERE id=?";
+        $stmt = mysqli_stmt_init($con);
 
-            jsonResponseMain($query_run, 'Данните на ' . $name . ' са обновени', 'Данните не са обновени');
-        } else {
-            $query = "UPDATE admins SET name='$name', password='$password', phone='$phone', create_role='$createPermission', edit_role='$editPermission', full_role='$allPermission', personal_view='$userView', status='$status', nomenclature_view='$nomenclatureView' WHERE id='$id'";
-            $query_run = mysqli_query($con, $query);
+        if (mysqli_stmt_prepare($stmt, $updateAdminQuery)) {
+            mysqli_stmt_bind_param($stmt, 'ssiiiiisi', $name, $phone, $createPermission, $editPermission, $allPermission, $userView, $status, $nomenclatureView, $id);
 
-            jsonResponseMain($query_run, 'Данните на ' . $name . ' са обновени', 'Данните не са обновени');
+            if (mysqli_stmt_execute($stmt)) {
+                jsonResponse(200, 'Данните на ' . $name . ' са обновени');
+            } else {
+                jsonResponse(500, 'Данните не са обновени');
+            }
         }
     }
 }
@@ -130,13 +120,7 @@ if (isset($_POST['period'])) {
     $second = $row['second'];
     $third = $row['third'];
 
-    $res = [
-        'first' => $first,
-        'second' => $second,
-        'third' => $third,
-    ];
-
-    echo json_encode($res);
+    echo json_encode(['first' => $first, 'second' => $second, 'third' => $third,]);
     return;
 }
 
@@ -149,11 +133,6 @@ if (isset($_GET['id'])) {
     $query_run = mysqli_query($con, $query);
 
     $order = mysqli_fetch_array($query_run);
-
-    $res = [
-        'status' => 200,
-        'data' => $order
-    ];
-    echo json_encode($res);
+    echo json_encode(['status' => 200, 'data' => $order]);
     return;
 }

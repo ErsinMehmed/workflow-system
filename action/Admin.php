@@ -11,27 +11,20 @@ error_reporting(E_ERROR | E_PARSE);
 if (isset($_POST['dashboard_login'])) {
 
     $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    $query = "SELECT * FROM admins WHERE email='$email' AND status <> 0";
-    $query_run = mysqli_query($con, $query);
+    $query = "SELECT email, password, status FROM admins WHERE email=? AND status <> 0";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_array($result);
 
-    if (mysqli_num_rows($query_run) > 0) {
-        while ($rows = mysqli_fetch_array($query_run)) {
-
-            if (password_verify($_POST['password'], $rows['password'])) {
-                $_SESSION['adminEmail'] = $email;
-
-                $res = [
-                    'status' => 200,
-                ];
-                echo json_encode($res);
-                return;
-            } else {
-                jsonResponse(500, 'Грешена парола');
-            }
-        }
+    if (!empty($row) && password_verify($password, $row['password'])) {
+        $_SESSION['adminEmail'] = $email;
+        echo json_encode(['status' => 200]);
     } else {
-        jsonResponse(500, 'Грешен имейл');
+        jsonResponse(500, 'Грешен имейл или парола');
     }
 }
 
@@ -52,12 +45,13 @@ if (isset($_POST['admin_update_data'])) {
     if (!$newPassword || !$newPasswordRep || !$phone) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "SELECT * FROM admins WHERE email='$email'";
+        $query = "SELECT email FROM admins WHERE email='$email'";
         $query_run = mysqli_query($con, $query);
 
         while ($rows = mysqli_fetch_array($query_run)) {
 
             if (password_verify($_POST['oldPassword'], $rows['password'])) {
+
                 if ($newPassword == $newPasswordRep) {
                     $newPassword = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
 

@@ -221,6 +221,12 @@ $email = $_SESSION['email']; ?>
       <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
         <div class="relative w-full h-full max-w-md">
           <div class="relative bg-gray-100 rounded-lg shadow mb-6">
+            <div id="customer-registration-spinner" class="absolute absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 hidden">
+              <svg aria-hidden="true" class="inline w-12 h-12 text-gray-200 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+              </svg>
+            </div>
             <button type="button" class="absolute top-3 right-2.5 text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center transition-all close-customer-register-modal">
               <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -247,7 +253,7 @@ $email = $_SESSION['email']; ?>
                   <label for="email-signUp" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
                     Имейл
                   </label>
-                  <input type="email" id="email-signUp" name="email" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5" placeholder="Въведете фамилия" minlength="5" />
+                  <input type="email" id="email-signUp" name="email" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full p-2.5" placeholder="Въведете имейл" minlength="5" />
                 </div>
                 <div>
                   <label for="phone" class="block ml-1 mb-1 text-sm font-semibold text-slate-500">
@@ -276,11 +282,11 @@ $email = $_SESSION['email']; ?>
                   </div>
                 </div>
                 <div>
-                  <label for="password" class="block mb-1.5 text-sm font-semibold text-slate-500">
+                  <label for="register-password" class="block mb-1.5 text-sm font-semibold text-slate-500">
                     Вашата парола
                   </label>
                   <div class="relative">
-                    <input :type="passwordReg ? 'password' : 'text'" name="password" id="password" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full pr-10 p-2.5" placeholder="••••••••" minlength="8" />
+                    <input :type="passwordReg ? 'password' : 'text'" name="password" id="register-password" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full pr-10 p-2.5" placeholder="••••••••" minlength="8" />
                     <div @click="passwordReg = !passwordReg" class="absolute inset-y-0 right-0 flex items-center pr-3">
                       <svg v-show="passwordReg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
@@ -293,11 +299,11 @@ $email = $_SESSION['email']; ?>
                   </div>
                 </div>
                 <div>
-                  <label for="password" class="block mb-1.5 text-sm font-semibold text-slate-500">
+                  <label for="register-password-rep" class="block mb-1.5 text-sm font-semibold text-slate-500">
                     Повтори парола
                   </label>
                   <div class="relative">
-                    <input :type="passwordRegRep ? 'password' : 'text'" name="passwordRep" id="password" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full pr-10 p-2.5" placeholder="••••••••" minlength="8" />
+                    <input :type="passwordRegRep ? 'password' : 'text'" name="passwordRep" id="register-password-rep" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full pr-10 p-2.5" placeholder="••••••••" minlength="8" />
                     <div @click="passwordRegRep = !passwordRegRep" class="absolute inset-y-0 right-0 flex items-center pr-3">
                       <svg v-show="passwordRegRep" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500 cursor-pointer transition-all hover:text-gray-400">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />

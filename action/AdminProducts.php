@@ -18,7 +18,6 @@ if (isset($_POST['admin_product_order'])) {
     $price = $_POST['price'];
     $date = date('Y-m-d H:i:s');
 
-
     if (!$name || !$quantity || !$supplier || !$manufacturer || !$onePrice) {
 
         jsonResponse(500, 'Попълнете всички полета');
@@ -27,6 +26,7 @@ if (isset($_POST['admin_product_order'])) {
         $query_go = mysqli_query($con, $query);
 
         if (mysqli_num_rows($query_go) == 1) {
+
             while ($rows = mysqli_fetch_array($query_go)) {
                 $quantityStock = $rows['quantity'];
                 $quantityResult = $quantityStock + $quantity;
@@ -37,7 +37,7 @@ if (isset($_POST['admin_product_order'])) {
                 $queryyy = "INSERT INTO product_orders (name,quantity,kind,supplier,manufacturer,price_per_one,total_price,date) VALUES ('$name','$quantity','$kind','$supplier','$manufacturer','$onePrice','$price','$date')";
                 $query_runn = mysqli_query($con, $queryyy);
 
-                jsonResponseMain($query_runn, 'Успешно добавена поръчка', 'Неуспешно добавяне на поръчка');
+                jsonResponseMain2($query_run, $query_runn, 'Успешно добавена поръчка', 'Неуспешно добавяне на поръчка');
             }
         } else {
             jsonResponse(500, 'Продукт с име ' . $name . ' не съществува');
@@ -62,16 +62,17 @@ if (isset($_POST['admin_delete_team'])) {
 
         while ($rows = mysqli_fetch_array($query_runn)) {
             $quantity = $rows["quantity"];
+
             if ($quantityProduct <= $quantity) {
                 $quantity = $quantity - $quantityProduct;
 
                 $query1 = "UPDATE stocks SET quantity = '$quantity' WHERE name = '$name'";
-                mysqli_query($con, $query1);
+                $query_runnn = mysqli_query($con, $query1);
 
                 $query2 = "DELETE FROM product_orders WHERE id = '$id'";
-                $query_runnn = mysqli_query($con, $query2);
+                $query_runnnn = mysqli_query($con, $query2);
 
-                jsonResponseMain($query_runnn, 'Успешно изтриване', 'Неуспешно изтриване');
+                jsonResponseMain2($query_runnn, $query_runnnn, 'Успешно изтриване', 'Неуспешно изтриване');
             } else {
                 jsonResponse(500, 'Няма достатъчна наличност в склад за да бъде изтрита тази поръчка');
             }

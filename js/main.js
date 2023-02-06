@@ -413,4 +413,17 @@ $(document).ready(function () {
     checkboxes.prop("disabled", $(this).is(":checked"));
     checkboxes.prop("checked", false);
   });
+
+  // Go to next or prev input email verification
+  const inputs = document.querySelectorAll(".email-code");
+
+  inputs.forEach((input, index) => {
+    input.addEventListener("input", function () {
+      if (input.value.length === 1) {
+        if (!inputs[index + 1].value) inputs[index + 1].focus();
+      } else if (input.value.length === 0 && index > 0) {
+        inputs[index - 1].focus();
+      }
+    });
+  });
 });

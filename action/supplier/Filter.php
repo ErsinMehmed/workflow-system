@@ -10,8 +10,8 @@ $query = "SELECT * FROM suppliers WHERE name LIKE '$text%'";
 $query_run = mysqli_query($con, $query); ?>
 <thead>
     <tr class="border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
-        <th class="pr-4 py-3">номер</th>
-        <th class="pr-4 py-3">име</th>
+        <th class="px-4 py-3">номер</th>
+        <th class="px-4 py-3">име</th>
         <th class="px-4 py-3">телефон</th>
         <th class="px-4 py-3">адрес</th>
         <th class="px-4 py-3">банкова сметка</th>

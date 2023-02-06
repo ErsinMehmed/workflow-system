@@ -383,17 +383,17 @@ $date = date("Y-m-d"); ?>
                                         <table id="admin-table" class="min-w-full leading-normal bg-white">
                                             <thead>
                                                 <tr class="border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase tracking-wider text-center">
-                                                    <th class="pr-4 py-3">снимка</th>
-                                                    <th class="pr-4 py-3">име</th>
-                                                    <th class="pr-4 py-3">права</th>
-                                                    <th class="pr-4 py-3">изгледи</th>
+                                                    <th class="px-4 py-3">снимка</th>
+                                                    <th class="px-4 py-3">име</th>
+                                                    <th class="px-4 py-3">права</th>
+                                                    <th class="px-4 py-3">изгледи</th>
                                                     <th class="px-4 py-3">статус</th>
                                                     <th class="px-4 py-3">действия</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $query = "SELECT * FROM admins WHERE status = '1'";
+                                                $query = "SELECT * FROM admins WHERE status <> 0";
                                                 $query_run = mysqli_query($con, $query);
 
                                                 if (mysqli_num_rows($query_run) > 0) {
@@ -585,10 +585,6 @@ $date = date("Y-m-d"); ?>
                                                                 Телефон
                                                             </label>
                                                             <input type="text" minlength="6" id="admin-phone-edit" name="adminPhone" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи телефон" />
-                                                            <label for="admin-password-edit" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">
-                                                                Парола
-                                                            </label>
-                                                            <input type="password" minlength="6" id="admin-password-edit" name="adminPassword" class="bg-gray-50 border border-gray-300 text-gray-900 mb-4 text-sm rounded-lg focus:outline-none focus:border-gray-400 w-full p-2.5" placeholder="Въведи парола" />
                                                             <label for="admin-status" class="block ml-1 mb-1 text-sm font-semibold text-slate-700">Статус</label>
                                                             <select id="admin-status" name="adminStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-gray-400 block w-full p-2.5 mb-4">
                                                                 <option value="1" selected>Активен</option>

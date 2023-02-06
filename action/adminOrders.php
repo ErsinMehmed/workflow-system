@@ -28,9 +28,11 @@ if (isset($_POST['admin_order'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
+
         if (preg_match('/^[0-9+\(\)\s-]+$/', $phone)) {
+
             if (is_numeric($m2)) {
-                $selQuery = "SELECT * FROM customers WHERE email = '$email'";
+                $selQuery = "SELECT email FROM customers WHERE email = '$email'";
                 $query = mysqli_query($con, $selQuery);
 
                 if (mysqli_num_rows($query) == 0) {
@@ -60,13 +62,7 @@ if (isset($_GET['id'])) {
 
     if (mysqli_num_rows($query_run) == 1) {
         $order = mysqli_fetch_array($query_run);
-
-        $res = [
-            'status' => 200,
-            'data' => $order
-        ];
-        echo json_encode($res);
-        return;
+        echo json_encode(['status' => 200, 'data' => $order]);
     } else {
         jsonResponse(404, 'Няма намерена информация');
     }
@@ -109,6 +105,7 @@ if (isset($_POST['admin_set_order'])) {
     $userID1 = ($_POST['userID1']);
     $userID2 = ($_POST['userID2']);
     $teamName = ($_POST['teamName']);
+
     if (!$user1  || !$user2) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
@@ -118,7 +115,7 @@ if (isset($_POST['admin_set_order'])) {
         $query = "INSERT INTO set_orders (team_id,order_id,user1,user2,user1_id,user2_id,team_name,date,view,order_date) VALUES ('$teamID','$orderID','$user1','$user2','$userID1','$userID2','$teamName','$curDT','1','$orderDate')";
         $query_run = mysqli_query($con, $query);
 
-        jsonResponseMain($query_run, 'Заявката е добавена на екип ' . $teamName, 'Заявката не е добавена на екип ' . $teamName);
+        jsonResponseMain2($query_run, $query_runn, 'Заявката е добавена на екип ' . $teamName, 'Заявката не е добавена на екип ' . $teamName);
     }
 }
 

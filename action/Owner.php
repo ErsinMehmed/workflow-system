@@ -53,7 +53,7 @@ if (isset($_POST['owner_admin'])) {
 
         jsonResponse(500, 'Попълнете всички полета');
     } else {
-        $query = "SELECT email FROM admins WHERE email = '$email'";
+        $query = "SELECT email FROM admins WHERE email = '$email' AND status != 0";
         $query_run = mysqli_query($con, $query);
 
         if (mysqli_num_rows($query_run) == 0) {
@@ -103,7 +103,7 @@ if (isset($_POST['period'])) {
     $period = $_POST['period'];
 
     $query = "SELECT SUM(CASE WHEN offer = 'Основна' THEN 1 ELSE 0 END) AS first, SUM(CASE WHEN offer = 'Премиум' THEN 1 ELSE 0 END) AS second,
-    SUM(CASE WHEN offer = 'Вип' THEN 1 ELSE 0 END) AS third FROM orders WHERE date ";
+    SUM(CASE WHEN offer = 'Вип' THEN 1 ELSE 0 END) AS third FROM orders WHERE date";
 
     if ($period == "CURDATE()") {
         $query .= "= $period AND status NOT IN ('Отказана', 'Изтекла')";
@@ -120,7 +120,32 @@ if (isset($_POST['period'])) {
     $second = $row['second'];
     $third = $row['third'];
 
-    echo json_encode(['first' => $first, 'second' => $second, 'third' => $third,]);
+    echo json_encode(['first' => $first, 'second' => $second, 'third' => $third]);
+    return;
+}
+
+// Get orders offers data by period
+if (isset($_POST['payPeriod'])) {
+
+    $period = $_POST['payPeriod'];
+
+    $query = "SELECT SUM(CASE WHEN pay = 'В брой' THEN 1 ELSE 0 END) AS cash, SUM(CASE WHEN pay = 'С карта' THEN 1 ELSE 0 END) AS card FROM orders WHERE date";
+
+    if ($period == "CURDATE()") {
+        $query .= "= $period AND status NOT IN ('Отказана', 'Изтекла')";
+    } else {
+        $query .= ">= $period AND status NOT IN ('Отказана', 'Изтекла')";
+    }
+
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+
+    $cash = $row['cash'];
+    $card = $row['card'];
+
+    echo json_encode(['cash' => $cash, 'card' => $card]);
     return;
 }
 

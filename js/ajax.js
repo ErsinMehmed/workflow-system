@@ -202,6 +202,16 @@ $(document).ready(function () {
       .attr("selected", "selected");
   }
 
+  function debounce(fn) {
+    let timeout;
+    return function () {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        fn.apply(this, arguments);
+      }, 300);
+    };
+  }
+
   alertify.set("notifier", "position", "top-center");
 
   // Customer register
@@ -446,8 +456,8 @@ $(document).ready(function () {
         $("#customer_invoice").html(res.data.invoice);
         $("#customer_address").html(res.data.address);
         $("#customer_information").html(res.data.information);
-        $("#customer_m2").html(res.data.m2 + " m2");
-        $("#customer_price").html(res.data.price + " лв.");
+        $("#customer_m2").html(`${res.data.m2} m2`);
+        $("#customer_price").html(`${res.data.price} лв.`);
       }
     });
   });
@@ -665,7 +675,7 @@ $(document).ready(function () {
   });
 
   // Owner filter by admin name
-  $("#search-admin").on("keyup", adminFilters);
+  $("#search-admin").on("keyup", debounce(adminFilters, 1000));
 
   // Owner filter by admin status
   $("#select-admin-status").on("change", adminFilters);
@@ -674,7 +684,7 @@ $(document).ready(function () {
   $("#order-filter-date").on("change", orderFilters);
 
   // Text filter dashboard order section
-  $("#search-order").on("keyup", orderFilters);
+  $("#search-order").on("keyup", debounce(orderFilters, 1000));
 
   // Date filter dashboard order section next button
   $("#date-next").on("click", function () {
@@ -687,13 +697,15 @@ $(document).ready(function () {
   });
 
   // text filter dashboard supplier section
-  $("#search-supplier").on("keyup", function () {
+  const searchSupplierDebounce = debounce(function () {
     const text = $(this).val();
 
     postData("action/supplier/Filter.php", { text: text }, function (data) {
       $("#supplier-table").html(data);
     });
   });
+
+  $("#search-supplier").on("keyup", searchSupplierDebounce);
 
   // Admin create user
   $(document).on("submit", "#add-user-form", function (e) {
@@ -709,6 +721,7 @@ $(document).ready(function () {
         closeModal("#add-user-modal");
         $("#add-user-form")[0].reset();
         $("#user-table").load(location.href + " #user-table");
+        $("#load-user-data").load(window.location.href + " #load-user-data");
         alertify.success(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
@@ -831,6 +844,7 @@ $(document).ready(function () {
       if (res.status == 200) {
         closeModal("#edit-user-modal");
         $("#user-table").load(location.href + " #user-table");
+        $("#load-user-data").load(window.location.href + " #load-user-data");
         alertify.success(res.message);
       } else if (res.status == 500) {
         alertify.error(res.message);
@@ -896,14 +910,16 @@ $(document).ready(function () {
     ownerFilterDate("#filter-date-to", 1)
   );
 
-  // User search by name and pid
-  $("#search-user").on("keyup", function () {
+  // User search by name or pid
+  const debouncedUsersFilter = debounce(function () {
     filterUsers(
-      $(this).val(),
+      $("#search-user").val(),
       $("#select-position").val(),
       $("#select-status").val()
     );
   });
+
+  $("#search-user").on("keyup", debouncedUsersFilter);
 
   // User position filter
   $("#select-position").on("change", function () {
@@ -984,7 +1000,7 @@ $(document).ready(function () {
   });
 
   // Get user2 name and insert in input
-  $(document).on("click", ".get-namee", function () {
+  $(document).on("click", ".get-name1", function () {
     const selected = $(this).html();
     const getID = $(".user2").html();
     const split = selected.split("-");
@@ -1047,7 +1063,7 @@ $(document).ready(function () {
     $("#select-team").prop("disabled", false);
     $("#hide-set-order-btn").removeClass("hidden");
 
-    getData("action/AdminOrders.php?id=" + id, function (response) {
+    getData(`action/AdminOrders.php?id=${id}`, function (response) {
       const res = JSON.parse(response);
 
       if (res.status == 200) {
@@ -1066,7 +1082,7 @@ $(document).ready(function () {
               $("#user1-set-order").val(res.data.user1_name);
               $("#user2-set-order").val(res.data.user2_name);
               $("#select-team").append(
-                "<option selected>" + res.data.name + "</option>"
+                `<option selected>${res.data.name}</option>`
               );
               $("#select-team").prop("disabled", "disabled");
               $("#hide-set-order-btn").addClass("hidden");
@@ -1244,15 +1260,18 @@ $(document).ready(function () {
     $("#delete-supplier-id").val($(this).val());
   });
 
-  // Product search and filter
-  $("#search-product").on("keyup", function () {
-    productFilter(
-      "#search-product",
-      "#select-product-kind",
-      "action/product/Filter.php",
-      "#product-table"
-    );
-  });
+  // Product search by name
+  $("#search-product").on(
+    "keyup",
+    debounce(function () {
+      productFilter(
+        "#search-product",
+        "#select-product-kind",
+        "action/product/Filter.php",
+        "#product-table"
+      );
+    })
+  );
 
   // Product filter by kind
   $("#select-product-kind").on("change", function () {
@@ -1264,15 +1283,18 @@ $(document).ready(function () {
     );
   });
 
-  // Product search by id or name
-  $("#search-order-product").on("keyup", function () {
-    productFilter(
-      "#search-order-product",
-      "#select-order-product-kind",
-      "action/product/Filter1.php",
-      "#product-order-table"
-    );
-  });
+  // Product search by name or supplier
+  $("#search-order-product").on(
+    "keyup",
+    debounce(function () {
+      productFilter(
+        "#search-order-product",
+        "#select-order-product-kind",
+        "action/product/Filter1.php",
+        "#product-order-table"
+      );
+    })
+  );
 
   // Product filter by kind
   $("#select-order-product-kind").on("change", function () {
@@ -1285,13 +1307,16 @@ $(document).ready(function () {
   });
 
   // Search team by name
-  $("#search-team").on("keyup", function () {
-    const text = $(this).val();
+  $("#search-team").on(
+    "keyup",
+    debounce(function () {
+      const text = $(this).val();
 
-    postData("action/team/Filter.php", { text: text }, function (data) {
-      $("#team-table").html(data);
-    });
-  });
+      postData("action/team/Filter.php", { text: text }, function (data) {
+        $("#team-table").html(data);
+      });
+    })
+  );
 
   // Admin delete team
   $(document).on("submit", "#delete-team-form", function (e) {
@@ -1644,18 +1669,25 @@ $(document).ready(function () {
   });
 
   // Mobile sort order
-  $("#search-mobile-order").on("keyup", function () {
-    const text = $(this).val();
-    const orderBy = getChecklistItems();
-    const orderState = $("#active-btn").val();
-    const state = orderState == 1 ? "Sort.php" : "Sort1.php";
-    const container =
-      orderState == 1 ? "#active-order-section" : "#finished-order-section";
+  $("#search-mobile-order").on(
+    "keyup",
+    debounce(function () {
+      const text = $(this).val();
+      const orderBy = getChecklistItems();
+      const orderState = $("#active-btn").val();
+      const state = orderState == 1 ? "Sort.php" : "Sort1.php";
+      const container =
+        orderState == 1 ? "#active-order-section" : "#finished-order-section";
 
-    postData("action/mobile/" + state, { text, orderBy }, function (response) {
-      $(container).html(response);
-    });
-  });
+      postData(
+        "action/mobile/" + state,
+        { text, orderBy },
+        function (response) {
+          $(container).html(response);
+        }
+      );
+    })
+  );
 
   $(document).on("click", ".update-order-steps", function () {
     $("#active-order-account").load(location.href + " #active-order-account");
@@ -1715,7 +1747,7 @@ $(document).ready(function () {
   $(document).on("click", ".open-photo-modal", function () {
     const email = $(this).val();
 
-    getData("action/AdminOrders.php?email=" + email, function (response) {
+    getData(`action/AdminOrders.php?email=${email}`, function (response) {
       const res = JSON.parse(response);
 
       if (res.status != 404) {
@@ -1927,8 +1959,8 @@ $(document).ready(function () {
   // Search setted product history by date and name
   $("#product-name-search, #product-history-date").on(
     "keyup change",
-    function () {
+    debounce(function () {
       sendHistorySearchRequest();
-    }
+    })
   );
 });

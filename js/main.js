@@ -115,7 +115,7 @@ $(document).ready(function () {
         break;
     }
 
-    $("#account-toast-price").html(accountFinalPrice.toFixed(2) + " лв.");
+    $("#account-toast-price").html(`${accountFinalPrice.toFixed(2)} лв.`);
     $("#input-account-price").val(accountFinalPrice.toFixed(2));
   });
 
@@ -168,7 +168,7 @@ $(document).ready(function () {
         break;
     }
 
-    $("#customer-price").val(finalPrice.toFixed(2) + " лв.");
+    $("#customer-price").val(`${finalPrice.toFixed(2)} лв.`);
     $("#customer-price-hidden").val(finalPrice.toFixed(2));
   });
 
@@ -350,15 +350,15 @@ $(document).ready(function () {
   });
 
   // Table update after click
-  $(document).on("click", "#reload-order-table", function (e) {
+  $(document).on("click", "#reload-order-table", function () {
     $("#order-table").load(location.href + " #order-table");
   });
 
-  $(document).on("click", ".reload-team-table", function (e) {
+  $(document).on("click", ".reload-team-table", function () {
     $("#team-table").load(location.href + " #team-table");
   });
 
-  $(document).on("click", "#reload-product-table", function (e) {
+  $(document).on("click", "#reload-product-table", function () {
     $("#product-table").load(location.href + " #product-table");
   });
 

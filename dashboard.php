@@ -60,7 +60,7 @@ $date = date("Y-m-d"); ?>
                       <div class="hidden lg:block mb-1.5 ml-5 text-xs text-gray-100">
                         Действия
                       </div>
-                      <li @click="dashOrder = true; dashUser = false; dashTeam = false; dashWarehouse = false; dashSupplier = false; dashClient = false; productOrder = false; dashProfile = false; dashSection = 'Заявки'" :class="dashOrder ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b] bg-opacity-50' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
+                      <li @click="dashOrder = true; dashUser = false; dashTeam = false; dashWarehouse = false; dashSupplier = false; dashClient = false; productOrder = false; dashProfile = false; dashSchedule = false; dashSection = 'Заявки'" :class="dashOrder ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b] bg-opacity-50' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
                         <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" />
                         </svg>
@@ -70,36 +70,42 @@ $date = date("Y-m-d"); ?>
                         <div class="hidden lg:block mb-1.5 mt-2 ml-5 text-xs text-gray-100">
                           Персонал
                         </div>
-                        <li @click="dashUser = true; dashOrder = false; dashTeam = false; dashWarehouse = false; dashSupplier = false; dashClient = false; productOrder = false; dashProfile = false; dashSection = 'Потребители'" :class="dashUser ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
+                        <li @click="dashUser = true; dashOrder = false; dashTeam = false; dashWarehouse = false; dashSupplier = false; dashClient = false; productOrder = false; dashProfile = false; dashSchedule = false; dashSection = 'Потребители'" :class="dashUser ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
                           <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                           </svg>
                           <span class="ml-2.5 hidden lg:block">Потребители</span>
                         </li>
-                        <li @click="dashTeam = true; dashOrder = false; dashUser = false; dashWarehouse = false; dashSupplier = false; dashClient = false; productOrder = false; dashProfile = false; dashSection = 'Екипи'" :class="dashTeam ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1 reload-team-table">
+                        <li @click="dashTeam = true; dashOrder = false; dashUser = false; dashWarehouse = false; dashSupplier = false; dashClient = false; productOrder = false; dashProfile = false; dashSchedule = false; dashSection = 'Екипи'" :class="dashTeam ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1 reload-team-table">
                           <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                           </svg>
                           <span class="ml-2.5 hidden lg:block">Екипи</span>
+                        </li>
+                        <li @click="dashSchedule = true; dashOrder = false; dashTeam = false; dashWarehouse = false; dashSupplier = false; dashClient = false; productOrder = false; dashProfile = false; dashUser = false; dashSection = 'График'" :class="dashSchedule ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
+                          <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                          </svg>
+                          <span class="ml-2.5 hidden lg:block">График</span>
                         </li>
                       <?php }
                       if ($roles["nomenclature_view"] == 1) { ?>
                         <div class="hidden lg:block mb-1.5 mt-2 ml-5 text-xs text-gray-100">
                           Номенклатури
                         </div>
-                        <li @click="dashWarehouse = true; dashOrder = false; dashUser = false; dashTeam = false; dashSupplier = false; dashClient = false; productOrder = false; dashProfile = false; dashSection = 'Склад'" :class="dashWarehouse ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
+                        <li @click="dashWarehouse = true; dashOrder = false; dashUser = false; dashTeam = false; dashSupplier = false; dashClient = false; productOrder = false; dashProfile = false; dashSchedule = false; dashSection = 'Склад'" :class="dashWarehouse ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
                           <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                           </svg>
                           <span class="ml-2.5 hidden lg:block">Склад</span>
                         </li>
-                        <li @click="productOrder = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashClient = false; dashSupplier = false; dashProfile = false; dashSection = 'Поръчки'" :class="productOrder ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
+                        <li @click="productOrder = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashClient = false; dashSupplier = false; dashProfile = false; dashSchedule = false; dashSection = 'Поръчки'" :class="productOrder ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
                           <svg fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                           </svg>
                           <span class="ml-2.5 hidden lg:block">Поръчки</span>
                         </li>
-                        <li @click="dashSupplier = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashClient = false; productOrder = false; dashProfile = false; dashSection = 'Доставчици'" :class="dashSupplier ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
+                        <li @click="dashSupplier = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashClient = false; productOrder = false; dashProfile = false; dashSchedule = false; dashSection = 'Доставчици'" :class="dashSupplier ? 'text-white border-l-4 border-[#3b7ddd] bg-gradient-to-r from-[#3a4b5e] via-[#2f3c4b] to-[#2f3c4b]' : 'hover:text-gray-300'" class="text-base w-full flex items-center py-2.5 px-4 transition-all cursor-pointer mb-1">
                           <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
                           </svg>
@@ -114,7 +120,7 @@ $date = date("Y-m-d"); ?>
           </Transition>
           <Transition name="fade">
             <div id="main-section" :class="toggleSidebar ? 'ml-14 lg:ml-64' : 'ml-0'" class="h-screen w-full bg-gray-100 relative overflow-y-auto">
-              <nav class="bg-white border-b border-gray-200 w-full z-30 w-full">
+              <nav class="bg-white border-b border-gray-200 w-full z-30">
                 <div class="px-3 py-3 lg:px-5 lg:pl-3">
                   <div class="flex items-center justify-between">
                     <div class="flex items-center justify-start">
@@ -163,7 +169,7 @@ $date = date("Y-m-d"); ?>
                         </span>
                         <div id="profile-dropdown" class="hidden z-10 w-44 bg-white rounded shadow-xl border border-slate-100">
                           <ul class="text-sm text-gray-700" aria-labelledby="dropdownDefault">
-                            <li @click="dashProfile = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashClient = false; productOrder = false; dashSupplier = false; dashSection = 'Профил'" :class="dashProfile ? 'bg-gray-100' : 'bg-white hover:bg-gray-100'" class="flex items-center py-2 px-4 cursor-pointer active:scale-90 transition-all">
+                            <li @click="dashProfile = true; dashOrder = false; dashUser = false; dashTeam = false; dashWarehouse = false; dashClient = false; productOrder = false; dashSupplier = false; dashSchedule = false; dashSection = 'Профил'" :class="dashProfile ? 'bg-gray-100' : 'bg-white hover:bg-gray-100'" class="flex items-center py-2 px-4 cursor-pointer active:scale-90 transition-all">
                               <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-slate-700 mr-1">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                               </svg>
@@ -1170,6 +1176,102 @@ $date = date("Y-m-d"); ?>
                 </div>
               </section>
 
+              <section class="animate__animated animate__fadeIn animate__faster" v-show="dashSchedule">
+                <div class="py-6 px-8 flex justify-center w-full">
+                  <div class="w-[70%] p-5 pl-0 shadow-lg rounded-md border border-slate-50 bg-white">
+                    <div id="load-user-data">
+                      <?php
+                      $query = "SELECT * FROM users WHERE status != 0";
+                      $execute = mysqli_query($con, $query);
+
+                      while ($rows = mysqli_fetch_array($execute)) {
+                        $id = $rows["id"];
+
+                        $query = "SELECT * FROM user_schedules WHERE user_id = '$id'";
+                        $queryRun = mysqli_query($con, $query);
+
+                        while ($row = mysqli_fetch_array($queryRun)) { ?>
+                          <button id="set-user-id-work" value="<?= $rows["id"] ?>" class="flex items-center w-full py-3.5 border-b border-slate-200 hover:bg-slate-50 transition-all px-3 user-box">
+                            <img src="uploaded-files/user-images/<?= $rows["image"] ?>" alt="<?= $rows["image"] ?>" class="w-[62px] h-[62px] rounded-full shadow-lg border object-cover" />
+                            <div class="ml-7 w-full">
+                              <div id="get-user-name-schedule" class="text-slate-700 font-semibold text-left text-lg mb-[3px]"><?= $rows["name"] ?></div>
+                              <div class="flex items-center text-base text-gray-500 w-full">
+                                <div class="flex items-center pr-3.5 border-r border-slate-200 w-1/4">
+                                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-[18px] h-[18px] mr-1">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                                  </svg>
+                                  <div>Пид - <?= $rows["pid"] ?></div>
+                                </div>
+                                <div class="flex items-center pl-3.5 border-r border-slate-200 w-1/4">
+                                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-[18px] h-[18px] mr-1">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
+                                  </svg>
+                                  <div><?= $rows["position"] ?></div>
+                                </div>
+                                <div class="flex items-center pl-3.5 border-r border-slate-200 w-1/4">
+                                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-[18px] h-[18px] mr-1">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                                  </svg>
+                                  <div>Работни дни <?= (isset($row["days_count"]) && !is_null($row["days_count"])) ? $row["days_count"] : "0"  ?></div>
+                                </div>
+                                <div class="flex items-center pl-3.5 w-1/4">
+                                  <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-[18px] h-[18px] mr-1">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
+                                  </svg>
+                                  <div>Дължима сума <?= ($rows["hourly_rate"] * 8) * $row["days_count"]  ?>лв.</div>
+                                </div>
+                              </div>
+                            </div>
+                          </button>
+                      <?php }
+                      } ?>
+                    </div>
+                    <input type="hidden" id="get-user-id-work">
+                  </div>
+
+                  <div class="w-[30%] p-5 pt-0 pr-0">
+                    <div class="rounded-md p-6 shadow-lg bg-white">
+                      <div class="flex items-center justify-start px-1.5">
+                        <span class="text-base font-bold text-slate-700 focus:outline-none"><span id="show-date"></span></span>
+                      </div>
+                      <table class="w-full mt-4">
+                        <thead>
+                          <tr>
+                            <th>
+                              <div class="w-10 h-10 flex justify-center items-center font-semibold text-slate-700">Пон</div>
+                            </th>
+                            <th>
+                              <div class="w-10 h-10 flex justify-center items-center font-semibold text-slate-700">Вто</div>
+                            </th>
+                            <th>
+                              <div class="w-10 h-10 flex justify-center items-center font-semibold text-slate-700">Сря</div>
+                            </th>
+                            <th>
+                              <div class="w-10 h-10 flex justify-center items-center font-semibold text-slate-700">Чет</div>
+                            </th>
+                            <th>
+                              <div class="w-10 h-10 flex justify-center items-center font-semibold text-slate-700">Пет</div>
+                            </th>
+                            <th>
+                              <div class="w-10 h-10 flex justify-center items-center font-semibold text-slate-700">Съб</div>
+                            </th>
+                            <th>
+                              <div class="w-10 h-10 flex justify-center items-center font-semibold text-slate-700">Нед</div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody id="calendar"></tbody>
+                      </table>
+                      <div class="flex items-center gap-x-4">
+                        <button id="clear-user-work-schedule" type="button" class="mt-4 w-full text-white text-sm bg-red-500 hover:bg-red-600 font-semibold rounded-md px-5 py-2 focus:outline-none transition-all active:scale-95">Изчисти</button>
+                        <button id="select-user-work-schedule" type="button" class="mt-4 w-full text-white text-sm bg-emerald-500 hover:bg-emerald-600 font-semibold rounded-md px-5 py-2 focus:outline-none transition-all active:scale-95">Избери</button>
+                        <button id="add-user-work-schedule" type="button" class="mt-4 w-full text-white text-sm bg-blue-500 hover:bg-blue-600 font-semibold rounded-md px-5 py-2 focus:outline-none transition-all active:scale-95">Запази</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
               <section class="animate__animated animate__fadeIn animate__faster" v-show="dashWarehouse">
                 <div class="py-6 px-8">
                   <div class="my-2 w-full sm:flex items-center justify-end space-y-4 sm:space-y-0 sm:space-x-3">
@@ -1208,7 +1310,7 @@ $date = date("Y-m-d"); ?>
                           <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                         </svg>
                       </button>
-                      <button id="view-product-history" type="button" class="w-10 h-10 bg-cyan-500 hover:bg-cyan-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
+                      <button id="view-product-history" type="button" class="w-10 h-10 bg-slate-500 hover:bg-slate-600 focus:outline-none active:scale-90 transition-all rounded-lg flex items-center justify-center shadow-lg">
                         <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7 text-white">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
@@ -2114,6 +2216,7 @@ $date = date("Y-m-d"); ?>
   <script src="js/main-vue.js"></script>
   <script src="js/main.js"></script>
   <script src="js/ajax.js"></script>
+  <script src="js/calendar.js"></script>
   <script src="loader/dashLoader.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 </body>

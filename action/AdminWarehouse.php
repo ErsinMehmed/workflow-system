@@ -14,7 +14,6 @@ if (isset($_POST['admin_product'])) {
     $kind = $_POST['kind'];
 
     if (!$name) {
-
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         $query = "SELECT name FROM stocks WHERE name = '$name'";
@@ -55,7 +54,6 @@ if (isset($_POST['admin_edit_product'])) {
     $kind = $_POST['kind'];
 
     if (!$name) {
-
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         $query = "SELECT name FROM stocks WHERE name = '$name'";
@@ -92,7 +90,6 @@ if (isset($_POST['admin_set_product'])) {
     $date = date('Y-m-d');
 
     if (!$product || !$quantity || !$teamId) {
-
         jsonResponse(500, 'Попълнете всички полета');
     } else {
 

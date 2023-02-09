@@ -26,7 +26,7 @@ if (isset($_POST['mobile_login'])) {
 
     $pid = $_POST['pid'];
 
-    $query = "SELECT id, pid FROM users WHERE pid='$pid'";
+    $query = "SELECT * FROM users WHERE pid='$pid'";
     $query_run = mysqli_query($con, $query);
 
     if (mysqli_num_rows($query_run) > 0) {
@@ -36,13 +36,13 @@ if (isset($_POST['mobile_login'])) {
             if (password_verify($_POST['password'], $rows['password'])) {
                 $_SESSION['pid'] = $pid;
 
-                $queryy = "UPDATE teams SET status='Yes' WHERE (user1_id='$userId' OR user2_id='$userId') AND delete_team <> 'yes'";
+                $queryy = "UPDATE teams SET status='Yes' WHERE (user1_id='$userId' OR user2_id='$userId') AND delete_team != 'yes'";
                 $query_runn = mysqli_query($con, $queryy);
 
                 echo json_encode(['status' => 200]);
                 return;
             } else {
-                jsonResponse(500, 'Грешена парола');
+                jsonResponse(500, 'Грешна парола');
             }
         }
     } else {
@@ -61,7 +61,7 @@ if (isset($_POST['action'])) {
     while ($rows = mysqli_fetch_array($query_run)) {
         $userId = $rows['id'];
 
-        $queryy = "UPDATE teams SET status='No' WHERE (user1_id='$userId' OR user2_id='$userId') AND delete_team <> 'yes'";
+        $queryy = "UPDATE teams SET status='No' WHERE (user1_id='$userId' OR user2_id='$userId') AND delete_team != 'yes'";
         $query_runn = mysqli_query($con, $queryy);
     }
     unset($_SESSION['pid']);
@@ -182,7 +182,7 @@ if (isset($_POST['productName'])) {
     $name = ($_POST['productName']);
     $teamId = ($_POST['teamId']);
 
-    $query = "SELECT * FROM set_products WHERE quantity <> 0 AND product_name = '$name' AND team_id = '$teamId' GROUP BY product_name";
+    $query = "SELECT * FROM set_products WHERE quantity > 0 AND product_name = '$name' AND team_id = '$teamId' GROUP BY product_name";
     $query_run = mysqli_query($con, $query);
 
     while ($rows = mysqli_fetch_array($query_run)) {
@@ -205,7 +205,7 @@ if (isset($_POST['productNameReturn'])) {
     $teamId = ($_POST['teamId']);
     $date = date('Y-m-d');
 
-    $query = "SELECT sum(quantity) as quantity_sum FROM set_products WHERE product_name = '$name' AND team_id = '$teamId'";
+    $query = "SELECT SUM(quantity) as quantity_sum FROM set_products WHERE product_name = '$name' AND team_id = '$teamId'";
     $query_run = mysqli_query($con, $query);
 
     while ($rows = mysqli_fetch_array($query_run)) {
@@ -224,7 +224,7 @@ if (isset($_POST['productNameReturn'])) {
             $query5 = "DELETE FROM set_products WHERE product_name = '$name' AND team_id = '$teamId'";
             $query_goo = mysqli_query($con, $query5);
 
-            $query = "SELECT * FROM teams WHERE id = '$teamId' AND delete_team <> 'yes'";
+            $query = "SELECT name FROM teams WHERE id = '$teamId' AND delete_team != 'yes'";
             $query_run = mysqli_query($con, $query);
 
             while ($row = mysqli_fetch_array($query_run)) {

@@ -5,7 +5,7 @@ include '../dbconn.php';
 
 $name = mysqli_real_escape_string($con, $_POST['supplierName']);
 
-$query = "SELECT * FROM product_orders WHERE supplier = '$name'";
+$query = "SELECT id, name, quantity, date FROM product_orders WHERE supplier = '$name'";
 $query_run = mysqli_query($con, $query);
 
 while ($rows = mysqli_fetch_array($query_run)) { ?>

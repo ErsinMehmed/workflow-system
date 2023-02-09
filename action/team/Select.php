@@ -3,7 +3,7 @@ require '../dbconn.php';
 
 if (isset($_POST['actionOr'])) {
 
-    $query = "SELECT * FROM teams WHERE delete_team <> 'yes'";
+    $query = "SELECT id, name FROM teams WHERE delete_team <> 'yes'";
     $query_run = mysqli_query($con, $query); ?>
     <option hidden disabled selected>Избери екип</option>
     <?php

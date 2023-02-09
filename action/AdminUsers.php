@@ -22,7 +22,6 @@ if (isset($_POST['admin_user'])) {
     uploadPhoto($filename, "userImg", '../uploaded-files/user-images/');
 
     if (!$name || !$egn || !$pid || !$phone || !$filename || !$address) {
-
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         $query = "SELECT pid FROM users WHERE pid = '$pid'";
@@ -33,10 +32,20 @@ if (isset($_POST['admin_user'])) {
             if (preg_match('/^[0-9+\(\)\s-]+$/', $phone)) {
 
                 if (mysqli_num_rows($query_run) == 0) {
-                    $query = "INSERT INTO users (image,name,pid,address,in_date,status,team_id,position,egn,phone,dob,username) VALUES ('$filename','$name','$pid','$address','$date','1','0','$position','$egn','$phone','$dob','$pid')";
+                    $query = "INSERT INTO users (image,name,pid,address,in_date,status,team_id,position,egn,phone,dob,username,hourly_rate) VALUES ('$filename','$name','$pid','$address','$date','1','0','$position','$egn','$phone','$dob','$pid','6')";
                     $query_run = mysqli_query($con, $query);
 
                     jsonResponseMain($query_run, 'Успешно добавихте потребителя', 'Неуспешно добавяне на потребителя');
+
+                    $query = "SELECT id FROM users WHERE pid = '$pid'";
+                    $execute = mysqli_query($con, $query);
+
+                    while ($rows = mysqli_fetch_array($execute)) {
+                        $userId = $rows["id"];
+
+                        $query = "INSERT INTO user_schedules (user_id) VALUES ('$userId')";
+                        $query_run = mysqli_query($con, $query);
+                    }
                 } else {
                     jsonResponse(500, 'Въведения ПИД вече съществува');
                 }
@@ -78,8 +87,8 @@ if (isset($_POST['admin_update_user'])) {
     $address = $_POST['userAddress'];
     $filename = $_FILES['userImg']['name'];
     $date = date('Y-m-d');
-    if (!$name || !$egn || !$phone || !$address) {
 
+    if (!$name || !$egn || !$phone || !$address) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
 

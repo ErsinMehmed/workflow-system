@@ -25,7 +25,6 @@ if (isset($_POST['admin_order'])) {
     $m2 = $_POST['m2'];
 
     if (!$name || !$phone || !$address || !$m2 || !$email) {
-
         jsonResponse(500, 'Попълнете всички полета');
     } else {
 
@@ -84,7 +83,6 @@ if (isset($_POST['admin_order_update'])) {
     $m2 = $_POST['m2'];
 
     if (!$phone || !$address  || !$price || !$m2) {
-
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         $query = "UPDATE orders SET phone='$phone', room='$room', offer='$offer', date='$date', time='$time', pay='$payment', address='$address', information='$information', price='$price', m2='$m2' WHERE id='$id'";

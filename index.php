@@ -12,6 +12,8 @@ $email = $_SESSION['email']; ?>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="keywords" content="услуги, почистване, оферти, къщи, офиси, салони, поръчки, Варна, Carpet Services, Carpet Serv, Carpet Service">
+  <meta name="description" content="Carpet Services - Получете най-добрите услуги в областта на почистването.">
 
   <link rel="shortcut icon" href="images/title.png" />
   <link rel="stylesheet" href="css/app.css" />
@@ -22,7 +24,8 @@ $email = $_SESSION['email']; ?>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-  <title>Carpet Cleaning - Начало</title>
+  <title>Carpet Cleaning | Начало</title>
+
 </head>
 
 <body class="scroll-smooth">
@@ -221,7 +224,7 @@ $email = $_SESSION['email']; ?>
       <div class="h-full w-full p-4 overflow-x-hidden overflow-y-auto flex justify-center">
         <div class="relative w-full h-full max-w-md">
           <div class="relative bg-gray-100 rounded-lg shadow mb-6">
-            <div id="customer-registration-spinner" class="absolute absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 hidden">
+            <div id="customer-registration-spinner" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 hidden">
               <svg aria-hidden="true" class="inline w-12 h-12 text-gray-200 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none">
                 <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
                 <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
@@ -505,7 +508,7 @@ $email = $_SESSION['email']; ?>
             Нашият оперативен екип е 24 часа на разположение в денонощието !
             Доверете ни се !
           </div>
-          <div class="text-xs md:text-xs lg:text-base text-justify sm:px-10 md:px-0">
+          <div class="text-sm lg:text-base text-justify sm:px-10 md:px-0">
             Екипите ни са обучени по приетите европейски изисквания за
             професионално почистване. Всеки един наш служител подхожда с
             голямо внимание към детайлите и дава максимума от своите
@@ -516,10 +519,10 @@ $email = $_SESSION['email']; ?>
               Поръчка
             </button>
             <div class="border-l-2 border-dotted pl-2.5 ml-2.5 sm:pl-3 sm:ml-3 lg:pl-4 lg:ml-4">
-              <div class="text-slate-500 text-xs sm:text-sm lg:text-base">
+              <div class="text-slate-500 text-xs lg:text-base">
                 Безплатна консултация
               </div>
-              <div class="font-bold text-slate-700 text-xs sm:text-sm lg:text-base">
+              <div class="font-bold text-slate-700 text-sm lg:text-base">
                 +359 899 845 743
               </div>
             </div>
@@ -537,7 +540,7 @@ $email = $_SESSION['email']; ?>
               <span class="sr-only">Close modal</span>
             </button>
             <div class="p-7 sm:space-x-8 pr-9 sm:flex items-center">
-              <img class="object-cover h-48 w-52 md:h-52 md:w-56 mx-auto md:mx-0" src="images/4-1.png" alt="service" />
+              <img class="object-cover h-44 w-48 sm:h-48 sm:w-52 md:h-52 md:w-56 mx-auto md:mx-0" src="images/4-1.png" alt="service" />
               <div class="w-full mt-2.5 sm:mt-0">
                 <h1 class="text-center font-bold text-slate-700 text-xl">
                   Оставете вашите данни.
@@ -547,7 +550,7 @@ $email = $_SESSION['email']; ?>
                 </h1>
                 <div class="relative my-4">
                   <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 text-gray-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                     </svg>
                   </div>
@@ -555,13 +558,13 @@ $email = $_SESSION['email']; ?>
                 </div>
                 <div class="relative my-4">
                   <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5 text-gray-500">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                     </svg>
                   </div>
                   <input type="text" name="" class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-0 focus:outline-none focus:border-gray-400 block w-full pl-10 p-2.5" placeholder="Вашият тел. номер" />
                 </div>
-                <button class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-1.5 bg-blue-500 hover:bg-blue-600 text-sm md:text-base font-semibold rounded-md transition-all text-white active:scale-90">
+                <button class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-[7px] bg-blue-500 hover:bg-blue-600 text-sm md:text-base font-semibold rounded-md transition-all text-white active:scale-90">
                   Изпрати
                 </button>
               </div>
@@ -572,8 +575,7 @@ $email = $_SESSION['email']; ?>
     </section>
 
     <section>
-      <div style="background-image: url(images/House-cleaning-service.png)" class="w-full brightness-[0.4] h-[32rem] sm:h-[34rem] md:h-[36rem] lg:h-[40rem] bg-fixed bg-cover bg-center flex justify-center items-center"></div>
-
+      <div style="background-image: url(images/House-cleaning-service.png)" class="w-full brightness-[0.3] md:brightness-[0.4] h-[32rem] sm:h-[34rem] md:h-[36rem] lg:h-[40rem] bg-fixed bg-cover bg-center flex justify-center items-center"></div>
       <div class="-mt-[30rem] sm:-mt-[32rem] md:-mt-[34rem] lg:-mt-[36rem] relative z-10 w-full" data-aos="slide-up" data-aos-duration="2000">
         <div class="text-center text-white font-extrabold text-2xl md:text-3xl xl:text-4xl">
           Всеки детайл е важен
@@ -582,14 +584,14 @@ $email = $_SESSION['email']; ?>
         <div class="text-white text-center md:text-lg xl:text-xl mt-6 mb-12">
           Приоритизираме следното
         </div>
-        <div class="mb-4">
+        <div class="mb-5 sm:mb-4">
           <ul class="flex justify-evenly text-sm font-medium text-center">
             <li @click="ourClientTab = true; processTab = false; communicationTab = false" :class="ourClientTab ? 'text-blue-500' : 'text-slate-100 hover:text-blue-500'" class="cursor-pointer transition-all">
               <svg viewBox="0 0 24 24" fill="currentColor" class="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 cursor-pointer mx-auto">
                 <path fill-rule="evenodd" d="M8.25 6.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM15.75 9.75a3 3 0 116 0 3 3 0 01-6 0zM2.25 9.75a3 3 0 116 0 3 3 0 01-6 0zM6.31 15.117A6.745 6.745 0 0112 12a6.745 6.745 0 016.709 7.498.75.75 0 01-.372.568A12.696 12.696 0 0112 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 01-.372-.568 6.787 6.787 0 011.019-4.38z" clip-rule="evenodd" />
                 <path d="M5.082 14.254a8.287 8.287 0 00-1.308 5.135 9.687 9.687 0 01-1.764-.44l-.115-.04a.563.563 0 01-.373-.487l-.01-.121a3.75 3.75 0 013.57-4.047zM20.226 19.389a8.287 8.287 0 00-1.308-5.135 3.75 3.75 0 013.57 4.047l-.01.121a.563.563 0 01-.373.486l-.115.04c-.567.2-1.156.349-1.764.441z" />
               </svg>
-              <div class="uppercase font-semibold lg:text-lg">
+              <div class="sm:uppercase font-semibold lg:text-lg">
                 Нашите Клиенти
               </div>
             </li>
@@ -597,7 +599,7 @@ $email = $_SESSION['email']; ?>
               <svg viewBox="0 0 24 24" fill="currentColor" class="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 cursor-pointer mx-auto">
                 <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
               </svg>
-              <div class="uppercase font-semibold lg:text-lg">
+              <div class="sm:uppercase font-semibold lg:text-lg">
                 Процес
               </div>
             </li>
@@ -606,7 +608,7 @@ $email = $_SESSION['email']; ?>
                 <path d="M4.913 2.658c2.075-.27 4.19-.408 6.337-.408 2.147 0 4.262.139 6.337.408 1.922.25 3.291 1.861 3.405 3.727a4.403 4.403 0 00-1.032-.211 50.89 50.89 0 00-8.42 0c-2.358.196-4.04 2.19-4.04 4.434v4.286a4.47 4.47 0 002.433 3.984L7.28 21.53A.75.75 0 016 21v-4.03a48.527 48.527 0 01-1.087-.128C2.905 16.58 1.5 14.833 1.5 12.862V6.638c0-1.97 1.405-3.718 3.413-3.979z" />
                 <path d="M15.75 7.5c-1.376 0-2.739.057-4.086.169C10.124 7.797 9 9.103 9 10.609v4.285c0 1.507 1.128 2.814 2.67 2.94 1.243.102 2.5.157 3.768.165l2.782 2.781a.75.75 0 001.28-.53v-2.39l.33-.026c1.542-.125 2.67-1.433 2.67-2.94v-4.286c0-1.505-1.125-2.811-2.664-2.94A49.392 49.392 0 0015.75 7.5z" />
               </svg>
-              <div class="uppercase font-semibold lg:text-lg">
+              <div class="sm:uppercase font-semibold lg:text-lg">
                 Комуникация
               </div>
             </li>
@@ -617,7 +619,7 @@ $email = $_SESSION['email']; ?>
             Нашите услуги за почистване са достъпни и нашите експерти по
             почистване са високо обучени. Ако по някаква причина не сте
             доволни от нашите професионални почистващи услуги, свържете се с
-            нас. Ще се върнем и ще почистим конкретните зони, които не
+            нас. Ще се върнем и почистим конкретните зони, които не
             отговарят на вашите очаквания. Нищо не е по-важно за нас от
             вашето удовлетворение.
           </p>
@@ -701,7 +703,7 @@ $email = $_SESSION['email']; ?>
           <h3 class="uppercase font-bold text-xs lg:text-sm text-gray-400 text-center md:text-left">
             Първи според мнението на клиентите
           </h3>
-          <h1 class="text-slate-700 font-semibold text-2xl lg:text-3xl text-center md:text-left">
+          <h1 class="text-slate-700 font-semibold text-xl md:text-2xl lg:text-3xl text-center md:text-left">
             Имате проблем, свързан с почистването?
           </h1>
           <p class="text-justify text-gray-500 indent-5 my-5 text-sm lg:text-base">
@@ -728,7 +730,7 @@ $email = $_SESSION['email']; ?>
 
     <section>
       <div class="text-slate-700 mt-16">
-        <h1 class="text-center font-semibold text-xl md:text-2xl lg:text-3xl">
+        <h1 class="text-center font-semibold text-xl md:text-2xl lg:text-3xl px-4 sm:px-0">
           Предлагаме висококачествени услуги
         </h1>
         <h2 class="text-center font-bold text-xl md:text-2xl lg:text-3xl">
@@ -773,7 +775,7 @@ $email = $_SESSION['email']; ?>
           </div>
           <div class="hidden lg:block w-4/12" data-aos="slide-up" data-aos-duration="2000">
             <div class="rounded-full p-5 border-2 border-gray-200">
-              <img class="object-cover rounded-full w-full" src="images/image_03-1-600x600.jpg" alt="girl wirh dog" />
+              <img class="object-cover rounded-full w-full" src="images/image_03-1-600x600.jpg" alt="girl with dog" />
             </div>
             <div class="w-full flex justify-center">
               <button class="inline-flex mt-8 xl:mt-5 items-center justify-center w-full md:w-auto px-6 py-2.5 bg-blue-400 hover:bg-blue-500 text-sm lg:text-base font-semibold rounded-3xl transition-all text-white active:scale-90">
@@ -1109,7 +1111,7 @@ $email = $_SESSION['email']; ?>
   <script>
     AOS.init({
       disable: function() {
-        var maxWidth = 800;
+        var maxWidth = 850;
         return window.innerWidth < maxWidth;
       },
     });

@@ -636,7 +636,7 @@ $date_now = date("Y-m-d"); ?>
                     <div class="text-slate-700 space-y-[1px] w-2/5">
                       <div class="text-sm flex items-center justify-center">
                         <div class="uppercase font-bold">Количество</div>
-                        <div class="w-6 h-6 ml-1.5 bg-blue-300 rounded font-semibold flex items-center justify-center text-white font-semibold">
+                        <div class="w-6 h-6 ml-1.5 bg-blue-300 rounded flex items-center justify-center text-white font-semibold">
                           <?= $quantity ?>
                         </div>
                       </div>
@@ -786,14 +786,14 @@ $date_now = date("Y-m-d"); ?>
           while ($rows = mysqli_fetch_assoc($query_run)) { ?>
             <form id="product-request-form">
               <div class="p-4 text-center">
-                <select id="get-product-kind" class="bg-white mb-5 border border-gray-300 text-slate-700 text-sm rounded focus:outline-none block w-full p-2.5 w-[248px] text-center mx-auto">
+                <select id="get-product-kind" class="bg-white mb-5 border border-gray-300 text-slate-700 text-sm rounded focus:outline-none block p-2.5 w-[248px] text-center mx-auto">
                   <option hidden selected>Изберете вид продукт</option>
                   <option value="Екипировка">Екипировка</option>
                   <option value="Препарати">Препарати</option>
                   <option value="Пособия за чистене">Пособия за чистене</option>
                   <option value="Техника">Техника</option>
                 </select>
-                <select id="all-product" name="product" class="bg-white mb-5 border border-gray-300 text-slate-700 text-sm rounded focus:outline-none hidden w-full p-2.5 w-[248px] text-center mx-auto"></select>
+                <select id="all-product" name="product" class="bg-white mb-5 border border-gray-300 text-slate-700 text-sm rounded focus:outline-none hidden p-2.5 w-[248px] text-center mx-auto"></select>
                 <div class="flex items-center justify-center space-x-5">
                   <div id="add-one-product" class="w-10 h-10 rounded border border-gray-300 shadow-xl flex items-center justify-center active:scale-90 transition-all cursor-pointer">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-slate-700">

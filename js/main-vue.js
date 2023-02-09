@@ -31,6 +31,7 @@ createApp({
       dashOrder: true,
       dashUser: false,
       dashTeam: false,
+      dashSchedule: false,
       dashWarehouse: false,
       productOrder: false,
       dashSupplier: false,
@@ -235,7 +236,7 @@ createApp({
       const { documentElement, body } = document;
       let windowScroll = body.scrollTop || documentElement.scrollTop;
       let height = documentElement.scrollHeight - documentElement.clientHeight;
-      this.progress = (windowScroll / height) * 100 + "%";
+      this.progress = `${(windowScroll / height) * 100}%`;
     },
 
     goTo(refName) {

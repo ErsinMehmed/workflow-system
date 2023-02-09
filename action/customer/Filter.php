@@ -1,7 +1,6 @@
 <?php
 include '../dbconn.php';
 
-//Select orders by date and offer
 if (isset($_POST['date'])) {
 
     $date = mysqli_real_escape_string($con, $_POST['date']);

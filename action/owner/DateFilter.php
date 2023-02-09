@@ -5,6 +5,7 @@ include '../dbconn.php';
 
 $dateFrom = mysqli_real_escape_string($con, $_POST['dateFrom']);
 $dateTo = mysqli_real_escape_string($con, $_POST['dateTo']); ?>
+
 <div class="bg-white shadow-md border border-slate-100 rounded-lg p-3 sm:p-4 xl:p-5">
     <?php
     $query = "SELECT SUM(price) as price_sum FROM orders WHERE date BETWEEN '$dateFrom' AND '$dateTo' AND status NOT IN ('Отказана', 'Изтекла')";
@@ -30,9 +31,10 @@ $dateTo = mysqli_real_escape_string($con, $_POST['dateTo']); ?>
         <?php } ?>
         </div>
 </div>
+
 <div class="bg-white shadow-md border border-slate-100 rounded-lg p-3 sm:p-4 xl:p-5">
     <?php
-    $query = "SELECT  SUM(total_price) as price_sum FROM product_orders WHERE date BETWEEN '$dateFrom' AND '$dateTo'";
+    $query = "SELECT SUM(total_price) as price_sum FROM product_orders WHERE date BETWEEN '$dateFrom' AND '$dateTo'";
     $execute = mysqli_query($con, $query);
 
     while ($rows = mysqli_fetch_array($execute)) { ?>

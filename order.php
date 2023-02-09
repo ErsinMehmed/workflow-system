@@ -13,7 +13,7 @@
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <title>Carpet Cleaning - Поръчка</title>
+  <title>Carpet Cleaning | Поръчка</title>
 </head>
 
 <body>

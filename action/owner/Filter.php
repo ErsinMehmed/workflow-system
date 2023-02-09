@@ -4,9 +4,7 @@ include '../dbconn.php';
 $text = mysqli_real_escape_string($con, $_POST['text']);
 $status = mysqli_real_escape_string($con, $_POST['status']);
 
-if ($status == 0) {
-    $query = "SELECT * FROM admins WHERE name LIKE '$text%' AND status = '$status'";
-} else if ($status == 1) {
+if ($status == 0 || $status == 1) {
     $query = "SELECT * FROM admins WHERE name LIKE '$text%' AND status = '$status'";
 } else {
     $query = "SELECT * FROM admins WHERE name LIKE '$text%'";

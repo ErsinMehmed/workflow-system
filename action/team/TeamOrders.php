@@ -7,7 +7,7 @@ include '../dbconn.php';
 $teamId = mysqli_real_escape_string($con, $_POST['teamId']);
 $date = date('Y-m-d');
 
-$query = "SELECT * FROM orders WHERE team_id = '$teamId' AND date >= '$date'";
+$query = "SELECT id, status, date, customer_name FROM orders WHERE team_id = '$teamId' AND date >= '$date'";
 $query_run = mysqli_query($con, $query);
 
 while ($rows = mysqli_fetch_array($query_run)) { ?>

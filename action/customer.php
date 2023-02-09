@@ -38,7 +38,7 @@ if (isset($_POST['save_customer'])) {
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         if (preg_match('/^[0-9+\(\)\s-]+$/', $phone)) {
-            $selQuery = "SELECT 1 FROM customers WHERE email = '$email'";
+            $selQuery = "SELECT email FROM customers WHERE email = '$email'";
             $query = mysqli_query($con, $selQuery);
 
             if (mysqli_num_rows($query) == 0) {
@@ -271,18 +271,20 @@ if (isset($_POST['customer_upload_room'])) {
 
             while ($rows = mysqli_fetch_array($query_runq)) {
 
+                $column = NULL;
+
                 if ($rows["image_room1"] == NULL) {
-                    $queryy = "UPDATE customers SET image_room1='$filename' WHERE email='$customerEmail'";
-                    $query_runn = mysqli_query($con, $queryy);
-                    jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
+                    $column = "image_room1";
                 } else if ($rows["image_room2"] == NULL) {
-                    $queryy = "UPDATE customers SET image_room2='$filename' WHERE email='$customerEmail'";
-                    $query_runn = mysqli_query($con, $queryy);
-                    jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
+                    $column = "image_room2";
                 } else if ($rows["image_room3"] == NULL) {
-                    $queryy = "UPDATE customers SET image_room3='$filename' WHERE email='$customerEmail'";
-                    $query_runn = mysqli_query($con, $queryy);
-                    jsonResponseMain($query_runn, 'Снимакта е добавена', 'Снимката не е добавена');
+                    $column = "image_room3";
+                }
+
+                if ($column) {
+                    $query = "UPDATE customers SET $column='$filename' WHERE email='$customerEmail'";
+                    $query_run = mysqli_query($con, $query);
+                    jsonResponseMain($query_run, 'Снимакта е добавена', 'Снимката не е добавена');
                 } else {
                     jsonResponse(500, 'Вече сте добавили 3 снимки');
                 }
@@ -298,17 +300,18 @@ if (isset($_POST['delete_customer_img'])) {
 
     $imgID = $_POST['imgId'];
     $customerEmail = $_SESSION['email'];
+    $column = NULL;
 
     if ($imgID == 1) {
-        $query = "UPDATE customers SET image_room1='' WHERE email='$customerEmail'";
-        $query_run = mysqli_query($con, $query);
-        jsonResponseMain($query_run, 'Снимакта е изтрита', 'Снимката не е изтрита');
+        $column = "image_room1";
     } else if ($imgID == 2) {
-        $query = "UPDATE customers SET image_room2='' WHERE email='$customerEmail'";
-        $query_run = mysqli_query($con, $query);
-        jsonResponseMain($query_run, 'Снимакта е изтрита', 'Снимката не е изтрита');
+        $column = "image_room2";
     } else if ($imgID == 3) {
-        $query = "UPDATE customers SET image_room3='' WHERE email='$customerEmail'";
+        $column = "image_room3";
+    }
+
+    if ($column) {
+        $query = "UPDATE customers SET $column='' WHERE email='$customerEmail'";
         $query_run = mysqli_query($con, $query);
         jsonResponseMain($query_run, 'Снимакта е изтрита', 'Снимката не е изтрита');
     }
@@ -329,9 +332,9 @@ if (isset($_POST['customer_rate'])) {
         $query_run = mysqli_query($con, $query);
 
         $query = "UPDATE orders SET customer_opinion='$text' WHERE id='$orderId'";
-        $query_run = mysqli_query($con, $query);
+        $query_runn = mysqli_query($con, $query);
 
-        jsonResponseMain($query_run, 'Благодарим за вашато мнение', '');
+        jsonResponseMain2($query_run, $query_runn, 'Благодарим за вашато мнение', '');
     }
 }
 

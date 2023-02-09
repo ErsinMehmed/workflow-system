@@ -19,7 +19,6 @@ if (isset($_POST['admin_product_order'])) {
     $date = date('Y-m-d H:i:s');
 
     if (!$name || !$quantity || !$supplier || !$manufacturer || !$onePrice) {
-
         jsonResponse(500, 'Попълнете всички полета');
     } else {
         $query = "SELECT * FROM stocks WHERE name = '$name'";

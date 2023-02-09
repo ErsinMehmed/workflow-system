@@ -1,3 +1,11 @@
+function togglePieChartsVisibility(sum, inputId, chartId) {
+  $(inputId)
+    .toggleClass("flex", sum === 0)
+    .toggleClass("hidden", sum !== 0)
+    .html(sum === 0 ? "Няма намерени данни" : "");
+  $(chartId).css("display", sum === 0 ? "none" : "block");
+}
+
 // Number pie chart of offer types
 const ctx = document.getElementById("offer-chart");
 
@@ -49,13 +57,7 @@ $(document).on("change", "#select-period", function (e) {
       const res = jQuery.parseJSON(response);
       const sum = res.first + res.second + res.third;
 
-      if (sum === 0) {
-        $("#offer-chart-no-data").html("Няма намерени данни");
-        $("#offer-chart").css("display", "none");
-      } else {
-        $("#offer-chart-no-data").html("");
-        $("#offer-chart").css("display", "block");
-      }
+      togglePieChartsVisibility(sum, "#offer-chart-no-data", "#offer-chart");
 
       pieChart.data.datasets[0].data = [res.first, res.second, res.third];
       pieChart.update();
@@ -87,8 +89,8 @@ const pastIncomes = [];
 const pastExpenses = [];
 
 for (let i = 0; i <= currentMonth; i++) {
-  pastIncomes.push($("#" + labels[i].toLowerCase()).val());
-  pastExpenses.push($("#1" + labels[i].toLowerCase()).val());
+  pastIncomes.push($(`#${labels[i].toLowerCase()}`).val());
+  pastExpenses.push($(`#1${labels[i].toLowerCase()}`).val());
 }
 
 const updatedIncome = pastIncomes.slice(0, currentMonth + 1);
@@ -154,4 +156,58 @@ new Chart(ctx1, {
       intersect: false,
     },
   },
+});
+
+// Numbers of payment by kind
+const ctx2 = document.getElementById("pay-chart");
+
+const cash = parseInt($("#cash-pay").val());
+const card = parseInt($("#card-pay").val());
+
+const sum1 = cash + card;
+
+if (sum1 === 0) {
+  $("#pay-chart-no-data").html("Няма намерени данни");
+} else {
+  var pieChart1 = new Chart(ctx2, {
+    type: "pie",
+
+    data: {
+      labels: ["В брой", "С карта"],
+      datasets: [
+        {
+          data: [cash, card],
+          backgroundColor: ["rgb(25, 136, 255)", "rgb(127, 189, 255)"],
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  });
+}
+
+$(document).on("change", "#select-period-payment", function (e) {
+  const payPeriod = $(this).val();
+
+  $.ajax({
+    url: "action/Owner.php",
+    type: "POST",
+    data: { payPeriod: payPeriod },
+    success: function (response) {
+      const res = jQuery.parseJSON(response);
+      const sum = res.cash + res.card;
+
+      togglePieChartsVisibility(sum, "#pay-chart-no-data", "#pay-chart");
+
+      pieChart1.data.datasets[0].data = [res.cash, res.card];
+      pieChart1.update();
+    },
+  });
 });

@@ -19,12 +19,11 @@ if (isset($_POST['admin_team'])) {
     $id2 = $_POST['teamUser2Id'];
 
     if (!$name || !$user1 || !$user2) {
-
         jsonResponse(500, 'Попълнете всички полета');
     } else {
 
         if ($pid1 != $pid2) {
-            $selQuery = "SELECT name, delete_team FROM teams WHERE name = '$name' AND delete_team <> 'yes'";
+            $selQuery = "SELECT name, delete_team FROM teams WHERE name = '$name' AND delete_team != 'yes'";
             $query = mysqli_query($con, $selQuery);
 
             if (mysqli_num_rows($query) == 0) {

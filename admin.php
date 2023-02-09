@@ -75,7 +75,7 @@ $date = date("Y-m-d"); ?>
                 </Transition>
                 <Transition name="fade">
                     <div id="main-section" :class="toggleSidebar ? 'ml-14 lg:ml-64' : 'ml-0'" class="h-screen w-full bg-gray-100 relative overflow-y-auto">
-                        <nav class="bg-white border-b border-gray-200 w-full z-30 w-full">
+                        <nav class="bg-white border-b border-gray-200 z-30 w-full">
                             <div class="px-3 py-3 lg:px-5 lg:pl-3">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center justify-start">
@@ -91,7 +91,7 @@ $date = date("Y-m-d"); ?>
                                     <div class="flex items-center">
                                         <div class="pl-4 pr-2 text-right text-xs font-semibold">
                                             <?php
-                                            $query = "SELECT * FROM owners WHERE email = '$admin'";
+                                            $query = "SELECT name, position FROM owners WHERE email = '$admin'";
                                             $execute = mysqli_query($con, $query);
 
                                             while ($roles = mysqli_fetch_array($execute)) { ?>
@@ -162,22 +162,16 @@ $date = date("Y-m-d"); ?>
                                     <div id="income-section" class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 px-4">
                                         <div class="bg-white shadow-md border border-slate-100 rounded-lg p-3 sm:p-4 xl:p-5">
                                             <?php
-                                            $currOrdersQuery = "SELECT SUM(price) as current_sum_of_prices FROM orders WHERE date >= CURDATE() - INTERVAL 30 DAY AND status NOT IN ('Отказана', 'Изтекла')";
-                                            $currOrdersResult = mysqli_query($con, $currOrdersQuery);
-                                            $currOrders = mysqli_fetch_array($currOrdersResult);
-                                            $currSumOfPrices = $currOrders['current_sum_of_prices'];
+                                            $query = "SELECT 
+                                                SUM(CASE WHEN date >= CURDATE() - INTERVAL 30 DAY AND status NOT IN ('Отказана', 'Изтекла') THEN price ELSE 0 END) AS current_sum_of_prices, 
+                                                SUM(CASE WHEN date BETWEEN CURDATE() - INTERVAL 60 DAY AND CURDATE() - INTERVAL 30 DAY AND status NOT IN ('Отказана', 'Изтекла') THEN price ELSE 0 END) AS previous_sum_of_prices FROM orders";
 
-                                            $prevOrdersQuery = "SELECT SUM(price) as previous_sum_of_prices FROM orders WHERE date BETWEEN CURDATE() - INTERVAL 60 DAY AND CURDATE() - INTERVAL 30 DAY AND status NOT IN ('Отказана', 'Изтекла')";
-                                            $prevOrdersResult = mysqli_query($con, $prevOrdersQuery);
-                                            $prevOrders = mysqli_fetch_array($prevOrdersResult);
-                                            $prevSumOfPrices = $prevOrders['previous_sum_of_prices'];
+                                            $result = mysqli_query($con, $query);
+                                            $row = mysqli_fetch_assoc($result);
+                                            $currSumOfPrices = $row['current_sum_of_prices'];
+                                            $prevSumOfPrices = $row['previous_sum_of_prices'];
 
-                                            $percentageChange = 0;
-                                            if ($currSumOfPrices === 0) {
-                                                $percentageChange = round((($prevSumOfPrices * 100)), 1);
-                                            } else {
-                                                $percentageChange = round((($currSumOfPrices - $prevSumOfPrices) / $currSumOfPrices * 100), 1);
-                                            } ?>
+                                            $percentageChange = ($currSumOfPrices === 0) ? round((($prevSumOfPrices * 100)), 1) : round((($currSumOfPrices - $prevSumOfPrices) / $currSumOfPrices * 100), 1); ?>
                                             <div class="w-full flex items-center justify-between">
                                                 <div class="flex-shrink-0">
                                                     <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900"><?= $currSumOfPrices ?>лв.</span>
@@ -202,22 +196,16 @@ $date = date("Y-m-d"); ?>
                                         </div>
                                         <div class="bg-white shadow-md border border-slate-100 rounded-lg p-3 sm:p-4 xl:p-5">
                                             <?php
-                                            $currOrdersQuery = "SELECT SUM(total_price) as current_sum_of_prices FROM product_orders WHERE date >= (CURDATE() - INTERVAL 30 DAY)";
-                                            $currOrdersResult = mysqli_query($con, $currOrdersQuery);
-                                            $currOrders = mysqli_fetch_array($currOrdersResult);
-                                            $currSumOfPrices = $currOrders['current_sum_of_prices'];
+                                            $query = "SELECT 
+                                                SUM(CASE WHEN date >= (CURDATE() - INTERVAL 30 DAY) THEN total_price ELSE 0 END) AS current_sum_of_prices, 
+                                                SUM(CASE WHEN date BETWEEN (CURDATE() - INTERVAL 60 DAY) AND (CURDATE() - INTERVAL 30 DAY) THEN total_price ELSE 0 END) AS previous_sum_of_prices FROM product_orders";
 
-                                            $prevOrdersQuery = "SELECT SUM(total_price) as previous_sum_of_prices FROM product_orders WHERE date BETWEEN (CURDATE() - INTERVAL 60 DAY) AND (CURDATE() - INTERVAL 30 DAY)";
-                                            $prevOrdersResult = mysqli_query($con, $prevOrdersQuery);
-                                            $prevOrders = mysqli_fetch_array($prevOrdersResult);
-                                            $prevSumOfPrices = $prevOrders['previous_sum_of_prices'];
+                                            $result = mysqli_query($con, $query);
+                                            $row = mysqli_fetch_assoc($result);
+                                            $currSumOfPrices = $row['current_sum_of_prices'];
+                                            $prevSumOfPrices = $row['previous_sum_of_prices'];
 
-                                            $percentageChange = 0;
-                                            if ($currSumOfPrices === 0) {
-                                                $percentageChange = round((($prevSumOfPrices * 100)), 1);
-                                            } else {
-                                                $percentageChange = round((($currSumOfPrices - $prevSumOfPrices) / $currSumOfPrices * 100), 1);
-                                            } ?>
+                                            $percentageChange = ($currSumOfPrices === 0) ? round((($prevSumOfPrices * 100)), 1) : round((($currSumOfPrices - $prevSumOfPrices) / $currSumOfPrices * 100), 1); ?>
                                             <div class="w-full flex items-center justify-between">
                                                 <div class="flex-shrink-0">
                                                     <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900"><?= $currSumOfPrices ?>лв.</span>
@@ -226,7 +214,7 @@ $date = date("Y-m-d"); ?>
                                                     </h3>
                                                 </div>
                                                 <div>
-                                                    <div class="w-12 h-12 mx-auto rounded-full bg-red-500 shadow-md flex items-center justify-center">
+                                                    <div class="w-12 h-12 mx-auto rounded-full bg-amber-500 shadow-md flex items-center justify-center">
                                                         <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
                                                         </svg>
@@ -247,7 +235,7 @@ $date = date("Y-m-d"); ?>
                                 </div>
 
                                 <?php
-                                $query = "SELECT offer, COUNT(*) as count FROM orders WHERE date >= CURDATE() - INTERVAL 7 DAY AND status NOT IN ('Отказана', 'Изтекла') GROUP BY offer";
+                                $query = "SELECT offer, COUNT(*) as count FROM orders WHERE date >= CURDATE() - INTERVAL 30 DAY AND status NOT IN ('Отказана', 'Изтекла') GROUP BY offer";
                                 $execute = mysqli_query($con, $query);
                                 while ($row = mysqli_fetch_array($execute)) {
                                     if ($row["offer"] === 'Основна') {
@@ -266,14 +254,14 @@ $date = date("Y-m-d"); ?>
                                         </div>
                                         <div class="w-[340px] h-64 py-7">
                                             <canvas id="offer-chart"></canvas>
-                                            <div id="offer-chart-no-data" class="w-full h-full flex items-center justify-center text-slate-700 font-semibold"></div>
+                                            <div id="offer-chart-no-data" class="w-full h-full hidden items-center justify-center text-slate-700 font-semibold animate__animated animate__fadeIn animate__faster"></div>
                                         </div>
                                         <div class="p-4 border-t border-slate-200 text-slate-500 flex items-center justify-between">
                                             <div class="flex items-center text-slate-700 text-sm">
-                                                <select id="select-period" class="bg-white border border-[#e1e5eb] text-[#495057] text-xs rounded focus:border-gray-300 block w-full p-1.5 px-2 w-36 cursor-pointer">
+                                                <select id="select-period" class="bg-white border border-[#e1e5eb] text-[#495057] text-xs rounded focus:border-gray-300 block p-1.5 px-2 w-36 cursor-pointer">
                                                     <option value="CURDATE()">Днес</option>
-                                                    <option value="CURDATE() - INTERVAL 7 DAY" selected>Последната седмица</option>
-                                                    <option value="CURDATE() - INTERVAL 30 DAY">Последният месец</option>
+                                                    <option value="CURDATE() - INTERVAL 7 DAY">Последната седмица</option>
+                                                    <option value="CURDATE() - INTERVAL 30 DAY" selected>Последният месец</option>
                                                     <option value="CURDATE() - INTERVAL 365 DAY">Последната година</option>
                                                 </select>
                                             </div>
@@ -346,7 +334,43 @@ $date = date("Y-m-d"); ?>
                                                 Печалба за изминалата година и процентна печалба по вид оферти
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
 
+                                <?php
+                                $query = "SELECT pay, COUNT(*) as count FROM orders WHERE date >= CURDATE() - INTERVAL 30 DAY AND status NOT IN ('Отказана', 'Изтекла') GROUP BY pay";
+                                $execute = mysqli_query($con, $query);
+                                while ($row = mysqli_fetch_array($execute)) {
+                                    if ($row["pay"] === 'В брой') {
+                                        echo '<input type="hidden" id="cash-pay" value="' . $row["count"] . '">';
+                                    } else if ($row["pay"] === 'С карта') {
+                                        echo '<input type="hidden" id="card-pay" value="' . $row["count"] . '">';
+                                    }
+                                } ?>
+
+                                <div class="w-[340px] bg-white shadow-lg border border-slate-100 rounded-lg">
+                                    <div class="p-3 border-b border-slate-200 text-slate-700 font-semibold text-[17px]">
+                                        Вид на плащане при поръчка
+                                    </div>
+                                    <div class="w-[340px] h-64 py-7">
+                                        <canvas id="pay-chart"></canvas>
+                                        <div id="pay-chart-no-data" class="w-full h-full hidden items-center justify-center text-slate-700 font-semibold animate__animated animate__fadeIn animate__faster"></div>
+                                    </div>
+                                    <div class="p-4 border-t border-slate-200 text-slate-500 flex items-center justify-between">
+                                        <div class="flex items-center text-slate-700 text-sm">
+                                            <select id="select-period-payment" class="bg-white border border-[#e1e5eb] text-[#495057] text-xs rounded focus:border-gray-300 block p-1.5 px-2 w-36 cursor-pointer">
+                                                <option value="CURDATE()">Днес</option>
+                                                <option value="CURDATE() - INTERVAL 7 DAY">Последната седмица</option>
+                                                <option value="CURDATE() - INTERVAL 30 DAY" selected>Последният месец</option>
+                                                <option value="CURDATE() - INTERVAL 365 DAY">Последната година</option>
+                                            </select>
+                                        </div>
+                                        <div class="flex items-center text-slate-700 text-sm cursor-pointer group active:scale-95 transition-all">
+                                            <span class="group-hover:text-slate-500 transition-all">Виж повече</span>
+                                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ml-0.5 w-4 h-4 mt-0.5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

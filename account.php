@@ -21,7 +21,7 @@ $email = $_SESSION['email']; ?>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <title>Carpet Cleaning - Акаунт</title>
+  <title>Carpet Cleaning | Акаунт</title>
 </head>
 
 <body>
@@ -630,15 +630,15 @@ $email = $_SESSION['email']; ?>
                           <svg aria-hidden="true" :class="dragFile ? 'text-blue-300' : 'text-gray-400'" class="w-10 h-10 mb-2 group-hover:text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                           </svg>
-                          <p :class="dragFile ? 'text-blue-400' : 'text-gray-500'" class="mb-2 text-sm group-hover:text-blue-400">
-                            <span v-show="!dragFile" class="font-semibold">
+                          <p :class="dragFile ? 'text-blue-400' : 'text-gray-500'" class="mb-1.5 text-sm group-hover:text-blue-400">
+                            <span v-show="!dragFile" class="font-semibold text-center">
                               Натиснете или провлачете за да добавите снимка
                             </span>
                             <span v-show="dragFile" class="font-semibold">
                               Пуснете файла тук
                             </span>
                           </p>
-                          <p :class="dragFile ? 'text-blue-400' : 'text-gray-500'" class="text-xs group-hover:text-blue-400">
+                          <p :class="dragFile ? 'text-blue-400' : 'text-gray-500'" class="text-xs sm:text-sm group-hover:text-blue-400">
                             PNG, JPG или JPEG (MAX 2MB)
                           </p>
                         </div>
@@ -670,7 +670,7 @@ $email = $_SESSION['email']; ?>
                   while ($rows = mysqli_fetch_array($query_run)) { ?>
                     <div class="w-full my-4">
                       <div class="ml-1 font-semibold text-sm md:text-base">Вашите снимки</div>
-                      <div class="ml-1 mb-3 text-xs md:text-sm font-semibold text-slate-500">(Натиснете върху снимката за да я премахнете)</div>
+                      <div class="ml-1 mb-3 text-sm font-semibold text-slate-500">(Натиснете върху снимката за да я премахнете)</div>
                       <div class="flex flex-wrap items-center gap-5">
                         <?php
                         for ($i = 1; $i <= 3; $i++) {
@@ -1230,7 +1230,7 @@ $email = $_SESSION['email']; ?>
                   <input type="hidden" id="get-team-id" name="team_id" />
                   <div class="bg-gray-200 py-4">
                     <div class="px-8 md:px-12 xl:px-14 py-2 text-slate-700">
-                      <label class="block ml-1 mb-1 font-semibold md:text-lg text-slate-700 text-center flex items-center justify-center">
+                      <label class="ml-1 mb-1 font-semibold md:text-lg text-slate-700 text-center flex items-center justify-center">
                         <span>Как оценявате нашите услуги ?</span>
                         <div id="rate-star-value" class="bg-blue-400 w-6 h-6 rounded ml-2 flex text-sm items-center justify-center text-slate-50 font-semibold">0</div>
                       </label>

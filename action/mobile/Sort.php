@@ -8,21 +8,20 @@ include '../function.php';
 
 $pid = $_SESSION['pid'];
 
-// Sort orders
 if (isset($_POST['text'])) {
 
     $text = mysqli_real_escape_string($con, $_POST['text']);
     $sort = mysqli_real_escape_string($con, $_POST['orderBy']);
     $date_now = date("Y-m-d");
 
-    $query = "SELECT * FROM users WHERE pid = '$pid'";
+    $query = "SELECT pid, team_id FROM users WHERE pid = '$pid'";
     $query_run = mysqli_query($con, $query);
 
 
     while ($rows = mysqli_fetch_array($query_run)) {
         $teamID = $rows['team_id'];
 
-        $query = "SELECT * FROM orders WHERE team_id = '$teamID' AND (status = 'Назначена' OR status = 'В процес') AND $sort LIKE '$text%' AND date = '$date_now'";
+        $query = "SELECT * FROM orders WHERE team_id = '$teamID' AND status IN ('Назначена', 'В процес') AND $sort LIKE '$text%' AND date = '$date_now'";
         $query_run = mysqli_query($con, $query);
 
         if (mysqli_num_rows($query_run) > 0) {

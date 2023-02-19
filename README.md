@@ -23,6 +23,7 @@ The Workflow System provides a graphical user interface for creating and managin
 
 The following libraries and tools have been used in this project:
 
+- [Heroicons](https://heroicons.com/)
 - [Animate.css](https://animate.style/)
 - [Tailwind CSS](https://tailwindcss.com/docs/installation)
 - [Flowbite](https://flowbite.com/docs/getting-started/introduction/)
@@ -30,6 +31,7 @@ The following libraries and tools have been used in this project:
 - [Alertify.js](https://alertifyjs.com/guide.html)
 - [Chart.js](https://www.chartjs.org/docs/latest/)
 - [PHPmailer](https://github.com/PHPMailer/PHPMailer)
+- [Twilio](https://www.twilio.com/)
 
 ## License
 
